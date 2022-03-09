@@ -18,7 +18,7 @@
   <meta name="author" content="stellae">
   <meta name="keywords" content="">
   
-  <title>Golang自动化之robotgo - stellae&#39;s blog</title>
+  <title>hexo一键自动构建gitee pages - stellae&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
 
@@ -163,7 +163,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Golang自动化之robotgo">
+            <span class="h2" id="subtitle" title="hexo一键自动构建gitee pages">
               
             </span>
 
@@ -178,8 +178,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2022-01-22 17:20" pubdate>
-        2022年1月22日 下午
+      <time datetime="2022-03-10 00:08" pubdate>
+        2022年3月10日 凌晨
       </time>
     </span>
   
@@ -190,7 +190,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      597 字
+      899 字
     </span>
   
 
@@ -200,7 +200,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      10
+      14
        分钟
     </span>
   
@@ -230,53 +230,47 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Golang自动化之robotgo</h1>
+            <h1 style="display: none">hexo一键自动构建gitee pages</h1>
             
               <p class="note note-info">
                 
-                  本文最后更新于：1 个月前
+                  本文最后更新于：几秒前
                 
               </p>
             
             <div class="markdown-body">
-              <h3 id="什么是robotgo"><a href="#什么是robotgo" class="headerlink" title="什么是robotgo"></a>什么是robotgo</h3><p>Golang 跨平台自动化系统，用于控制键盘、鼠标、位图、图像、读取屏幕，进程、窗口句柄以及全局事件监听。RobotGo 支持 Mac, Windows, and Linux(X11)系统</p>
-<h3 id="安装robotgo"><a href="#安装robotgo" class="headerlink" title="安装robotgo"></a>安装robotgo</h3><p>建议安装go1.17版本，亲测有效。</p>
-<ul>
-<li>mac环境</li>
-</ul>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// Xcode Command Line Tools</span><br>xcode-<span class="hljs-keyword">select</span> --install<br><span class="hljs-comment">// golang version</span><br><span class="hljs-keyword">go</span> version go1<span class="hljs-number">.17</span><span class="hljs-number">.6</span> darwin/arm64 <br><span class="hljs-comment">// robotgo version</span><br>github.com/<span class="hljs-keyword">go</span>-vgo/robotgo v0<span class="hljs-number">.100</span><span class="hljs-number">.10</span><br></code></pre></td></tr></table></figure>
+              <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>由于 Gitee Pages 的访问速度很快，很多朋友会选择 Gitee Pages 部署项目（如：个人博客、开源项目国内镜像站点）。但是它不像 GitHub Pages 那样，一提交代码就能自动更新 Pages，因为 Gitee 的自动部署属于 Gitee Pages Pro 的服务。</p>
+<p>为了实现 Gitee Pages 的自动部署，找到了大佬开发的工具 <a target="_blank" rel="noopener" href="https://github.com/marketplace/actions/gitee-pages-action">Gitee Pages Action</a> ，只需要在 GitHub 项目的 Settings 页面下配置 keys，然后在 <code>.github/workflows/</code> 下创建一个工作流，通过工作流自动将代码从Github拷贝到Gitee，再模拟自动点击构建部署博客。</p>
+<h3 id="完整示例"><a href="#完整示例" class="headerlink" title="完整示例"></a>完整示例</h3><h4 id="创建workflow"><a href="#创建workflow" class="headerlink" title="创建workflow"></a>创建workflow</h4><p>首先我们需要知道hexo的目录结构：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs shell">./<br>├── README.md<br>├── .deploy_git<br>├── _config.yml<br>├── db.json<br>├── node_modules<br>├── package-lock.json<br>├── package.json<br>├── public<br>├── scaffolds<br>├── source<br>└── themes<br></code></pre></td></tr></table></figure>
 
-<ul>
-<li>windows环境</li>
-</ul>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// 需要安装mingw-w64，下载后把对应bin目录添加到path中，执行 gcc -v 刷新</span><br>https:<span class="hljs-comment">//sourceforge.net/projects/mingw-w64/</span><br><span class="hljs-comment">// golang version</span><br><span class="hljs-keyword">go</span> version go1<span class="hljs-number">.17</span><span class="hljs-number">.6</span> darwin/arm64 <br><span class="hljs-comment">// robotgo version</span><br>github.com/<span class="hljs-keyword">go</span>-vgo/robotgo v0<span class="hljs-number">.100</span><span class="hljs-number">.10</span><br></code></pre></td></tr></table></figure>
+<p><code>_config.yml</code>描述了你的hexo仓库的一些基本信息，其中包括了你通过<code>hexo deploy</code> 部署指向的远端仓库地址。而需要推送的内容，是存放在<code>.deploy_git</code>文件夹中的，也就是我们通过命令<code>hexo generate</code>生成的博客html原始文件。</p>
+<p>所以这里我们要添加的<code>workflow</code>工作流，位于<code>.deploy_git/.github/workflows/xxx.yml</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> .github/workflows/sync.yml</span><br><br>name: Sync<br><br>on:<br>  push:<br>    branches: [main]<br>  workflow_dispatch:<br><br>jobs:<br>  build:<br>    runs-on: ubuntu-latest<br>    steps:<br>      - name: Sync to Gitee<br>        uses: wearerequired/git-mirror-action@master<br>        env:<br>          # 注意在 Settings-&gt;Secrets 配置 GITEE_RSA_PRIVATE_KEY<br>          SSH_PRIVATE_KEY: $&#123;&#123; secrets.GITEE_RSA_PRIVATE_KEY &#125;&#125;<br>        with:<br>          # 注意替换为你的 GitHub 源仓库地址<br>          source-repo: git@github.com:doocs/leetcode.git<br>          # 注意替换为你的 Gitee 目标仓库地址<br>          destination-repo: git@gitee.com:Doocs/leetcode.git<br><br>      - name: Build Gitee Pages<br>        uses: yanglbme/gitee-pages-action@main<br>        with:<br>          # 注意替换为你的 Gitee 用户名<br>          gitee-username: yanglbme<br>          # 注意在 Settings-&gt;Secrets 配置 GITEE_PASSWORD<br>          gitee-password: $&#123;&#123; secrets.GITEE_PASSWORD &#125;&#125;<br>          # 注意替换为你的 Gitee 仓库，仓库名严格区分大小写，请准确填写，否则会出错<br>          gitee-repo: doocs/leetcode<br>          # 要部署的分支，默认是 master，若是其他分支，则需要指定（指定的分支必须存在）<br>          branch: main<br></code></pre></td></tr></table></figure>
 
-<h3 id="模拟事件"><a href="#模拟事件" class="headerlink" title="模拟事件"></a>模拟事件</h3><ul>
-<li>模拟键盘输入</li>
-</ul>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// 按击空格键，空格-space / 回车-enter</span><br>robotgo.KeyTap(<span class="hljs-string">&quot;space&quot;</span>)  <br><span class="hljs-comment">// 同时按住command + e 键</span><br>robotgo.KeyTap(<span class="hljs-string">&quot;e&quot;</span>, <span class="hljs-string">&quot;command&quot;</span>)<br><span class="hljs-comment">// 一直按住键，不放开</span><br>robotgo.KeyToggle(<span class="hljs-string">`a`</span>, <span class="hljs-string">`down`</span>)<br><span class="hljs-comment">// 解除按住，弹起键</span><br>robotgo.KeyToggle(<span class="hljs-string">`a`</span>, <span class="hljs-string">`up`</span>)<br><span class="hljs-comment">// 输入字符(同时)，接收第二个参数，输入每个字符设置时间间隔</span><br>robotgo.TypeStr(<span class="hljs-string">&quot;hello world&quot;</span>)<br>robotgo.TypeStr(<span class="hljs-string">&quot;hello world&quot;</span>, <span class="hljs-number">1000</span>)<br></code></pre></td></tr></table></figure>
-
-<ul>
-<li>模拟鼠标操作</li>
-</ul>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// 获取鼠标所在坐标</span><br>x, y := robotgo.GetMousePos()<br><span class="hljs-comment">// 将鼠标移动到屏幕 x:800 y:400 的位置（闪现到指定位置）</span><br>robotgo.Move(<span class="hljs-number">800</span>, <span class="hljs-number">400</span>)<br><span class="hljs-comment">// 将鼠标移动到屏幕 x:800 y:400 的位置（模仿人类操作, 缓慢移动到指定位置）</span><br>robotgo.MoveSmooth(<span class="hljs-number">800</span>, <span class="hljs-number">400</span>)<br><span class="hljs-comment">// 第3，4个参数分别代表：纵坐标x和横坐标的延迟到达时间，</span><br>robotgo.MoveSmooth(<span class="hljs-number">800</span>, <span class="hljs-number">400</span>, <span class="hljs-number">1.0</span>, <span class="hljs-number">2.0</span>)<br><span class="hljs-comment">// 鼠标点击：button -&gt; &quot;left&quot; / &quot;right&quot; / &quot;wheelLeft&quot;， double 是否双击</span><br>robotgo.Click(button <span class="hljs-keyword">string</span>, double <span class="hljs-keyword">bool</span>)<br><span class="hljs-comment">// 移动到指定位置后进行鼠标点击</span><br>robotgo.MoveClick(<span class="hljs-number">800</span>, <span class="hljs-number">400</span>, <span class="hljs-string">`left`</span>, <span class="hljs-literal">true</span>)<br><span class="hljs-comment">// 按住鼠标拖动到指定位置</span><br>robotgo.DragSmooth(<span class="hljs-number">600</span>, <span class="hljs-number">400</span>) <br><span class="hljs-comment">// 滑动鼠标滚轮 第二个参数&quot;up&quot;/&quot;down&quot;</span><br>robotgo.ScrollMouse(<span class="hljs-number">100</span>, <span class="hljs-string">&quot;down&quot;</span>)<br></code></pre></td></tr></table></figure>
-
-<ul>
-<li>窗口操作</li>
-</ul>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// 获得当前window</span><br>m := robotgo.GetActive()<br><span class="hljs-comment">// 激活window</span><br>robotgo.SetActive(m)<br><span class="hljs-comment">// 关闭当前window</span><br>robotgo.CloseWindow()<br></code></pre></td></tr></table></figure>
-
-<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><ul>
-<li>自动打开浏览器进行关键字搜索</li>
-</ul>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    exec.Command(<span class="hljs-string">&quot;open&quot;</span>, <span class="hljs-string">&quot;-a&quot;</span>, <span class="hljs-string">&quot;/Applications/Google Chrome.app&quot;</span>, <span class="hljs-string">&quot;http://www.baidu.com&quot;</span>).Run()<br>    <span class="hljs-comment">//等待</span><br>    robotgo.MilliSleep(<span class="hljs-number">5</span> * <span class="hljs-number">1000</span>)<br>    <span class="hljs-comment">// get current Window Active</span><br>    mdata := robotgo.GetActive()<br>    <span class="hljs-comment">// set Window Active</span><br>    robotgo.SetActive(mdata)<br>    robotgo.TypeStr(<span class="hljs-string">&quot;why golang&quot;</span>, <span class="hljs-number">100</span>)<br>    robotgo.KeyTap(<span class="hljs-string">&quot;enter&quot;</span>)<br>    robotgo.MilliSleep(<span class="hljs-number">5</span> * <span class="hljs-number">1000</span>)<br>    <span class="hljs-comment">// close current Window</span><br>    robotgo.CloseWindow()<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<blockquote>
-<p>如果是windows环境可以选择打开ie浏览器，替换第一句代码即可</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs go">exec.Command(<span class="hljs-string">&quot;cmd&quot;</span>, <span class="hljs-string">&quot;/c&quot;</span>, <span class="hljs-string">&quot;start&quot;</span>, <span class="hljs-string">&quot;iexplore.exe&quot;</span>, <span class="hljs-string">&quot;www.zhihu.com&quot;</span>).Run()<br></code></pre></td></tr></table></figure>
-</blockquote>
+<h4 id="配置密钥"><a href="#配置密钥" class="headerlink" title="配置密钥"></a>配置密钥</h4><p><strong>这里建议生成两对SSH Key，分别用于Github和Gitee。当然也可以用同一对，只要保证配置在 <code>Github -&gt; repo -&gt; setting -&gt; secrets中Gitee的私钥</code> 能够与 <code>Gitee -&gt; 设置中的SSH公钥</code> 对应上就好了</strong></p>
+<ol>
+<li><p>在命令行终端或 Git Bash 使用命令 <code>ssh-keygen -t rsa -C &quot;youremail@example.com&quot;</code> 生成 SSH Key，注意替换为自己的邮箱。生成的 <code>id_rsa</code> 是私钥，<code>id_rsa.pub</code> 是公钥。(⚠️注意此处不要设置密码，生成的公私钥用于下面 GitHub / Gitee 的配置，以保证公私钥成对，否则从 GitHub -&gt; Gitee 的同步将会失败。)</p>
+</li>
+<li><p>在 GitHub 项目的「Settings -&gt; Secrets」路径下配置好命名为 <code>GITEE_RSA_PRIVATE_KEY</code> 和 <code>GITEE_PASSWORD</code> 的两个密钥。其中：<code>GITEE_RSA_PRIVATE_KEY</code> 存放 <code>id_rsa</code> 私钥；<code>GITEE_PASSWORD</code> 存放 Gitee 帐号的密码。</p>
+</li>
+<li><p>在 GitHub 的个人设置页面「<a target="_blank" rel="noopener" href="https://github.com/settings/keys">Settings -&gt; SSH and GPG keys</a>」配置 SSH 公钥（即：<code>id_rsa.pub</code>），命名随意。</p>
+</li>
+<li><p>在 Gitee 的个人设置页面「<a target="_blank" rel="noopener" href="https://gitee.com/profile/sshkeys">安全设置 -&gt; SSH 公钥</a>」配置 SSH 公钥（即：<code>id_rsa.pub</code>），命名随意。</p>
+</li>
+</ol>
+<h4 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h4><p>如果一切配置正常，并成功触发 <a target="_blank" rel="noopener" href="https://github.com/marketplace/actions/gitee-pages-action">Gitee Pages Action</a> ，Gitee Pages Action 会打印出成功的结果。并且，我们会在 Gitee 公众号收到一条登录通知。这是 Gitee Pages Action 程序帮我们登录到 Gitee 官网，并为我们点击了项目的部署按钮。</p>
+<h4 id="错误及解决方案"><a href="#错误及解决方案" class="headerlink" title="错误及解决方案"></a>错误及解决方案</h4><p>首次需要<strong>手动</strong>登录 Gitee ，点击“启动”进行 Gitee Pages 服务的部署。</p>
+<p>更多错误情况见 <a target="_blank" rel="noopener" href="https://github.com/marketplace/actions/gitee-pages-action#%E9%94%99%E8%AF%AF%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88">错误及解决方案</a></p>
 <h3 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h3><ul>
-<li><a target="_blank" rel="noopener" href="https://github.com/go-vgo/Mingw">robotgo</a></li>
+<li><p><a target="_blank" rel="noopener" href="https://lxd0619.github.io/frontend/hexo%E5%90%8C%E6%97%B6%E9%83%A8%E7%BD%B2GitHub%E5%92%8CGitee.html">hexo自动同步部署GitHub和Gitee pages</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/marketplace/actions/gitee-pages-action">Gitee Pages Action · Actions · GitHub Marketplace · GitHub</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/wearerequired/git-mirror-action">GitHub - wearerequired/git-mirror-action</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/yanglbme/gitee-pages-action">GitHub - yanglbme/gitee-pages-action</a></p>
+</li>
 </ul>
 
             </div>
@@ -287,7 +281,7 @@
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/Myblog/categories/Go/">Go</a>
+                      <a class="hover-with-bg" href="/Myblog/categories/Hexo/">Hexo</a>
                     
                   </div>
                 
@@ -295,9 +289,7 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/Myblog/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/">自动化</a>
-                    
-                      <a class="hover-with-bg" href="/Myblog/tags/robotgo/">robotgo</a>
+                      <a class="hover-with-bg" href="/Myblog/tags/hexo/">hexo</a>
                     
                   </div>
                 
@@ -314,18 +306,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/Myblog/2022/03/10/hexo%E4%B8%80%E9%94%AE%E8%87%AA%E5%8A%A8%E6%9E%84%E5%BB%BAgitee-pages/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">hexo一键自动构建gitee pages</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/Myblog/2022/01/20/Golang%E6%93%8D%E4%BD%9CExcel%E6%96%87%E4%BB%B6/">
-                        <span class="hidden-mobile">Golang操作Excel文件</span>
+                      <a href="/Myblog/2022/01/22/Golang%E8%87%AA%E5%8A%A8%E5%8C%96%E4%B9%8Brobotgo/">
+                        <span class="hidden-mobile">Golang自动化之robotgo</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

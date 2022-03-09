@@ -1,0 +1,852 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/Myblog/img/favicon.png">
+  <link rel="icon" href="/Myblog/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="Simple, so charming!">
+  <meta name="author" content="stellae">
+  <meta name="keywords" content="">
+  
+  <title>stellae&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/Myblog/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"stellae.gitee.io","root":"/Myblog/","version":"1.8.10","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/Myblog/js/utils.js" ></script>
+  <script  src="/Myblog/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 100vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/Myblog/">&nbsp;<strong>stellae's blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/Myblog/img/tokYjYqaPB0.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.2)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Simple, so charming!">
+              
+            </span>
+
+            
+          </div>
+
+          
+            <div class="scroll-down-bar">
+              <i class="iconfont icon-arrowdown"></i>
+            </div>
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div class="py-5" id="board"
+          style=margin-top:0>
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/Myblog/2018/09/06/%E7%B1%BB%E5%92%8C%E5%AF%B9%E8%B1%A101/" target="_blank">
+          类和对象01
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/Myblog/2018/09/06/%E7%B1%BB%E5%92%8C%E5%AF%B9%E8%B1%A101/" target="_blank">
+          
+          
+            
+          
+          1、理论上的定义：类：就是拥有相同功能和属性的对象的集合。（抽象）对象：类的实例（具体）
+2、从生活角度如果说人这个物种是一个类，那么每一个人就是一个对象。
+3、编程方式面向过程编程：以算法为工具函数式编程：以函数为工具面向对象编程：以类和对象为工具（面向生活）
+类：对拥有相同功能（方法）和相同属性的封装。封装效果：一个类中可以对多个功能进行封装（多个函数）；封装多个属性
+一、类的声明格式123c
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2018-09-06 19:10" pubdate>
+              2018-09-06
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/Myblog/categories/Python/">Python</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/Myblog/tags/%E7%B1%BB%E5%92%8C%E5%AF%B9%E8%B1%A1/">类和对象</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/Myblog/2018/09/04/pygame/" target="_blank">
+          pygame
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/Myblog/2018/09/04/pygame/" target="_blank">
+          
+          
+            
+          
+          安装：pip install Pygame
+1、初始化游戏模块1pygame.init()
+2、创建游戏窗口set_mode((100, 200)) : 单位像素
+12window = pygame.display.set_mode((400, 600)）#窗口大小：元组，元组中的两个值表示宽度和高度
+程序结束窗口会自动关闭，所以需要循环或者其他方式让窗口手动关闭。
+3、给窗口填充颜色颜色：计算机
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2018-09-04 19:06" pubdate>
+              2018-09-04
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/Myblog/categories/Python/">Python</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/Myblog/tags/pygame/">pygame</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/Myblog/2018/09/03/%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%E5%92%8C%E5%BC%82%E5%B8%B8%E6%8D%95%E8%8E%B7/" target="_blank">
+          文件操作和异常捕获
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/Myblog/2018/09/03/%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%E5%92%8C%E5%BC%82%E5%B8%B8%E6%8D%95%E8%8E%B7/" target="_blank">
+          
+          
+            
+          
+          一、文件操作1、基本过程：打开文件 — 操作 — 关闭文件open：(路径，打开方式，encoding=编码方式)路径：绝对路径（了解），相对路径： ./ ， ../ ， …/打开方式：r， rb，w，wb，a注意：路径不存在的时候，读的形式打开会报错，写的形式打开会自动创建文件。设置编码方式：utf-8 ， gbk注意：如果以二进制的方式打开文件（rb，wb），不能设置编码方式。
+2、文件的读和
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2018-09-03 19:05" pubdate>
+              2018-09-03
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/Myblog/categories/Python/">Python</a>
+            
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/Myblog/2018/08/31/%E6%A8%A1%E5%9D%97%E5%AE%9A%E4%B9%89%E5%92%8C%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/" target="_blank">
+          模块定义和文件操作
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/Myblog/2018/08/31/%E6%A8%A1%E5%9D%97%E5%AE%9A%E4%B9%89%E5%92%8C%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C/" target="_blank">
+          
+          
+            
+          
+          补充：按住Ctrl同时点击模块名，可以查看模块内的方法（实现内容大多数被加密）。
+一、什么是模块？：对变量、函数、类进行封装，每一个py文件就是一个模块。
+
+怎么使用其他模块中的内容？
+
+a、import 模块通过 “模块.内容” 的形式去使用模块中的内容（全局变量、函数、类）
+12import my_listmy_list.count([1, 2, 3, 4, 5])
+b、from 模块 imp
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2018-08-31 19:01" pubdate>
+              2018-08-31
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/Myblog/categories/Python/">Python</a>
+            
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/Myblog/2018/08/30/%E5%87%BD%E6%95%B0%E5%9F%BA%E7%A1%8003-%E7%94%9F%E6%88%90%E5%99%A8%E3%80%81%E8%A3%85%E9%A5%B0%E5%99%A8/" target="_blank">
+          函数基础03-生成器、装饰器
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/Myblog/2018/08/30/%E5%87%BD%E6%95%B0%E5%9F%BA%E7%A1%8003-%E7%94%9F%E6%88%90%E5%99%A8%E3%80%81%E8%A3%85%E9%A5%B0%E5%99%A8/" target="_blank">
+          
+          
+            
+          
+          
+函数就是一种特殊的类型。声明函数的时候，其实就是声明一个类型为function的变量，所以变量能做的事情，函数都能做。一、回调函数1、函数作为函数的参数1234567891011121314151617181920ef clean_floor(time):    print(&#x27;%s,做地板清洁服务&#x27;%time)    print(&#x27;收费100&#x27;)    r
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2018-08-30 19:02" pubdate>
+              2018-08-30
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/Myblog/categories/Python/">Python</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/Myblog/tags/%E5%87%BD%E6%95%B0/">函数</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/Myblog/2018/08/30/%E5%87%BD%E6%95%B0%E5%9F%BA%E7%A1%8002-%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0%E3%80%81%E9%80%92%E5%BD%92%E5%87%BD%E6%95%B0/" target="_blank">
+          函数基础02-匿名函数、递归函数
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/Myblog/2018/08/30/%E5%87%BD%E6%95%B0%E5%9F%BA%E7%A1%8002-%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0%E3%80%81%E9%80%92%E5%BD%92%E5%87%BD%E6%95%B0/" target="_blank">
+          
+          
+            
+          
+          一、匿名函数匿名函数本质还是函数，之前函数的所有内容仍然适用。
+1、匿名函数的声明函数名 = lambda  参数列表：返回值
+2、说明函数名：本质是一个变量存储右边的函数。（可无）lambda：声明匿名函数的关键字。参数列表：参数名1，参数名2，……冒号：固定写法。返回值：表达式的值就是返回值。
+12345#用匿名函数计算两个数的和my_sum = lambda x, y: x + yprint
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2018-08-30 19:00" pubdate>
+              2018-08-30
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/Myblog/categories/Python/">Python</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/Myblog/tags/%E5%87%BD%E6%95%B0/">函数</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/Myblog/2018/08/29/%E5%87%BD%E6%95%B0%E5%9F%BA%E7%A1%8001/" target="_blank">
+          函数基础01
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/Myblog/2018/08/29/%E5%87%BD%E6%95%B0%E5%9F%BA%E7%A1%8001/" target="_blank">
+          
+          
+            
+          
+          推荐一个网址：http://pythontutor.com/visualize.html#mode=edit可以在线运行代码，观看执行过程，很好用。
+
+没有函数，出现的问题是什么？1、同样的代码需要些多次。2、一个功能的需求发生改变，需要修改多个地方。
+
+定义：函数就是对实现某一特定功能的代码段的封装。
+作用：提高代码的复用度，让代码更简洁。一、函数分类
+内置函数：系统写好的，可以直接使用的函数。
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2018-08-29 18:59" pubdate>
+              2018-08-29
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/Myblog/categories/Python/">Python</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/Myblog/tags/%E5%87%BD%E6%95%B0/">函数</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/Myblog/2018/08/28/%E5%AD%A6%E7%94%9F%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/" target="_blank">
+          学生管理系统
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/Myblog/2018/08/28/%E5%AD%A6%E7%94%9F%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/" target="_blank">
+          
+          
+            
+          
+          学生管理系统练手小项目：学生管理系统
+12345678910111213=================================================XXX学生管理系统功能点1.添加学生信息2.查看学生信息3.修改学生信息4.删除学生信息5.退出要求1.在一个系统中可以保存多个学生信息2.添加学生（输入姓名、年龄、电话）到1中的变量中3.修改学生的电话（输入姓名，和电话）4.删
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2018-08-28 18:57" pubdate>
+              2018-08-28
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/Myblog/categories/Python/">Python</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/Myblog/tags/%E5%AD%A6%E7%94%9F%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/">学生管理系统</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/Myblog/2018/08/28/%E5%AE%B9%E5%99%A802-%E5%AD%97%E5%85%B8%E5%92%8C%E9%9B%86%E5%90%88/" target="_blank">
+          容器02-字典和集合
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/Myblog/2018/08/28/%E5%AE%B9%E5%99%A802-%E5%AD%97%E5%85%B8%E5%92%8C%E9%9B%86%E5%90%88/" target="_blank">
+          
+          
+            
+          
+          字典和集合一、字典–dict字典：容器类型，以键值对作为元素。（字典里面存的数据全是以键值对出现的）
+字典是可变的（增删改）— 指字典中的键值对的值和个数是可变的
+
+键值对 –&gt; 键：值（key：value）{key1：value1，key2：value2，…}注意：key–必须唯一，不可变的（数字、布尔、字符串、元组，推荐使用字符串）值 – 没有要求1、声明字典dict1 = &#123;
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2018-08-28 18:55" pubdate>
+              2018-08-28
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/Myblog/categories/Python/">Python</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/Myblog/tags/%E5%AE%B9%E5%99%A8/">容器</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/Myblog/2018/08/27/%E5%AE%B9%E5%99%A801-%E5%88%97%E8%A1%A8%E5%92%8C%E5%85%83%E7%BB%84/" target="_blank">
+          容器01-列表和元组
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/Myblog/2018/08/27/%E5%AE%B9%E5%99%A801-%E5%88%97%E8%A1%A8%E5%92%8C%E5%85%83%E7%BB%84/" target="_blank">
+          
+          
+            
+          
+          一、列表–list
+列表示python中的容器类型。有序的，可变的容器（可变指列表中的元素、位置、个数可变）
+元素：指的是列表中的每一个内容。列表中的元素可以是任意类型的元素
+
+1、声明列表   （1）、直接声明列表   scores =  [90, 80, 75]   #   [] –&gt; 代表空列表   （2）、将其它的数据类型转换成列表（只有序列才能转换:字符串和range（）、字典、元
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2018-08-27 18:54" pubdate>
+              2018-08-27
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/Myblog/categories/Python/">Python</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/Myblog/tags/%E5%AE%B9%E5%99%A8/">容器</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+
+
+  <nav aria-label="navigation">
+    <span class="pagination" id="pagination">
+      <a class="extend prev" rel="prev" href="/Myblog/page/11/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/Myblog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/Myblog/page/10/#board">10</a><a class="page-number" href="/Myblog/page/11/#board">11</a><span class="page-number current">12</span><a class="page-number" href="/Myblog/page/13/#board">13</a><a class="extend next" rel="next" href="/Myblog/page/13/#board"><i class="iconfont icon-arrowright"></i></a>
+    </span>
+  </nav>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/Myblog/js/events.js" ></script>
+<script  src="/Myblog/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/Myblog/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/Myblog/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/Myblog/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/Myblog/js/boot.js" ></script>
+
+
+</body>
+</html>

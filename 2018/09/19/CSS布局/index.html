@@ -1,0 +1,540 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/Myblog/img/favicon.png">
+  <link rel="icon" href="/Myblog/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="Simple, so charming!">
+  <meta name="author" content="stellae">
+  <meta name="keywords" content="">
+  
+  <title>CSS布局 - stellae&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/Myblog/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/Myblog/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"stellae.gitee.io","root":"/Myblog/","version":"1.8.10","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/Myblog/js/utils.js" ></script>
+  <script  src="/Myblog/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/Myblog/">&nbsp;<strong>stellae's blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/Myblog/img/WtwSsqwYlA0.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="CSS布局">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      stellae
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2018-09-19 23:44" pubdate>
+        2018年9月19日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      56
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">CSS布局</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：3 年前
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h4 id="一、标准流"><a href="#一、标准流" class="headerlink" title="一、标准流"></a>一、标准流</h4><p>标准流：浏览器对标签默认的布局方式就是标准流。<br><strong>标准流布局原则：</strong></p>
+<ul>
+<li><p>块级标签：<br>a、块级标签一个占一行（不管标签的宽度是否是浏览器宽度）<br>b、默认宽度是父标签的宽度，默认高度是内容的高度。<br>c、直接设置宽高<strong>有效</strong></p>
+</li>
+<li><p>行内标签：<br>a、多个行内标签可以一行显示。<br>b、默认宽高是内容的宽高。<br>c、直接设置宽高<strong>无效。</strong></p>
+</li>
+<li><p>行内块标签：<br>a、多个行内块标签可以在一行显示。<br>b、默认宽高是内容的宽高。<br>c、直接设置宽高<strong>有效。</strong></p>
+</li>
+</ul>
+<p><strong>display属性：转换标签的性质</strong><br>block：块级<br>inline：行内<br>inline-block：行内块</p>
+<p>注意：行内块和其他标签之间默认会有个间隙，而且无法消除，所以一般不建议使用。</p>
+<h4 id="二、浮动-–-float"><a href="#二、浮动-–-float" class="headerlink" title="二、浮动 – float"></a>二、浮动 – float</h4><p>通过给float属性赋值为 left 或者 right 来让标签浮动。浮动会让标签脱流，脱流后原来的标准流布局方式不适用了。<br><code>float:left;</code> 按照浏览器的左上角为起点。<br><code>float:right</code>按照浏览器的右上角为起点。</p>
+<p>浮动的目的：让竖着显示的可以横着来（针对块）</p>
+<p><strong>浮动的效果：<br>一行可以显示多个；默认的宽高是内容的大小；可以设置宽度和高度</strong></p>
+<p>注意事项：<br>a、如果同一级的标签，后面的需要浮动，前面的也需要浮动，否则可能会出现一些显示问题。<br>b、浮动的标签不占位置，不浮动的占位置。</p>
+<p><strong>利用浮动产生文字环绕效果</strong><br>结论：被环绕的标签浮动，文字对应的标签不浮动。</p>
+<p><strong>清除浮动</strong>：不是将标签的浮动给去掉，而是清除因为浮动而产生的高度塌陷的问题。</p>
+<p><strong>高度塌陷</strong>：在文档流中，父元素的高度默认是被子元素撑开的，也就是子元素多高，父元素就多高。<br>但是当为子元素设置浮动以后，子元素会完全脱离文档流，此时将会导致子元素无法撑起父元素的高度，导致父元素的高度塌陷。<br>由于父元素的高度塌陷了，则父元素下的所有元素都会向上移动，这样将会导致页面布局混乱。</p>
+<p><strong>高度塌陷产生原因</strong>：父标签不浮动，子标签浮动，并且不设置父标签的高度，就会产生高度塌陷问题。</p>
+<p>解决方案：<br>1、在后面添加一个div空盒子，设置样式为clear：both</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs applescript">&lt;<span class="hljs-keyword">div</span> <span class="hljs-built_in">id</span>=<span class="hljs-string">&quot;&quot;</span> style=<span class="hljs-string">&quot;clear: both;&quot;</span>&gt;<br>&lt;/<span class="hljs-keyword">div</span>&gt;<br></code></pre></td></tr></table></figure>
+<p>2、给父标签添加样式，设置overflow的值为hidden。</p>
+<p>3、万能清除法</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-id">#father</span><span class="hljs-selector-pseudo">:after</span>&#123;<br>	<span class="hljs-attribute">display</span>: block;<br>	<span class="hljs-attribute">clear</span>: both;<br>	<span class="hljs-attribute">content</span>: <span class="hljs-string">&#x27;&#x27;</span>;<br>	<span class="hljs-attribute">visibility</span>: hidden;<br>	<span class="hljs-attribute">height</span>: <span class="hljs-number">0</span>;<br>	<br>&#125;<br><span class="hljs-selector-id">#father</span>&#123;<br>	<span class="hljs-attribute">zoom</span>: <span class="hljs-number">1</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="三、定位"><a href="#三、定位" class="headerlink" title="三、定位"></a>三、定位</h4><p>CSS中可以通过left，right，bottom，top属性来设置标签上下左右的距离。但是要通过position属性设置参考对象。</p>
+<p><strong>absolute</strong>：相对第一个非static/initial(默认值)父标签进行定位。</p>
+<p><strong>relative</strong>：相对于自己在标准流中的位置来定位。（当标签本身不希望去定位，只是想让自己的子标签可以相对自己定位时使用。）</p>
+<p><strong>fixed</strong>：相对于浏览器定位。（滚动时位置相对于浏览器不变）</p>
+<p><strong>sticky</strong>：当网页的内容不超过一屏（不滚动），按照标准流定位；超过一屏就相对浏览器定位。</p>
+<p>initial：默认值，没有相对定位。</p>
+<p><strong>技巧：当遇到某个方向的定位无效时，可以尝试让标签浮动然后定位。</strong></p>
+<h4 id="四、盒子模型"><a href="#四、盒子模型" class="headerlink" title="四、盒子模型"></a>四、盒子模型</h4><p>html中所有可见的标签都是一个盒子模型：包括长和宽决定的content、padding、border、margin。<br>其中content、padding、border是可见的，margin是不可见的。<br><img src="https://upload-images.jianshu.io/upload_images/13692175-934c0a4ce5c85c94.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/Myblog/img/loading.gif" lazyload></p>
+<p><strong>1、content（内容）</strong>：设置width 和height影响的就是内容部分的大小。添加子标签、内容都是放在内容部分的。</p>
+<p><strong>2、padding（内边距）</strong>：内容外围，可见部分，如果标签有背景颜色，那么这个部分的颜色和内容一致。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs html">padding-left: 20px;<br>padding:10px; /*所有*/<br>padding:10px 20px; /*上下和作业*/<br>padding:10px 20px 30px 40px; /*顺时针*/<br></code></pre></td></tr></table></figure>
+
+<p><strong>3、border（边框）</strong>：border在padding的外围，如果没有padding，就在内容的外围，可以设置颜色。<br><code>border:宽度 风格 颜色</code><br>样式：solid（实线）、dashde（虚线）、dotted（点划线）double（双线）</p>
+<p><strong>4、margin（外边距）</strong>：不可见。主要用来占位。</p>
+<h4 id="五、其他常用属性"><a href="#五、其他常用属性" class="headerlink" title="五、其他常用属性"></a>五、其他常用属性</h4><p><strong>1、字体相关属性</strong></p>
+<ul>
+<li>字体颜色：color</li>
+<li>字体大小：font-size</li>
+<li>字体名：font-family</li>
+<li>字体加粗：font-weight：bolder（更粗的）、bold（加粗）、normal（常规）、100-900</li>
+<li>字体倾斜：font-style：italic、oblique、normal</li>
+</ul>
+<p><strong>2、文本修饰 – text-decoration</strong><br>none：取消修饰<br>underline：下划线<br>overline：上划线<br>line-through：删除线</p>
+<p><strong>3、对齐方式</strong><br>text-align：left、right、center（文字水平方向居中）</p>
+<p>margin：0px auto;（水平居中）<br>一行内容在垂直方向居中，可以通过将line-height的值设置为父标签的height值。（垂直居中）</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs html">height:40px;<br>line-height:40px;<br></code></pre></td></tr></table></figure>
+
+<p><strong>4、首行缩进 – text-indent</strong><br><code>text-indent:2em</code><br>em代表一个空格的长度</p>
+<p><strong>5、字间距 – letter-spacing</strong><br><code>letter-spacing:2em</code></p>
+<p><strong>6、背景图片</strong><br>格式：<code>babackground-image:图片地址、是否平铺 x方向坐标 y方向的坐标 颜色</code><br>no-repeat/repeat/repeat-x/repeat-y(不平铺、平铺、x方向平铺、y方向平铺)</p>
+<p><code>background-image: url(img/beauty.png) no-repeat center center yellow;</code>   center表示在水平或者垂直方向居中。<br>默认图片不够时，背景图片会平铺。</p>
+<p><strong>7、设置圆角</strong></p>
+<figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs maxima"><span class="hljs-built_in">border</span>-<span class="hljs-built_in">radius</span>: 20px;<br><span class="hljs-built_in">border</span>-bottom-left-<span class="hljs-built_in">radius</span>: 20px;<br></code></pre></td></tr></table></figure>
+
+<h4 id="六、补充"><a href="#六、补充" class="headerlink" title="六、补充"></a>六、补充</h4><p><strong>制作网页首页title图标</strong><br><img src="https://upload-images.jianshu.io/upload_images/13692175-f71a7cb24ddba76e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/Myblog/img/loading.gif" lazyload></p>
+<p><strong>一般写网页前一定要先将标签默认的margin值和padding值关闭。</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs html">*&#123; <br>  margin:0;<br>  padding:0;<br>  position:relative;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>实现元素居中</strong><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/zhouhuan/p/vertical_center.html">CSS中垂直居中的11种方式</a><br><a target="_blank" rel="noopener" href="https://www.w3cplus.com/css/elements-horizontally-center-with-css.html">CSS中元素6种水平居中</a></p>
+<h2 id="练习"><a href="#练习" class="headerlink" title="练习"></a><strong>练习</strong></h2><p>HTML代码</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-meta-keyword">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;UTF-8&quot;</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>京东-欢迎登录<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;stylesheet&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/css&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;css/test.css&quot;</span>/&gt;</span><br>	<span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;logo&quot;</span>&gt;</span><br>			<span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;img/logo.png&quot;</span> /&gt;</span><br>		<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;logo_test&quot;</span>&gt;</span><br>			<span class="hljs-tag">&lt;<span class="hljs-name">font</span>&gt;</span>欢迎登录<span class="hljs-tag">&lt;/<span class="hljs-name">font</span>&gt;</span><br>		<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;q&quot;</span>&gt;</span><br>			<span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;img/q-icon.png&quot;</span> /&gt;</span><br>			<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;q1&quot;</span>&gt;</span><br>				<span class="hljs-tag">&lt;<span class="hljs-name">font</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;id1&quot;</span>&gt;</span>登录页面，调查问卷<span class="hljs-tag">&lt;/<span class="hljs-name">font</span>&gt;</span><br>			<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>		<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;tiaowen&quot;</span> <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;background-color: blanchedalmond;&quot;</span>&gt;</span><br>			<span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">align</span>=<span class="hljs-string">&quot;center&quot;</span>&gt;</span>依据《网络安全法》，为保障您的账户安全和正常使用，请尽快完成手机号验证！ 新版《京东隐私政策》已上线，将更有利于保护您的个人隐私。<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>		<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;bgpic&quot;</span>&gt;</span><br>			<span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;img/bg.png&quot;</span> <span class="hljs-attr">width</span>=<span class="hljs-string">&quot;1280px&quot;</span>/&gt;</span><br>		<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>		<br>		<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;login&quot;</span> <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;background-color:white;&quot;</span>&gt;</span><br>			<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;d01&quot;</span>&gt;</span><br>				<span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">font</span> <span class="hljs-attr">size</span>=<span class="hljs-string">&quot;1&quot;</span>&gt;</span>京东不会以任何理由要求您转账汇款，谨防诈骗。<span class="hljs-tag">&lt;/<span class="hljs-name">font</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>			<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>			<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;login1&quot;</span>&gt;</span><br>				<span class="hljs-tag">&lt;<span class="hljs-name">font</span> <span class="hljs-attr">size</span>=<span class="hljs-string">&quot;5&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;saoma&quot;</span>&gt;</span>扫码登录<span class="hljs-tag">&lt;/<span class="hljs-name">font</span>&gt;</span><br>			<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>			<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;login2&quot;</span>&gt;</span><br>				<span class="hljs-tag">&lt;<span class="hljs-name">font</span> <span class="hljs-attr">size</span>=<span class="hljs-string">&quot;5&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;denglu&quot;</span>&gt;</span>账户登录<span class="hljs-tag">&lt;/<span class="hljs-name">font</span>&gt;</span><br>			<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>			<span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;forget&quot;</span>&gt;</span>忘记密码<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br>			<br>			<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;qq&quot;</span>&gt;</span><br>				<span class="hljs-comment">&lt;!--&lt;div id=&quot;qq_img&quot;&gt;--&gt;</span><br>				<span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;img/qq.png&quot;</span> <span class="hljs-attr">style</span>=<span class="hljs-string">&quot;float: left;&quot;</span>/&gt;</span><br>				<span class="hljs-comment">&lt;!--&lt;/div&gt;--&gt;</span><br>				<span class="hljs-tag">&lt;<span class="hljs-name">font</span> <span class="hljs-attr">size</span>=<span class="hljs-string">&quot;2&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;qq1&quot;</span>&gt;</span>QQ<span class="hljs-tag">&lt;/<span class="hljs-name">font</span>&gt;</span><br>				<span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;img/weixin.png&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;vx1&quot;</span> /&gt;</span><br>				<span class="hljs-tag">&lt;<span class="hljs-name">font</span> <span class="hljs-attr">size</span>=<span class="hljs-string">&quot;2&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;vx2&quot;</span>&gt;</span>微信<span class="hljs-tag">&lt;/<span class="hljs-name">font</span>&gt;</span><br>				<span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;img/right.png&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;zhuce01&quot;</span>/&gt;</span><br>				<span class="hljs-tag">&lt;<span class="hljs-name">font</span> <span class="hljs-attr">size</span>=<span class="hljs-string">&quot;3&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;zhuce02&quot;</span>&gt;</span>立即注册<span class="hljs-tag">&lt;/<span class="hljs-name">font</span>&gt;</span><br>			<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>	<br>		<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>		<br>		<br>		<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;user&quot;</span>&gt;</span><br>			<br>			<span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">action</span>=<span class="hljs-string">&quot;&quot;</span> <span class="hljs-attr">method</span>=<span class="hljs-string">&quot;post&quot;</span>&gt;</span><br>				<span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;img/user.png&quot;</span> /&gt;</span><br>				<span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;user&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;user01&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;&quot;</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">&quot;邮箱/用户名/已验证手机&quot;</span>/&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">br</span> /&gt;</span><br>				<span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;img/password_icon.png&quot;</span> /&gt;</span><br>				<span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;password&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;password&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;password&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;&quot;</span> <span class="hljs-attr">placeholder</span>=<span class="hljs-string">&quot;密码&quot;</span>/&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">br</span> /&gt;</span><br>				<span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;&quot;</span>&gt;</span><br>					<span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;submit&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;form_login&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;登录&quot;</span> /&gt;</span><br>				<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>			<span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span><br>		<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><br>		<span class="hljs-tag">&lt;<span class="hljs-name">font</span> <span class="hljs-attr">size</span>=<span class="hljs-string">&quot;2&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;p1&quot;</span>&gt;</span>关于我们 <span class="hljs-tag">&lt;/<span class="hljs-name">font</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">font</span> <span class="hljs-attr">size</span>=<span class="hljs-string">&quot;2&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;shu1&quot;</span>&gt;</span>丨<span class="hljs-tag">&lt;/<span class="hljs-name">font</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">font</span> <span class="hljs-attr">size</span>=<span class="hljs-string">&quot;2&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;p2&quot;</span>&gt;</span>联系我们 <span class="hljs-tag">&lt;/<span class="hljs-name">font</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">font</span> <span class="hljs-attr">size</span>=<span class="hljs-string">&quot;2&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;shu2&quot;</span>&gt;</span>丨<span class="hljs-tag">&lt;/<span class="hljs-name">font</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">font</span> <span class="hljs-attr">size</span>=<span class="hljs-string">&quot;2&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;p3&quot;</span>&gt;</span>人才招聘 <span class="hljs-tag">&lt;/<span class="hljs-name">font</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">font</span> <span class="hljs-attr">size</span>=<span class="hljs-string">&quot;2&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;shu3&quot;</span>&gt;</span>丨<span class="hljs-tag">&lt;/<span class="hljs-name">font</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">font</span> <span class="hljs-attr">size</span>=<span class="hljs-string">&quot;2&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;p4&quot;</span>&gt;</span>商家入驻 <span class="hljs-tag">&lt;/<span class="hljs-name">font</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">font</span> <span class="hljs-attr">size</span>=<span class="hljs-string">&quot;2&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;shu4&quot;</span>&gt;</span>丨<span class="hljs-tag">&lt;/<span class="hljs-name">font</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">font</span> <span class="hljs-attr">size</span>=<span class="hljs-string">&quot;2&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;p5&quot;</span>&gt;</span>广告服务<span class="hljs-tag">&lt;/<span class="hljs-name">font</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">font</span> <span class="hljs-attr">size</span>=<span class="hljs-string">&quot;2&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;shu5&quot;</span>&gt;</span>丨<span class="hljs-tag">&lt;/<span class="hljs-name">font</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">font</span> <span class="hljs-attr">size</span>=<span class="hljs-string">&quot;2&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;p6&quot;</span>&gt;</span>手机京东<span class="hljs-tag">&lt;/<span class="hljs-name">font</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">font</span> <span class="hljs-attr">size</span>=<span class="hljs-string">&quot;2&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;shu6&quot;</span>&gt;</span>丨<span class="hljs-tag">&lt;/<span class="hljs-name">font</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">font</span> <span class="hljs-attr">size</span>=<span class="hljs-string">&quot;2&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;p7&quot;</span>&gt;</span>友情链接<span class="hljs-tag">&lt;/<span class="hljs-name">font</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">font</span> <span class="hljs-attr">size</span>=<span class="hljs-string">&quot;2&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;shu7&quot;</span>&gt;</span>丨<span class="hljs-tag">&lt;/<span class="hljs-name">font</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">font</span> <span class="hljs-attr">size</span>=<span class="hljs-string">&quot;2&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;p8&quot;</span>&gt;</span>销售联盟<span class="hljs-tag">&lt;/<span class="hljs-name">font</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">font</span> <span class="hljs-attr">size</span>=<span class="hljs-string">&quot;2&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;shu8&quot;</span>&gt;</span>丨<span class="hljs-tag">&lt;/<span class="hljs-name">font</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">font</span> <span class="hljs-attr">size</span>=<span class="hljs-string">&quot;2&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;p9&quot;</span>&gt;</span>京东社区<span class="hljs-tag">&lt;/<span class="hljs-name">font</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">font</span> <span class="hljs-attr">size</span>=<span class="hljs-string">&quot;2&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;shu9&quot;</span>&gt;</span>丨<span class="hljs-tag">&lt;/<span class="hljs-name">font</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">font</span> <span class="hljs-attr">size</span>=<span class="hljs-string">&quot;2&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;p10&quot;</span>&gt;</span>京东公益<span class="hljs-tag">&lt;/<span class="hljs-name">font</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">font</span> <span class="hljs-attr">size</span>=<span class="hljs-string">&quot;2&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;shu10&quot;</span>&gt;</span>丨<span class="hljs-tag">&lt;/<span class="hljs-name">font</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">font</span> <span class="hljs-attr">size</span>=<span class="hljs-string">&quot;2&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;p11&quot;</span>&gt;</span>English Site<span class="hljs-tag">&lt;/<span class="hljs-name">font</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">font</span> <span class="hljs-attr">size</span>=<span class="hljs-string">&quot;2&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;p12&quot;</span>&gt;</span>Copyright © 2004-2018  京东JD.com 版权所有<span class="hljs-tag">&lt;/<span class="hljs-name">font</span>&gt;</span><br>	<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br><br></code></pre></td></tr></table></figure>
+
+<p>CSS代码</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-tag">body</span>&#123;<br>	<span class="hljs-attribute">margin</span>: <span class="hljs-number">0px</span>;<br>&#125;<br><span class="hljs-selector-id">#zhuce02</span><span class="hljs-selector-pseudo">:hover</span>,<span class="hljs-selector-id">#vx2</span><span class="hljs-selector-pseudo">:hover</span>,<span class="hljs-selector-id">#qq1</span><span class="hljs-selector-pseudo">:hover</span>,<span class="hljs-selector-id">#forget</span><span class="hljs-selector-pseudo">:hover</span>,<span class="hljs-selector-id">#id1</span><span class="hljs-selector-pseudo">:hover</span>,<span class="hljs-selector-id">#p1</span><span class="hljs-selector-pseudo">:hover</span>,<span class="hljs-selector-id">#p2</span><span class="hljs-selector-pseudo">:hover</span>,<span class="hljs-selector-id">#p3</span><span class="hljs-selector-pseudo">:hover</span>,<span class="hljs-selector-id">#p4</span><span class="hljs-selector-pseudo">:hover</span>,<span class="hljs-selector-id">#p5</span><span class="hljs-selector-pseudo">:hover</span>,<span class="hljs-selector-id">#p6</span><span class="hljs-selector-pseudo">:hover</span>,<span class="hljs-selector-tag">vp7</span><span class="hljs-selector-pseudo">:hover</span>,<span class="hljs-selector-id">#p8</span><span class="hljs-selector-pseudo">:hover</span>,<span class="hljs-selector-id">#p9</span><span class="hljs-selector-pseudo">:hover</span>,<span class="hljs-selector-id">#p10</span><span class="hljs-selector-pseudo">:hover</span>,<span class="hljs-selector-id">#p11</span><span class="hljs-selector-pseudo">:hover</span>&#123;<br>	<span class="hljs-attribute">color</span>: red;<br>	<span class="hljs-attribute">text-decoration</span>: underline;<br>&#125;<br><span class="hljs-selector-id">#logo</span>&#123;<br>	<span class="hljs-attribute">position</span>: absolute;<br>	<span class="hljs-attribute">left</span>: <span class="hljs-number">130px</span>;<br>	<span class="hljs-attribute">top</span>: <span class="hljs-number">24px</span>;<br>&#125;<br><span class="hljs-selector-id">#logo_test</span>&#123;<br>	<span class="hljs-attribute">position</span>: absolute;<br>	<span class="hljs-attribute">left</span>: <span class="hljs-number">320px</span>;<br>	<span class="hljs-attribute">top</span>: <span class="hljs-number">45px</span>;<br>	<span class="hljs-attribute">font-size</span>: <span class="hljs-number">25px</span>;<br>&#125;<br><span class="hljs-selector-id">#q</span>&#123;<br>	<span class="hljs-attribute">position</span>: absolute;<br>	<span class="hljs-attribute">left</span>: <span class="hljs-number">992px</span>;<br>	<span class="hljs-attribute">top</span>: <span class="hljs-number">75px</span>;<br>&#125;<br><span class="hljs-selector-id">#q1</span>&#123;<br>	<span class="hljs-attribute">position</span>: relative;<br>	<span class="hljs-attribute">left</span>: <span class="hljs-number">30px</span>;<br>	<span class="hljs-attribute">top</span>:-<span class="hljs-number">22px</span>;<br>	<span class="hljs-attribute">font-size</span>: <span class="hljs-number">13px</span>;<br>&#125;<br><span class="hljs-selector-id">#tiaowen</span>&#123;<br>	<span class="hljs-attribute">position</span>: absolute;<br>	<span class="hljs-attribute">width</span>: <span class="hljs-number">100%</span>;<br>	<span class="hljs-attribute">top</span>: <span class="hljs-number">100px</span>;<br>	<span class="hljs-attribute">font-size</span>: <span class="hljs-number">13px</span>;<br>&#125;<br><span class="hljs-selector-id">#bgpic</span>&#123;<br>	<span class="hljs-attribute">position</span>: absolute;<br>	<span class="hljs-attribute">width</span>: <span class="hljs-number">100%</span>;<br>	<span class="hljs-attribute">top</span>: <span class="hljs-number">143px</span>;<br>&#125;<br><span class="hljs-selector-id">#login</span>&#123;<br>	<span class="hljs-attribute">position</span>: relative;<br>	<span class="hljs-attribute">width</span>: <span class="hljs-number">348px</span>;<br>	<span class="hljs-attribute">height</span>: <span class="hljs-number">400px</span>;<br>	<span class="hljs-attribute">left</span>: <span class="hljs-number">850px</span>;<br>	<span class="hljs-attribute">top</span>: <span class="hljs-number">148px</span>;<br>&#125;<br><span class="hljs-selector-id">#d01</span>&#123;<br>	<span class="hljs-attribute">position</span>: absolute;<br>	<span class="hljs-attribute">height</span>: <span class="hljs-number">40px</span>;<br>	<span class="hljs-attribute">padding</span>: <span class="hljs-number">0px</span> <span class="hljs-number">42px</span>;<br>	<span class="hljs-attribute">line-height</span>: <span class="hljs-number">10px</span>;<br>	<span class="hljs-attribute">background-color</span>: blanchedalmond;<br>	<span class="hljs-attribute">text-align</span>: center;<br>&#125;<br><span class="hljs-selector-id">#login1</span>&#123;<br>	<span class="hljs-attribute">position</span>: absolute;<br>	<span class="hljs-attribute">top</span>: <span class="hljs-number">50px</span>;<br>	<span class="hljs-attribute">left</span>: <span class="hljs-number">50px</span>;<br>&#125;<br><span class="hljs-selector-id">#login2</span>&#123;<br>	<span class="hljs-attribute">position</span>: absolute;<br>	<span class="hljs-attribute">top</span>: <span class="hljs-number">50px</span>;<br>	<span class="hljs-attribute">left</span>: <span class="hljs-number">210px</span>;<br>&#125;<br><span class="hljs-selector-id">#forget</span>&#123;<br>	<span class="hljs-attribute">position</span>: absolute;<br>	<span class="hljs-attribute">top</span>: <span class="hljs-number">225px</span>;<br>	<span class="hljs-attribute">left</span>: <span class="hljs-number">260px</span>;<br>	<span class="hljs-attribute">font-size</span>: <span class="hljs-number">10px</span>;<br>&#125;<br><br><span class="hljs-selector-id">#user</span>&#123;<br>	<span class="hljs-attribute">position</span>: absolute;<br>	<span class="hljs-attribute">top</span>: <span class="hljs-number">280px</span>;<br>	<span class="hljs-attribute">left</span>: <span class="hljs-number">890px</span>;<br>&#125;<br><span class="hljs-selector-id">#user01</span>&#123;<br>	<span class="hljs-attribute">position</span>: relative;<br>	<span class="hljs-attribute">top</span>: -<span class="hljs-number">14px</span>;<br>	<span class="hljs-attribute">left</span>: -<span class="hljs-number">7px</span>;<br>	<span class="hljs-attribute">height</span>: <span class="hljs-number">30px</span>;<br>	<span class="hljs-attribute">width</span>: <span class="hljs-number">230px</span>;<br>&#125;<br><span class="hljs-selector-id">#password</span>&#123;<br>	<span class="hljs-attribute">position</span>: relative;<br>	<span class="hljs-attribute">top</span>: -<span class="hljs-number">14px</span>;<br>	<span class="hljs-attribute">left</span>: -<span class="hljs-number">7px</span>;<br>	<span class="hljs-attribute">height</span>: <span class="hljs-number">30px</span>;<br>	<span class="hljs-attribute">width</span>: <span class="hljs-number">230px</span>;<br>&#125;<br><span class="hljs-selector-id">#form_login</span>&#123;<br>	<span class="hljs-attribute">position</span>: absolute;<br>	<span class="hljs-attribute">top</span>:<span class="hljs-number">150px</span>;<br>	<span class="hljs-attribute">left</span>: -<span class="hljs-number">30px</span>;<br>	<span class="hljs-attribute">height</span>: <span class="hljs-number">34px</span>;<br>	<span class="hljs-attribute">width</span>: <span class="hljs-number">270px</span>;<br>	<span class="hljs-attribute">margin-left</span>: <span class="hljs-number">28px</span>;<br>	<span class="hljs-attribute">margin-right</span>: <span class="hljs-number">28px</span>;<br>	<span class="hljs-attribute">background-color</span>: <span class="hljs-built_in">rgb</span>(<span class="hljs-number">229</span>,<span class="hljs-number">56</span>,<span class="hljs-number">60</span>);<br>&#125;<br><span class="hljs-selector-id">#qq</span>&#123;<br>	<span class="hljs-attribute">position</span>: absolute;<br>	<span class="hljs-attribute">left</span>: <span class="hljs-number">19px</span>;<br>	<span class="hljs-attribute">top</span>: <span class="hljs-number">360px</span>;<br>&#125;<br><span class="hljs-selector-id">#qq1</span>&#123;<br>	<span class="hljs-attribute">float</span>: left; <br>	<span class="hljs-attribute">position</span>:absolute; <br>	<span class="hljs-attribute">left</span>: <span class="hljs-number">25px</span>;<br>	<span class="hljs-attribute">top</span>: <span class="hljs-number">5px</span>;<br>&#125;<br><span class="hljs-selector-id">#vx1</span>&#123;<br>	<span class="hljs-attribute">float</span>: left; <br>	<span class="hljs-attribute">position</span>:absolute; <br>	<span class="hljs-attribute">left</span>: <span class="hljs-number">52px</span>;<br>&#125;<br><span class="hljs-selector-id">#vx2</span>&#123;<br>	<span class="hljs-attribute">float</span>: left; <br>	<span class="hljs-attribute">position</span>:absolute; <br>	<span class="hljs-attribute">left</span>: <span class="hljs-number">80px</span>;<br>	<span class="hljs-attribute">top</span>: <span class="hljs-number">5px</span>;<br>	<span class="hljs-attribute">width</span>: <span class="hljs-number">50px</span>;<br>&#125;<br><span class="hljs-selector-id">#zhuce01</span>&#123;<br>	<span class="hljs-attribute">float</span>: left; <br>	<span class="hljs-attribute">position</span>:absolute; <br>	<span class="hljs-attribute">left</span>: <span class="hljs-number">200px</span>;<br>&#125;<br><span class="hljs-selector-id">#zhuce02</span>&#123;<br>	<span class="hljs-attribute">float</span>: left; <br>	<span class="hljs-attribute">position</span>:absolute; <br>	<span class="hljs-attribute">left</span>: <span class="hljs-number">226px</span>;<br>	<span class="hljs-attribute">top</span>: <span class="hljs-number">2px</span>;<br>	<span class="hljs-attribute">width</span>: <span class="hljs-number">100px</span>;<br>&#125;<br><span class="hljs-selector-id">#saoma</span><span class="hljs-selector-pseudo">:hover</span>,<span class="hljs-selector-id">#denglu</span><span class="hljs-selector-pseudo">:hover</span>&#123;<br>	<span class="hljs-attribute">color</span>: <span class="hljs-built_in">rgb</span>(<span class="hljs-number">229</span>,<span class="hljs-number">56</span>,<span class="hljs-number">60</span>);<br>	<span class="hljs-attribute">font-weight</span>:bold ;<br>&#125;<br><br><span class="hljs-selector-id">#p1</span>&#123;<br>	<span class="hljs-attribute">position</span>: absolute;<br>	<span class="hljs-attribute">top</span>: <span class="hljs-number">605px</span>;<br>	<span class="hljs-attribute">left</span>: <span class="hljs-number">200px</span>;<br><br>&#125;<br><span class="hljs-selector-id">#shu1</span>&#123;<br>	<span class="hljs-attribute">position</span>: absolute;<br>	<span class="hljs-attribute">top</span>: <span class="hljs-number">605px</span>;<br>	<span class="hljs-attribute">left</span>: <span class="hljs-number">260px</span>;<br>&#125;<br><span class="hljs-selector-id">#p2</span>&#123;<br>	<span class="hljs-attribute">position</span>: absolute;<br>	<span class="hljs-attribute">top</span>: <span class="hljs-number">605px</span>;<br>	<span class="hljs-attribute">left</span>: <span class="hljs-number">280px</span>;<br>&#125;<br><span class="hljs-selector-id">#shu2</span>&#123;<br>	<span class="hljs-attribute">position</span>: absolute;<br>	<span class="hljs-attribute">top</span>: <span class="hljs-number">605px</span>;<br>	<span class="hljs-attribute">left</span>: <span class="hljs-number">340px</span>;<br>&#125;<br><span class="hljs-selector-id">#p3</span>&#123;<br>	<span class="hljs-attribute">position</span>: absolute;<br>	<span class="hljs-attribute">top</span>: <span class="hljs-number">605px</span>;<br>	<span class="hljs-attribute">left</span>: <span class="hljs-number">360px</span>;<br>&#125;<br><span class="hljs-selector-id">#shu3</span>&#123;<br>	<span class="hljs-attribute">position</span>: absolute;<br>	<span class="hljs-attribute">top</span>: <span class="hljs-number">605px</span>;<br>	<span class="hljs-attribute">left</span>: <span class="hljs-number">420px</span>;<br>&#125;<br><span class="hljs-selector-id">#p4</span>&#123;<br>	<span class="hljs-attribute">position</span>: absolute;<br>	<span class="hljs-attribute">top</span>: <span class="hljs-number">605px</span>;<br>	<span class="hljs-attribute">left</span>: <span class="hljs-number">440px</span>;<br>&#125;<br><span class="hljs-selector-id">#shu4</span>&#123;<br>	<span class="hljs-attribute">position</span>: absolute;<br>	<span class="hljs-attribute">top</span>: <span class="hljs-number">605px</span>;<br>	<span class="hljs-attribute">left</span>: <span class="hljs-number">500px</span>;<br>&#125;<br><span class="hljs-selector-id">#p5</span>&#123;<br>	<span class="hljs-attribute">position</span>: absolute;<br>	<span class="hljs-attribute">top</span>: <span class="hljs-number">605px</span>;<br>	<span class="hljs-attribute">left</span>: <span class="hljs-number">520px</span>;<br>&#125;<br><span class="hljs-selector-id">#shu5</span>&#123;<br>	<span class="hljs-attribute">position</span>: absolute;<br>	<span class="hljs-attribute">top</span>: <span class="hljs-number">605px</span>;<br>	<span class="hljs-attribute">left</span>: <span class="hljs-number">580px</span>;<br>&#125;<br><span class="hljs-selector-id">#p6</span>&#123;<br>	<span class="hljs-attribute">position</span>: absolute;<br>	<span class="hljs-attribute">top</span>: <span class="hljs-number">605px</span>;<br>	<span class="hljs-attribute">left</span>: <span class="hljs-number">600px</span>;<br>&#125;<br><span class="hljs-selector-id">#shu6</span>&#123;<br>	<span class="hljs-attribute">position</span>: absolute;<br>	<span class="hljs-attribute">top</span>: <span class="hljs-number">605px</span>;<br>	<span class="hljs-attribute">left</span>: <span class="hljs-number">660px</span>;<br>&#125;<br><span class="hljs-selector-id">#p7</span>&#123;<br>	<span class="hljs-attribute">position</span>: absolute;<br>	<span class="hljs-attribute">top</span>: <span class="hljs-number">605px</span>;<br>	<span class="hljs-attribute">left</span>: <span class="hljs-number">680px</span>;<br>&#125;<br><span class="hljs-selector-id">#shu7</span>&#123;<br>	<span class="hljs-attribute">position</span>: absolute;<br>	<span class="hljs-attribute">top</span>: <span class="hljs-number">605px</span>;<br>	<span class="hljs-attribute">left</span>: <span class="hljs-number">740px</span>;<br>&#125;<br><span class="hljs-selector-id">#p8</span>&#123;<br>	<span class="hljs-attribute">position</span>: absolute;<br>	<span class="hljs-attribute">top</span>: <span class="hljs-number">605px</span>;<br>	<span class="hljs-attribute">left</span>: <span class="hljs-number">760px</span>;<br>&#125;<br><span class="hljs-selector-id">#shu8</span>&#123;<br>	<span class="hljs-attribute">position</span>: absolute;<br>	<span class="hljs-attribute">top</span>: <span class="hljs-number">605px</span>;<br>	<span class="hljs-attribute">left</span>: <span class="hljs-number">820px</span>;<br>&#125;<br><span class="hljs-selector-id">#p9</span>&#123;<br>	<span class="hljs-attribute">position</span>: absolute;<br>	<span class="hljs-attribute">top</span>: <span class="hljs-number">605px</span>;<br>	<span class="hljs-attribute">left</span>: <span class="hljs-number">840px</span>;<br>&#125;<br><span class="hljs-selector-id">#shu9</span>&#123;<br>	<span class="hljs-attribute">position</span>: absolute;<br>	<span class="hljs-attribute">top</span>: <span class="hljs-number">605px</span>;<br>	<span class="hljs-attribute">left</span>: <span class="hljs-number">900px</span>;<br>&#125;<br><span class="hljs-selector-id">#p10</span>&#123;<br>	<span class="hljs-attribute">position</span>: absolute;<br>	<span class="hljs-attribute">top</span>: <span class="hljs-number">605px</span>;<br>	<span class="hljs-attribute">left</span>: <span class="hljs-number">920px</span>;<br>&#125;<br><span class="hljs-selector-id">#shu10</span>&#123;<br>	<span class="hljs-attribute">position</span>: absolute;<br>	<span class="hljs-attribute">top</span>: <span class="hljs-number">605px</span>;<br>	<span class="hljs-attribute">left</span>: <span class="hljs-number">980px</span>;<br>&#125;<br><span class="hljs-selector-id">#p11</span>&#123;<br>	<span class="hljs-attribute">position</span>: absolute;<br>	<span class="hljs-attribute">top</span>: <span class="hljs-number">605px</span>;<br>	<span class="hljs-attribute">left</span>: <span class="hljs-number">1000px</span>;<br>&#125;<br><span class="hljs-selector-id">#p12</span>&#123;<br>	<span class="hljs-attribute">position</span>: absolute;<br>	<span class="hljs-attribute">top</span>: <span class="hljs-number">630px</span>;<br>	<span class="hljs-attribute">left</span>: <span class="hljs-number">505px</span>;<br><br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>效果如下<br><img src="https://upload-images.jianshu.io/upload_images/13692175-b93533a5aeaeccfd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/Myblog/img/loading.gif" lazyload></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/categories/Web/">Web</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/tags/CSS/">CSS</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/Myblog/2018/09/21/JavaScript/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">JavaScript</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/Myblog/2018/09/18/CSS%E5%9F%BA%E7%A1%80/">
+                        <span class="hidden-mobile">CSS基础</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/Myblog/js/events.js" ></script>
+<script  src="/Myblog/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/Myblog/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/Myblog/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/Myblog/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/Myblog/js/boot.js" ></script>
+
+
+</body>
+</html>

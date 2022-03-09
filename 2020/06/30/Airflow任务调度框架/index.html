@@ -1,0 +1,578 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/Myblog/img/favicon.png">
+  <link rel="icon" href="/Myblog/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="Simple, so charming!">
+  <meta name="author" content="stellae">
+  <meta name="keywords" content="">
+  
+  <title>Airflow任务调度框架 - stellae&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/Myblog/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/Myblog/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"stellae.gitee.io","root":"/Myblog/","version":"1.8.10","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/Myblog/js/utils.js" ></script>
+  <script  src="/Myblog/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/Myblog/">&nbsp;<strong>stellae's blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/Myblog/img/WtwSsqwYlA0.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Airflow任务调度框架">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      stellae
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-06-30 16:01" pubdate>
+        2020年6月30日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      4k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      82
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Airflow任务调度框架</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：2 年前
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h3 id="Airflow是什么"><a href="#Airflow是什么" class="headerlink" title="Airflow是什么"></a>Airflow是什么</h3><p>Airflow 是 Airbnb 开源的一个用 Python 编写的调度工具。于 2014 年启动，2015 年春季开源，2016 年加入 Apache 软件基金会的孵化计划。</p>
+<p>Airflow 通过 DAG 也即是有向非循环图来定义整个工作流，因而具有非常强大的表达能力。</p>
+<p>在进一步介绍 Airflow 之前，我想先介绍一些在 Airflow 中常见的名词概念：</p>
+<ul>
+<li><p><strong>DAG</strong></p>
+<p>DAG 意为有向无循环图，在 Airflow 中则定义了整个完整的作业。同一个 DAG 中的所有 Task 拥有相同的调度时间。</p>
+</li>
+<li><p><strong>Task</strong></p>
+<p>Task 为 DAG 中具体的作业任务，它必须存在于某一个 DAG 之中。Task 在 DAG 中配置依赖关系，跨 DAG 的依赖是可行的，但是并不推荐。跨 DAG 依赖会导致 DAG 图的直观性降低，并给依赖管理带来麻烦。</p>
+</li>
+<li><p><strong>DAG Run</strong></p>
+<p>当一个 DAG 满足它的调度时间，或者被外部触发时，就会产生一个 DAG Run。可以理解为由 DAG 实例化的实例。</p>
+</li>
+<li><p><strong>Task Instance</strong></p>
+<p>当一个 Task 被调度启动时，就会产生一个 Task Instance。可以理解为由 Task 实例化的实例。</p>
+</li>
+</ul>
+<h3 id="Airflow的服务构成"><a href="#Airflow的服务构成" class="headerlink" title="Airflow的服务构成"></a>Airflow的服务构成</h3><p>一个正常运行的 Airflow 系统一般由以下几个服务构成</p>
+<ul>
+<li><p><strong>WebServer</strong></p>
+<p>Airflow 提供了一个可视化的 Web 界面。启动 WebServer 后，就可以在 Web 界面上查看定义好的 DAG 并监控及改变运行状况。也可以在 Web 界面中对一些变量进行配置。</p>
+</li>
+<li><p><strong>Worker</strong></p>
+<p>一般来说我们用 Celery Worker 来执行具体的作业。Worker 可以部署在多台机器上，并可以分别设置接收的队列。当接收的队列中有作业任务时，Worker 就会接收这个作业任务，并开始执行。Airflow 会自动在每个部署 Worker 的机器上同时部署一个 Serve Logs 服务，这样我们就可以在 Web 界面上方便的浏览分散在不同机器上的作业日志了。</p>
+</li>
+<li><p><strong>Scheduler</strong></p>
+<p>整个 Airflow 的调度由 Scheduler 负责发起，每隔一段时间 Scheduler 就会检查所有定义完成的 DAG 和定义在其中的作业，如果有符合运行条件的作业，Scheduler 就会发起相应的作业任务以供 Worker 接收。</p>
+</li>
+<li><p><strong>Flower</strong></p>
+<p>Flower 提供了一个可视化界面以监控所有 Celery Worker 的运行状况。这个服务并不是必要的。</p>
+</li>
+</ul>
+<h3 id="Airflow安装和使用"><a href="#Airflow安装和使用" class="headerlink" title="Airflow安装和使用"></a>Airflow安装和使用</h3><ul>
+<li>安装</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">pip install apache-airflow<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>设置airflow home</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">&gt;</span><span class="bash"> mkdir ~/airflow</span><br><span class="hljs-meta">&gt;</span><span class="bash"> <span class="hljs-built_in">export</span> AIRFLOW_HOME=~/airflow</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>初始化</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">airflow initdb<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Airflow 在运行需要 Database 记录每一次跑过的 Task 的結果，所以接下来我們要初始化 Database，Airflow 预设使用 SQLite，之后我們也可以把 Database 变成 PostgreSQL 或是 MySQL 等等。</p>
+</blockquote>
+<ul>
+<li>启动webserver</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">airflow webserver -p 8080<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>启动scheduler</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">airflow scheduler<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="Airflow自定义"><a href="#Airflow自定义" class="headerlink" title="Airflow自定义"></a>Airflow自定义</h3><h4 id="编写DAG1"><a href="#编写DAG1" class="headerlink" title="编写DAG1"></a>编写DAG1</h4><p>相同表结构进行数据同步</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> datetime <span class="hljs-keyword">import</span> timedelta<br><span class="hljs-keyword">from</span> airflow <span class="hljs-keyword">import</span> DAG<br><span class="hljs-keyword">from</span> airflow.utils.dates <span class="hljs-keyword">import</span> days_ago<br><span class="hljs-keyword">from</span> airflow.models <span class="hljs-keyword">import</span> Variable<br><br><span class="hljs-keyword">import</span> sys<br>sys.path.insert(<span class="hljs-number">0</span>, <span class="hljs-string">&quot;/opt/bitnami/airflow/dags/git&quot;</span>)<br><span class="hljs-keyword">from</span> acme.operators.dwh_operators <span class="hljs-keyword">import</span> AuditOperator, PostgresToPostgresOperator<br><br><br><br>default_args = &#123;<br>    <span class="hljs-string">&#x27;owner&#x27;</span>: <span class="hljs-string">&#x27;XingChen&#x27;</span>, <span class="hljs-comment"># DAG 擁有者的名稱，如上一篇說明的，通常是負責實作這個 DAG 的人員名稱</span><br>    <span class="hljs-string">&#x27;depends_on_past&#x27;</span>: <span class="hljs-literal">False</span>, <span class="hljs-comment"># 每一次執行的 Task 是否會依賴於上次執行的 Task，如果是 True 的話，代表上次的 Task 如果執行失敗，這次的 Task 不会执行，而是放到trigger里面等待执行</span><br>    <span class="hljs-string">&#x27;start_date&#x27;</span>: datetime(<span class="hljs-number">2020</span>, <span class="hljs-number">2</span>, <span class="hljs-number">24</span>), <span class="hljs-comment">#  Task 從哪個日期後開始可以被 Scheduler 排入排程</span><br>  	<span class="hljs-string">&#x27;start_data&#x27;</span>: days_ago(<span class="hljs-number">1</span>),   <span class="hljs-comment"># 两种都可以</span><br>    <span class="hljs-string">&#x27;email&#x27;</span>: [<span class="hljs-string">&#x27;airflow@example.com&#x27;</span>], <span class="hljs-comment"># 如果 Task 執行失敗的話，要寄信給哪些人的 email</span><br>    <span class="hljs-string">&#x27;email_on_failure&#x27;</span>: <span class="hljs-literal">False</span>, <span class="hljs-comment"># 如果 Task 執行失敗的話，是否寄信</span><br>    <span class="hljs-string">&#x27;email_on_retry&#x27;</span>: <span class="hljs-literal">False</span>, <span class="hljs-comment"># 如果 Task 重試的話，是否寄信</span><br>    <span class="hljs-string">&#x27;retries&#x27;</span>: <span class="hljs-number">1</span>, <span class="hljs-comment"># 最多重試的次數</span><br>    <span class="hljs-string">&#x27;retry_delay&#x27;</span>: timedelta(minutes=<span class="hljs-number">5</span>), <span class="hljs-comment"># 每次重試中間的間隔</span><br>    <span class="hljs-comment"># &#x27;end_date&#x27;: datetime(2020, 2, 29), # Task 從哪個日期後，開始不被 Scheduler 放入排程</span><br>    <span class="hljs-comment"># &#x27;execution_timeout&#x27;: timedelta(seconds=300), # Task 執行時間的上限</span><br>    <span class="hljs-comment"># &#x27;on_failure_callback&#x27;: some_function, # Task 執行失敗時，呼叫的 function</span><br>    <span class="hljs-comment"># &#x27;on_success_callback&#x27;: some_other_function, # Task 執行成功時，呼叫的 function</span><br>    <span class="hljs-comment"># &#x27;on_retry_callback&#x27;: another_function, # Task 重試時，呼叫的 function</span><br>&#125;<br><br><br><br><br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">synchronize basic data of traditional media to internet db</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><br>tmpl_search_path = Variable.get(<span class="hljs-string">&quot;sql_path&quot;</span>)<br><br><br><span class="hljs-keyword">with</span> DAG(<br>    dag_id=<span class="hljs-string">&quot;hubble-internet-stage&quot;</span>,<br>    tags=[<span class="hljs-string">&quot;hubble-internet&quot;</span>],<br>    default_args=default_args,<br>    template_searchpath=tmpl_search_path,<br>    description=<span class="hljs-string">&quot;synchronize basic data of traditional media to internet db&quot;</span>,<br>    schedule_interval=timedelta(hours=<span class="hljs-number">1</span>)) <span class="hljs-keyword">as</span> dag:<br><br>    <span class="hljs-comment"># Law</span><br>    audit_law_category_record = AuditOperator(<br>        task_id=<span class="hljs-string">&#x27;audit_internet_law_category_record&#x27;</span>,<br>        postgres_conn_id=<span class="hljs-string">&#x27;hubble-internet-stage-db&#x27;</span>,<br>        audit_key=<span class="hljs-string">&quot;law_category&quot;</span>,<br>        cycle_dtm=<span class="hljs-string">&quot;&#123;&#123; ts &#125;&#125;&quot;</span>,<br>        dag=dag,<br>        pool=<span class="hljs-string">&#x27;hubble_internet_pool&#x27;</span><br>    )<br><br>    extract_law_category = PostgresToPostgresOperator(<br>        task_id=<span class="hljs-string">&#x27;extract_internet_law_category&#x27;</span>,<br>        sql=<span class="hljs-string">&#x27;internet_law_category.sql&#x27;</span>,<br>        pg_table=<span class="hljs-string">&#x27;law_category&#x27;</span>,<br>        src_postgres_conn_id=<span class="hljs-string">&#x27;hubble-db-stage&#x27;</span>,<br>        dest_posgres_conn_id=<span class="hljs-string">&#x27;hubble-internet-stage-db&#x27;</span>,<br>        pg_preoperator=<span class="hljs-string">&quot;DELETE FROM law_category&quot;</span>,<br>        dag=dag,<br>        pool=<span class="hljs-string">&#x27;hubble_internet_pool&#x27;</span>)<br><br>    audit_law_category_record &gt;&gt; extract_law_category<br><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p><code>task1 &gt;&gt; [task2, task3]</code>  - 代表<code>task1</code>执行之后同时执行<code>task2</code>和<code>task3</code></p>
+<p><code>sql_path</code>定义在<code>Variable</code>里面，值为sql目录的绝对路径，通过<code>    template_searchpath=tmpl_search_path,</code>可以拿到对应文件</p>
+</blockquote>
+<h4 id="编写DAG2"><a href="#编写DAG2" class="headerlink" title="编写DAG2"></a>编写DAG2</h4><p>适用于表结构大体相同，需要修改部分数据或者自定义插入sql</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> datetime <span class="hljs-keyword">import</span> timedelta<br><span class="hljs-keyword">from</span> airflow <span class="hljs-keyword">import</span> DAG<br><span class="hljs-keyword">from</span> airflow.utils.dates <span class="hljs-keyword">import</span> days_ago<br><span class="hljs-keyword">from</span> airflow.models <span class="hljs-keyword">import</span> Variable<br><br><span class="hljs-keyword">import</span> sys<br>sys.path.insert(<span class="hljs-number">0</span>, <span class="hljs-string">&quot;/opt/bitnami/airflow/dags/git&quot;</span>)<br><span class="hljs-keyword">from</span> acme.operators.dwh_operators <span class="hljs-keyword">import</span> AuditOperator, PostgresToPostgresCustomOperator<br><br><br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">Synchronize Spanish environmental data</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><br>default_args = &#123;<br>    <span class="hljs-string">&quot;owner&quot;</span>: <span class="hljs-string">&quot;Lvhaojie&quot;</span>,<br>    <span class="hljs-string">&quot;depends_on_past&quot;</span>: <span class="hljs-literal">False</span>,<br>    <span class="hljs-string">&quot;start_date&quot;</span>: days_ago(<span class="hljs-number">0</span>),<br>    <span class="hljs-string">&quot;email&quot;</span>: [<span class="hljs-string">&quot;haojie.lv@coloseo.cn&quot;</span>],<br>    <span class="hljs-string">&quot;email_on_failure&quot;</span>: <span class="hljs-literal">True</span>,<br>    <span class="hljs-string">&quot;email_on_retry&quot;</span>: <span class="hljs-literal">True</span>,<br>    <span class="hljs-string">&quot;retries&quot;</span>: <span class="hljs-number">1</span>,<br>    <span class="hljs-string">&quot;retry_delay&quot;</span>: timedelta(minutes=<span class="hljs-number">10</span>),<br>&#125;<br><br>tmpl_search_path = Variable.get(<span class="hljs-string">&quot;sql_path&quot;</span>)<br><br><span class="hljs-keyword">with</span> DAG(<br>    dag_id=<span class="hljs-string">&quot;spain_uat_country&quot;</span>,<br>    tags=[<span class="hljs-string">&quot;spain-uat&quot;</span>],<br>    default_args=default_args,<br>    template_searchpath=tmpl_search_path,<br>    description=<span class="hljs-string">&quot;synchronize spain production environmental data of table country&quot;</span>,<br>    schedule_interval=timedelta(hours=<span class="hljs-number">1</span>)) <span class="hljs-keyword">as</span> dag:<br><br>    audit_country_record = AuditOperator(<br>        task_id=<span class="hljs-string">&#x27;audit_spain_country_record&#x27;</span>,<br>        postgres_conn_id=<span class="hljs-string">&#x27;spain-sevilla-uat&#x27;</span>,<br>        audit_key=<span class="hljs-string">&quot;country&quot;</span>,<br>        cycle_dtm=<span class="hljs-string">&quot;&#123;&#123; ts &#125;&#125;&quot;</span>,<br>        dag=dag,<br>        pool=<span class="hljs-string">&#x27;spain-uat&#x27;</span><br>    )<br><br>    extract_country = PostgresToPostgresCustomOperator(<br>        task_id=<span class="hljs-string">&#x27;extract_spain_country&#x27;</span>,<br>        src_postgres_conn_id=<span class="hljs-string">&#x27;spain-pablo-picasso-production&#x27;</span>,<br>        src_postgres_sql=<span class="hljs-string">&#x27;query_uat_country.sql&#x27;</span>,<br>        dest_posgres_conn_id=<span class="hljs-string">&#x27;spain-sevilla-uat&#x27;</span>,<br>        dest_posgres_sql=<span class="hljs-string">&#x27;insert_uat_country.sql&#x27;</span>,<br>        sql_key=<span class="hljs-string">&quot;query_data&quot;</span>,<br>        dag=dag,<br>        pool=<span class="hljs-string">&#x27;spain-uat&#x27;</span>)<br><br>    audit_country_record &gt;&gt; extract_country<br><br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="自定义Operator"><a href="#自定义Operator" class="headerlink" title="自定义Operator"></a>自定义Operator</h4><p><code>Operator</code> 用来定义 <code>Task</code>，有些 <code>Task</code> 的功能是执行 <code>Bash</code> 指令、有些則是执行 <code>Python</code>，当然也可以通过 <code>Python Operator</code> 执行全部的事，但通过不同功能的 <code>Operator</code> 来定义 <code>Task</code>，在实际上会更容易些。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#!/usr/bin/env python3</span><br><span class="hljs-keyword">import</span> logging<br><br><br><span class="hljs-keyword">from</span> airflow.hooks.postgres_hook <span class="hljs-keyword">import</span> PostgresHook<br><span class="hljs-keyword">from</span> airflow.models <span class="hljs-keyword">import</span> BaseOperator<br><span class="hljs-keyword">from</span> airflow.utils.decorators <span class="hljs-keyword">import</span> apply_defaults<br><span class="hljs-keyword">from</span> datetime <span class="hljs-keyword">import</span> datetime<br><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PostgresToPostgresOperator</span>(<span class="hljs-params">BaseOperator</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    Executes sql code in a Postgres database and inserts into another</span><br><span class="hljs-string"></span><br><span class="hljs-string">    :param src_postgres_conn_id: 源库</span><br><span class="hljs-string">    :type src_postgres_conn_id: string</span><br><span class="hljs-string"></span><br><span class="hljs-string">    :param dest_postgres_conn_id: 目标库</span><br><span class="hljs-string">    :type dest_postgres_conn_id: String</span><br><span class="hljs-string"></span><br><span class="hljs-string">    :param sql: 执行的 sql 或 sql 模版文件</span><br><span class="hljs-string">    :type sql: sql 语句 或 sql 模版文件，模版文件后缀名必须为 .sql</span><br><span class="hljs-string"></span><br><span class="hljs-string">    :param parameters: sql 执行的参数字典</span><br><span class="hljs-string">    :type parameters: dict</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br><br>    template_fields = (<br>        <span class="hljs-string">&quot;sql&quot;</span>,<br>        <span class="hljs-string">&quot;parameters&quot;</span>,<br>        <span class="hljs-string">&quot;pg_table&quot;</span>,<br>        <span class="hljs-string">&quot;pg_preoperator&quot;</span>,<br>        <span class="hljs-string">&quot;pg_postoperator&quot;</span>,<br>    )<br>    template_ext = (<span class="hljs-string">&quot;.sql&quot;</span>,)<br>    ui_color = <span class="hljs-string">&quot;#ededed&quot;</span><br><br><span class="hljs-meta">    @apply_defaults</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span>(<span class="hljs-params"></span></span><br><span class="hljs-function"><span class="hljs-params">        self,</span></span><br><span class="hljs-function"><span class="hljs-params">        sql,</span></span><br><span class="hljs-function"><span class="hljs-params">        pg_table,</span></span><br><span class="hljs-function"><span class="hljs-params">        src_postgres_conn_id=<span class="hljs-string">&quot;postgres_default&quot;</span>,</span></span><br><span class="hljs-function"><span class="hljs-params">        dest_posgres_conn_id=<span class="hljs-string">&quot;postgres_default&quot;</span>,</span></span><br><span class="hljs-function"><span class="hljs-params">        pg_preoperator=None,</span></span><br><span class="hljs-function"><span class="hljs-params">        pg_postoperator=None,</span></span><br><span class="hljs-function"><span class="hljs-params">        parameters=None,</span></span><br><span class="hljs-function"><span class="hljs-params">        *args,</span></span><br><span class="hljs-function"><span class="hljs-params">        **kwargs</span></span><br><span class="hljs-function"><span class="hljs-params">    </span>):</span><br>        super().__init__(*args, **kwargs)<br>        self.sql = sql<br>        self.pg_table = pg_table<br>        self.src_postgres_conn_id = src_postgres_conn_id<br>        self.dest_postgres_conn_id = dest_posgres_conn_id<br>        self.pg_preoperator = pg_preoperator<br>        self.pg_postoperator = pg_postoperator<br>        self.parameters = parameters<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">execute</span>(<span class="hljs-params">self, context</span>):</span><br>        logging.info(<span class="hljs-string">&quot;Executing: &quot;</span> + str(self.sql))<br>        src_pg = PostgresHook(postgres_conn_id=self.src_postgres_conn_id)<br>        dest_pg = PostgresHook(postgres_conn_id=self.dest_postgres_conn_id)<br><br>        logging.info(<br>            <span class="hljs-string">&quot;Transferring Postgres query results into other Postgres databases.&quot;</span><br>        )<br>        conn = src_pg.get_conn()<br>        cursor = conn.cursor()<br>        cursor.execute(self.sql, self.parameters)<br><br>        <span class="hljs-keyword">if</span> self.pg_preoperator:<br>            logging.info(<span class="hljs-string">&quot;Running Postgres preoperator&quot;</span>)<br>            dest_pg.run(self.pg_preoperator)<br><br>        logging.info(<span class="hljs-string">&quot;Inserting rows into Postgres&quot;</span>)<br>        dest_pg.insert_rows(table=self.pg_table, rows=cursor)<br><br>        <span class="hljs-keyword">if</span> self.pg_postoperator:<br>            logging.info(<span class="hljs-string">&quot;Running Postgres postoperator&quot;</span>)<br>            dest_pg.run(self.pg_postoperator)<br><br>        logging.info(<span class="hljs-string">&quot;Done.&quot;</span>)<br><br>        <br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PostgresToPostgresCustomOperator</span>(<span class="hljs-params">BaseOperator</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    Executes sql code in a Postgres database and inserts into another</span><br><span class="hljs-string"></span><br><span class="hljs-string">    :param src_postgres_conn_id: 源库</span><br><span class="hljs-string">    :type src_postgres_conn_id: string</span><br><span class="hljs-string"></span><br><span class="hljs-string">    :param dest_postgres_conn_id: 目标库</span><br><span class="hljs-string">    :type dest_postgres_conn_id: String</span><br><span class="hljs-string"></span><br><span class="hljs-string">    :param sql: 执行的 sql 或 sql 模版文件</span><br><span class="hljs-string">    :type sql: sql 语句 或 sql 模版文件，模版文件后缀名必须为 .sql</span><br><span class="hljs-string"></span><br><span class="hljs-string">    :param parameters: sql 执行的参数字典</span><br><span class="hljs-string">    :type parameters: dict</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br><br>    template_fields = (<br>        <span class="hljs-string">&quot;src_postgres_sql&quot;</span>,<br>        <span class="hljs-string">&quot;dest_posgres_sql&quot;</span>,<br>        <span class="hljs-string">&quot;pg_preoperator&quot;</span>,<br>        <span class="hljs-string">&quot;pg_postoperator&quot;</span>,<br>    )<br>    template_ext = (<span class="hljs-string">&quot;.sql&quot;</span>,)<br>    ui_color = <span class="hljs-string">&quot;#ededed&quot;</span><br><br><span class="hljs-meta">    @apply_defaults</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span>(<span class="hljs-params"></span></span><br><span class="hljs-function"><span class="hljs-params">        self,</span></span><br><span class="hljs-function"><span class="hljs-params">        src_postgres_sql,</span></span><br><span class="hljs-function"><span class="hljs-params">        dest_posgres_sql,</span></span><br><span class="hljs-function"><span class="hljs-params">        src_postgres_conn_id=<span class="hljs-string">&quot;postgres_default&quot;</span>,</span></span><br><span class="hljs-function"><span class="hljs-params">        dest_posgres_conn_id=<span class="hljs-string">&quot;postgres_default&quot;</span>,</span></span><br><span class="hljs-function"><span class="hljs-params">        pg_preoperator=None,</span></span><br><span class="hljs-function"><span class="hljs-params">        pg_postoperator=None,</span></span><br><span class="hljs-function"><span class="hljs-params">        sql_key=None,</span></span><br><span class="hljs-function"><span class="hljs-params">        *args,</span></span><br><span class="hljs-function"><span class="hljs-params">        **kwargs</span></span><br><span class="hljs-function"><span class="hljs-params">    </span>):</span><br>        super().__init__(*args, **kwargs)<br>        self.src_postgres_sql = src_postgres_sql<br>        self.dest_posgres_sql = dest_posgres_sql<br>        self.src_postgres_conn_id = src_postgres_conn_id<br>        self.dest_postgres_conn_id = dest_posgres_conn_id<br>        self.pg_preoperator = pg_preoperator<br>        self.pg_postoperator = pg_postoperator<br>        self.sql_key = sql_key<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">execute</span>(<span class="hljs-params">self, context</span>):</span><br>        logging.info(<span class="hljs-string">&quot;Executing: &quot;</span> + str(self.src_postgres_sql))<br>        src_pg = PostgresHook(postgres_conn_id=self.src_postgres_conn_id)<br>        dest_pg = PostgresHook(postgres_conn_id=self.dest_postgres_conn_id)<br><br>        logging.info(<br>            <span class="hljs-string">&quot;Transferring Postgres query results into other Postgres databases.&quot;</span><br>        )<br>        src_conn = src_pg.get_conn()<br>        src_cursor = src_conn.cursor()<br>        src_cursor.execute(self.src_postgres_sql)<br><br>        <span class="hljs-keyword">if</span> self.pg_preoperator:<br>            logging.info(<span class="hljs-string">&quot;Running Postgres preoperator&quot;</span>)<br>            dest_pg.run(self.pg_preoperator)<br><br>        logging.info(<span class="hljs-string">&quot;Inserting rows into Postgres&quot;</span>)<br>        <span class="hljs-keyword">if</span> self.sql_key:<br>            query_data = src_cursor.fetchall()<br>            <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> query_data:<br>                dest_pg.run(self.dest_posgres_sql,<br>                            parameters=&#123;self.sql_key: i&#125;)<br>        <span class="hljs-keyword">else</span>:<br>            dest_pg.run(self.dest_posgres_sql)<br><br>        <span class="hljs-keyword">if</span> self.pg_postoperator:<br>            logging.info(<span class="hljs-string">&quot;Running Postgres postoperator&quot;</span>)<br>            dest_pg.run(self.pg_postoperator)<br><br>        logging.info(<span class="hljs-string">&quot;Done.&quot;</span>)<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">PostgresOperatorWithTemplatedParams</span>(<span class="hljs-params">BaseOperator</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    Executes sql code in a specific Postgres database</span><br><span class="hljs-string"></span><br><span class="hljs-string">    :param postgres_conn_id: 目标库</span><br><span class="hljs-string">    :type  postgres_conn_id: string</span><br><span class="hljs-string"></span><br><span class="hljs-string">    :param sql: sql 语句或 sql 模版</span><br><span class="hljs-string">    :type  sql: sql 语句或 sql 模版文件，文件后缀必须为.sql</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br><br>    template_fields = (<span class="hljs-string">&quot;sql&quot;</span>, <span class="hljs-string">&quot;parameters&quot;</span>)<br>    template_ext = (<span class="hljs-string">&quot;.sql&quot;</span>,)<br>    ui_color = <span class="hljs-string">&quot;#ededed&quot;</span><br><br><span class="hljs-meta">    @apply_defaults</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span>(<span class="hljs-params"></span></span><br><span class="hljs-function"><span class="hljs-params">        self,</span></span><br><span class="hljs-function"><span class="hljs-params">        sql,</span></span><br><span class="hljs-function"><span class="hljs-params">        postgres_conn_id=<span class="hljs-string">&quot;postgres_default&quot;</span>,</span></span><br><span class="hljs-function"><span class="hljs-params">        autocommit=False,</span></span><br><span class="hljs-function"><span class="hljs-params">        parameters=None,</span></span><br><span class="hljs-function"><span class="hljs-params">        *args,</span></span><br><span class="hljs-function"><span class="hljs-params">        **kwargs</span></span><br><span class="hljs-function"><span class="hljs-params">    </span>):</span><br>        super().__init__(*args, **kwargs)<br>        self.sql = sql<br>        self.postgres_conn_id = postgres_conn_id<br>        self.autocommit = autocommit<br>        self.parameters = parameters<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">execute</span>(<span class="hljs-params">self, context</span>):</span><br>        logging.info(<span class="hljs-string">&quot;Executing:&quot;</span> + str(self.sql))<br>        self.hook = PostgresHook(postgres_conn_id=self.postgres_conn_id)<br>        self.hook.run(self.sql, self.autocommit, parameters=self.parameters)<br><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AuditOperator</span>(<span class="hljs-params">BaseOperator</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    Manages audit id&#x27;s in the databse to make sure that</span><br><span class="hljs-string">    operations are traceable.</span><br><span class="hljs-string"></span><br><span class="hljs-string">    :param postgres_conn_id: 目标库</span><br><span class="hljs-string">    :type postgres_conn_id: string</span><br><span class="hljs-string"></span><br><span class="hljs-string">    :param audit_key: The key to use in the audit table</span><br><span class="hljs-string">    :type autid_key: string</span><br><span class="hljs-string"></span><br><span class="hljs-string">    :param cycle_dtm: The dtm of the extraction cycle run (ds)</span><br><span class="hljs-string">    :type cycle_dtm: datetime</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br><br>    template_fields = (<span class="hljs-string">&quot;audit_key&quot;</span>, <span class="hljs-string">&quot;cycle_dtm&quot;</span>)<br>    ui_color = <span class="hljs-string">&quot;#ededed&quot;</span><br><br><span class="hljs-meta">    @apply_defaults</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span>(<span class="hljs-params"></span></span><br><span class="hljs-function"><span class="hljs-params">        self,</span></span><br><span class="hljs-function"><span class="hljs-params">        postgres_conn_id=<span class="hljs-string">&quot;postgres_default&quot;</span>,</span></span><br><span class="hljs-function"><span class="hljs-params">        audit_key=None,</span></span><br><span class="hljs-function"><span class="hljs-params">        cycle_dtm=None,</span></span><br><span class="hljs-function"><span class="hljs-params">        *args,</span></span><br><span class="hljs-function"><span class="hljs-params">        **kwargs</span></span><br><span class="hljs-function"><span class="hljs-params">    </span>):</span><br>        super().__init__(*args, **kwargs)<br>        self.postgres_conn_id = postgres_conn_id<br>        self.audit_key = audit_key<br>        self.cycle_dtm = cycle_dtm<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">execute</span>(<span class="hljs-params">self, context</span>):</span><br>        logging.info(<span class="hljs-string">&quot;Getting postgres hook object&quot;</span>)<br>        hook = PostgresHook(postgres_conn_id=self.postgres_conn_id)<br><br>        logging.info(<span class="hljs-string">&quot;Acquiring lock and updating audit table.&quot;</span>)<br>        conn = hook.get_conn()<br>        cursor = conn.cursor()<br>        cursor.execute(<span class="hljs-string">&quot;LOCK TABLE audit_runs IN ACCESS EXCLUSIVE MODE&quot;</span>)<br>        cursor.close()<br><br>        logging.info(<span class="hljs-string">&quot;Acquiring new audit number&quot;</span>)<br>        cursor = conn.cursor()<br>        cursor.execute(<br>            <span class="hljs-string">&quot;SELECT COALESCE(MAX(audit_id), 0)+1 FROM audit_runs&quot;</span><br>        )<br>        row = cursor.fetchone()<br>        cursor.close()<br>        audit_id = row[<span class="hljs-number">0</span>]<br>        logging.info(<span class="hljs-string">&quot;Found audit id %d.&quot;</span> % (audit_id))<br><br>        params = &#123;<br>            <span class="hljs-string">&quot;audit_id&quot;</span>: audit_id,<br>            <span class="hljs-string">&quot;audit_key&quot;</span>: self.audit_key,<br>            <span class="hljs-string">&quot;exec_dtm&quot;</span>: datetime.now(),<br>            <span class="hljs-string">&quot;cycle_dtm&quot;</span>: self.cycle_dtm,<br>        &#125;<br>        cursor = conn.cursor()<br>        logging.info(<span class="hljs-string">&quot;updating audit table with audit id: %d&quot;</span> % (audit_id))<br>        cursor.execute(<br>            <span class="hljs-string">&quot;INSERT INTO audit_runs &quot;</span><br>            <span class="hljs-string">&quot;(audit_id, audit_key, execution_dtm, cycle_dtm) VALUES &quot;</span><br>            <span class="hljs-string">&quot;(%(audit_id)s, %(audit_key)s, %(exec_dtm)s, %(cycle_dtm)s)&quot;</span>,<br>            params,<br>        )<br>        conn.commit()<br>        cursor.close()<br>        conn.close()<br><br>        ti = context[<span class="hljs-string">&quot;ti&quot;</span>]<br>        ti.xcom_push(key=<span class="hljs-string">&quot;audit_id&quot;</span>, value=audit_id)<br><br>        <span class="hljs-keyword">return</span> audit_id<br><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<ul>
+<li><code>template_fields</code>: airflow的每个operator都定义了template_fields变量，其意思是需要渲染的字段，在执行时会自动渲染这些字段里的模板参数。举例:template_fields = (‘sql’, ‘partition’, ‘hive_table’)，也就是说执行operator时只有这4个字段里包含的模板参数会被渲染</li>
+<li><code>PostgresToPostgresOperator</code>：适用于两个库表结构完全相同的情况；</li>
+<li><code>PostgresToPostgresCustomOperator</code> ：适用于对数据进行简单处理的任务</li>
+</ul>
+<p>以上自定义的<code>Operator</code>，可以自定义执行类似同步数据这种任务。</p>
+</blockquote>
+<h4 id="Airflow日志定期清理"><a href="#Airflow日志定期清理" class="headerlink" title="Airflow日志定期清理"></a>Airflow日志定期清理</h4><p>airflow日志记录详细，占用空间也特别大，所以一般情况需要定期进行日志清理。下面我们编写一个定期任务来实现这个功能。</p>
+<p><code>airflow_logs_cleanup.py</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">A maintenance workflow that you can deploy into Airflow to periodically clean</span><br><span class="hljs-string">out the task logs to avoid those getting too big.</span><br><span class="hljs-string">airflow trigger_dag --conf &#x27;[curly-braces]&quot;maxLogAgeInDays&quot;:30[curly-braces]&#x27; airflow-log-cleanup</span><br><span class="hljs-string">--conf options:</span><br><span class="hljs-string">    maxLogAgeInDays:&lt;INT&gt; - Optional</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-keyword">from</span> airflow.models <span class="hljs-keyword">import</span> DAG, Variable<br><span class="hljs-keyword">from</span> airflow.configuration <span class="hljs-keyword">import</span> conf<br><span class="hljs-keyword">from</span> airflow.utils.dates <span class="hljs-keyword">import</span> days_ago<br><span class="hljs-keyword">from</span> airflow.operators.bash_operator <span class="hljs-keyword">import</span> BashOperator<br><span class="hljs-keyword">from</span> airflow.operators.dummy_operator <span class="hljs-keyword">import</span> DummyOperator<br><span class="hljs-keyword">from</span> datetime <span class="hljs-keyword">import</span> timedelta<br><span class="hljs-keyword">import</span> os<br><span class="hljs-keyword">import</span> logging<br><br><br><span class="hljs-comment"># airflow-log-cleanup</span><br><br><br>DAG_ID = os.path.basename(__file__).replace(<span class="hljs-string">&quot;.pyc&quot;</span>, <span class="hljs-string">&quot;&quot;</span>).replace(<span class="hljs-string">&quot;.py&quot;</span>, <span class="hljs-string">&quot;&quot;</span>)<br>START_DATE = days_ago(<span class="hljs-number">1</span>)<br>BASE_LOG_FOLDER = conf.get(<span class="hljs-string">&quot;core&quot;</span>, <span class="hljs-string">&quot;base_log_folder&quot;</span>)<br><span class="hljs-comment"># How often to Run. @daily - Once a day at Midnight</span><br>SCHEDULE_INTERVAL = <span class="hljs-string">&quot;@daily&quot;</span><br><span class="hljs-comment"># Who is listed as the owner of this DAG in the Airflow Web Server</span><br>DAG_OWNER_NAME = <span class="hljs-string">&quot;&quot;</span><br><span class="hljs-comment"># List of email address to send email alerts to if this job fails</span><br>ALERT_EMAIL_ADDRESSES = []<br><span class="hljs-comment"># Length to retain the log files if not already provided in the conf. If this</span><br><span class="hljs-comment"># is set to 30, the job will remove those files that are 30 days old or older</span><br>DEFAULT_MAX_LOG_AGE_IN_DAYS = Variable.get(<br>    <span class="hljs-string">&quot;airflow_log_cleanup__max_log_age_in_days&quot;</span>, <span class="hljs-number">14</span><br>)<br><span class="hljs-comment"># Whether the job should delete the logs or not. Included if you want to</span><br><span class="hljs-comment"># temporarily avoid deleting the logs</span><br>ENABLE_DELETE = <span class="hljs-literal">True</span><br><span class="hljs-comment"># The number of worker nodes you have in Airflow. Will attempt to run this</span><br><span class="hljs-comment"># process for however many workers there are so that each worker gets its</span><br><span class="hljs-comment"># logs cleared.</span><br>NUMBER_OF_WORKERS = <span class="hljs-number">1</span><br>DIRECTORIES_TO_DELETE = [BASE_LOG_FOLDER]<br>ENABLE_DELETE_CHILD_LOG = Variable.get(<br>    <span class="hljs-string">&quot;airflow_log_cleanup__enable_delete_child_log&quot;</span>, <span class="hljs-string">&quot;False&quot;</span><br>)<br>LOG_CLEANUP_PROCESS_LOCK_FILE = <span class="hljs-string">&quot;/tmp/airflow_log_cleanup_worker.lock&quot;</span><br>logging.info(<span class="hljs-string">&quot;ENABLE_DELETE_CHILD_LOG  &quot;</span> + ENABLE_DELETE_CHILD_LOG)<br><br><span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> BASE_LOG_FOLDER <span class="hljs-keyword">or</span> BASE_LOG_FOLDER.strip() == <span class="hljs-string">&quot;&quot;</span>:<br>    <span class="hljs-keyword">raise</span> ValueError(<br>        <span class="hljs-string">&quot;BASE_LOG_FOLDER variable is empty in airflow.cfg. It can be found &quot;</span><br>        <span class="hljs-string">&quot;under the [core] section in the cfg file. Kindly provide an &quot;</span><br>        <span class="hljs-string">&quot;appropriate directory path.&quot;</span><br>    )<br><br><span class="hljs-keyword">if</span> ENABLE_DELETE_CHILD_LOG.lower() == <span class="hljs-string">&quot;true&quot;</span>:<br>    <span class="hljs-keyword">try</span>:<br>        CHILD_PROCESS_LOG_DIRECTORY = conf.get(<br>            <span class="hljs-string">&quot;scheduler&quot;</span>, <span class="hljs-string">&quot;child_process_log_directory&quot;</span><br>        )<br>        <span class="hljs-keyword">if</span> CHILD_PROCESS_LOG_DIRECTORY != <span class="hljs-string">&#x27; &#x27;</span>:<br>            DIRECTORIES_TO_DELETE.append(CHILD_PROCESS_LOG_DIRECTORY)<br>    <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:<br>        logging.exception(<br>            <span class="hljs-string">&quot;Could not obtain CHILD_PROCESS_LOG_DIRECTORY from &quot;</span> +<br>            <span class="hljs-string">&quot;Airflow Configurations: &quot;</span> + str(e)<br>        )<br><br>default_args = &#123;<br>    <span class="hljs-string">&#x27;owner&#x27;</span>: DAG_OWNER_NAME,<br>    <span class="hljs-string">&#x27;depends_on_past&#x27;</span>: <span class="hljs-literal">False</span>,<br>    <span class="hljs-string">&#x27;email&#x27;</span>: ALERT_EMAIL_ADDRESSES,<br>    <span class="hljs-string">&#x27;email_on_failure&#x27;</span>: <span class="hljs-literal">True</span>,<br>    <span class="hljs-string">&#x27;email_on_retry&#x27;</span>: <span class="hljs-literal">False</span>,<br>    <span class="hljs-string">&#x27;start_date&#x27;</span>: START_DATE,<br>    <span class="hljs-string">&#x27;retries&#x27;</span>: <span class="hljs-number">1</span>,<br>    <span class="hljs-string">&#x27;retry_delay&#x27;</span>: timedelta(minutes=<span class="hljs-number">1</span>)<br>&#125;<br><br>dag = DAG(<br>    DAG_ID,<br>    default_args=default_args,<br>    schedule_interval=SCHEDULE_INTERVAL,<br>    start_date=START_DATE<br>)<br><span class="hljs-keyword">if</span> hasattr(dag, <span class="hljs-string">&#x27;doc_md&#x27;</span>):<br>    dag.doc_md = __doc__<br><span class="hljs-keyword">if</span> hasattr(dag, <span class="hljs-string">&#x27;catchup&#x27;</span>):<br>    dag.catchup = <span class="hljs-literal">False</span><br><br>start = DummyOperator(<br>    task_id=<span class="hljs-string">&#x27;start&#x27;</span>,<br>    dag=dag)<br><br>log_cleanup = <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">echo &quot;Getting Configurations...&quot;</span><br><span class="hljs-string">BASE_LOG_FOLDER=&quot;&#123;&#123;params.directory&#125;&#125;&quot;</span><br><span class="hljs-string">WORKER_SLEEP_TIME=&quot;&#123;&#123;params.sleep_time&#125;&#125;&quot;</span><br><span class="hljs-string">sleep $&#123;WORKER_SLEEP_TIME&#125;s</span><br><span class="hljs-string">MAX_LOG_AGE_IN_DAYS=&quot;&#123;&#123;dag_run.conf.maxLogAgeInDays&#125;&#125;&quot;</span><br><span class="hljs-string">if [ &quot;$&#123;MAX_LOG_AGE_IN_DAYS&#125;&quot; == &quot;&quot; ]; then</span><br><span class="hljs-string">    echo &quot;maxLogAgeInDays conf variable isn&#x27;t included. Using Default &#x27;&quot;&quot;&quot;</span> + str(DEFAULT_MAX_LOG_AGE_IN_DAYS) + <span class="hljs-string">&quot;&quot;&quot;&#x27;.&quot;</span><br><span class="hljs-string">    MAX_LOG_AGE_IN_DAYS=&#x27;&quot;&quot;&quot;</span> + str(DEFAULT_MAX_LOG_AGE_IN_DAYS) + <span class="hljs-string">&quot;&quot;&quot;&#x27;</span><br><span class="hljs-string">fi</span><br><span class="hljs-string">ENABLE_DELETE=&quot;&quot;&quot;</span> + str(<span class="hljs-string">&quot;true&quot;</span> <span class="hljs-keyword">if</span> ENABLE_DELETE <span class="hljs-keyword">else</span> <span class="hljs-string">&quot;false&quot;</span>) + <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">echo &quot;Finished Getting Configurations&quot;</span><br><span class="hljs-string">echo &quot;&quot;</span><br><span class="hljs-string">echo &quot;Configurations:&quot;</span><br><span class="hljs-string">echo &quot;BASE_LOG_FOLDER:      &#x27;$&#123;BASE_LOG_FOLDER&#125;&#x27;&quot;</span><br><span class="hljs-string">echo &quot;MAX_LOG_AGE_IN_DAYS:  &#x27;$&#123;MAX_LOG_AGE_IN_DAYS&#125;&#x27;&quot;</span><br><span class="hljs-string">echo &quot;ENABLE_DELETE:        &#x27;$&#123;ENABLE_DELETE&#125;&#x27;&quot;</span><br><span class="hljs-string">cleanup() &#123;</span><br><span class="hljs-string">    echo &quot;Executing Find Statement: $1&quot;</span><br><span class="hljs-string">    FILES_MARKED_FOR_DELETE=`eval $1`</span><br><span class="hljs-string">    echo &quot;Process will be Deleting the following File(s)/Directory(s):&quot;</span><br><span class="hljs-string">    echo &quot;$&#123;FILES_MARKED_FOR_DELETE&#125;&quot;</span><br><span class="hljs-string">    echo &quot;Process will be Deleting `echo &quot;$&#123;FILES_MARKED_FOR_DELETE&#125;&quot; | \</span><br><span class="hljs-string">    grep -v &#x27;^$&#x27; | wc -l` File(s)/Directory(s)&quot;     \</span><br><span class="hljs-string">    # &quot;grep -v &#x27;^$&#x27;&quot; - removes empty lines.</span><br><span class="hljs-string">    # &quot;wc -l&quot; - Counts the number of lines</span><br><span class="hljs-string">    echo &quot;&quot;</span><br><span class="hljs-string">    if [ &quot;$&#123;ENABLE_DELETE&#125;&quot; == &quot;true&quot; ];</span><br><span class="hljs-string">    then</span><br><span class="hljs-string">        if [ &quot;$&#123;FILES_MARKED_FOR_DELETE&#125;&quot; != &quot;&quot; ];</span><br><span class="hljs-string">        then</span><br><span class="hljs-string">            echo &quot;Executing Delete Statement: $2&quot;</span><br><span class="hljs-string">            eval $2</span><br><span class="hljs-string">            DELETE_STMT_EXIT_CODE=$?</span><br><span class="hljs-string">            if [ &quot;$&#123;DELETE_STMT_EXIT_CODE&#125;&quot; != &quot;0&quot; ]; then</span><br><span class="hljs-string">                echo &quot;Delete process failed with exit code \</span><br><span class="hljs-string">                    &#x27;$&#123;DELETE_STMT_EXIT_CODE&#125;&#x27;&quot;</span><br><span class="hljs-string">                echo &quot;Removing lock file...&quot;</span><br><span class="hljs-string">                rm -f &quot;&quot;&quot;</span> + str(LOG_CLEANUP_PROCESS_LOCK_FILE) + <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">                if [ &quot;$&#123;REMOVE_LOCK_FILE_EXIT_CODE&#125;&quot; != &quot;0&quot; ]; then</span><br><span class="hljs-string">                    echo &quot;Error removing the lock file. \</span><br><span class="hljs-string">                    Check file permissions.\</span><br><span class="hljs-string">                    To re-run the DAG, ensure that the lock file has been \</span><br><span class="hljs-string">                    deleted (&quot;&quot;&quot;</span> + str(LOG_CLEANUP_PROCESS_LOCK_FILE) + <span class="hljs-string">&quot;&quot;&quot;).&quot;</span><br><span class="hljs-string">                    exit $&#123;REMOVE_LOCK_FILE_EXIT_CODE&#125;</span><br><span class="hljs-string">                fi</span><br><span class="hljs-string">                exit $&#123;DELETE_STMT_EXIT_CODE&#125;</span><br><span class="hljs-string">            fi</span><br><span class="hljs-string">        else</span><br><span class="hljs-string">            echo &quot;WARN: No File(s)/Directory(s) to Delete&quot;</span><br><span class="hljs-string">        fi</span><br><span class="hljs-string">    else</span><br><span class="hljs-string">        echo &quot;WARN: You&#x27;re opted to skip deleting the File(s)/Directory(s)!!!&quot;</span><br><span class="hljs-string">    fi</span><br><span class="hljs-string">&#125;</span><br><span class="hljs-string">if [ ! -f &quot;&quot;&quot;</span> + str(LOG_CLEANUP_PROCESS_LOCK_FILE) + <span class="hljs-string">&quot;&quot;&quot; ]; then</span><br><span class="hljs-string">    echo &quot;Lock file not found on this node! \</span><br><span class="hljs-string">    Creating it to prevent collisions...&quot;</span><br><span class="hljs-string">    touch &quot;&quot;&quot;</span> + str(LOG_CLEANUP_PROCESS_LOCK_FILE) + <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    CREATE_LOCK_FILE_EXIT_CODE=$?</span><br><span class="hljs-string">    if [ &quot;$&#123;CREATE_LOCK_FILE_EXIT_CODE&#125;&quot; != &quot;0&quot; ]; then</span><br><span class="hljs-string">        echo &quot;Error creating the lock file. \</span><br><span class="hljs-string">        Check if the airflow user can create files under tmp directory. \</span><br><span class="hljs-string">        Exiting...&quot;</span><br><span class="hljs-string">        exit $&#123;CREATE_LOCK_FILE_EXIT_CODE&#125;</span><br><span class="hljs-string">    fi</span><br><span class="hljs-string">    echo &quot;&quot;</span><br><span class="hljs-string">    echo &quot;Running Cleanup Process...&quot;</span><br><span class="hljs-string">    FIND_STATEMENT=&quot;find $&#123;BASE_LOG_FOLDER&#125;/*/* -type f -mtime \</span><br><span class="hljs-string">     +$&#123;MAX_LOG_AGE_IN_DAYS&#125;&quot;</span><br><span class="hljs-string">    DELETE_STMT=&quot;$&#123;FIND_STATEMENT&#125; -exec rm -f &#123;&#125; \;&quot;</span><br><span class="hljs-string">    cleanup &quot;$&#123;FIND_STATEMENT&#125;&quot; &quot;$&#123;DELETE_STMT&#125;&quot;</span><br><span class="hljs-string">    CLEANUP_EXIT_CODE=$?</span><br><span class="hljs-string">    FIND_STATEMENT=&quot;find $&#123;BASE_LOG_FOLDER&#125;/*/* -type d -empty&quot;</span><br><span class="hljs-string">    DELETE_STMT=&quot;$&#123;FIND_STATEMENT&#125; -prune -exec rm -rf &#123;&#125; \;&quot;</span><br><span class="hljs-string">    cleanup &quot;$&#123;FIND_STATEMENT&#125;&quot; &quot;$&#123;DELETE_STMT&#125;&quot;</span><br><span class="hljs-string">    CLEANUP_EXIT_CODE=$?</span><br><span class="hljs-string">    FIND_STATEMENT=&quot;find $&#123;BASE_LOG_FOLDER&#125;/* -type d -empty&quot;</span><br><span class="hljs-string">    DELETE_STMT=&quot;$&#123;FIND_STATEMENT&#125; -prune -exec rm -rf &#123;&#125; \;&quot;</span><br><span class="hljs-string">    cleanup &quot;$&#123;FIND_STATEMENT&#125;&quot; &quot;$&#123;DELETE_STMT&#125;&quot;</span><br><span class="hljs-string">    CLEANUP_EXIT_CODE=$?</span><br><span class="hljs-string">    echo &quot;Finished Running Cleanup Process&quot;</span><br><span class="hljs-string">    echo &quot;Deleting lock file...&quot;</span><br><span class="hljs-string">    rm -f &quot;&quot;&quot;</span> + str(LOG_CLEANUP_PROCESS_LOCK_FILE) + <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    REMOVE_LOCK_FILE_EXIT_CODE=$?</span><br><span class="hljs-string">    if [ &quot;$&#123;REMOVE_LOCK_FILE_EXIT_CODE&#125;&quot; != &quot;0&quot; ]; then</span><br><span class="hljs-string">        echo &quot;Error removing the lock file. Check file permissions. To re-run the DAG, ensure that the lock file has been deleted (&quot;&quot;&quot;</span> + str(LOG_CLEANUP_PROCESS_LOCK_FILE) + <span class="hljs-string">&quot;&quot;&quot;).&quot;</span><br><span class="hljs-string">        exit $&#123;REMOVE_LOCK_FILE_EXIT_CODE&#125;</span><br><span class="hljs-string">    fi</span><br><span class="hljs-string">else</span><br><span class="hljs-string">    echo &quot;Another task is already deleting logs on this worker node. \</span><br><span class="hljs-string">    Skipping it!&quot;</span><br><span class="hljs-string">    echo &quot;If you believe you&#x27;re receiving this message in error, kindly check \</span><br><span class="hljs-string">    if &quot;&quot;&quot;</span> + str(LOG_CLEANUP_PROCESS_LOCK_FILE) + <span class="hljs-string">&quot;&quot;&quot; exists and delete it.&quot;</span><br><span class="hljs-string">    exit 0</span><br><span class="hljs-string">fi</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><br><span class="hljs-keyword">for</span> log_cleanup_id <span class="hljs-keyword">in</span> range(<span class="hljs-number">1</span>, NUMBER_OF_WORKERS + <span class="hljs-number">1</span>):<br><br>    <span class="hljs-keyword">for</span> dir_id, directory <span class="hljs-keyword">in</span> enumerate(DIRECTORIES_TO_DELETE):<br><br>        log_cleanup_op = BashOperator(<br>            task_id=<span class="hljs-string">&#x27;log_cleanup_worker_num_&#x27;</span> + str(log_cleanup_id) + <span class="hljs-string">&#x27;_dir_&#x27;</span> + str(dir_id),<br>            bash_command=log_cleanup,<br>            params=&#123;<br>                <span class="hljs-string">&quot;directory&quot;</span>: str(directory),<br>                <span class="hljs-string">&quot;sleep_time&quot;</span>: int(log_cleanup_id)*<span class="hljs-number">3</span>&#125;,<br>            dag=dag)<br><br>        log_cleanup_op.set_upstream(start)<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<ul>
+<li><p><code>airflow.configuration.conf.get</code>: 可以获取airflow配置文件<code>airflow.cfg</code>中的配置信息。</p>
+</li>
+<li><p><code>airflow_log_cleanup__max_log_age_in_days</code>： airflow变量设置日志清理范围</p>
+</li>
+<li><p><code>airflow_log_cleanup__enable_delete_child_log</code>: airflow变量设置是否清理子日志</p>
+</li>
+</ul>
+</blockquote>
+<h3 id="相关坑点"><a href="#相关坑点" class="headerlink" title="相关坑点"></a>相关坑点</h3><ul>
+<li>sql中进行时间过滤，应该使用airflow内置的时间，来获取任务执行时的时间，比如 <code>&#123;&#123; ds &#125;&#125;</code> 或者 <code>&#123;&#123; ts &#125;&#125;</code> – <a target="_blank" rel="noopener" href="https://airflow.apache.org/docs/1.10.10/macros-ref.html">airflow macros</a></li>
+<li>airflow会在当前任务结束时间(开始时间+时间间隔)到达时，才会将当前任务编排到scheduler开始执行。</li>
+<li>如果没有开启 dag，也就是 <code>trigger</code> 的状态为 <code>off</code>，点击<code>trigger dag</code>会把任务挂起，直至开启 dag 才会执行。</li>
+<li>airflow日志占用内存比较严重，如果需要定期清理见上文示例。</li>
+</ul>
+<p>其他坑点见 <a target="_blank" rel="noopener" href="https://gist.github.com/diggzhang/a3db0856dbf5ef80b89a797a0712d968">传送门</a></p>
+<ul>
+<li>参考文章 - <a target="_blank" rel="noopener" href="https://www.coderbridge.com/@FrankYang0529/6c90609c64c14df284f141b703c03702">Airflow动手玩</a> / <a target="_blank" rel="noopener" href="https://github.com/gtoonstra/etl-with-airflow/tree/master/examples/etl-example/dags">etl-with-airflow</a> / <a target="_blank" rel="noopener" href="https://airflow.apache.org/docs/stable/macros-ref.html">Airflow模版语法</a> / <a target="_blank" rel="noopener" href="https://github.com/teamclairvoyant/airflow-maintenance-dags/blob/master/log-cleanup/airflow-log-cleanup.py">日志清理实例</a></li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/categories/Airflow/">Airflow</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/tags/airflow/">airflow</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/Myblog/2020/08/05/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8GraphQL/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">为什么要使用GraphQL</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/Myblog/2020/04/09/Pandoc%E6%A0%BC%E5%BC%8F%E8%BD%AC%E6%8D%A2%E5%B7%A5%E5%85%B7/">
+                        <span class="hidden-mobile">Pandoc格式转换工具</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/Myblog/js/events.js" ></script>
+<script  src="/Myblog/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/Myblog/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/Myblog/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/Myblog/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/Myblog/js/boot.js" ></script>
+
+
+</body>
+</html>

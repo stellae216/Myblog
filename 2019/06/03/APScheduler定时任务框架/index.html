@@ -1,0 +1,588 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/Myblog/img/favicon.png">
+  <link rel="icon" href="/Myblog/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="Simple, so charming!">
+  <meta name="author" content="stellae">
+  <meta name="keywords" content="">
+  
+  <title>APScheduler定时任务框架 - stellae&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/Myblog/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/Myblog/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"stellae.gitee.io","root":"/Myblog/","version":"1.8.10","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/Myblog/js/utils.js" ></script>
+  <script  src="/Myblog/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/Myblog/">&nbsp;<strong>stellae's blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/Myblog/img/WtwSsqwYlA0.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="APScheduler定时任务框架">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      stellae
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2019-06-03 16:23" pubdate>
+        2019年6月3日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.8k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      31
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">APScheduler定时任务框架</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：8 个月前
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h3 id="sched-Python内置模块"><a href="#sched-Python内置模块" class="headerlink" title="sched - Python内置模块"></a>sched - Python内置模块</h3><p>sched 模块是 Python 内置的模块，它是一个调度（延时处理机制），每次想要定时执行某任务都必须写入一个调度。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> sched<br><span class="hljs-keyword">import</span> time<br><span class="hljs-keyword">from</span> datetime <span class="hljs-keyword">import</span> datetime<br><br><br><span class="hljs-comment"># 第一个参数是一个可以返回时间戳的函数，第二个参数可以在定时未到达之前阻塞。</span><br>schedule = sched.scheduler(time.time, time.sleep)<br><br><br><span class="hljs-comment"># 被周期性调度触发的函数</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">print_time</span>(<span class="hljs-params">inc</span>):</span><br>    print(datetime.now().strftime(<span class="hljs-string">&quot;%Y-%m-%d %H:%M:%S&quot;</span>))<br>    schedule.enter(inc, <span class="hljs-number">0</span>, print_time, (inc,))<br><br><br><span class="hljs-comment"># enter四个参数分别为：间隔事件、优先级（用于同时间到达的两个事件同时执行时定序）、被调用触发的函数，</span><br><span class="hljs-comment"># 给该触发函数的参数（tuple形式）</span><br>schedule.enter(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, print_time, (<span class="hljs-number">1</span>,))  <span class="hljs-comment"># 1s输出一次</span><br>schedule.run()<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="APScheduler定时任务框架"><a href="#APScheduler定时任务框架" class="headerlink" title="APScheduler定时任务框架"></a>APScheduler定时任务框架</h3><p>APScheduler是一个 Python 定时任务框架，使用起来十分方便。提供了基于日期、固定时间间隔以及 crontab 类型的任务，并且可以持久化任务、并以 daemon 方式运行应用。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">pip install apscheduler<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="APScheduler四个组建"><a href="#APScheduler四个组建" class="headerlink" title="APScheduler四个组建"></a>APScheduler四个组建</h3><p>APScheduler 四个组件分别为：触发器(trigger)，作业存储(job store)，执行器(executor)，调度器(scheduler)。</p>
+<ul>
+<li><p>触发器(trigger)</p>
+<p>包含调度逻辑，每一个作业有它自己的触发器，用于决定接下来哪一个作业会运行。除了他们自己初始配置意外，触发器完全是无状态的。</p>
+<p>APScheduler 有三种内建的 trigger，后面有详细说明。</p>
+<blockquote>
+<p>date: 特定的时间点触发<br>interval: 固定时间间隔触发<br>cron: 在特定时间周期性地触发</p>
+</blockquote>
+</li>
+<li><p>作业存储(job store)</p>
+<p>存储被调度的作业，默认的作业存储是简单地把作业保存在内存中，其他的作业存储是将作业保存在数据库中。一个作业的数据讲在保存在持久化作业存储时被序列化，并在加载时被反序列化。调度器不能分享同一个作业存储。APScheduler 默认使用 MemoryJobStore，可以修改使用 DB 存储方案。</p>
+</li>
+<li><p>执行器(executor)</p>
+<p>处理作业的运行，他们通常通过在作业中提交制定的可调用对象到一个线程或者进城池来进行。当作业完成时，执行器将会通知调度器。最常用的 executor 有两种。</p>
+<blockquote>
+<p>ProcessPoolExecutor<br>ThreadPoolExecutor</p>
+</blockquote>
+</li>
+<li><p>调度器(scheduler)</p>
+<p>通常在应用中只有一个调度器，应用的开发者通常不会直接处理作业存储、调度器和触发器，相反，调度器提供了处理这些的合适的接口。配置作业存储和执行器可以在调度器中完成，例如添加、修改和移除作业。</p>
+</li>
+</ul>
+<h3 id="APScheduler简单例子"><a href="#APScheduler简单例子" class="headerlink" title="APScheduler简单例子"></a>APScheduler简单例子</h3><p>例子：周一至周五每天早上6：30输出当前时间。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> datetime <span class="hljs-keyword">import</span> datetime<br><br><span class="hljs-keyword">from</span> apscheduler.schedulers.blocking <span class="hljs-keyword">import</span> BlockingScheduler<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">job</span>():</span><br>    print(datetime.now().strftime(<span class="hljs-string">&quot;%Y-%m-%d %H:%M:%S&quot;</span>))<br><br><br>scheduler = BlockingScheduler()<br><span class="hljs-comment"># scheduler.add_job(job, &#x27;cron&#x27;, minute=&#x27;*&#x27;) # 每分钟</span><br>scheduler.add_job(job, <span class="hljs-string">&#x27;cron&#x27;</span>, day_of_week=<span class="hljs-string">&#x27;1-5&#x27;</span>, hour=<span class="hljs-number">6</span>, minute=<span class="hljs-number">30</span>) <span class="hljs-comment"># 每周1-5早上6:30</span><br><span class="hljs-comment"># 开始运行调度器</span><br>scheduler.start()<br></code></pre></td></tr></table></figure>
+
+<p>APScheduler 中有两种常用的调度器：BlockingScheduler 和 BackgroundScheduler，当调度器是应用中唯一要运行的任务时，使用 BlockingSchedule；如果希望调度器在后台执行，使用 BackgroundScheduler。</p>
+<blockquote>
+<p>BlockingScheduler – 当调度程序是进程中唯一运行的程序时。<br>BackgroundScheduler – 当你不使用下面的任何框架，并且希望调度程序在应用程序的后台运行时。<br>AsyncIOScheduler – 使用asyncio模块时。<br>GeventScheduler – 使用gevent模块时。<br>TornadoScheduler – 使用Tornado框架时。<br>TwistedScheduler – 使用Twisted框架时<br>QtScheduler – 使用Qt时。</p>
+</blockquote>
+<h3 id="Trigger规则"><a href="#Trigger规则" class="headerlink" title="Trigger规则"></a>Trigger规则</h3><ul>
+<li><p>date -  特定的时间点触发</p>
+<blockquote>
+<ul>
+<li>run_date (datetime|str) – the date/time to run the job at</li>
+<li>timezone (datetime.tzinfo|str) – time zone for run_date if it doesn’t have one already</li>
+</ul>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> datetime <span class="hljs-keyword">import</span> date<br><span class="hljs-keyword">from</span> apscheduler.schedulers.blocking <span class="hljs-keyword">import</span> BlockingScheduler<br>sched = BlockingScheduler()<br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">my_job</span>(<span class="hljs-params">text</span>):</span><br>    print(text)<br><span class="hljs-comment"># The job will be executed on November 6th, 2009</span><br>sched.add_job(my_job, <span class="hljs-string">&#x27;date&#x27;</span>, run_date=date(<span class="hljs-number">2009</span>, <span class="hljs-number">11</span>, <span class="hljs-number">6</span>), args=[<span class="hljs-string">&#x27;text&#x27;</span>])<br>sched.add_job(my_job, <span class="hljs-string">&#x27;date&#x27;</span>, run_date=datetime(<span class="hljs-number">2009</span>, <span class="hljs-number">11</span>, <span class="hljs-number">6</span>, <span class="hljs-number">16</span>, <span class="hljs-number">30</span>, <span class="hljs-number">5</span>), args=[<span class="hljs-string">&#x27;text&#x27;</span>])<br>sched.add_job(my_job, <span class="hljs-string">&#x27;date&#x27;</span>, run_date=<span class="hljs-string">&#x27;2009-11-06 16:30:05&#x27;</span>, args=[<span class="hljs-string">&#x27;text&#x27;</span>])<br><span class="hljs-comment"># The &#x27;date&#x27; trigger and datetime.now() as run_date are implicit</span><br>sched.add_job(my_job, args=[<span class="hljs-string">&#x27;text&#x27;</span>])<br>sched.start()<br></code></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<ul>
+<li><p>interval - 固定时间间隔触发</p>
+<p>参数：</p>
+<blockquote>
+<ul>
+<li>weeks (int) – number of weeks to wait</li>
+<li>days (int) – number of days to wait</li>
+<li>hours (int) – number of hours to wait</li>
+<li>minutes (int) – number of minutes to wait</li>
+<li>seconds (int) – number of seconds to wait</li>
+<li>start_date (datetime|str) – starting point for the interval calculation</li>
+<li>end_date (datetime|str) – latest possible date/time to trigger on</li>
+<li>timezone (datetime.tzinfo|str) – time zone to use for the date/time calculations</li>
+</ul>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> datetime <span class="hljs-keyword">import</span> datetime<br><span class="hljs-keyword">from</span> apscheduler.schedulers.blocking <span class="hljs-keyword">import</span> BlockingScheduler<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">job_function</span>():</span><br>    print(<span class="hljs-string">&quot;Hello World&quot;</span>)<br><span class="hljs-comment"># BlockingScheduler</span><br>sched = BlockingScheduler()<br><span class="hljs-comment"># Schedule job_function to be called every two hours</span><br>sched.add_job(job_function, <span class="hljs-string">&#x27;interval&#x27;</span>, hours=<span class="hljs-number">2</span>)<br><span class="hljs-comment"># The same as before, but starts on 2010-10-10 at 9:30 and stops on 2014-06-15 at 11:00</span><br>sched.add_job(job_function, <span class="hljs-string">&#x27;interval&#x27;</span>, hours=<span class="hljs-number">2</span>, start_date=<span class="hljs-string">&#x27;2010-10-10 09:30:00&#x27;</span>, end_date=<span class="hljs-string">&#x27;2014-06-15 11:00:00&#x27;</span>)<br>sched.start()<br></code></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<ul>
+<li><p>cron - 在特定时间周期性地触发</p>
+<p>参数：</p>
+<blockquote>
+<ul>
+<li>year (int|str) – 4-digit year</li>
+<li>month (int|str) – month (1-12)</li>
+<li>day (int|str) – day of the (1-31)</li>
+<li>week (int|str) – ISO week (1-53)</li>
+<li>day_of_week (int|str) – number or name of weekday (0-6 or mon,tue,wed,thu,fri,sat,sun)</li>
+<li>hour (int|str) – hour (0-23)</li>
+<li>minute (int|str) – minute (0-59)</li>
+<li>second (int|str) – second (0-59)</li>
+<li>start_date (datetime|str) – earliest possible date/time to trigger on (inclusive)</li>
+<li>end_date (datetime|str) – latest possible date/time to trigger on (inclusive)</li>
+<li>timezone (datetime.tzinfo|str) – time zone to use for the date/time calculations (defaults to scheduler timezone)</li>
+</ul>
+</blockquote>
+<p>表达式：</p>
+<p><img src="https://stellae.gitee.io/myblog/images/images/python_timer_expression.png" srcset="/Myblog/img/loading.gif" lazyload></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> apscheduler.schedulers.blocking <span class="hljs-keyword">import</span> BlockingScheduler<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">job_function</span>():</span><br>    print(<span class="hljs-string">&quot;Hello World&quot;</span>)<br><span class="hljs-comment"># BlockingScheduler</span><br>sched = BlockingScheduler()<br><span class="hljs-comment"># Schedules job_function to be run on the third Friday</span><br><span class="hljs-comment"># of June, July, August, November and December at 00:00, 01:00, 02:00 and 03:00</span><br>sched.add_job(job_function, <span class="hljs-string">&#x27;cron&#x27;</span>, month=<span class="hljs-string">&#x27;6-8,11-12&#x27;</span>, day=<span class="hljs-string">&#x27;3rd fri&#x27;</span>, hour=<span class="hljs-string">&#x27;0-3&#x27;</span>)<br><span class="hljs-comment"># Runs from Monday to Friday at 5:30 (am) until 2014-05-30 00:00:00</span><br>sched.add_job(job_function, <span class="hljs-string">&#x27;cron&#x27;</span>, day_of_week=<span class="hljs-string">&#x27;mon-fri&#x27;</span>, hour=<span class="hljs-number">5</span>, minute=<span class="hljs-number">30</span>, end_date=<span class="hljs-string">&#x27;2014-05-30&#x27;</span>)<br>sched.start()<br></code></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<h3 id="Flask-APScheduler使用"><a href="#Flask-APScheduler使用" class="headerlink" title="Flask-APScheduler使用"></a>Flask-APScheduler使用</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">pip install flask-apscheduler<br></code></pre></td></tr></table></figure>
+
+
+
+<p>例子：</p>
+<p><code>run.py</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> flask <span class="hljs-keyword">import</span> Flask<br><span class="hljs-keyword">from</span> flask_script <span class="hljs-keyword">import</span> Manager<br><span class="hljs-keyword">from</span> flask_apscheduler <span class="hljs-keyword">import</span> APScheduler<br><br><span class="hljs-keyword">from</span> app.setting <span class="hljs-keyword">import</span> SQLALCHEMY_DATABASE_URI<br><span class="hljs-keyword">from</span> app.model <span class="hljs-keyword">import</span> db<br><span class="hljs-keyword">from</span> app.views <span class="hljs-keyword">import</span> app_bluepring<br><br><br>app = Flask(__name__)<br><br><span class="hljs-comment"># 数据库的配置</span><br>app.config[<span class="hljs-string">&#x27;SQLALCHEMY_DATABASE_URI&#x27;</span>] = SQLALCHEMY_DATABASE_URI<br>app.config[<span class="hljs-string">&#x27;SQLALCHEMY_TRACK_MODIFICATIONS&#x27;</span>] = <span class="hljs-literal">False</span><br><br><span class="hljs-comment"># 初始化scheduler</span><br>scheduler = APScheduler()<br>scheduler.init_app(app)<br><br><span class="hljs-comment"># 初始化app和db</span><br>db.init_app(app)<br><br><span class="hljs-comment"># 注册蓝图</span><br>app.register_blueprint(blueprint=app_bluepring, url_prefix=<span class="hljs-string">&#x27;/app&#x27;</span>)<br><br>scheduler.start()<br><br>manage = Manager(app)<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br><br>    manage.run()<br><br></code></pre></td></tr></table></figure>
+
+<p><code>views.py</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> datetime<br><br><span class="hljs-keyword">from</span> flask <span class="hljs-keyword">import</span> Blueprint, current_app<br><br><br>app_bluepring = Blueprint(<span class="hljs-string">&#x27;app&#x27;</span>, __name__)<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">update_product_pic</span>():</span><br>    <span class="hljs-keyword">pass</span><br><br><br><span class="hljs-meta">@app_bluepring.route(&#x27;/creat_task&#x27;)</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">creat_task</span>():</span><br>    <span class="hljs-string">&quot;&quot;&quot;定时任务：每天晚上7：00执行&quot;&quot;&quot;</span><br>    current_app.apscheduler.add_job(func=update_product_pic, id=<span class="hljs-string">&quot;tasks&quot;</span>, trigger=<span class="hljs-string">&quot;cron&quot;</span>, day=<span class="hljs-string">&#x27;*&#x27;</span>, hour=<span class="hljs-number">19</span>, coalesce=<span class="hljs-literal">True</span>, misfire_grace_time=<span class="hljs-number">30</span>, replace_existing=<span class="hljs-literal">True</span>)<br>    <span class="hljs-comment"># current_app.apscheduler.add_job(func=update_product_pic, id=&quot;tasks&quot;, trigger=&quot;cron&quot;, second=&#x27;*&#x27;)</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;create task successful&#x27;</span><br><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>1、misfire_grace_time，假如一个作业本来 08:00 有一次执行，但是由于某种原因没有被调度上，现在 08:01 了，这个 08:00 的运行实例被提交时，会检查它预订运行的时间和当下时间的差值（这里是1分钟），大于我们设置的 30 秒限制，那么这个运行实例不会被执行。</p>
+<p>2、 scheduler 被 shutdown 后重启，某个任务会积攒了好几次没执行如 5 次，下次这个作业被提交给执行器时，执行 5 次。设置 coalesce=True 后，只会执行一次。</p>
+<p>3、replace_existing=True避免出现两个以上重复任务。</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://lz5z.com/Python%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F/">参考文章</a> 、 <a target="_blank" rel="noopener" href="https://www.cnblogs.com/kangoroo/p/7233709.html">常见问题</a></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/categories/APScheduler/">APScheduler</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/tags/APScheduler/">APScheduler</a>
+                    
+                      <a class="hover-with-bg" href="/Myblog/tags/%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1/">定时任务</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/Myblog/2019/06/12/Python%E9%A1%B9%E7%9B%AE%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Python项目性能优化</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/Myblog/2019/04/20/Kong%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B%E6%8C%87%E5%8D%97/">
+                        <span class="hidden-mobile">Kong快速上手指南</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/Myblog/js/events.js" ></script>
+<script  src="/Myblog/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/Myblog/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/Myblog/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/Myblog/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/Myblog/js/boot.js" ></script>
+
+
+</body>
+</html>

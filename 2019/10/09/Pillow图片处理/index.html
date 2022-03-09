@@ -1,0 +1,585 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/Myblog/img/favicon.png">
+  <link rel="icon" href="/Myblog/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="Simple, so charming!">
+  <meta name="author" content="stellae">
+  <meta name="keywords" content="">
+  
+  <title>Pillow图片处理 - stellae&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/Myblog/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/Myblog/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"stellae.gitee.io","root":"/Myblog/","version":"1.8.10","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/Myblog/js/utils.js" ></script>
+  <script  src="/Myblog/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/Myblog/">&nbsp;<strong>stellae's blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/Myblog/img/WtwSsqwYlA0.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Pillow图片处理">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      stellae
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2019-10-09 13:26" pubdate>
+        2019年10月9日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3.3k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      63
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Pillow图片处理</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：8 个月前
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h2 id="Pillow简介"><a href="#Pillow简介" class="headerlink" title="Pillow简介"></a>Pillow简介</h2><p>PIL：Python Imaging Library，已经是Python平台事实上的图像处理标准库了。PIL功能非常强大，但API却非常简单易用。</p>
+<p>由于PIL仅支持到Python 2.7，加上年久失修，于是一群志愿者在PIL的基础上创建了兼容的版本，名字叫<a target="_blank" rel="noopener" href="https://github.com/python-pillow/Pillow">Pillow</a>，支持最新Python 3.x，又加入了许多新特性，因此，我们可以直接安装使用Pillow。</p>
+<h2 id="Pillow安装"><a href="#Pillow安装" class="headerlink" title="Pillow安装"></a>Pillow安装</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">pip install pillow<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="Pillow实际使用场景"><a href="#Pillow实际使用场景" class="headerlink" title="Pillow实际使用场景"></a>Pillow实际使用场景</h2><h3 id="图片模糊-轮廓"><a href="#图片模糊-轮廓" class="headerlink" title="图片模糊/轮廓"></a>图片模糊/轮廓</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> PIL <span class="hljs-keyword">import</span> Image, ImageFilter<br><br>im = Image.open(<span class="hljs-string">&#x27;test.jpg&#x27;</span>)<br>im2 = im.filter(ImageFilter.BLUR)         <span class="hljs-comment"># 应用模糊滤镜</span><br><span class="hljs-comment"># im2 = im.filter(ImageFilter.CONTOUR)    # 应用轮廓滤镜</span><br>im2.save(<span class="hljs-string">&#x27;blur.jpg&#x27;</span>, <span class="hljs-string">&#x27;jpeg&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<h3 id="图片锐度"><a href="#图片锐度" class="headerlink" title="图片锐度"></a>图片锐度</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> PIL <span class="hljs-keyword">import</span> ImageEnhance<br><br>enhancer = ImageEnhance.Sharpness(im)<br>enhancer.enhance(<span class="hljs-number">40</span>).show()   <span class="hljs-comment"># 数值越大锐度越高</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="图片旋转"><a href="#图片旋转" class="headerlink" title="图片旋转"></a>图片旋转</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">im_rotate = im.rotate(<span class="hljs-number">90</span>)   <span class="hljs-comment"># 逆时针旋转90度</span><br>im_rotate.show()<br></code></pre></td></tr></table></figure>
+
+<h3 id="图片验证码"><a href="#图片验证码" class="headerlink" title="图片验证码"></a>图片验证码</h3><h4 id="1-示例1-简单"><a href="#1-示例1-简单" class="headerlink" title="1. 示例1 (简单)"></a>1. 示例1 (简单)</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> PIL <span class="hljs-keyword">import</span> Image, ImageDraw, ImageFont, ImageFilter<br><br><span class="hljs-keyword">import</span> random<br><br><br><span class="hljs-comment"># 随机字母:</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">random_char</span>():</span><br>    <span class="hljs-keyword">return</span> chr(random.randint(<span class="hljs-number">65</span>, <span class="hljs-number">90</span>))<br><br><br><span class="hljs-comment"># 随机颜色1:</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">random_color</span>():</span><br>    <span class="hljs-keyword">return</span> random.randint(<span class="hljs-number">64</span>, <span class="hljs-number">255</span>), random.randint(<span class="hljs-number">64</span>, <span class="hljs-number">255</span>), random.randint(<span class="hljs-number">64</span>, <span class="hljs-number">255</span>)<br><br><br><span class="hljs-comment"># 随机颜色2:</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">random_color2</span>():</span><br>    <span class="hljs-keyword">return</span> random.randint(<span class="hljs-number">32</span>, <span class="hljs-number">127</span>), random.randint(<span class="hljs-number">32</span>, <span class="hljs-number">127</span>), random.randint(<span class="hljs-number">32</span>, <span class="hljs-number">127</span>)<br><br><br><span class="hljs-comment"># 240 x 60:</span><br>width = <span class="hljs-number">60</span> * <span class="hljs-number">4</span><br>height = <span class="hljs-number">60</span><br>image = Image.new(<span class="hljs-string">&#x27;RGB&#x27;</span>, (width, height), (<span class="hljs-number">255</span>, <span class="hljs-number">255</span>, <span class="hljs-number">255</span>))<br><span class="hljs-comment"># 创建Font对象:</span><br>font = ImageFont.truetype(<span class="hljs-string">&#x27;/Users/stellae/Downloads/ttf/consola.ttf&#x27;</span>, <span class="hljs-number">36</span>)<br><span class="hljs-comment"># 创建Draw对象:</span><br>draw = ImageDraw.Draw(image)<br><span class="hljs-comment"># 填充每个像素:</span><br><span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> range(width):<br>    <span class="hljs-keyword">for</span> y <span class="hljs-keyword">in</span> range(height):<br>        draw.point((x, y), fill=random_color())<br><span class="hljs-comment"># 输出文字:</span><br><span class="hljs-keyword">for</span> t <span class="hljs-keyword">in</span> range(<span class="hljs-number">4</span>):<br>    draw.text((<span class="hljs-number">60</span> * t + <span class="hljs-number">10</span>, <span class="hljs-number">10</span>), random_char(), font=font, fill=random_color2())<br><span class="hljs-comment"># 模糊:</span><br>image = image.filter(ImageFilter.BLUR)<br>image.save(<span class="hljs-string">&#x27;./code.jpg&#x27;</span>, <span class="hljs-string">&#x27;jpeg&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<h4 id="2-示例2-推荐"><a href="#2-示例2-推荐" class="headerlink" title="2. 示例2 (推荐)"></a>2. 示例2 (推荐)</h4><p>需要用到字体文件<code>&#39;Arial.ttf&#39;, &#39;Georgia.ttf&#39;, &#39;actionj.ttf&#39;</code>，存放在<code>/&lt;项目&gt;/static/fonts/</code>目录下。</p>
+<p>captcha.py</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">图片验证码</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-keyword">import</span> os<br><span class="hljs-keyword">import</span> random<br><br><span class="hljs-keyword">from</span> io <span class="hljs-keyword">import</span> BytesIO<br><br><span class="hljs-keyword">from</span> PIL <span class="hljs-keyword">import</span> Image<br><span class="hljs-keyword">from</span> PIL <span class="hljs-keyword">import</span> ImageFilter<br><span class="hljs-keyword">from</span> PIL.ImageDraw <span class="hljs-keyword">import</span> Draw<br><span class="hljs-keyword">from</span> PIL.ImageFont <span class="hljs-keyword">import</span> truetype<br><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Bezier</span>(<span class="hljs-params">object</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;贝塞尔曲线&quot;&quot;&quot;</span><br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span>(<span class="hljs-params">self</span>):</span><br>        self.tsequence = tuple([t / <span class="hljs-number">20.0</span> <span class="hljs-keyword">for</span> t <span class="hljs-keyword">in</span> range(<span class="hljs-number">21</span>)])<br>        self.beziers = &#123;&#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">make_bezier</span>(<span class="hljs-params">self, n</span>):</span><br>        <span class="hljs-string">&quot;&quot;&quot;绘制贝塞尔曲线&quot;&quot;&quot;</span><br>        <span class="hljs-keyword">try</span>:<br>            <span class="hljs-keyword">return</span> self.beziers[n]<br>        <span class="hljs-keyword">except</span> KeyError:<br>            combinations = pascal_row(n - <span class="hljs-number">1</span>)<br>            result = []<br>            <span class="hljs-keyword">for</span> t <span class="hljs-keyword">in</span> self.tsequence:<br>                tpowers = (t ** i <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(n))<br>                upowers = ((<span class="hljs-number">1</span> - t) ** i <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(n - <span class="hljs-number">1</span>, <span class="hljs-number">-1</span>, <span class="hljs-number">-1</span>))<br>                coefs = [c * a * b <span class="hljs-keyword">for</span> c, a, b <span class="hljs-keyword">in</span> zip(combinations,<br>                                                      tpowers, upowers)]<br>                result.append(coefs)<br>            self.beziers[n] = result<br>            <span class="hljs-keyword">return</span> result<br><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Captcha</span>(<span class="hljs-params">object</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;验证码&quot;&quot;&quot;</span><br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span>(<span class="hljs-params">self, width, height, fonts=None, color=None</span>):</span><br>        self._image = <span class="hljs-literal">None</span><br>        self._fonts = fonts <span class="hljs-keyword">if</span> fonts <span class="hljs-keyword">else</span> \<br>            [os.path.join(os.path.join(os.path.dirname(os.path.dirname(__file__)), <span class="hljs-string">&#x27;static&#x27;</span>), <span class="hljs-string">&#x27;fonts&#x27;</span>, font)<br>             <span class="hljs-keyword">for</span> font <span class="hljs-keyword">in</span> [<span class="hljs-string">&#x27;Arial.ttf&#x27;</span>, <span class="hljs-string">&#x27;Georgia.ttf&#x27;</span>, <span class="hljs-string">&#x27;actionj.ttf&#x27;</span>]]<br>        self._color = color <span class="hljs-keyword">if</span> color <span class="hljs-keyword">else</span> random_color(<span class="hljs-number">0</span>, <span class="hljs-number">200</span>, random.randint(<span class="hljs-number">220</span>, <span class="hljs-number">255</span>))<br>        self._width, self._height = width, height<br><br><span class="hljs-meta">    @classmethod</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">instance</span>(<span class="hljs-params">cls, width=<span class="hljs-number">200</span>, height=<span class="hljs-number">75</span></span>):</span><br>        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> hasattr(Captcha, <span class="hljs-string">&quot;_instance&quot;</span>):<br>            cls._instance = cls(width, height)<br>        <span class="hljs-keyword">return</span> cls._instance<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">background</span>(<span class="hljs-params">self</span>):</span><br>        <span class="hljs-string">&quot;&quot;&quot;绘制背景&quot;&quot;&quot;</span><br>        Draw(self._image).rectangle([(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>), self._image.size],<br>                                    fill=random_color(<span class="hljs-number">230</span>, <span class="hljs-number">255</span>))<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">smooth</span>(<span class="hljs-params">self</span>):</span><br>        <span class="hljs-string">&quot;&quot;&quot;平滑图像&quot;&quot;&quot;</span><br>        <span class="hljs-keyword">return</span> self._image.filter(ImageFilter.SMOOTH)<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">curve</span>(<span class="hljs-params">self, width=<span class="hljs-number">4</span>, number=<span class="hljs-number">6</span>, color=None</span>):</span><br>        <span class="hljs-string">&quot;&quot;&quot;绘制曲线&quot;&quot;&quot;</span><br>        dx, height = self._image.size<br>        dx /= number<br>        path = [(dx * i, random.randint(<span class="hljs-number">0</span>, height))<br>                <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">1</span>, number)]<br>        bcoefs = Bezier().make_bezier(number - <span class="hljs-number">1</span>)<br>        points = []<br>        <span class="hljs-keyword">for</span> coefs <span class="hljs-keyword">in</span> bcoefs:<br>            points.append(tuple(sum([coef * p <span class="hljs-keyword">for</span> coef, p <span class="hljs-keyword">in</span> zip(coefs, ps)])<br>                                <span class="hljs-keyword">for</span> ps <span class="hljs-keyword">in</span> zip(*path)))<br>        Draw(self._image).line(points, fill=color <span class="hljs-keyword">if</span> color <span class="hljs-keyword">else</span> self._color, width=width)<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">noise</span>(<span class="hljs-params">self, number=<span class="hljs-number">50</span>, level=<span class="hljs-number">2</span>, color=None</span>):</span><br>        <span class="hljs-string">&quot;&quot;&quot;绘制扰码&quot;&quot;&quot;</span><br>        width, height = self._image.size<br>        dx, dy = width / <span class="hljs-number">10</span>, height / <span class="hljs-number">10</span><br>        width, height = width - dx, height - dy<br>        draw = Draw(self._image)<br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(number):<br>            x = int(random.uniform(dx, width))<br>            y = int(random.uniform(dy, height))<br>            draw.line(((x, y), (x + level, y)),<br>                      fill=color <span class="hljs-keyword">if</span> color <span class="hljs-keyword">else</span> self._color, width=level)<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">text</span>(<span class="hljs-params">self, captcha_text, fonts, font_sizes=None, drawings=None, squeeze_factor=<span class="hljs-number">0.75</span>, color=None</span>):</span><br>        <span class="hljs-string">&quot;&quot;&quot;绘制文本&quot;&quot;&quot;</span><br>        color = color <span class="hljs-keyword">if</span> color <span class="hljs-keyword">else</span> self._color<br>        fonts = tuple([truetype(name, size)<br>                       <span class="hljs-keyword">for</span> name <span class="hljs-keyword">in</span> fonts<br>                       <span class="hljs-keyword">for</span> size <span class="hljs-keyword">in</span> font_sizes <span class="hljs-keyword">or</span> (<span class="hljs-number">65</span>, <span class="hljs-number">70</span>, <span class="hljs-number">75</span>)])<br>        draw = Draw(self._image)<br>        char_images = []<br>        <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> captcha_text:<br>            font = random.choice(fonts)<br>            c_width, c_height = draw.textsize(c, font=font)<br>            char_image = Image.new(<span class="hljs-string">&#x27;RGB&#x27;</span>, (c_width, c_height), (<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>))<br>            char_draw = Draw(char_image)<br>            char_draw.text((<span class="hljs-number">0</span>, <span class="hljs-number">0</span>), c, font=font, fill=color)<br>            char_image = char_image.crop(char_image.getbbox())<br>            <span class="hljs-keyword">for</span> drawing <span class="hljs-keyword">in</span> drawings:<br>                d = getattr(self, drawing)<br>                char_image = d(char_image)<br>            char_images.append(char_image)<br>        width, height = self._image.size<br>        offset = int((width - sum(int(i.size[<span class="hljs-number">0</span>] * squeeze_factor)<br>                                  <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> char_images[:<span class="hljs-number">-1</span>]) -<br>                      char_images[<span class="hljs-number">-1</span>].size[<span class="hljs-number">0</span>]) / <span class="hljs-number">2</span>)<br>        <span class="hljs-keyword">for</span> char_image <span class="hljs-keyword">in</span> char_images:<br>            c_width, c_height = char_image.size<br>            mask = char_image.convert(<span class="hljs-string">&#x27;L&#x27;</span>).point(<span class="hljs-keyword">lambda</span> i: i * <span class="hljs-number">1.97</span>)<br>            self._image.paste(char_image,<br>                        (offset, int((height - c_height) / <span class="hljs-number">2</span>)),<br>                        mask)<br>            offset += int(c_width * squeeze_factor)<br><br><span class="hljs-meta">    @staticmethod</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">warp</span>(<span class="hljs-params">image, dx_factor=<span class="hljs-number">0.3</span>, dy_factor=<span class="hljs-number">0.3</span></span>):</span><br>        <span class="hljs-string">&quot;&quot;&quot;图像扭曲&quot;&quot;&quot;</span><br>        width, height = image.size<br>        dx = width * dx_factor<br>        dy = height * dy_factor<br>        x1 = int(random.uniform(-dx, dx))<br>        y1 = int(random.uniform(-dy, dy))<br>        x2 = int(random.uniform(-dx, dx))<br>        y2 = int(random.uniform(-dy, dy))<br>        warp_image = Image.new(<br>            <span class="hljs-string">&#x27;RGB&#x27;</span>,<br>            (width + abs(x1) + abs(x2), height + abs(y1) + abs(y2)))<br>        warp_image.paste(image, (abs(x1), abs(y1)))<br>        width2, height2 = warp_image.size<br>        <span class="hljs-keyword">return</span> warp_image.transform(<br>            (width, height),<br>            Image.QUAD,<br>            (x1, y1, -x1, height2 - y2, width2 + x2, height2 + y2, width2 - x2, -y1))<br><br><span class="hljs-meta">    @staticmethod</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">offset</span>(<span class="hljs-params">image, dx_factor=<span class="hljs-number">0.1</span>, dy_factor=<span class="hljs-number">0.2</span></span>):</span><br>        <span class="hljs-string">&quot;&quot;&quot;图像偏移&quot;&quot;&quot;</span><br>        width, height = image.size<br>        dx = int(random.random() * width * dx_factor)<br>        dy = int(random.random() * height * dy_factor)<br>        offset_image = Image.new(<span class="hljs-string">&#x27;RGB&#x27;</span>, (width + dx, height + dy))<br>        offset_image.paste(image, (dx, dy))<br>        <span class="hljs-keyword">return</span> offset_image<br><br><span class="hljs-meta">    @staticmethod</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">rotate</span>(<span class="hljs-params">image, angle=<span class="hljs-number">25</span></span>):</span><br>        <span class="hljs-string">&quot;&quot;&quot;图像旋转&quot;&quot;&quot;</span><br>        <span class="hljs-keyword">return</span> image.rotate(random.uniform(-angle, angle),<br>                            Image.BILINEAR, expand=<span class="hljs-number">1</span>)<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">generate</span>(<span class="hljs-params">self, captcha_text=<span class="hljs-string">&#x27;&#x27;</span>, fmt=<span class="hljs-string">&#x27;PNG&#x27;</span></span>):</span><br>        <span class="hljs-string">&quot;&quot;&quot;生成验证码(文字和图片)&quot;&quot;&quot;</span><br>        self._image = Image.new(<span class="hljs-string">&#x27;RGB&#x27;</span>, (self._width, self._height), (<span class="hljs-number">255</span>, <span class="hljs-number">255</span>, <span class="hljs-number">255</span>))<br>        self.background()<br>        self.text(captcha_text, self._fonts,<br>                  drawings=[<span class="hljs-string">&#x27;warp&#x27;</span>, <span class="hljs-string">&#x27;rotate&#x27;</span>, <span class="hljs-string">&#x27;offset&#x27;</span>])<br>        self.curve()<br>        self.noise()<br>        self.smooth()<br>        image_bytes = BytesIO()<br>        self._image.save(image_bytes, format=fmt)<br>        <span class="hljs-keyword">return</span> image_bytes.getvalue()<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">pascal_row</span>(<span class="hljs-params">n=<span class="hljs-number">0</span></span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;生成Pascal三角第n行&quot;&quot;&quot;</span><br>    result = [<span class="hljs-number">1</span>]<br>    x, numerator = <span class="hljs-number">1</span>, n<br>    <span class="hljs-keyword">for</span> denominator <span class="hljs-keyword">in</span> range(<span class="hljs-number">1</span>, n // <span class="hljs-number">2</span> + <span class="hljs-number">1</span>):<br>        x *= numerator<br>        x /= denominator<br>        result.append(x)<br>        numerator -= <span class="hljs-number">1</span><br>    <span class="hljs-keyword">if</span> n &amp; <span class="hljs-number">1</span> == <span class="hljs-number">0</span>:<br>        result.extend(reversed(result[:<span class="hljs-number">-1</span>]))<br>    <span class="hljs-keyword">else</span>:<br>        result.extend(reversed(result))<br>    <span class="hljs-keyword">return</span> result<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">random_color</span>(<span class="hljs-params">start=<span class="hljs-number">0</span>, end=<span class="hljs-number">255</span>, opacity=<span class="hljs-number">255</span></span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;获得随机颜色&quot;&quot;&quot;</span><br>    red = random.randint(start, end)<br>    green = random.randint(start, end)<br>    blue = random.randint(start, end)<br>    <span class="hljs-keyword">if</span> opacity <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>:<br>        <span class="hljs-keyword">return</span> red, green, blue<br>    <span class="hljs-keyword">return</span> red, green, blue, opacity<br></code></pre></td></tr></table></figure>
+
+<p>utils.py</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">工具函数</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-keyword">import</span> random<br><br><span class="hljs-keyword">from</span> io <span class="hljs-keyword">import</span> StringIO<br><br><br>ALL_CHARS = <span class="hljs-string">&#x27;0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ&#x27;</span><br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">gen_captcha_text</span>(<span class="hljs-params">length=<span class="hljs-number">4</span></span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;生成指定长度的图片验证码文字&quot;&quot;&quot;</span><br>    code = StringIO()<br>    chars_len = len(ALL_CHARS)<br>    <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(length):<br>        index = random.randrange(chars_len)<br>        code.write(ALL_CHARS[index])<br>    <span class="hljs-keyword">return</span> code.getvalue()<br></code></pre></td></tr></table></figure>
+
+<p>使用方法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> django.http <span class="hljs-keyword">import</span> HttpResponse<br><br><span class="hljs-keyword">from</span> common.captcha <span class="hljs-keyword">import</span> Captcha<br><span class="hljs-keyword">from</span> common.utils <span class="hljs-keyword">import</span> gen_captcha_text<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">captcha</span>(<span class="hljs-params">request</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;生成验证码&quot;&quot;&quot;</span><br>    <span class="hljs-comment"># 随机验证码内容, 可以指定长度</span><br>    code_text = gen_captcha_text()<br>    <span class="hljs-comment"># 将验证码放入session缓存中</span><br>    request.session[<span class="hljs-string">&#x27;code_text&#x27;</span>] = code_text<br>    <span class="hljs-comment"># instance()指定验证码宽高； generate(code_text)生成验证码,返回图片二进制数据</span><br>    code_bytes = Captcha.instance().generate(code_text)<br>    <span class="hljs-keyword">return</span> HttpResponse(code_bytes, content_type=<span class="hljs-string">&#x27;image/png&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>想要在页面上直接显示出图片，可以将二进制图片利用base64编码成字符串</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 修改以上代码</span><br>code_bytes = Captcha.instance().generate(code_text)<br>code_base64_str = base64.b64encode(code_bytes).decode(<span class="hljs-string">&#x27;utf-8&#x27;</span>)<br><span class="hljs-keyword">return</span> JsonResponse(&#123;<span class="hljs-string">&#x27;code&#x27;</span>:<span class="hljs-number">200</span>, <span class="hljs-string">&#x27;pic&#x27;</span>:code_base64_str&#125;)<br></code></pre></td></tr></table></figure>
+
+<p>在src前添加data:image/jpeg;base64,+已经encode的二进制代码，就可以在网页端显示出图片</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;captcha_pic&quot;</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;data:image/gif;base64,R0lGODlhDwAPAKECAAAAzMzM/////wAAACwAAAAADwAPAAACIISPeQHsrZ5ModrLlN48CXF8m2iQ3YmmKqVlRtW4MLwWACH+H09wdGltaXplZCBieSBVbGVhZCBTbWFydFNhdmVyIQAAOw==&quot;</span> <span class="hljs-attr">width</span>=<span class="hljs-string">&quot;150&quot;</span> <span class="hljs-attr">height</span>=<span class="hljs-string">&quot;150&quot;</span>/&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="图片绘制-文字-水印"><a href="#图片绘制-文字-水印" class="headerlink" title="图片绘制(文字/水印)"></a>图片绘制(文字/水印)</h3><h4 id="1-添加文字"><a href="#1-添加文字" class="headerlink" title="1. 添加文字"></a>1. 添加文字</h4><p>将QQ 头像（或者微博头像）右上角加上红色的数字，类似于微信未读信息数量那种提示效果。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> PIL <span class="hljs-keyword">import</span> Image, ImageDraw, ImageFont<br><br><br>path = <span class="hljs-string">&#x27;/Users/stellae/Downloads/temp/Wechat_portrait.jpeg&#x27;</span><br>path_save = <span class="hljs-string">&#x27;/Users/stellae/Downloads/temp/Wechat_portrait_draw.png&#x27;</span><br>ttf_path = <span class="hljs-string">&#x27;/Users/stellae/Downloads/ttf/consola.ttf&#x27;</span><br>color = <span class="hljs-string">&quot;#DE7860&quot;</span>   <span class="hljs-comment"># 红色（十六进制颜色码）</span><br><span class="hljs-comment"># color = (255,0,0)   # 也可以使用RGB颜色值</span><br>font = ImageFont.truetype(font=ttf_path, size=<span class="hljs-number">100</span>)   <span class="hljs-comment"># 字体设置</span><br>draw_number = <span class="hljs-string">&#x27;6%&#x27;</span>   <span class="hljs-comment"># 内容</span><br>image = Image.open(path)<br>draw = ImageDraw.Draw(image)<br>width, height = image.size<br>draw.text((width * <span class="hljs-number">0.8</span>, height * <span class="hljs-number">0.05</span>), <span class="hljs-string">u&#x27;%s&#x27;</span> % draw_number, fill=color, font=font)  <span class="hljs-comment"># 绘制</span><br>image.save(path_save, <span class="hljs-string">&#x27;png&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这里的这个u表示将后面跟的字符串以unicode格式存储；</p>
+<blockquote>
+<blockquote>
+<p>RGB颜色值与十六进制颜色值转换<a target="_blank" rel="noopener" href="https://www.sioe.cn/yingyong/yanse-rgb-16/">工具</a>；</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<h4 id="2-添加水印"><a href="#2-添加水印" class="headerlink" title="2. 添加水印"></a>2. 添加水印</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> PIL <span class="hljs-keyword">import</span> Image<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">add_watermark_to_image</span>(<span class="hljs-params">image, watermark</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;添加水印&quot;&quot;&quot;</span><br>    rgba_image = image.convert(<span class="hljs-string">&#x27;RGBA&#x27;</span>)    <span class="hljs-comment"># 转换图像模式为RGBA</span><br>    rgba_watermark = watermark.convert(<span class="hljs-string">&#x27;RGBA&#x27;</span>)<br><br>    image_x, image_y = rgba_image.size<br>    watermark_x, watermark_y = rgba_watermark.size<br><br>    <span class="hljs-comment"># 缩放图片</span><br>    scale = <span class="hljs-number">10</span><br>    watermark_scale = max(image_x / (scale * watermark_x), image_y / (scale * watermark_y))<br>    new_size = (int(watermark_x * watermark_scale), int(watermark_y * watermark_scale))<br>    rgba_watermark = rgba_watermark.resize(new_size, resample=Image.ANTIALIAS)<br>    <span class="hljs-comment"># 透明度</span><br>    rgba_watermark_mask = rgba_watermark.convert(<span class="hljs-string">&quot;L&quot;</span>).point(lut=<span class="hljs-keyword">lambda</span> x: min(x, <span class="hljs-number">180</span>))<br>    rgba_watermark.putalpha(rgba_watermark_mask)<br><br>    watermark_x, watermark_y = rgba_watermark.size<br>    <span class="hljs-comment"># 水印位置</span><br>    rgba_image.paste(rgba_watermark, box=(image_x - watermark_x, image_y - watermark_y), mask=rgba_watermark_mask)<br><br>    <span class="hljs-keyword">return</span> rgba_image<br><br><br>file_path = <span class="hljs-string">&#x27;/Users/stellae/Downloads/temp/Wechat_portrait.jpeg&#x27;</span>    <span class="hljs-comment"># 原图片</span><br>watermark_path = <span class="hljs-string">&#x27;/Users/stellae/Downloads/temp/EX101.jpg&#x27;</span>          <span class="hljs-comment"># 水印图片</span><br><br>im_before = Image.open(file_path)<br><span class="hljs-comment"># im_before.show()</span><br><br>im_watermark = Image.open(watermark_path)<br>im_after = add_watermark_to_image(im_before, im_watermark)<br>im_after.show()<br><br></code></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>方法说明：</strong><br><strong>Image.convert(mode = None，matrix = None，dither = None，调色板= 0，<em>colors = 256</em>)方法用于转换Image模式，PIL中有九种不同模式，分别为1、L、P、RGB、RGBA、CMYK、YCbCr、I、F</strong></p>
+<blockquote>
+<blockquote>
+<ul>
+<li><p>1：1位像素，表示黑和白，但是存储的时候每个像素存储为8bit。</p>
+</li>
+<li><p>L：8位像素，表示黑和白。</p>
+</li>
+<li><p>P：8位像素，使用调色板映射到其他模式。</p>
+</li>
+<li><p>RGB：3x8位像素，为真彩色。</p>
+</li>
+<li><p>RGBA：4x8位像素，有透明通道的真彩色。</p>
+</li>
+<li><p>CMYK：4x8位像素，颜色分离。</p>
+</li>
+<li><p>YCbCr：3x8位像素，彩色视频格式。</p>
+</li>
+<li><p>I：32位整型像素。</p>
+</li>
+<li><p>F：32位浮点型像素。</p>
+</li>
+</ul>
+</blockquote>
+</blockquote>
+<p><strong>Image.point(lut, mode=None)方法通过查找表或函数映射此图像</strong></p>
+<blockquote>
+<blockquote>
+<ul>
+<li><strong>lut</strong> –查找表，在图像中每个波段包含256个值（如果self.mode ==“ I”且mode ==“ L”，则为65536）。可以改用函数，它应使用单个参数。对每个可能的像素值调用一次该函数，并将结果表应用于图像的所有波段。</li>
+<li><strong>模式</strong> –输出模式（默认与输入相同）。在当前版本中，仅当源图像的模式为“ L”或“ P”并且输出的模式为“ 1”或源图像的模式为“ I”且输出模式为“ L”时，才可以使用此功能</li>
+</ul>
+</blockquote>
+</blockquote>
+<p><strong>Image.putalpha(alpha)方法在此图像中添加或替换alpha层。如果图像没有Alpha图层，则将其转换为“ LA”或“ RGBA”。新层必须为“ L”或“ 1”。</strong></p>
+<blockquote>
+<blockquote>
+<ul>
+<li>alpha –新的alpha层。这可以是具有与该图像相同大小的“ L”或“ 1”图像，也可以是整数或其他颜色值。</li>
+</ul>
+</blockquote>
+</blockquote>
+<p><strong>Image.paste(im, box=None, mask=None)方法将另一个图像粘贴到该图像中。</strong></p>
+<blockquote>
+<blockquote>
+<ul>
+<li>box参数可以是2元组（给出左上角），4元组（定义左，上，右和下像素坐标），也可以是None（与（0，0）相同）。请参阅<a target="_blank" rel="noopener" href="https://pillow.readthedocs.io/en/stable/handbook/concepts.html#coordinate-system">坐标系</a>。如果指定了4元组，则粘贴图像的大小必须与区域的大小匹配。</li>
+<li>如果模式不匹配，则粘贴的图像将转换为该图像的模式（<a target="_blank" rel="noopener" href="https://pillow.readthedocs.io/en/stable/reference/Image.html#PIL.Image.Image.convert"><code>convert()</code></a>有关详细信息，请参见方法）。</li>
+<li>源可以是包含像素值的整数或元组，而不是图像。然后，该方法用给定的颜色填充区域。创建RGB图像时，还可以使用ImageColor模块支持的颜色字符串。</li>
+<li>如果指定了遮罩，则此方法仅更新遮罩指示的区域。您可以使用“ 1”，“ L”或“ RGBA”图像（在后一种情况下，alpha波段用作遮罩）。遮罩为255时，将按原样复制给定图像。掩码为0时，将保留当前值。中间值会将两个图像混合在一起，包括它们的Alpha通道（如果有的话）。</li>
+</ul>
+</blockquote>
+</blockquote>
+</blockquote>
+<h3 id="图片缩放-压缩"><a href="#图片缩放-压缩" class="headerlink" title="图片缩放(压缩)"></a>图片缩放(压缩)</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># thumbnail.py</span><br><span class="hljs-keyword">import</span> os<br><br><span class="hljs-keyword">from</span> multiprocessing <span class="hljs-keyword">import</span> Pool<br><span class="hljs-keyword">from</span> PIL <span class="hljs-keyword">import</span> Image<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">thumbnail</span>(<span class="hljs-params">image_details</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;生成指定尺寸缩略图&quot;&quot;&quot;</span><br>    size, path = image_details<br>    image = Image.open(path)<br>    image.thumbnail(size)<br>    file_prefix, file_extension = os.path.splitext(path)  <span class="hljs-comment"># 分割文件前后缀</span><br>    save_path = <span class="hljs-string">f&#x27;<span class="hljs-subst">&#123;file_prefix&#125;</span>_<span class="hljs-subst">&#123;size[<span class="hljs-number">0</span>]&#125;</span>_<span class="hljs-subst">&#123;size[<span class="hljs-number">1</span>]&#125;</span><span class="hljs-subst">&#123;file_extension&#125;</span>&#x27;</span><br>    image.save(save_path)<br>    <span class="hljs-keyword">return</span> save_path<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">gen_thumbnail</span>(<span class="hljs-params">file_path</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;生成大小两个尺寸的缩略图&quot;&quot;&quot;</span><br>    sizes = [(<span class="hljs-number">1024</span>, <span class="hljs-number">656</span>), (<span class="hljs-number">600</span>, <span class="hljs-number">384</span>)]<br>    file_path = [file_path] * <span class="hljs-number">2</span><br>    <span class="hljs-comment"># 创建拥有2个进程数量的进程池</span><br>    pool = Pool(<span class="hljs-number">2</span>)<br>    results = pool.map(thumbnail, zip(sizes, file_path))<br>    pool.close()   <span class="hljs-comment"># 确保不会有新的进程加入pool</span><br>    pool.join()<br>    <span class="hljs-keyword">return</span> results<br><br></code></pre></td></tr></table></figure>
+
+<p>如果要等比缩放，并且空缺地方填白。参考以下代码。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># thumbnail.py</span><br><span class="hljs-keyword">import</span> os<br><br><span class="hljs-keyword">from</span> multiprocessing <span class="hljs-keyword">import</span> Pool<br><span class="hljs-keyword">from</span> PIL <span class="hljs-keyword">import</span> Image<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">thumbnail</span>(<span class="hljs-params">image_details</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;生成指定尺寸缩略图,并将空缺部分填白&quot;&quot;&quot;</span><br>    size, path = image_details<br>    image = Image.open(path)<br>    aspect_width, aspect_height = size<br>    source_width, source_height = image.size<br>    <span class="hljs-comment"># 判断宽高比</span><br>    <span class="hljs-keyword">if</span> (source_width / source_height) &gt; (aspect_width / aspect_height):<br>        rate = aspect_width / source_width<br>    <span class="hljs-keyword">else</span>:<br>        rate = aspect_height / source_height<br>    rate = round(rate, <span class="hljs-number">1</span>)<br>    image = image.resize((int(source_width * rate), int(source_height * rate)), Image.ANTIALIAS)<br>    <span class="hljs-comment"># 填白</span><br>    result_image = Image.new(<span class="hljs-string">&#x27;RGB&#x27;</span>, [aspect_width, aspect_height], (<span class="hljs-number">255</span>, <span class="hljs-number">255</span>, <span class="hljs-number">255</span>, <span class="hljs-number">255</span>))<br>    result_image.paste(image, (int((aspect_width - image.size[<span class="hljs-number">0</span>]) / <span class="hljs-number">2</span>), int((aspect_height - image.size[<span class="hljs-number">1</span>]) / <span class="hljs-number">2</span>)))<br>    file_prefix, file_extension = os.path.splitext(path)  <span class="hljs-comment"># 分割文件前后缀</span><br>    save_path = <span class="hljs-string">f&#x27;<span class="hljs-subst">&#123;file_prefix&#125;</span>_<span class="hljs-subst">&#123;image.size[<span class="hljs-number">0</span>]&#125;</span>_<span class="hljs-subst">&#123;image.size[<span class="hljs-number">1</span>]&#125;</span><span class="hljs-subst">&#123;file_extension&#125;</span>&#x27;</span><br>    result_image.save(save_path)<br>    <span class="hljs-keyword">return</span> save_path<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">gen_thumbnail</span>(<span class="hljs-params">file_path</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;生成大小两个尺寸的缩略图&quot;&quot;&quot;</span><br>    sizes = [(<span class="hljs-number">1013</span>, <span class="hljs-number">650</span>), (<span class="hljs-number">600</span>, <span class="hljs-number">385</span>)]<br>    file_path = [file_path] * <span class="hljs-number">2</span><br>    <span class="hljs-comment"># 创建拥有2个进程数量的进程池</span><br>    pool = Pool(<span class="hljs-number">2</span>)<br>    results = pool.map(thumbnail, zip(sizes, file_path))<br>    pool.close()   <span class="hljs-comment"># 确保不会有新的进程加入pool</span><br>    pool.join()<br>    <span class="hljs-keyword">return</span> results<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>resize()方法可以缩小也可以放大，而thumbnail()方法只能缩小；</p>
+<p>resize()方法不会改变对象的大小，只会返回一个新的Image对象，而thumbnail()方法会直接改变对象的大小，返回值为None；</p>
+<p>resize()方法中的size参数直接规定了修改后的大小，而thumbnail()方法按比例缩小，size参数只规定修改后size的最大值。</p>
+</blockquote>
+<ul>
+<li><p><strong>resize方法可以指定使用抗锯齿模式缩放图片：添加参数Image.ANTIALIAS</strong>。</p>
+</li>
+<li><p><strong>save方法可以指定存储图片质量：添加参数quality=&lt;0-100&gt; ，quality越大，质量越高</strong>。</p>
+</li>
+</ul>
+<p>更多用法请查看 <a target="_blank" rel="noopener" href="https://pillow.readthedocs.io/en/stable/reference/Image.html">Pillow方法详解</a></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/categories/Python/">Python</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/tags/pillow/">pillow</a>
+                    
+                      <a class="hover-with-bg" href="/Myblog/tags/%E9%AA%8C%E8%AF%81%E7%A0%81/">验证码</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/Myblog/2019/10/31/Logging%E6%A8%A1%E5%9D%97%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Logging模块基本用法</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/Myblog/2019/09/12/Marshmallow%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">
+                        <span class="hidden-mobile">Marshmallow序列化与反序列化</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/Myblog/js/events.js" ></script>
+<script  src="/Myblog/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/Myblog/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/Myblog/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/Myblog/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/Myblog/js/boot.js" ></script>
+
+
+</body>
+</html>

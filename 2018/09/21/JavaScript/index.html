@@ -1,0 +1,539 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/Myblog/img/favicon.png">
+  <link rel="icon" href="/Myblog/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="Simple, so charming!">
+  <meta name="author" content="stellae">
+  <meta name="keywords" content="">
+  
+  <title>JavaScript - stellae&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/Myblog/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/Myblog/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"stellae.gitee.io","root":"/Myblog/","version":"1.8.10","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/Myblog/js/utils.js" ></script>
+  <script  src="/Myblog/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/Myblog/">&nbsp;<strong>stellae's blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/Myblog/img/WtwSsqwYlA0.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="JavaScript">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      stellae
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2018-09-21 23:47" pubdate>
+        2018年9月21日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.9k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      28
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">JavaScript</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：3 年前
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h3 id="一、JS介绍"><a href="#一、JS介绍" class="headerlink" title="一、JS介绍"></a>一、JS介绍</h3><h5 id="1、什么是JS"><a href="#1、什么是JS" class="headerlink" title="1、什么是JS"></a>1、什么是JS</h5><p>javaScripy = ECMAScript(js语法) + BOM - window(浏览器对象模型) + DOM - document(文档对象模型)<br>js 是 javascript 的缩写，是一门专门用来控制网页内容的行为的脚本语言。<br>js 就是 web 标准中的行为标准。</p>
+<h5 id="2、在哪儿写-JS-代码"><a href="#2、在哪儿写-JS-代码" class="headerlink" title="2、在哪儿写 JS 代码"></a>2、在哪儿写 JS 代码</h5><p>1、写在标签的内容（写在标签的行为相关的属性中，比如按钮的onclicked）。</p>
+<p>2、写在 script 标签中（script标签可以放在html 的任何位置，但是一般放在head或者body中）。</p>
+<p>3、写在外部的 js 文件中</p>
+<p>导入</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text/javascript&quot;</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;js/new_file.js&quot;</span>&gt;</span>	<br><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h5 id="3、js-能做些什么事情"><a href="#3、js-能做些什么事情" class="headerlink" title="3、js 能做些什么事情"></a>3、js 能做些什么事情</h5><p>1、js 可以在网页中插入html 代码。<br>2、可以修改标签的内容。<br>3、修改标签的样式。</p>
+<h3 id="二、JS基础语法"><a href="#二、JS基础语法" class="headerlink" title="二、JS基础语法"></a>二、JS基础语法</h3><h5 id="1、注释"><a href="#1、注释" class="headerlink" title="1、注释"></a>1、注释</h5><p>单行注释：单行注释前面加‘//’<br>多行注释：<br>/<em>这是多行注释<br>\</em>这是注释的第二行<br>*/</p>
+<h5 id="2、标识符"><a href="#2、标识符" class="headerlink" title="2、标识符"></a>2、标识符</h5><p>要求是由数字、字母、下划线和 $符 组成，数字不能开头。<br><code>var h1</code></p>
+<h5 id="3、基本数据类型。"><a href="#3、基本数据类型。" class="headerlink" title="3、基本数据类型。"></a>3、基本数据类型。</h5><p>注意：JS中大小写敏感，没有元组和集合。</p>
+<p><strong>常规</strong><br>Number：数字（包含所有数字）<br>Boolean（布尔类型）<br>String（字符串）<br>Array（数组）<br>Object（对象）</p>
+<p><strong>特殊</strong><br>NaN（不存在的数字）<br>null（空，一般用来清空变量中的内容）<br>undefined（变量没有赋值时，默认是undefined）<br>console.log（）   //在控制台打印内容</p>
+<h5 id="4、字面量"><a href="#4、字面量" class="headerlink" title="4、字面量"></a>4、字面量</h5><p>Number字面量：所有的数字（支持科学技术法，不支持复数）。</p>
+<p>Boolean字面量：true、false（小写）。</p>
+<p>String字面量：单引号或者双引号包围的字符集，支持转义字符（和python相同）。</p>
+<p>Array字面量：相当于python中的列表。</p>
+<p>Object对象字面量：相当于python中的‘字典+对象’<br>注意：key相当于属性，value相当于属性的值。</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs angelscript">var dict = &#123;a:<span class="hljs-number">100</span>, name:<span class="hljs-number">200</span>&#125;<br>console.log(dict)<br></code></pre></td></tr></table></figure>
+<p>typeof()查看数据类型。</p>
+<h5 id="5、js中的语句"><a href="#5、js中的语句" class="headerlink" title="5、js中的语句"></a>5、js中的语句</h5><p>1、一条语句结束后可以写分号，也可以不写，但是一行要写多行就必须写分号。<br>2、js中没有缩进的语法要求，需要代码的时候使用{}</p>
+<h5 id="6、js中变量的声明"><a href="#6、js中变量的声明" class="headerlink" title="6、js中变量的声明"></a>6、js中变量的声明</h5><p><strong>(1)、var声明变量的关键字。</strong><br><code>var 变量名</code> 或者 <code>var 变量=初值</code><br><strong>(2)、变量名：标识符</strong><br>不能是js中的关键字；驼峰式命名（第一个单词的首字母小写，后面每个单词首字母大写），见名知义<br><code>var age ;  var name</code><br><code>var age1 = 10, name ,studyId</code><br>一个变量存储多种类型的值。</p>
+<h5 id="7、js-中的运算符"><a href="#7、js-中的运算符" class="headerlink" title="7、js 中的运算符"></a>7、js 中的运算符</h5><p>包含：数学运算符、比较运算符、逻辑运算符、赋值元素运算符、三目运算符。</p>
+<p><strong>数学运算符</strong>：+、-、<em>、/、%、\</em>*(js7才有)、++（自加1）、–（自减1）<br>注意：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">b</span> = a++：在赋值时先赋值，再加一<br><span class="hljs-attr">b</span> = ++a：先加<span class="hljs-number">1</span>，再赋值。 <br></code></pre></td></tr></table></figure>
+<p><strong>比较运算符</strong>：&gt;,&lt;,==,&gt;=,&lt;=,!=,===,!==,&gt;==,&lt;==.<br>结果都是布尔值。<br>==：是否相等（判断值是否相等）<br>===：是否完全相等（判断值和类型是否相等）<br><img src="https://upload-images.jianshu.io/upload_images/13692175-4d0ef2be2285b4e3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/Myblog/img/loading.gif" lazyload></p>
+<p><strong>逻辑运算符</strong><br>&amp;&amp;（与）、||（或）、！（非）</p>
+<p><strong>赋值运算符</strong><br>=，+=，-=，*=，/=，%=，%=……</p>
+<p><strong>三目运算符 – ？：</strong><br>语法：<br><code>表达式1?值1:值2</code> —&gt;  判断表达式1的值是否为真，为真整个运算的结果就是值1，否则值2.</p>
+<p>运算顺序：数学&gt;比较&gt;逻辑&gt;三目&gt;赋值</p>
+<h5 id="8、js中的分支语句"><a href="#8、js中的分支语句" class="headerlink" title="8、js中的分支语句"></a>8、js中的分支语句</h5><p><strong>if语句</strong></p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs angelscript"><span class="hljs-keyword">if</span>(条件语句<span class="hljs-number">1</span>)&#123;<br>  代码段<span class="hljs-number">1</span><br>&#125;<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(条件语句<span class="hljs-number">2</span>)&#123;<br>  代码段<span class="hljs-number">2</span><br>&#125;<span class="hljs-keyword">else</span>&#123;<br>  代码段<span class="hljs-number">3</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>执行过程：先判断条件语句1是否为true，为true就执行代码段1，再判断条件2……</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-selector-tag">var</span> <span class="hljs-selector-tag">a</span> = <span class="hljs-number">2</span><br><span class="hljs-function"><span class="hljs-title">if</span><span class="hljs-params">(!(a%<span class="hljs-number">2</span>)</span></span>)&#123;<br>	console.log(<span class="hljs-string">&#x27;偶数&#x27;</span>)<br>&#125;<span class="hljs-keyword">else</span>&#123;<br>	console.log(<span class="hljs-string">&#x27;奇数&#x27;</span>)<br>&#125;<br><br>偶数<br></code></pre></td></tr></table></figure>
+<p><strong>swith语句</strong></p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs angelscript"><span class="hljs-keyword">switch</span>(表达式)&#123;<br>	<span class="hljs-keyword">case</span> 值<span class="hljs-number">1</span>:&#123;<br>		代码段<span class="hljs-number">1</span><br>	&#125;<br>	<span class="hljs-keyword">case</span> 值<span class="hljs-number">2</span>:&#123; <br>		代码段<span class="hljs-number">2</span><br>	&#125;<br>	···<br>	<span class="hljs-keyword">default</span>:&#123;<br>		<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>执行过程：先计算表达式的值，然后用这个值去和后边case关键字后面的值一一对比，找到第一个和表达式的值相等的case，然后将这个case作为入口，依次执行这个case后边所有的代码。直到遇到switch和break结束。如果没有找到和表达式的值相等的case就执行default后面的代码。</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><code class="hljs typescript">练习一：打印星期<br><span class="hljs-keyword">var</span> week = <span class="hljs-number">4</span><br><span class="hljs-keyword">switch</span>(week)&#123;<br>	<span class="hljs-keyword">case</span> <span class="hljs-number">0</span>:&#123;<br>		<span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;星期天&quot;</span>)<br>		<span class="hljs-keyword">break</span><br>	&#125;<br>	<span class="hljs-keyword">case</span> <span class="hljs-number">1</span>:&#123;<br>		<span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;星期一&quot;</span>)<br>		<span class="hljs-keyword">break</span><br>	&#125;<br>	<span class="hljs-keyword">case</span> <span class="hljs-number">2</span>:&#123;<br>		<span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;星期二&quot;</span>)<br>		<span class="hljs-keyword">break</span><br>	&#125;<br>	<span class="hljs-keyword">case</span> <span class="hljs-number">3</span>:&#123;<br>		<span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;星期三&quot;</span>)<br>		<span class="hljs-keyword">break</span><br>	&#125;<br>	<span class="hljs-keyword">case</span> <span class="hljs-number">4</span>:&#123;<br>		<span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;星期四&quot;</span>)<br>		<span class="hljs-keyword">break</span><br>	&#125;<br>	<span class="hljs-keyword">case</span> <span class="hljs-number">5</span>:&#123;<br>		<span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;星期五&quot;</span>)<br>		<span class="hljs-keyword">break</span><br>	&#125;<br>	<span class="hljs-keyword">case</span> <span class="hljs-number">6</span>:&#123;<br>		<span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;星期六&quot;</span>)<br>		<span class="hljs-keyword">break</span><br>	&#125;<br>&#125;<br><br>练习二：输入成绩查看分数划分<br><span class="hljs-keyword">var</span> score = <span class="hljs-number">3</span><br><span class="hljs-keyword">switch</span>(score)&#123;<br>	<span class="hljs-keyword">case</span> <span class="hljs-number">1</span>:<br>	<span class="hljs-keyword">case</span> <span class="hljs-number">2</span>:<br>	<span class="hljs-keyword">case</span> <span class="hljs-number">3</span>:<br>	<span class="hljs-keyword">case</span> <span class="hljs-number">4</span>:<br>	<span class="hljs-keyword">case</span> <span class="hljs-number">5</span>:&#123;<br>		<span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;不及格&quot;</span>)<br>		<span class="hljs-keyword">break</span><br>	&#125;<br>	<span class="hljs-keyword">case</span> <span class="hljs-number">6</span>:&#123;<br>		<span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;及格&quot;</span>)<br>		<span class="hljs-keyword">break</span><br>	&#125;<br>	<span class="hljs-keyword">case</span> <span class="hljs-number">7</span>:&#123;<br>		<span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;良好&quot;</span>)<br>		<span class="hljs-keyword">break</span><br>	&#125;<br>	<span class="hljs-keyword">case</span> <span class="hljs-number">8</span>:&#123;<br>		<span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;良好&quot;</span>)<br>		<span class="hljs-keyword">break</span><br>	&#125;<br>	<span class="hljs-keyword">case</span> <span class="hljs-number">9</span>:&#123;<br>		<span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;优秀&quot;</span>)<br>		<span class="hljs-keyword">break</span><br>	&#125;<br>	<span class="hljs-keyword">case</span> <span class="hljs-number">10</span>:&#123;<br>		<span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;优秀&quot;</span>)<br>		<span class="hljs-keyword">break</span><br>	&#125;<br>	<span class="hljs-keyword">default</span>:&#123;<br>		<span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;输入不正确！&quot;</span>)<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h5 id="9、循环"><a href="#9、循环" class="headerlink" title="9、循环"></a>9、循环</h5><p>js中的循环结构分为：for循环和while循环。<br><strong>for-in循环</strong></p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs actionscript"><span class="hljs-keyword">for</span> <span class="hljs-keyword">var</span> 变量 <span class="hljs-keyword">in</span> 序列&#123;<br>	循环体<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>执行过程：依次从序列中取元素中对应的索引值，每取一个执行一次循环体。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-selector-tag">var</span> str = <span class="hljs-string">&#x27;abcd&#x27;</span><br><span class="hljs-keyword">for</span> (<span class="hljs-selector-tag">var</span> <span class="hljs-selector-tag">i</span> <span class="hljs-keyword">in</span> str)&#123;<br>	console.log(str[i])<br>&#125;<br><span class="hljs-comment">//遍历字符串和数组，取对应的下边，遍历对象，取对应的属性名</span><br>a<br>b<br>c<br>d<br></code></pre></td></tr></table></figure>
+
+<p><strong>for循环</strong></p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs angelscript"><span class="hljs-keyword">for</span>(表达式<span class="hljs-number">1</span>；表达式<span class="hljs-number">2</span>；表达式<span class="hljs-number">3</span>)&#123;<br>  循环体<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>执行过程：先执行表达式1，再判断表达式2的结果是否为true，如果为true，就执行循环体，执行完循环体再执行循环体3，然后再判断表达式2的结果是否为true，直到表达式2的结果为false为止。</p>
+<p><strong>while循环</strong></p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs actionscript"><span class="hljs-keyword">while</span>（条件语句）&#123;<br>  循环体<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>do - while循环</strong></p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs actionscript"><span class="hljs-keyword">do</span>&#123;<br>  循环体<br>&#125;<span class="hljs-keyword">while</span>（条件语句）<br></code></pre></td></tr></table></figure>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs lasso"><span class="hljs-built_in">var</span> <span class="hljs-keyword">sum</span> = <span class="hljs-number">0</span><br><span class="hljs-built_in">var</span> i = <span class="hljs-number">1</span><br><span class="hljs-keyword">do</span>&#123;<br>	<span class="hljs-keyword">sum</span> += i<br>	i++<br>&#125;<span class="hljs-keyword">while</span>(i&lt;=<span class="hljs-number">100</span>)<br>console.<span class="hljs-keyword">log</span>(<span class="hljs-keyword">sum</span>)<br></code></pre></td></tr></table></figure>
+
+<h5 id="10、函数"><a href="#10、函数" class="headerlink" title="10、函数"></a>10、函数</h5><figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ada"><span class="hljs-keyword">function</span> <span class="hljs-title">函数名（参数列表）&#123;</span><br>  函数体<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>函数调用时要保证每个参数都有值！不支持不定长参数。<br>js中函数如果没有返回值，那么返回值是undefined</p>
+<p>逗号表达式：如果多个表达式之间用逗号隔开，整个表达式的结果是最后那个值。</p>
+<p>注意：js中不能同时返回多个值（因为不支持元组）</p>
+<p>js中，函数也可以作为变量</p>
+<p> <strong>函数的另外一种声明方式</strong></p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs actionscript"><span class="hljs-keyword">var</span> 变量 = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(参数列表)</span></span>&#123;<br>  函数体<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h5 id="11、数据类型"><a href="#11、数据类型" class="headerlink" title="11、数据类型"></a>11、数据类型</h5><p>new 类型名（值）  –&gt;  可以将其他类型的数据转换成相应类型的值。<br><strong>a、数字类型 – Number</strong>：所有的数字类型。<br><strong>b、布尔 – Boolean</strong>：true和false<br><code>var bool = new Boolean（&quot;a&quot;） //true</code><br>总结：所有为0为空的转换成布尔是false，NaN，null，undefined都是false<br><strong>c、字符串 – String</strong></p>
+<ul>
+<li>获取单个字符：通过字符串[下标]</li>
+<li>js中下标只支持0~长度-1，不支持负值。并且不支持切片</li>
+<li>获取字符串长度：<strong>字符串.length</strong></li>
+<li>运算符：比较和加操作<br>如果其他的数据类型和字符串相加，都是现把其他数据类型转换成字符串，然后做字符串的拼接操作。</li>
+</ul>
+<p><strong>d、数组</strong><br>有序，可变的，元素类型可以是任意的数据</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/categories/Web/">Web</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/tags/js/">js</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/Myblog/2018/09/25/Window%E5%AF%B9%E8%B1%A1/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Window对象</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/Myblog/2018/09/19/CSS%E5%B8%83%E5%B1%80/">
+                        <span class="hidden-mobile">CSS布局</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/Myblog/js/events.js" ></script>
+<script  src="/Myblog/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/Myblog/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/Myblog/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/Myblog/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/Myblog/js/boot.js" ></script>
+
+
+</body>
+</html>

@@ -1,0 +1,491 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/Myblog/img/favicon.png">
+  <link rel="icon" href="/Myblog/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="Simple, so charming!">
+  <meta name="author" content="stellae">
+  <meta name="keywords" content="">
+  
+  <title>Django模型关联关系 - stellae&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/Myblog/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/Myblog/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"stellae.gitee.io","root":"/Myblog/","version":"1.8.10","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/Myblog/js/utils.js" ></script>
+  <script  src="/Myblog/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/Myblog/">&nbsp;<strong>stellae's blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/Myblog/img/WtwSsqwYlA0.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Django模型关联关系">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      stellae
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2018-10-24 10:04" pubdate>
+        2018年10月24日 上午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      820 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      15
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Django模型关联关系</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：3 年前
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h3 id="模型关联关系"><a href="#模型关联关系" class="headerlink" title="模型关联关系"></a>模型关联关系</h3><p>  1、一对一：OneToOneField</p>
+  <figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs applescript"><span class="hljs-comment"># 已知a对象，查找b对象：a.b</span><br><span class="hljs-comment"># 已知b对象，查找a对象：b.a ，其中a名称变成小写</span><br><span class="hljs-built_in">class</span> A:<br>	<span class="hljs-built_in">name</span> = xxx<br>	...<br>	b = models.OneToOneField(B)  <span class="hljs-comment"># 一对一可以写在任意一个模型中</span><br>	<br><span class="hljs-built_in">class</span> B:<br>	<span class="hljs-built_in">name</span> = xxx<br>	...<br></code></pre></td></tr></table></figure>
+
+<p>  例子：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-comment"># models.py文件</span><br>class StudentInfo(models.Model):<br>    phone = models.CharField(<span class="hljs-attribute">max_length</span>=11, <span class="hljs-attribute">null</span>=<span class="hljs-literal">True</span>)<br>   <span class="hljs-built_in"> address </span>= models.CharField(<span class="hljs-attribute">max_length</span>=100)<br>    # OneToOneField - 指定一对一的关联关系,该字段定义在任何一个模型中都可以<br>    stu = models.OneToOneField(Student)<br><br>    class Meta:<br>        db_table = <span class="hljs-string">&#x27;student_info&#x27;</span><br>        <br><span class="hljs-comment"># views.py文件</span><br><span class="hljs-comment"># 1、a.b</span><br>def sel_stu_by_info(request):<br>    <span class="hljs-keyword">if</span> request.method == <span class="hljs-string">&#x27;GET&#x27;</span>:<br>        # 知道手机号码12334567，找人<br>        <span class="hljs-builtin-name">info</span> = StudentInfo.objects.<span class="hljs-builtin-name">get</span>(<span class="hljs-attribute">phone</span>=<span class="hljs-string">&#x27;12334567&#x27;</span>)<br>        student = info.stu<br>        stu_info = f<span class="hljs-string">&#x27;姓名:&#123;student.s_name&#125;,年龄:&#123;student.s_age&#125;&#x27;</span><br>        return HttpResponse(stu_info)<br><br><span class="hljs-comment"># 2、b.a</span><br>def sel_info_by_stu(request):<br>    <span class="hljs-keyword">if</span> request.method == <span class="hljs-string">&#x27;GET&#x27;</span>:<br>        # 通过学生查询拓展表信息<br>        stu = Student.objects.<span class="hljs-builtin-name">get</span>(<span class="hljs-attribute">s_name</span>=<span class="hljs-string">&#x27;辰辰&#x27;</span>)<br>        # 第一种<br>        <span class="hljs-builtin-name">info</span> = StudentInfo.objects.filter(<span class="hljs-attribute">stu_id</span>=stu.id)<br>        <span class="hljs-builtin-name">info</span> = StudentInfo.objects.filter(<span class="hljs-attribute">stu</span>=stu)<br>        <br>        # 第二种,学生对象.关联的模型名的小写<br>        <span class="hljs-builtin-name">info</span> = stu.studentinfo<br>        <br>        return HttpResponse(<span class="hljs-string">&#x27;通过学生查询查找拓展表的信息&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+
+
+<p>2、一对多：ForeignKey</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs applescript"><span class="hljs-comment"># 已知a对象，查找b对象: a.b</span><br><span class="hljs-comment"># 已知b对象，查找b对象: b.a_set</span><br><span class="hljs-built_in">class</span> A:<br>	<span class="hljs-built_in">name</span> = xxx<br>	b = models.ForeignKey(B) <span class="hljs-comment"># 多对一中能写在多对应的模型中</span><br><br><span class="hljs-built_in">class</span> B:<br>	<span class="hljs-built_in">name</span> = xxx<br></code></pre></td></tr></table></figure>
+
+<p>例子：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-comment"># models.py文件</span><br>class Grade(models.Model):<br>    g_name = models.CharField(<span class="hljs-attribute">max_length</span>=10, <span class="hljs-attribute">unique</span>=<span class="hljs-literal">True</span>)<br><br>    class Meta:<br>        db_table = <span class="hljs-string">&#x27;grade&#x27;</span><br><br>class Student(models.Model):<br>    # 定义s_name字段，varchar类型，最长不超过6字符，唯一<br>    s_name = models.CharField(<span class="hljs-attribute">max_length</span>=6, <span class="hljs-attribute">unique</span>=<span class="hljs-literal">True</span>)<br>    # 定义s_age字段，int类型, 默认长度18<br>    s_age = models.IntegerField(<span class="hljs-attribute">default</span>=18)<br>    # 定义s_gender字段， int：类型<br>    s_gender = models.BooleanField(<span class="hljs-attribute">default</span>=1)<br>    # 定义创建时间<br>    create_time = models.DateTimeField(<span class="hljs-attribute">auto_now_add</span>=<span class="hljs-literal">True</span>, <span class="hljs-attribute">null</span>=<span class="hljs-literal">True</span>) # 创建时赋予时间，以后不修改<br>    # 定义修改时间<br>    operate_time = models.DateTimeField(<span class="hljs-attribute">auto_now</span>=<span class="hljs-literal">True</span>, <span class="hljs-attribute">null</span>=<span class="hljs-literal">True</span>) # 每次修改赋予新的时间<br>    # 定义语文成绩<br>    chinese = models.DecimalField(<span class="hljs-attribute">decimal_places</span>=1,max_digits=4, <span class="hljs-attribute">null</span>=<span class="hljs-literal">True</span>)<br>    # 定义数学成绩<br>    math = models.DecimalField(<span class="hljs-attribute">decimal_places</span>=1, <span class="hljs-attribute">max_digits</span>=4, <span class="hljs-attribute">null</span>=<span class="hljs-literal">True</span>)<br>    # 一对多的模型，只能把外键定义在多的一遍<br>    grade = models.ForeignKey(Grade, <span class="hljs-attribute">null</span>=<span class="hljs-literal">True</span>)<br><br>    class Meta:<br>        # 定义模型迁移到数据库中时的表名<br>        # 表名是student<br>        db_table = <span class="hljs-string">&#x27;student&#x27;</span><br>        <br><span class="hljs-comment"># views.py文件</span><br>def sel_stu_grade(request):<br>    <span class="hljs-keyword">if</span> request.method == <span class="hljs-string">&#x27;GET&#x27;</span>:<br>    <br>        # 1、通过学生查找班级 - a.b<br>        stu = Student.objects.filter(<span class="hljs-attribute">s_name</span>=<span class="hljs-string">&#x27;老王&#x27;</span>).first()<br>        grade = stu.grade<br>        grade_info = f<span class="hljs-string">&#x27;姓名：&#123;stu.s_name&#125;, 班级：&#123;grade.g_name&#125;&#x27;</span><br>        return HttpResponse(grade_info)<br><br>        # 2、通过班级查找学生 - b.a_set <br>        grade = Grade.objects.filter(<span class="hljs-attribute">g_name</span>=<span class="hljs-string">&#x27;艺术&#x27;</span>).first()<br>        students = grade.student_set.all()<br>        <span class="hljs-builtin-name">print</span>(students)<br>        return HttpResponse(<span class="hljs-string">&#x27;查询所有对应班级信息&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+
+
+<p>  3、多对多：ManyToManyField</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs angelscript"># 已知a对象，查找b对象: a.b<br># 已知b对象，查找b对象: b.a_set<br># add - 添加 ； remove - 删除<br><span class="hljs-keyword">class</span> <span class="hljs-symbol">A:</span><br>	<span class="hljs-symbol">name</span> = <span class="hljs-symbol">xxx</span><br>	<span class="hljs-symbol">b</span> = <span class="hljs-symbol">ManyToManyField</span>(<span class="hljs-symbol">B</span>) # 多对多中能写在任意一个模型中<br><br><span class="hljs-symbol">class</span> <span class="hljs-symbol">B:</span><br>	<span class="hljs-symbol">name</span> = <span class="hljs-symbol">xxx</span><br></code></pre></td></tr></table></figure>
+
+<p>例子：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-comment"># models.py</span><br>class Course(models.Model):<br>    c_name = models.CharField(<span class="hljs-attribute">max_length</span>=10, <span class="hljs-attribute">null</span>=<span class="hljs-literal">True</span>)<br>    # 多对多字段<br>    stu = models.ManyToManyField(Student)<br><br>    class Meta:<br>        db_table = <span class="hljs-string">&#x27;course&#x27;</span><br><br><span class="hljs-comment"># views.py文件</span><br>def add_stu_course(request):<br>    <span class="hljs-keyword">if</span> request.method == <span class="hljs-string">&#x27;GET&#x27;</span>:<br>        cous = Course.objects.all()<br>        return render(request, <span class="hljs-string">&#x27;course.html&#x27;</span>, &#123;<span class="hljs-string">&#x27;cous&#x27;</span>:cous&#125;)<br>    <span class="hljs-keyword">if</span> request.method == <span class="hljs-string">&#x27;POST&#x27;</span>:<br>        # 获取课程id和学生id<br>        c_id = request.POST.<span class="hljs-builtin-name">get</span>(<span class="hljs-string">&#x27;cous_id&#x27;</span>)<br>        s_id = request.GET.<span class="hljs-builtin-name">get</span>(<span class="hljs-string">&#x27;stu_id&#x27;</span>)<br><br>        stu = Student.objects.<span class="hljs-builtin-name">get</span>(<span class="hljs-attribute">pk</span>=s_id)<br>        # 设置学生和课程的关联关系<br>        course = Course.objects.<span class="hljs-builtin-name">get</span>(<span class="hljs-attribute">pk</span>=c_id)<br>        stu.course_set.<span class="hljs-builtin-name">add</span>(course) # 添加<br>        # <span class="hljs-builtin-name">add</span> ==&gt;&gt; <span class="hljs-builtin-name">remove</span>() 删除<br>        return HttpResponse(<span class="hljs-string">&#x27;选课成功!&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/categories/Django/">Django</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/tags/django/">django</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/Myblog/2018/10/25/Django%E6%A8%A1%E6%9D%BF%E5%92%8C%E7%BB%A7%E6%89%BF%E4%BB%A5%E5%8F%8A%E8%BF%87%E6%BB%A4%E5%99%A8/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Django模板和继承以及过滤器</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/Myblog/2018/10/22/Django%E5%9F%BA%E7%A1%80/">
+                        <span class="hidden-mobile">Django基础</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/Myblog/js/events.js" ></script>
+<script  src="/Myblog/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/Myblog/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/Myblog/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/Myblog/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/Myblog/js/boot.js" ></script>
+
+
+</body>
+</html>

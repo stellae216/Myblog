@@ -1,0 +1,583 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/Myblog/img/favicon.png">
+  <link rel="icon" href="/Myblog/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="Simple, so charming!">
+  <meta name="author" content="stellae">
+  <meta name="keywords" content="">
+  
+  <title>并发编程 - stellae&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/Myblog/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/Myblog/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"stellae.gitee.io","root":"/Myblog/","version":"1.8.10","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/Myblog/js/utils.js" ></script>
+  <script  src="/Myblog/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/Myblog/">&nbsp;<strong>stellae's blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/Myblog/img/WtwSsqwYlA0.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="并发编程">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      stellae
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2019-01-08 17:03" pubdate>
+        2019年1月8日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3.2k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      55
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">并发编程</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：2 年前
+                
+              </p>
+            
+            <div class="markdown-body">
+              <p><strong>并发编程分为</strong>：</p>
+<ul>
+<li>多线程</li>
+<li>多进程</li>
+<li>异步I/O</li>
+</ul>
+<p><strong>并发编程的主要作用</strong>：</p>
+<ol>
+<li>加速程序的执行</li>
+<li>改善用户体验</li>
+</ol>
+<p><strong>什么情况应该采用并发编程</strong>：</p>
+<p>耗时间的任务都尽可能独立的执行，而不要阻塞代码其他部分。</p>
+<p><strong>线程和进程共享数据</strong>：</p>
+<ul>
+<li><p>线程间通信(共享数据)非常简单因为可以共享一个进程中的内存</p>
+</li>
+<li><p>进程间通信(共享数据)比较麻烦因为操作系统会保护分配给进程的内存</p>
+<p>要实现多进程间的通信通常可以用系统管道、套接字、三方服务来实现<br>multiprocessing.Queue</p>
+</li>
+</ul>
+<h4 id="一、多线程"><a href="#一、多线程" class="headerlink" title="一、多线程"></a>一、多线程</h4><h5 id="方法一：创建Thread对象"><a href="#方法一：创建Thread对象" class="headerlink" title="方法一：创建Thread对象"></a>方法一：创建Thread对象</h5><p>创建一个Thread对象指定target和args属性并通过start方法启动线程。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os, glob, time<br><span class="hljs-keyword">from</span> threading <span class="hljs-keyword">import</span> Thread<br><span class="hljs-keyword">from</span> PIL <span class="hljs-keyword">import</span> Image<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_image_list</span>(<span class="hljs-params">image_dir</span>):</span><br>    image_list = glob.glob(image_dir)<br>    <span class="hljs-keyword">return</span> image_list<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">gen_thumbnail</span>(<span class="hljs-params">image_name</span>):</span><br>        filename, ext = os.path.splitext(image_name)<br>        filename = filename[filename.rfind(<span class="hljs-string">&#x27;\\&#x27;</span>) + <span class="hljs-number">1</span>:]<br>        <span class="hljs-keyword">for</span> size <span class="hljs-keyword">in</span> (<span class="hljs-number">32</span>, <span class="hljs-number">64</span>, <span class="hljs-number">128</span>):<br>            outfile = <span class="hljs-string">f&#x27;<span class="hljs-subst">&#123;filename&#125;</span>_<span class="hljs-subst">&#123;size&#125;</span>_<span class="hljs-subst">&#123;size&#125;</span>.png&#x27;</span><br>            image = Image.open(image_name)<br>            image.thumbnail((size, size))<br>            image.save(<span class="hljs-string">f&#x27;images_<span class="hljs-subst">&#123;size&#125;</span>/<span class="hljs-subst">&#123;outfile&#125;</span>&#x27;</span>)<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">main</span>():</span><br>    start = time.time()<br>    threads = []<br>    images_name_list = get_image_list(<span class="hljs-string">&#x27;./images/*&#x27;</span>)<br>    <span class="hljs-keyword">for</span> image_name <span class="hljs-keyword">in</span> images_name_list: <br>        t = Thread(target=gen_thumbnail, args=(image_name,))   <span class="hljs-comment"># 指定线程的任务和参数</span><br>        <span class="hljs-comment"># t = ThumbnailThread(image_name)</span><br>        t.start()<br>        threads.append(t)<br>    <span class="hljs-keyword">for</span> t <span class="hljs-keyword">in</span> threads:<br>        <span class="hljs-comment"># 阻塞，必须等到线程执行完</span><br>        t.join()<br>    end = time.time()<br>    print(<span class="hljs-string">f&#x27;<span class="hljs-subst">&#123;end - start&#125;</span>s&#x27;</span>)<br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    main()<br></code></pre></td></tr></table></figure>
+
+<p>补充：如果上面改成 <code>Thread(target=gen_thumbnail, args=(image_name,), daemon=True)</code>，这样线程就变成了守护线程，当主线程结束之后，会自动结束此线程。</p>
+<p>守护线程：在系统停止运行时，不会因为线程还没有执行完而阻止系统停止。</p>
+<h5 id="方法二：继承Thread类"><a href="#方法二：继承Thread类" class="headerlink" title="方法二：继承Thread类"></a>方法二：继承Thread类</h5><p>继承Thread类并重写run方法定义线程执行的任务。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os, glob, time<br><span class="hljs-keyword">from</span> threading <span class="hljs-keyword">import</span> Thread<br><span class="hljs-keyword">from</span> PIL <span class="hljs-keyword">import</span> Image<br><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ThumbnailThread</span>(<span class="hljs-params">Thread</span>):</span><br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span>(<span class="hljs-params">self, image_name</span>):</span><br>        self.image_name = image_name<br>        super().__init__()<br>        <span class="hljs-comment"># super().__init__(daemon=True)   守护进程</span><br><br>    <span class="hljs-comment"># 必须初始化父类__init__方法，程序才会自动调用run方法</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">run</span>(<span class="hljs-params">self</span>):</span><br>        filename, ext = os.path.splitext(self.image_name)<br>        filename = filename[filename.rfind(<span class="hljs-string">&#x27;\\&#x27;</span>) + <span class="hljs-number">1</span>:]<br>        <span class="hljs-keyword">for</span> size <span class="hljs-keyword">in</span> (<span class="hljs-number">32</span>, <span class="hljs-number">64</span>, <span class="hljs-number">128</span>):<br>            outfile = <span class="hljs-string">f&#x27;<span class="hljs-subst">&#123;filename&#125;</span>_<span class="hljs-subst">&#123;size&#125;</span>_<span class="hljs-subst">&#123;size&#125;</span>.png&#x27;</span><br>            image = Image.open(self.image_name)<br>            image.thumbnail((size, size))<br>            image.save(<span class="hljs-string">f&#x27;images_<span class="hljs-subst">&#123;size&#125;</span>/<span class="hljs-subst">&#123;outfile&#125;</span>&#x27;</span>)<br>            <br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">main</span>():</span><br>    start = time.time()<br>    threads = []<br>    images_name_list = get_image_list(<span class="hljs-string">&#x27;./images/*&#x27;</span>)<br>    <span class="hljs-keyword">for</span> image_name <span class="hljs-keyword">in</span> images_name_list: <br>        t = ThumbnailThread(image_name)<br>        t.start()<br>        threads.append(t)<br>    <span class="hljs-keyword">for</span> t <span class="hljs-keyword">in</span> threads:<br>        <span class="hljs-comment"># 阻塞，必须等到线程执行完</span><br>        t.join()<br>    end = time.time()<br>    print(<span class="hljs-string">f&#x27;<span class="hljs-subst">&#123;end - start&#125;</span>s&#x27;</span>)<br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    main()<br></code></pre></td></tr></table></figure>
+
+
+
+<h5 id="方法三：创建线程池对象"><a href="#方法三：创建线程池对象" class="headerlink" title="方法三：创建线程池对象"></a>方法三：创建线程池对象</h5><p>创建线程池对象ThreadPoolExecutor通过submit来提交要执行的任务。<br>第三种方式可以通过Future对象的result方法在将来获得线程的执行结果，也可以通过done方法判定线程是否执行结束。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os, glob, time<br><br><span class="hljs-keyword">from</span> threading <span class="hljs-keyword">import</span> Thread<br><span class="hljs-keyword">from</span> concurrent.futures <span class="hljs-keyword">import</span> ThreadPoolExecutor<br><br><span class="hljs-keyword">from</span> PIL <span class="hljs-keyword">import</span> Image<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_image_list</span>(<span class="hljs-params">image_dir</span>):</span><br>    image_list = glob.glob(image_dir)<br>    <span class="hljs-keyword">return</span> image_list<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">gen_thumbnail</span>(<span class="hljs-params">image_name</span>):</span><br>        filename, ext = os.path.splitext(image_name)<br>        filename = filename[filename.rfind(<span class="hljs-string">&#x27;\\&#x27;</span>) + <span class="hljs-number">1</span>:]<br>        <span class="hljs-keyword">for</span> size <span class="hljs-keyword">in</span> (<span class="hljs-number">32</span>, <span class="hljs-number">64</span>, <span class="hljs-number">128</span>):<br>            outfile = <span class="hljs-string">f&#x27;<span class="hljs-subst">&#123;filename&#125;</span>_<span class="hljs-subst">&#123;size&#125;</span>_<span class="hljs-subst">&#123;size&#125;</span>.png&#x27;</span><br>            image = Image.open(image_name)<br>            image.thumbnail((size, size))<br>            image.save(<span class="hljs-string">f&#x27;images_<span class="hljs-subst">&#123;size&#125;</span>/<span class="hljs-subst">&#123;outfile&#125;</span>&#x27;</span>)<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">main</span>():</span><br>    futures = []<br>    start = time.time()<br>    <span class="hljs-keyword">with</span> ThreadPoolExecutor(max_workers=<span class="hljs-number">30</span>) <span class="hljs-keyword">as</span> pool:<br>        images_name_list = get_image_list(<span class="hljs-string">&#x27;images/*&#x27;</span>)<br>        <span class="hljs-keyword">for</span> image_name <span class="hljs-keyword">in</span> images_name_list:<br>            <span class="hljs-comment"># submit是一个非阻塞式的方法，即便工作线程数已经用完，submit也会接受提交的任务。</span><br>            future = pool.submit(gen_thumbnail, image_name)<br>            futures.append(future)<br>    <span class="hljs-keyword">for</span> future <span class="hljs-keyword">in</span> futures:<br>        <span class="hljs-comment"># result()是一个阻塞式方法，如果线程还没有执行完，就会此处阻塞</span><br>        future.result()<br>    <span class="hljs-comment"># shutdown也是非阻塞式的方法，但是如果已经提交的执行完的任务没有执行完，线程池是不会停止工作的，shutdown之后不能提交任务。</span><br>    end = time.time()<br>    print(<span class="hljs-string">f&#x27;<span class="hljs-subst">&#123;end-start&#125;</span>s&#x27;</span>)<br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    main()<br></code></pre></td></tr></table></figure>
+
+<h5 id="线程间资源竞争问题"><a href="#线程间资源竞争问题" class="headerlink" title="线程间资源竞争问题"></a>线程间资源竞争问题</h5><ul>
+<li><p>多个线程竞争一个资源 - 保护临界资源 - 锁(threading.Lock/RLock)</p>
+</li>
+<li><p>多个线程竞争多个资源(线程数&gt;资源数) - 信号量(threading.Semaphore)</p>
+</li>
+<li><p>多个线程的调度 - 暂停线程执行/唤醒等待中的线程 - Condition (在lock的基础上)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 模拟银行存取钱：有钱则取，无钱等待 - 线程之间调度 -Condition</span><br><span class="hljs-keyword">import</span> threading<br><br><span class="hljs-keyword">from</span> concurrent.futures <span class="hljs-keyword">import</span> ThreadPoolExecutor<br><span class="hljs-keyword">from</span> time <span class="hljs-keyword">import</span> sleep<br><span class="hljs-keyword">from</span> random <span class="hljs-keyword">import</span> randint<br><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Account</span>():</span><br>    <span class="hljs-string">&quot;&quot;&quot;账户&quot;&quot;&quot;</span><br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span>(<span class="hljs-params">self, balance=<span class="hljs-number">0</span></span>):</span><br>        self.balance = balance<br>        lock = threading.Lock()<br>        self.condition = threading.Condition(lock)<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">deposit</span>(<span class="hljs-params">self, money</span>):</span><br>        <span class="hljs-string">&quot;&quot;&quot;存钱&quot;&quot;&quot;</span><br>        <span class="hljs-keyword">with</span> self.condition:<br>            new_balance = self.balance + money<br>            sleep(<span class="hljs-number">0.001</span>)<br>            self.balance = new_balance<br>            self.condition.notify_all()<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">withdraw</span>(<span class="hljs-params">self, money</span>):</span><br>        <span class="hljs-string">&quot;&quot;&quot;取钱&quot;&quot;&quot;</span><br>        <span class="hljs-keyword">with</span> self.condition:<br>            <span class="hljs-keyword">while</span> money &gt; self.balance:<br>                <span class="hljs-comment"># 等待并释放掉锁</span><br>                print(<span class="hljs-string">&#x27;余额不足！&#x27;</span>)<br>                self.condition.wait()<br>            new_balance = self.balance - money<br>            sleep(<span class="hljs-number">0.001</span>)<br>            self.balance = new_balance<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">add_money</span>(<span class="hljs-params">account</span>):</span><br>    <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>        money = randint(<span class="hljs-number">5</span>, <span class="hljs-number">10</span>)<br>        account.deposit(money)<br>        print(threading.current_thread().name, <span class="hljs-string">&#x27;:&#x27;</span>, money, <span class="hljs-string">&#x27; --&gt; &#x27;</span>, account.balance)<br>        sleep(<span class="hljs-number">0.8</span>)<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">sub_money</span>(<span class="hljs-params">account</span>):</span><br>    <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>        money = randint(<span class="hljs-number">10</span>, <span class="hljs-number">30</span>)<br>        account.withdraw(money)<br>        print(threading.current_thread().name, <span class="hljs-string">&#x27;:&#x27;</span>, money, <span class="hljs-string">&#x27; &lt;-- &#x27;</span>, account.balance)<br>        sleep(<span class="hljs-number">1</span>)<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">main</span>():</span><br>    account = Account()<br>    <span class="hljs-keyword">with</span> ThreadPoolExecutor(max_workers=<span class="hljs-number">100</span>) <span class="hljs-keyword">as</span> pool:<br>        <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(<span class="hljs-number">100</span>):<br>            pool.submit(add_money, account)<br>            pool.submit(sub_money, account)<br><br>    print(<span class="hljs-string">f&#x27;账户余额：<span class="hljs-subst">&#123;account.balance&#125;</span>元&#x27;</span>)<br><br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    main()<br></code></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h4 id="二、多进程"><a href="#二、多进程" class="headerlink" title="二、多进程"></a>二、多进程</h4><p>多进程：多进程可以有效的解决GIL ( 全局解释器锁 ) 的问题，实现多进程主要的类是Process，其他辅助的类跟threading模块中的类似，进程间共享数据可以使用管道、套接字等，在multiprocessing模块中有一个Queue类，它基于管道和锁机制提供了多个进程共享的队列，可以让进程之间共享数据。</p>
+<h5 id="方法一：-创建Process对象"><a href="#方法一：-创建Process对象" class="headerlink" title="方法一： 创建Process对象"></a>方法一： 创建Process对象</h5><p>使用方法 - 类似 - 多线程方法一</p>
+<p><code>from multiprocessing import Process</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os, glob, time<br><br><span class="hljs-keyword">from</span> multiprocessing <span class="hljs-keyword">import</span> Process<br><br><span class="hljs-keyword">from</span> PIL <span class="hljs-keyword">import</span> Image<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_image_list</span>(<span class="hljs-params">image_dir</span>):</span><br>    image_list = glob.glob(image_dir)<br>    <span class="hljs-keyword">return</span> image_list<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">gen_thumbnail</span>(<span class="hljs-params">image_name</span>):</span><br>        filename, ext = os.path.splitext(image_name)<br>        filename = filename[filename.rfind(<span class="hljs-string">&#x27;\\&#x27;</span>) + <span class="hljs-number">1</span>:]<br>        <span class="hljs-keyword">for</span> size <span class="hljs-keyword">in</span> (<span class="hljs-number">32</span>, <span class="hljs-number">64</span>, <span class="hljs-number">128</span>):<br>            outfile = <span class="hljs-string">f&#x27;<span class="hljs-subst">&#123;filename&#125;</span>_<span class="hljs-subst">&#123;size&#125;</span>_<span class="hljs-subst">&#123;size&#125;</span>.png&#x27;</span><br>            image = Image.open(image_name)<br>            image.thumbnail((size, size))<br>            image.save(<span class="hljs-string">f&#x27;images_<span class="hljs-subst">&#123;size&#125;</span>/<span class="hljs-subst">&#123;outfile&#125;</span>&#x27;</span>)<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">main</span>():</span><br>    start = time.time()<br>    processes = []<br>    images_name_list = get_image_list(<span class="hljs-string">&#x27;./images/*&#x27;</span>)<br>    <span class="hljs-keyword">for</span> image_name <span class="hljs-keyword">in</span> images_name_list: <br>        p = Process(target=gen_thumbnail, args=(image_name,))   <span class="hljs-comment"># 指定线程的任务和参数</span><br>        p.start()<br>        processes.append(p)<br>    <span class="hljs-keyword">for</span> p <span class="hljs-keyword">in</span> processes:<br>        <span class="hljs-comment"># 阻塞，必须等到线程执行完</span><br>        p.join()<br>    end = time.time()<br>    print(<span class="hljs-string">f&#x27;<span class="hljs-subst">&#123;end - start&#125;</span>s&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<h5 id="方法二：创建进程池对象"><a href="#方法二：创建进程池对象" class="headerlink" title="方法二：创建进程池对象"></a>方法二：创建进程池对象</h5><p>1.<code>from multiprocessing import Pool</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> multiprocessing <span class="hljs-keyword">import</span> Pool, cpu_count<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">update_product_pic</span>(<span class="hljs-params">x</span>):</span><br>  <span class="hljs-keyword">pass</span><br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>  <span class="hljs-keyword">with</span> Pool(<span class="hljs-number">2</span>) <span class="hljs-keyword">as</span> pool:<br>     pool.map(update_product_pic, [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>])   <span class="hljs-comment"># 批量导入任务到进程</span><br>  pool.join()    <span class="hljs-comment"># 阻塞进程，直至任务完成</span><br><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>说明：1、进程数量最好与cpu核数相同(cpu_count)；2、使用pool.apply_async(update_product_pic, (1,))在windows环境上会报错，需要把进程池调用代码放<code>if __name__ == &#39;__main__&#39;:</code>里面，避免进程循环调用，不推荐使用此方法；3、pool.map方法如果主进程终止，那么任务进程也会终止</p>
+</blockquote>
+<p>2.使用方法 - 类似 - 多线程方法三</p>
+<p><code>form concurrent.futures import ProcessPoolExecutor </code></p>
+<h4 id="三、异步I-O"><a href="#三、异步I-O" class="headerlink" title="三、异步I/O"></a>三、异步I/O</h4><p>异步I/O(异步编程) - 只使用一个线程(单线程) 来处理用户请求，用户请求一旦被接纳，剩下的都是I/O操作，通过多路I/O复用也可以达到并发效果。这种做法与多线程相比，可以让CPU利用率更高，因为没有线程切换的开销。今天我们使用的 Redis 和 Node.js 就是单线程+异步I/O实现。</p>
+<p>异步处理：从调度程序的任务队列中挑选任务，该调度程序以交叉的形式执行这些任务， 我们并不能保证任务将以某种顺序去执行，因为执行顺序取决于队列中的一项任务是否愿 意将CPU处理时间让位给另一项任务。异步任务通常通过多任务协作处理的方式来实现， 由于执行时间和顺序的不确定，因此需要通过回调式编程或者 future 对象来获取任务执行的结果。Python 3通过 asyncio 模块和 await 和 async 关键字（在Python 3.7中正式被 列为关键字）来支持异步处理。 </p>
+<p>协程 (corouting) - 可以在需要时进行切换,相互协作的子程序</p>
+<p>同步 –&gt;阻塞               异步 –&gt; 非阻塞 - 代码可以继续往下</p>
+<h5 id="asyncio异步操作"><a href="#asyncio异步操作" class="headerlink" title="asyncio异步操作"></a>asyncio异步操作</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> asyncio<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">num_generator</span>(<span class="hljs-params">m, n</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;指定范围的数字生成器&quot;&quot;&quot;</span><br>    <span class="hljs-keyword">yield</span> <span class="hljs-keyword">from</span> range(m, n + <span class="hljs-number">1</span>)<br><br><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">prime_filter</span>(<span class="hljs-params">m, n</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;素数过滤器&quot;&quot;&quot;</span><br>    primes = []<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> num_generator(m, n):<br>        flag = <span class="hljs-literal">True</span><br>        <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(<span class="hljs-number">2</span>, int(i ** <span class="hljs-number">0.5</span> + <span class="hljs-number">1</span>)):<br>            <span class="hljs-keyword">if</span> i % j == <span class="hljs-number">0</span>:<br>                flag = <span class="hljs-literal">False</span><br>                <span class="hljs-keyword">break</span><br>        <span class="hljs-keyword">if</span> flag:<br>            print(<span class="hljs-string">&#x27;Prime =&gt;&#x27;</span>, i)<br>            primes.append(i)<br><br>        <span class="hljs-keyword">await</span> asyncio.sleep(<span class="hljs-number">0.001</span>)<br>    <span class="hljs-keyword">return</span> tuple(primes)<br><br><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">square_mapper</span>(<span class="hljs-params">m, n</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;平方映射器&quot;&quot;&quot;</span><br>    squares = []<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> num_generator(m, n):<br>        print(<span class="hljs-string">&#x27;Square =&gt;&#x27;</span>, i * i)<br>        squares.append(i * i)<br>        <span class="hljs-keyword">await</span> asyncio.sleep(<span class="hljs-number">0.001</span>)<br>    <span class="hljs-keyword">return</span> squares<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">main</span>():</span><br>    <span class="hljs-string">&quot;&quot;&quot;主函数&quot;&quot;&quot;</span><br>    <span class="hljs-comment"># 函数获得系统默认的事件循环 - 消息队列</span><br>    loop = asyncio.get_event_loop()<br>    <span class="hljs-comment"># 拿到future对象</span><br>    future = asyncio.gather(prime_filter(<span class="hljs-number">2</span>, <span class="hljs-number">100</span>), square_mapper(<span class="hljs-number">1</span>, <span class="hljs-number">100</span>))<br>    <span class="hljs-comment"># future对象的add_done_callback可以添加执行完成时的回调函数</span><br>    future.add_done_callback(<span class="hljs-keyword">lambda</span> x: print(x.result()))<br>    <span class="hljs-comment"># loop对象的run_until_complete方法可以等待通过future对象获得协程执行结果</span><br>    loop.run_until_complete(future)<br>    loop.close()<br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    main()<br></code></pre></td></tr></table></figure>
+
+<p>说明：当用async标识方法时，只是显示告诉编译器在该方法中await关键字可能会被用到，当执行到await关键字开始处于挂起的状态，直到异步动作执行完成才恢复。</p>
+<p>如果想要得到更好的事件循环队列，可以使用第三方库<code>uvloop</code>(异步I/O事件循环)来实现，性能上远远高于系统默认的循环队列。</p>
+<h5 id="aiohttp异步HTTP网络访问"><a href="#aiohttp异步HTTP网络访问" class="headerlink" title="aiohttp异步HTTP网络访问"></a>aiohttp异步HTTP网络访问</h5><p>示例：拿到对应网站的标题</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> asyncio<br><span class="hljs-keyword">import</span> re<br><br><span class="hljs-keyword">import</span> aiohttp<br><br><br><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">fetch</span>(<span class="hljs-params">session, url</span>):</span><br>    <span class="hljs-keyword">async</span> <span class="hljs-keyword">with</span> session.get(url, ssl=<span class="hljs-literal">False</span>) <span class="hljs-keyword">as</span> resp:<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">await</span> resp.text()<br><br><br><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">main</span>(<span class="hljs-params">url, pattern</span>):</span><br>    <span class="hljs-keyword">async</span> <span class="hljs-keyword">with</span> aiohttp.ClientSession() <span class="hljs-keyword">as</span> session:<br>        html = <span class="hljs-keyword">await</span> fetch(session, url)<br>        <span class="hljs-keyword">return</span> pattern.search(html).group(<span class="hljs-string">&#x27;title&#x27;</span>)<br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    pattern = re.compile(<span class="hljs-string">r&#x27;\&lt;title\&gt;(?P&lt;title&gt;.*)\&lt;\/title\&gt;&#x27;</span>)<br>    urls = (<span class="hljs-string">&#x27;https://www.python.org/&#x27;</span>,<br>            <span class="hljs-string">&#x27;https://git-scm.com/&#x27;</span>,<br>            <span class="hljs-string">&#x27;https://www.jd.com/&#x27;</span>,<br>            <span class="hljs-string">&#x27;https://www.taobao.com/&#x27;</span>,<br>            <span class="hljs-string">&#x27;https://www.douban.com/&#x27;</span>)<br>    loop = asyncio.get_event_loop()<br>    futures = asyncio.gather(*[main(url, pattern) <span class="hljs-keyword">for</span> url <span class="hljs-keyword">in</span> urls])<br>    futures.add_done_callback(<span class="hljs-keyword">lambda</span> x: print(x.result()))<br>    loop.run_until_complete(futures)<br>    loop.close()<br><br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="四、多线程、多进程、异步I-O区别"><a href="#四、多线程、多进程、异步I-O区别" class="headerlink" title="四、多线程、多进程、异步I/O区别"></a>四、多线程、多进程、异步I/O区别</h4><p>多线程因为GIL(全局解释器锁)的存在不能发挥CPU的多核特性，所以要想利用多核特性，只能使用多进程。对于计算密集型的任务，应该优先考虑多进程。</p>
+<ul>
+<li>使用多线程： <ol>
+<li>程序需要维护许多共享的状态（尤其是可变状态）。Python中的列表、字典、 集合都是线程安全的，所以使用线程而不是进程维护共享状态的代价相对较小。</li>
+<li>程序花费大量的时间执行I/O操作，没有太多并集计算的需求且不需要太多的内存占用。 </li>
+</ol>
+</li>
+<li>使用多进程： <ol>
+<li>程序执行计算密集型任务（如：字节码操作、数据处理、科学计算）。 </li>
+<li>程序的输入可以并行的分成块，并且可以将运算结果合并。 </li>
+<li>程序在内存使用方面没有任何限制且不强依赖于I/O操作（如：读写文件、套接字等）。</li>
+</ol>
+</li>
+<li>使用异步I/O：<ol>
+<li>程序执行请求操作，但是可能不会马上得到响应。</li>
+</ol>
+</li>
+</ul>
+<h4 id="五、Celery-异步任务"><a href="#五、Celery-异步任务" class="headerlink" title="五、Celery - 异步任务"></a>五、Celery - 异步任务</h4><p>异步化处理：使用 celery创建生产者和消费者，生产者放入消息队列中即可，消费者进行消费。这里使用redis的list类型做队列。 </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> celery<br><br><span class="hljs-comment"># 注册环境变量（注册Django配置文件）</span><br>os.environ.setdefault(<span class="hljs-string">&#x27;DJANGO_SETTINGS_MODULE&#x27;</span>, <span class="hljs-string">&#x27;Fangtx.settings&#x27;</span>)<br><span class="hljs-comment"># common.views模块名，broker消息代理(从哪里获取消息队列服务)</span><br>app = celery.Celery(<span class="hljs-string">&#x27;common.views&#x27;</span>, broker=<span class="hljs-string">&#x27;redis://:123456@39.96.51.36:6379/0&#x27;</span>)<br><span class="hljs-comment"># 读取Django项目的配置信息</span><br>app.config_from_object(<span class="hljs-string">&#x27;django.conf:settings&#x27;</span>)<br><br><span class="hljs-meta">@app.task</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">send_mobile_code</span>(<span class="hljs-params">code:str, mobile:str</span>):</span><br>    <span class="hljs-keyword">pass</span><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">main</span>():</span><br>    send_mobile_code.delay(code=code, mobile=mobile)<br><br>main() <br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>说明：</p>
+<ol>
+<li>[<code>@app.task](mailto:%60@app.task)</code> 装饰需要异步处理的任务，调用时需要加入delay()函数；</li>
+<li>消费者使用<code>celery -A common.views worker -l info</code> ;</li>
+<li>如果celery需要读取django配置需要加上代码 <code>os.environ.setdefault(&#39;DJANGO_SETTINGS_MODULE&#39;, &#39;Fangtx.settings&#39;)</code> <code>app.config_from_object(&#39;django.conf:settings&#39;)</code></li>
+</ol>
+</blockquote>
+<p>问题：windows平台出现 <code>Celery ValueError: not enough values to unpack (expected 3, got 0)</code></p>
+<p>解决：安装第三方库<code>pip install eventlet</code> 然后在命令后加<code>-P eventlet</code></p>
+<h5 id="celery定时任务"><a href="#celery定时任务" class="headerlink" title="celery定时任务"></a>celery定时任务</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">@app.task</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">show_message</span>(<span class="hljs-params">content</span>):</span><br>    print(content)<br><br>app.conf.update(<br>    timezone=settings.TIME_ZONE,<br>    enable_utc=<span class="hljs-literal">True</span>,<br>    <span class="hljs-comment"># 定时任务要通过消息的生产者将其转换成队列中的消息</span><br>    <span class="hljs-comment"># celery -A common.utils beat -l info</span><br>    beat_schedule=&#123;<br>        <span class="hljs-string">&#x27;task_one&#x27;</span>: &#123;<br>            <span class="hljs-string">&#x27;task&#x27;</span>: <span class="hljs-string">&#x27;common.utils.show_message&#x27;</span>,<br>            <span class="hljs-string">&#x27;schedule&#x27;</span>: crontab(),<br>            <span class="hljs-string">&#x27;args&#x27;</span>: (<span class="hljs-string">&#x27;hello,world! &#x27;</span>, )<br>        &#125;,<br>    &#125;,<br>)<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>说明：需要使用<code>celery -A common.utils beat -l info</code>起生产者，然后起消费者执行。</p>
+</blockquote>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/categories/Celery/">Celery</a>
+                    
+                      <a class="hover-with-bg" href="/Myblog/categories/Celery/Python/">Python</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/tags/celery/">celery</a>
+                    
+                      <a class="hover-with-bg" href="/Myblog/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">多线程</a>
+                    
+                      <a class="hover-with-bg" href="/Myblog/tags/%E5%A4%9A%E8%BF%9B%E7%A8%8B/">多进程</a>
+                    
+                      <a class="hover-with-bg" href="/Myblog/tags/%E5%BC%82%E6%AD%A5I-O/">异步I/O</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/Myblog/2019/01/09/Docker%E7%AE%80%E6%98%93%E4%B8%8A%E6%89%8B%E6%8C%87%E5%8D%97/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Docker简易上手指南</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/Myblog/2019/01/05/%E6%97%B6%E9%97%B4%E5%92%8C%E6%97%A5%E6%9C%9F%E6%A8%A1%E5%9D%97/">
+                        <span class="hidden-mobile">时间和日期模块</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/Myblog/js/events.js" ></script>
+<script  src="/Myblog/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/Myblog/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/Myblog/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/Myblog/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/Myblog/js/boot.js" ></script>
+
+
+</body>
+</html>

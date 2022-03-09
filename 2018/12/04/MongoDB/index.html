@@ -1,0 +1,521 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/Myblog/img/favicon.png">
+  <link rel="icon" href="/Myblog/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="Simple, so charming!">
+  <meta name="author" content="stellae">
+  <meta name="keywords" content="">
+  
+  <title>MongoDB - stellae&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/Myblog/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/Myblog/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"stellae.gitee.io","root":"/Myblog/","version":"1.8.10","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/Myblog/js/utils.js" ></script>
+  <script  src="/Myblog/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/Myblog/">&nbsp;<strong>stellae's blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/Myblog/img/WtwSsqwYlA0.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="MongoDB">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      stellae
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2018-12-04 21:52" pubdate>
+        2018年12月4日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.9k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      33
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">MongoDB</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：8 个月前
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h4 id="MongoDB特点"><a href="#MongoDB特点" class="headerlink" title="MongoDB特点"></a>MongoDB特点</h4><p>MongoDB 是一个介于关系数据库和非关系数据库之间的产品,是非关系数据库当中功能最丰富,最像关系数据库的。 </p>
+<p>MongoDB最大的特点：它支持的查询语言非常强大,其语法有点类似于面向对象的查询语言, 几乎可以实现类似关系数据库单表查询的绝大部分功能。它是一个面向集合的,模式自由的文档型数据库。</p>
+<p>1、 面向集合(Collection-Orented) </p>
+<p>意思是数据被分组存储在数据集中, 被称为一个集合(Collenction)。每个集合在数据库中 都有一个唯一的标识名,并且可以包含无限数目的文档。集合的概念类似关系型数据库(RDBMS)里面的表(table),不同的是它不需要定义任何模式(schema)。 </p>
+<p>2、 模式自由(schema-free) </p>
+<p>存储在 MongoDB 数据库中的文件,我们不需要知道它的任何结构定义。提了这 么多次”无模式”或”模式自由”,它到是个什么概念呢?例如,下面两个记录可以存在于同一个集合里面:</p>
+<p> {“welcome” : “Beijing”}</p>
+<p> {“age” : 28} </p>
+<p>3、 文档型意思是我们存储的数据是键-值对的集合,键是字符串,值可以是数据类型集合里的任意类型, 包括数组和文档. 文件存储格式为 BSON(一种 JSON 的扩展) </p>
+<h4 id="适用场景"><a href="#适用场景" class="headerlink" title="适用场景"></a>适用场景</h4><p>1 网站数据:MongoDB 非常适合实时的插入,更新与查询,并具备网站实时数据存储所需的复制及高度伸缩性 </p>
+<p>2 缓存:由于性能很高,MongoDB 也适合作为信息基础设施的缓存层。在系统重启之后, 由 MongoDB 搭建的持久化缓存层可以避免下层的数据源过载 </p>
+<p>3 大尺寸,低价值的数据:使用传统的关系型数据库存储一些数据时可能会比较昂贵,在此之前,很 多时候程序员往往会选择传统的文件进行存储 </p>
+<p>4 高伸缩性的场景:MongoDB 非常适合由数十或数百台服务器组成的数据库。MongoDB的路线图中已经包对 MapReduce 引擎的内置支持 </p>
+<p>5 用于对象及 JSON 数据的存储:MongoDB 的 BSON 数据格式非常适合文档化格式的存储及查询 </p>
+<h4 id="MongoDB使用语句"><a href="#MongoDB使用语句" class="headerlink" title="MongoDB使用语句"></a>MongoDB使用语句</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><code class="hljs mongodb">查看<br>show dbs<br>show colletions; <br><br>数据库并没有添加，当我们在给数据库中的集合插一条文档的时候就会自动创建一条文档、一个集合、一个数据库。<br>use newdb    <br><br>插入数据<br>db.users.insert(&#123;&quot;name&quot;: &#39;carmack&#39;&#125;)  <br><br>查询数据<br>db.users.find()<br>db.users.findOne(&#123;&quot;uid&quot;:2&#125;)<br><br>删除数据<br>db.users.remove(&#123;&quot;uid&quot;:2&#125;)<br><br>清空集合<br>db.users.remove(&#123;&#125;)<br><br>删除集合<br>db.users.drop()<br><br>更新文档<br>第一个文档为查询的文档，第二个文档为修改为什么文档, 后面的文档会覆盖我们要修改文档的整个内容<br>db.users.update(&#123;&quot;uid&quot;:2&#125;,&#123;&quot;uname&quot;:&quot;jon&quot;&#125;)<br><br>使用修改器$inc更新<br>对uid为2的用户增加100块钱工资<br>db.users.update(&#123;&quot;uid&quot;:2&#125;,&#123;&quot;$inc&quot;:&#123;&quot;salary&quot;:100&#125;&#125;)<br>减100<br>db.users.update(&#123;&quot;uid&quot;:2&#125;,&#123;&quot;$inc&quot;:&#123;&quot;salary&quot;:-100&#125;&#125;)<br><br>添加一个字段$set修改器<br>db.users.update(&#123;&quot;uid&quot;:2&#125;,&#123;&quot;$set&quot;:&#123;&quot;age&quot;:18&#125;&#125;)<br><br>删除一个字段$unset修改器<br>db.users.update(&#123;&quot;uid&quot;:2&#125;,&#123;&quot;$unset&quot;:&#123;&quot;age&quot;:true&#125;&#125;)<br><br>数组的更新<br>db.users.update(&#123;&quot;uid&quot;:2&#125;,&#123;&quot;$push&quot;:&#123;&quot;email&quot;:&quot;a&quot;&#125;&#125;)<br><br>$pushAll在元组中增加多个元素,但是他不检查元素是否存在<br>db.users.update(&#123;&quot;uid&quot;:2&#125;,&#123;&quot;$pushAll&quot;:&#123;&quot;email&quot;:[&quot;a&quot;, &quot;b&quot;,&quot;c&quot;,&quot;d&quot;]&#125;&#125;)<br><br>$addToSet 往数组中添加一个不重复的元素<br>db.users.update(&#123;&quot;uid&quot;:2&#125;,&#123;&quot;$addToSet&quot;:&#123;&quot;email&quot;:&quot;d&quot;&#125;&#125;)<br><br>添加多个不重复的元素，这时候就得需要⽤到$eache操作符了<br>db.users.update(&#123;&quot;uid&quot;:2&#125;,&#123;&quot;$addToSet&quot;:&#123;&quot;email&quot;:&#123;&quot;$each&quot;:[&quot;e&quot;,&quot;g&quot;,&quot;f&quot;,&quot;d&quot;]&#125;&#125;&#125;)<br><br>删除数组元素<br>db.users.update(&#123;&quot;uid&quot;:2&#125;,&#123;&quot;$pop&quot;:&#123;&quot;email&quot;:-1&#125;&#125;) #从左侧删除一个元素<br>db.users.update(&#123;&quot;uid&quot;:2&#125;,&#123;&quot;$pop&quot;:&#123;&quot;email&quot;:1&#125;&#125;)#从右侧删除一个元素<br>db.users.update(&#123;&quot;uid&quot;:2&#125;,&#123;&quot;$pull&quot;:&#123;&quot;email&quot;:&quot;b&quot;&#125;&#125;) #删除数组内的指定一个元素<br>db.users.update(&#123;&quot;uid&quot;:2&#125;,&#123;&quot;$pullAll&quot;:&#123;&quot;email&quot;:[&quot;b&quot;,&quot;c&quot;]&#125;&#125;) #删除数组内指定的多个元<br><br>数组元素的更新<br>通过数组.下标修改<br>db.users.update(&#123;&quot;uid&quot;:2&#125;,&#123;&quot;$set&quot;:&#123;&quot;email.0&quot;:&quot;tim.qq.com&quot;&#125;&#125;)<br><br>等于 &#x3D;<br>db.users.find(&#123;&quot;salary&quot;:3000&#125;).pretty()<br>小于 &lt;<br>db.users.find(&#123;&quot;salary&quot;:&#123;$lt:3000&#125;&#125;).pretty()<br>小于等于 &lt;&#x3D;<br>db.users.find(&#123;&quot;salary&quot;:&#123;$lte:3000&#125;&#125;).pretty()<br>大于 &gt;<br>db.users.find(&#123;&quot;salary&quot;:&#123;$gt:3000&#125;&#125;).pretty()<br>大于等于 &gt;&#x3D;<br>db.users.find(&#123;&quot;salary&quot;:&#123;$gte:3000&#125;&#125;).pretty()<br>不等于 !&#x3D;<br>db.users.find(&#123;&quot;salary&quot;:&#123;$ne:3000&#125;&#125;).pretty()<br><br>MongoDB 的 find() 方法可以传入多个键(key)，每个键(key)以逗号隔开，即常规 SQL 的 AND 条件<br>db.users.find(&#123;&quot;id&quot;:2, &quot;sex&quot;: &quot;M&quot;&#125;).pretty()<br><br>MongoDB OR 条件语句使⽤了关键字 $or,语法格式如下：<br>db.users.find(&#123;$or: [&#123;key1: value1&#125;, &#123;key2:value2&#125;] &#125;).pretty()<br></code></pre></td></tr></table></figure>
+
+<h4 id="pymongo"><a href="#pymongo" class="headerlink" title="pymongo"></a>pymongo</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">pip install pymongo<br></code></pre></td></tr></table></figure>
+
+<p>要使用pymongo最先应该做的事就是先连上运行中的 mongod，创建一个连接到mongod到客户端，并连接到数据库</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> pymongo <span class="hljs-keyword">import</span> MongoClient<br><br>client = MongoClient()<br><span class="hljs-comment"># 或者 client = MongoClient(“mongodb://127.0.0.1:27019”) ，不写默认连接本机</span><br>db = client.db1   <span class="hljs-comment"># 数据库一</span><br><span class="hljs-comment"># client[&#x27;db1&#x27;]</span><br><br><span class="hljs-comment"># 连接到对应的数据集：</span><br>coll = db.dataset<br><span class="hljs-comment"># 或者 db[&#x27;dataset&#x27;]</span><br></code></pre></td></tr></table></figure>
+
+
+
+<p><strong>数据库操作</strong></p>
+<ul>
+<li>插入数据</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python">insert_one(document)<br>insert_many(documents, ordered=<span class="hljs-literal">True</span>)<br><br>result = db.restaurants.insert_one(&#123;<br> “address”: &#123;<br>     “street”: “<span class="hljs-number">2</span> Avenue”,<br>     “zipcode”: “<span class="hljs-number">10075</span>”,<br>     “building”: “<span class="hljs-number">1480</span>”,<br>     “coord”: [<span class="hljs-number">-73.9557413</span>, <span class="hljs-number">40.7720266</span>]<br> &#125;<br>&#125;)<br>result = db.test.insert_many([&#123;‘x’: i&#125; <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">2</span>)])<br></code></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>查询数据</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># find 查询出来的是一个列表集合。</span><br>cursor = db.restaurants.find()<br><span class="hljs-keyword">for</span> document <span class="hljs-keyword">in</span> cursor:<br>	print(document) <span class="hljs-comment"># 打印每条数据    </span><br><span class="hljs-comment"># 查询字段在最上层</span><br>cursor = db.restaurants.find(&#123;“borough”: “Manhattan”&#125;)<br>cursor = db.restaurants.find(&#123;“cuisine”: “Italian”, “address.zipcode”: “<span class="hljs-number">10075</span>”&#125;)<br><span class="hljs-comment"># 查询字段在内层嵌套中  </span><br>cursor = db.restaurants.find(&#123;“address.zipcode”: “<span class="hljs-number">10075</span>”&#125;)<br>cursor = db.restaurants.find(&#123;“grades.score”: &#123;“$gt”: <span class="hljs-number">30</span>&#125;&#125;)<br><span class="hljs-comment"># 将查询数据排序</span><br>cursor = db.restaurants.find().sort(“borough”)<br>cursor = db.restaurants.find().sort([(“borough”, pymongo.ASCENDING)])  <span class="hljs-comment"># 升序</span><br>cursor = db.restaurants.find().sort([(“borough”, pymongo.DESCENDING)])  <span class="hljs-comment"># 降序</span><br></code></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>更新数据</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 更新文档的函数有三个(不能更新_id字段)</span><br><br>返回结果是个一：UpdateResult ，如果查找到多个匹配，则只更新第一个！<br>update_one(filter, update, upsert=<span class="hljs-literal">False</span>)<br>result = db.restaurants.update_one(<br>	&#123;“name”: “Juni”&#125;,<br> 	&#123;<br>     “$set”: &#123;<span class="hljs-string">&quot;cuisine&quot;</span>: <span class="hljs-string">&quot;American (New)&quot;</span>&#125;,<br>     “$currentDate”: &#123;“lastModified”: <span class="hljs-literal">True</span>&#125;<br> 	&#125;<br>)<br><br><span class="hljs-comment"># 查找到多少匹配，就更新多少。</span><br>update_many(filter, update, upsert=<span class="hljs-literal">False</span>)<br>result = db.restaurants.update_many(<br>     &#123;“address.zipcode”: “<span class="hljs-number">10016</span>”, “cuisine”: “Other”&#125;,<br>     &#123;<br>         “$set”: &#123;“cuisine”: “Category To Be Determined”&#125;,<br>         “$currentDate”: &#123;“lastModified”: <span class="hljs-literal">True</span>&#125;<br>     &#125;<br>)<br><br>replace_one(filter, replacement, upsert=<span class="hljs-literal">False</span>)<br></code></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>删除数据</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python">删除一个<br>result = db.test.delete_one(&#123;<span class="hljs-string">&#x27;x&#x27;</span>: <span class="hljs-number">1</span>&#125;)<br><br>删除多个<br>result = db.restaurants.delete_many(&#123;<span class="hljs-string">&quot;borough&quot;</span>: <span class="hljs-string">&quot;Manhattan&quot;</span>&#125;)<br><br>删除全部<br>result = db.restaurants.delete_many(&#123;&#125;)<br><br>删除整个集合，是drop_collection()的别名<br>db.restaurants.drop()<br></code></pre></td></tr></table></figure>
+
+<h4 id="MongoEngine"><a href="#MongoEngine" class="headerlink" title="MongoEngine"></a>MongoEngine</h4><p>创建并操作模型，间接对mongodb进行操作</p>
+<p>使用情况见 –&gt; <a href="https://stellae.gitee.io/myblog/2018/12/05/Scrapy/">传送门</a></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/tags/mongoDB/">mongoDB</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/Myblog/2018/12/05/Scrapy/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Scrapy</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/Myblog/2018/12/03/%E4%BB%A3%E7%90%86IP/">
+                        <span class="hidden-mobile">代理IP</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/Myblog/js/events.js" ></script>
+<script  src="/Myblog/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/Myblog/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/Myblog/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/Myblog/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/Myblog/js/boot.js" ></script>
+
+
+</body>
+</html>

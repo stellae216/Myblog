@@ -1,0 +1,602 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/Myblog/img/favicon.png">
+  <link rel="icon" href="/Myblog/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="Simple, so charming!">
+  <meta name="author" content="stellae">
+  <meta name="keywords" content="">
+  
+  <title>Flask-模型 - stellae&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/Myblog/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/Myblog/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"stellae.gitee.io","root":"/Myblog/","version":"1.8.10","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/Myblog/js/utils.js" ></script>
+  <script  src="/Myblog/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/Myblog/">&nbsp;<strong>stellae's blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/Myblog/img/WtwSsqwYlA0.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Flask-模型">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      stellae
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2018-11-14 16:25" pubdate>
+        2018年11月14日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.9k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      35
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Flask-模型</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：3 年前
+                
+              </p>
+            
+            <div class="markdown-body">
+              <p>Flask默认并没有提供任何数据库操作的API</p>
+<p>我们可以选择任何适合自己项目的数据库来使用</p>
+<p>SQLAlchemy是一个很强大的关系型数据库框架，支持多种数据库后台。SQLAlchemy提供了高层ORM，也提供了使用数据库原生SQL的低层功能。</p>
+<p>ORM：</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">将对对象的操作转换为原生<span class="hljs-keyword">SQL</span><br>优点<br>	易用性，可以有效减少重复<span class="hljs-keyword">SQL</span><br>	性能损耗少<br>	设计灵活，可以轻松实现复杂查询<br>	移植性好<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="模型定义"><a href="#模型定义" class="headerlink" title="模型定义"></a>模型定义</h3><p>安装flask-sqlalchemy和pymysql</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cmake">pip <span class="hljs-keyword">install</span> flask-sqlalchemy<br>pip <span class="hljs-keyword">install</span> pymysql<br></code></pre></td></tr></table></figure>
+
+<p>应用models.py</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> flask_sqlalchemy <span class="hljs-keyword">import</span>  SQLAlchemy<br><br>db = SQLAlchemy()<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span>(<span class="hljs-params">db.Model</span>):</span><br>    id = db.Column(db.Integer, primary_key=<span class="hljs-literal">True</span>, autoincrement=<span class="hljs-literal">True</span>)<br>    username = db.Column(db.String(<span class="hljs-number">10</span>), unique=<span class="hljs-literal">True</span>)<br>    password = db.Column(db.String(<span class="hljs-number">100</span>), unique=<span class="hljs-literal">True</span>)<br><br>    __tablename__ = <span class="hljs-string">&#x27;user&#x27;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">其中：<br><br><span class="hljs-type">Integer</span>表示创建的s_id字段的类型为整形，<br>primary_key表示是否为主键<br>String表示该字段为字符串<br><span class="hljs-keyword">unique</span>表示该字段唯一<br>nullable表示字段是否为空<br><span class="hljs-keyword">default</span>表示默认值<br>autoincrement表示是否自增<br></code></pre></td></tr></table></figure>
+
+<p>数据库连接的格式</p>
+<figure class="highlight sqf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs sqf">dialect+<span class="hljs-built_in">driver</span>:<span class="hljs-comment">//username:password@host:port/database</span><br><br>dialect数据库实现<br><span class="hljs-built_in">driver</span>数据库的驱动<br></code></pre></td></tr></table></figure>
+
+<p>配置文件修改</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> app.modles <span class="hljs-keyword">import</span> db<br><br><span class="hljs-comment"># 数据库的配置</span><br>app.config[<span class="hljs-string">&#x27;SQLALCHEMY_DATABASE_URI&#x27;</span>] = <span class="hljs-string">&quot;mysql+pymysql://root:123456@localhost:3306/flask&quot;</span><br>app.config[<span class="hljs-string">&#x27;SQLALCHEMY_TRACK_MODIFICATIONS&#x27;</span>] = <span class="hljs-literal">False</span>   <span class="hljs-comment"># 不写会有警告信息</span><br><span class="hljs-comment"># 初始化app和db</span><br>db.init_app(app)<br></code></pre></td></tr></table></figure>
+<p>迁徙生成表</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> app.modles <span class="hljs-keyword">import</span> db<br><br><span class="hljs-meta">@blue.route(&#x27;/&#x27;)</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">create_db</span>():</span><br>    <span class="hljs-comment"># 第一次迁移模型，创建表</span><br>    db.create_all()<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;创建模型成功&#x27;</span><br><br></code></pre></td></tr></table></figure>
+
+<p>删除表</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">@blue.route(&#x27;/drop_db/&#x27;)</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">drop_db</span>():</span><br>    <span class="hljs-comment"># 删除模型</span><br>    db.drop_all()<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;删除模型成功&#x27;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="数据库迁移"><a href="#数据库迁移" class="headerlink" title="数据库迁移"></a>数据库迁移</h3><p>在flask中也有migrate操作，它能跟踪模型的变化，并将变化映射到数据库中。</p>
+<ol>
+<li>安装migrate</li>
+</ol>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">pip <span class="hljs-keyword">install</span> flask-migrate<br></code></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>配置migrate</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> flask_migrate <span class="hljs-keyword">import</span> Migrate, MigrateCommand<br><br>migrate = Migrate(app, db)<br><br>manage.add_command(<span class="hljs-string">&#x27;db&#x27;</span>, MigrateCommand)<br></code></pre></td></tr></table></figure>
+
+
+<ol start="3">
+<li>操作</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">python manage.py db init       初始化数据库,会创建一个migations文件夹,并且在迁移时会在数据库中生成一个alembic_version表<br>python manage.py db migrate    生成迁移文件<br>python manage.py db upgrade    执行迁移文件中的升级<br>python manage.py db downgrade  执行迁移文件中的降级<br>python manage.py db --help     帮助文档<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="模型的CRUD操作"><a href="#模型的CRUD操作" class="headerlink" title="模型的CRUD操作"></a>模型的CRUD操作</h3><ul>
+<li>添加</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-tag">db</span><span class="hljs-selector-class">.session</span><span class="hljs-selector-class">.add</span>(对象1)<br><span class="hljs-selector-tag">db</span><span class="hljs-selector-class">.session</span><span class="hljs-selector-class">.add_all</span>(<span class="hljs-selector-attr">[对象1,对象2,...]</span>)<br><span class="hljs-selector-tag">db</span><span class="hljs-selector-class">.session</span><span class="hljs-selector-class">.commit</span>()<br></code></pre></td></tr></table></figure>
+
+<p><strong>第一种方式</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">@blue.route(&#x27;/add_stu&#x27;, methods=[&#x27;POST&#x27;])</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">add_stu</span>():</span><br>    <span class="hljs-comment"># 插入数据</span><br>    stu = Student()<br>    stu.s_name = <span class="hljs-string">&#x27;小明&#x27;</span><br>    <span class="hljs-comment"># 向数据库发出insert语句，但是由于事务原因，当提交commit时，才会生效</span><br>    db.session.add(stu)<br>    db.session.commit()<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;创建学生成功！&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>第二种方式</strong></p>
+<p>可以在模型文件中将提交语句<strong>封装成方法</strong>，后面的操作都可以对应封装成方法。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">save</span>(<span class="hljs-params">self</span>):</span><br>    db.session.add(self)<br>    db.session.commit()<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">@blue.route(&#x27;/add_stu&#x27;, methods=[&#x27;POST&#x27;])</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">add_stu</span>():</span><br>    <span class="hljs-comment"># 插入数据</span><br>    stu = Student()<br>    stu.s_name = <span class="hljs-string">&#x27;小明&#x27;</span><br>    stu.save()<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;创建学生成功！&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>删除</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">@blue.route(&#x27;/add_stu&#x27;, methods=[&#x27;DELETE&#x27;])</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">del_stu</span>():</span><br>    <span class="hljs-comment"># 删除数据</span><br>    stu = Student.query.filter(Student.s_name==<span class="hljs-string">&#x27;小花&#x27;</span>).first()<br>    db.session.delete(stu)<br>    db.session.commit()<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;删除学生成功&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>更新</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">@blue.route(&#x27;/up_stu&#x27;, methods=[&#x27;PATCH&#x27;])</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">up_stu</span>():</span><br>    <span class="hljs-comment"># 第一种方式</span><br>    stu = Student.query.filter(Student.s_name==<span class="hljs-string">&#x27;小花&#x27;</span>).first()<br>    stu.s_name = <span class="hljs-string">&#x27;小明&#x27;</span><br>    db.session.add(stu)<br>    db.session.commit()<br>    <br>    <span class="hljs-comment"># 第二种方式，使用update</span><br>    Student.query.filter(Student.s_name==<span class="hljs-string">&#x27;小明&#x27;</span>).update(&#123;<span class="hljs-string">&#x27;s_name&#x27;</span>:<span class="hljs-string">&#x27;小花&#x27;</span>&#125;)<br>    <span class="hljs-comment"># Student.query.filter(Student.s_name==&#x27;小明&#x27;).update(&#123;&#x27;s_name&#x27;:&#x27;小花&#x27;&#125;, synchronize_session=False)</span><br>    db.session.commit()<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&#x27;更新学生成功&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>说明：update和delete操作是指定synchronize_session=False不同步更新session； synchronize_session= fetch 更新之前进行查询，获取最新的更新对象。</p>
+</blockquote>
+<ul>
+<li><p>查询</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">Student.query.filter_by(s_name=<span class="hljs-string">&#x27;小明&#x27;</span>).first() <br>Student.query.filter(Student.s_name==<span class="hljs-string">&#x27;小明&#x27;</span>).first()  <br><span class="hljs-comment"># get()方法获取主键所在行的对象，获取不到返回空</span><br>Student.query.get(<span class="hljs-number">1</span>)  <br></code></pre></td></tr></table></figure>
+
+<p>all（）：查询所有结果，返回列表</p>
+<p>first（）：返回对象</p>
+<p>注意：不能写all().first() – 列表没有first()方法</p>
+</li>
+</ul>
+<p>  <strong>使用运算符进行查询</strong></p>
+<p>  获取查询集</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">filter(类名.属性.运算符(<span class="hljs-string">&#x27;xxx&#x27;</span>))<br>filter(类名.属性 数学运算符 值)<br></code></pre></td></tr></table></figure>
+
+<p>  运算符：</p>
+  <figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">contains： 包含<br>startswith：以什么开始<br>endswith：以什么结束<br>like：模糊    %：代表一个或者多个字符。    _：代表一个字符。<br>in_：在范围内<br>__gt__: 大于<br>__ge__：大于等于<br>__lt__：小于<br>__le__：小于等于<br><br>例如：<br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Student</span>.</span></span>query.filter(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Student</span>.</span></span>s_age.<span class="hljs-constructor">__lt__(15)</span>)<br><span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Student</span>.</span></span>query.filter(<span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Student</span>.</span></span>s_name.startswith(<span class="hljs-character">&#x27;张&#x27;</span>))<br>Student = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Student</span>.</span></span>query.order<span class="hljs-constructor">_by(Student.<span class="hljs-params">id</span>.<span class="hljs-params">desc</span>()</span>).all<span class="hljs-literal">()</span>  # 以id降序排序<br></code></pre></td></tr></table></figure>
+
+<p>  筛选：</p>
+  <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">offset</span><span class="hljs-params">(n)</span></span>                         结果跳过n个信息<br><span class="hljs-function"><span class="hljs-title">limit</span><span class="hljs-params">(n)</span></span>                          得到结果的n个值<br>order_by（<span class="hljs-string">&#x27;-id&#x27;</span>）                  以 id 降序排序 <br><span class="hljs-function"><span class="hljs-title">get</span><span class="hljs-params">()</span></span>                             获取主键所在行的对象，获取不到返回空<br><span class="hljs-function"><span class="hljs-title">first</span><span class="hljs-params">()</span></span>                           得到结果的第一个值<br><span class="hljs-function"><span class="hljs-title">paginate</span><span class="hljs-params">(page, per_page)</span></span>          分页，下面会详细说明<br></code></pre></td></tr></table></figure>
+
+<p>  paginate()属性说明：</p>
+   <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs routeros">items      当前页面中的记录<br>query      分页的源查询<br>page       当前页数<br>prev_num   上一页的页数<br>next_num   下一页的页数<br>has_prev   如果有上一页，返回<span class="hljs-literal">False</span><br>has_next   如果有下一页，返回<span class="hljs-literal">True</span><br>pages      查询得到的总页数<br>per_page   每页显示的记录数量<br>total      查询返回的记录总数<br><br></code></pre></td></tr></table></figure>
+
+<p>  后端数据处理：</p>
+  <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 方法一：手动实现分页，使用offset和limit</span><br>page = int(request.args.get(<span class="hljs-string">&#x27;page&#x27;</span>, <span class="hljs-number">1</span>))<br>stus = Student.query.offset((page<span class="hljs-number">-1</span>)*<span class="hljs-number">5</span>).limit(<span class="hljs-number">5</span>)<br><br><span class="hljs-comment"># 方法二： 使用切片[:]</span><br>s_page = (page - <span class="hljs-number">1</span>)*<span class="hljs-number">5</span><br>e_page = page * <span class="hljs-number">5</span><br>stus = Student.query.all()[s_page: e_page]<br><br><span class="hljs-comment"># 方法三：使用paginate -- 推荐</span><br>page = request.args.get(<span class="hljs-string">&#x27;page&#x27;</span>,<span class="hljs-number">1</span>)<br>paginates = Student.query.paginate(int(page),<span class="hljs-number">3</span>)<br>stus = paginates.items<br></code></pre></td></tr></table></figure>
+
+<pre><code>前端数据展示：</code></pre>
+  <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs html">&#123;% for stu in stus %&#125;<br>    ID:&#123;&#123; stu.id &#125;&#125;<br>    姓名:&#123;&#123; stu.s_name &#125;&#125;<br>    <span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span><br>&#123;% endfor %&#125;<br><br><span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span><br>当前一共&#123;&#123; paginates.pages &#125;&#125;页<br>&#123;% if paginates.has_prev %&#125;<br>    <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;&#123;&#123; url_for(&#x27;user.sel_stu&#x27;) &#125;&#125;?page=&#123;&#123; paginates.prev_num &#125;&#125;&quot;</span>&gt;</span>上一页<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><br>&#123;% endif %&#125;<br>&#123;% for i in range(1, paginates.pages+1) %&#125;<br>    <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;&#123;&#123; url_for(&#x27;user.sel_stu&#x27;) &#125;&#125;?page=&#123;&#123; i &#125;&#125;&quot;</span>&gt;</span>&#123;&#123; i &#125;&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><br>&#123;% endfor %&#125;<br>&#123;% if paginates.has_next %&#125;<br>    <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;&#123;&#123; url_for(&#x27;user.sel_stu&#x27;) &#125;&#125;?page=&#123;&#123; paginates.next_num &#125;&#125;&quot;</span>&gt;</span>下一页<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><br>&#123;% endif %&#125;<br></code></pre></td></tr></table></figure>
+
+<p>  逻辑运算：</p>
+  <figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs angelscript"><span class="hljs-keyword">from</span> sqlalchemy <span class="hljs-keyword">import</span> and_, not_, or_<br><br>与<br>	and_<br>	filter(and_(条件<span class="hljs-number">1</span>,条件<span class="hljs-number">2</span>…))<br><br>或<br>	or_<br>	filter(or_(条件<span class="hljs-number">1</span>,条件<span class="hljs-number">2</span>…))<br><br>非<br>	not_<br>	filter(not_(条件<span class="hljs-number">1</span>),条件<span class="hljs-number">2</span>…)<br></code></pre></td></tr></table></figure>
+
+<h3 id="模型对应关系"><a href="#模型对应关系" class="headerlink" title="模型对应关系"></a>模型对应关系</h3><h4 id="一对多（1：N）"><a href="#一对多（1：N）" class="headerlink" title="一对多（1：N）"></a>一对多（1：N）</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Student</span>(<span class="hljs-params">db.Model</span>):</span><br>    id = db.Column(db.Integer, primary_key=<span class="hljs-literal">True</span>, autoincrement=<span class="hljs-literal">True</span>)<br>    s_name = db.Column(db.String(<span class="hljs-number">10</span>), unique=<span class="hljs-literal">True</span>, nullable=<span class="hljs-literal">False</span>)<br>    gender = db.Column(db.Boolean, default=<span class="hljs-number">1</span>)<br>    grade_id = db.Column(db.Integer, db.ForeignKey(<span class="hljs-string">&#x27;grade.id&#x27;</span>), nullable=<span class="hljs-literal">False</span>)   <br><br>    __tablename__=<span class="hljs-string">&#x27;student&#x27;</span><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Grade</span>(<span class="hljs-params">db.Model</span>):</span><br>    id = db.Column(db.Integer, primary_key = <span class="hljs-literal">True</span>, autoincrement = <span class="hljs-literal">True</span>)<br>    g_name = db.Column(db.String(<span class="hljs-number">10</span>), nullable=<span class="hljs-literal">False</span>, unique=<span class="hljs-literal">True</span>)<br>    student = db.relationship(<span class="hljs-string">&#x27;Student&#x27;</span>, backref=<span class="hljs-string">&#x27;g&#x27;</span>)<br><br>    __tablename__ = <span class="hljs-string">&#x27;grade&#x27;</span><br><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>学生指定班级(正向查询)</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">stu = Student.query.filter(Student.s_name==<span class="hljs-string">&#x27;乔峰&#x27;</span>).first()<br>grade = stu.g<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>班级指定学生(反向查询)</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">grade = Grade.query.get(<span class="hljs-number">2</span>)<br>student = grade.student<br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="多对多（N-M）"><a href="#多对多（N-M）" class="headerlink" title="多对多（N:M）"></a>多对多（N:M）</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Student</span>(<span class="hljs-params">db.Model</span>):</span><br>    id = db.Column(db.Integer, primary_key=<span class="hljs-literal">True</span>, autoincrement=<span class="hljs-literal">True</span>)<br>    s_name = db.Column(db.String(<span class="hljs-number">10</span>), unique=<span class="hljs-literal">True</span>, nullable=<span class="hljs-literal">False</span>)<br>    gender = db.Column(db.Boolean, default=<span class="hljs-number">1</span>)<br>    grade_id = db.Column(db.Integer, db.ForeignKey(<span class="hljs-string">&#x27;grade.id&#x27;</span>), nullable=<span class="hljs-literal">False</span>)<br><br>    __tablename__=<span class="hljs-string">&#x27;student&#x27;</span><br><br><span class="hljs-comment"># 中间表</span><br>s_c = db.Table(<span class="hljs-string">&#x27;s_c&#x27;</span>,<br>               db.Column(<span class="hljs-string">&#x27;s_id&#x27;</span>, db.Integer, db.ForeignKey(<span class="hljs-string">&#x27;student.id&#x27;</span>)),<br>                db.Column(<span class="hljs-string">&#x27;c_id&#x27;</span>, db.Integer, db.ForeignKey(<span class="hljs-string">&#x27;course.id&#x27;</span>))<br>               )<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Course</span>(<span class="hljs-params">db.Model</span>):</span><br>    id = db.Column(db.Integer, primary_key=<span class="hljs-literal">True</span>, autoincrement=<span class="hljs-literal">True</span>)<br>    c_name = db.Column(db.String(<span class="hljs-number">10</span>), nullable=<span class="hljs-literal">True</span>, unique=<span class="hljs-literal">True</span>)<br>    student = db.relationship(<span class="hljs-string">&#x27;Student&#x27;</span>, secondary=s_c, backref=<span class="hljs-string">&#x27;cou&#x27;</span>)<br><br>    __tablename__ = <span class="hljs-string">&#x27;course&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<p>添加/删除关联关系</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python">stu = Student.query.get(s_id)<br>cou = Course.query.get(cou_id)<br><br><span class="hljs-comment"># 两种方式添加关联关系 -- 正向/反向</span><br>stu.cou.append(cou)<br>cou.student.append(stu)<br><br><span class="hljs-comment"># 删除关联关系 -- 正向/反向</span><br>stu.cou.remove(cou)<br>cou.student.append(stu)<br><br><span class="hljs-comment"># 提交 -- 成功后会在中间表中添加对应关系</span><br>db.session.commit()<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>学生指定课程(正向查询)</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">stu.cou <span class="hljs-comment">#得到一个学生对应的课程列表</span><br><br>stu.cou[<span class="hljs-number">0</span>].c_name<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>课程指定学生(反向查询)</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">cou.student <span class="hljs-comment"># 得到一个课程对应的学生列表</span><br><br>cou.student[<span class="hljs-number">0</span>].s_name<br></code></pre></td></tr></table></figure>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/categories/Flask/">Flask</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/tags/flask/">flask</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/Myblog/2018/11/15/Flask-%E9%92%A9%E5%AD%90%E5%92%8C%E8%A1%A8%E5%8D%95/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Flask-钩子和表单</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/Myblog/2018/11/13/Flask-Session%E5%92%8CCookie/">
+                        <span class="hidden-mobile">Flask-Session和Cookie</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/Myblog/js/events.js" ></script>
+<script  src="/Myblog/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/Myblog/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/Myblog/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/Myblog/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/Myblog/js/boot.js" ></script>
+
+
+</body>
+</html>

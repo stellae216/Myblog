@@ -1,0 +1,503 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/Myblog/img/favicon.png">
+  <link rel="icon" href="/Myblog/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="Simple, so charming!">
+  <meta name="author" content="stellae">
+  <meta name="keywords" content="">
+  
+  <title>Flask-钩子和表单 - stellae&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/Myblog/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/Myblog/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"stellae.gitee.io","root":"/Myblog/","version":"1.8.10","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/Myblog/js/utils.js" ></script>
+  <script  src="/Myblog/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/Myblog/">&nbsp;<strong>stellae's blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/Myblog/img/WtwSsqwYlA0.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Flask-钩子和表单">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      stellae
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2018-11-15 18:25" pubdate>
+        2018年11月15日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      17
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Flask-钩子和表单</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：3 年前
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h3 id="钩子函数"><a href="#钩子函数" class="headerlink" title="钩子函数"></a>钩子函数</h3><p>flask中具有四种钩子被做成了修饰器,我们在后端可以进行调用做相关的操作，使用钩子函数时，我们需要借助flask的全局变量g，g作为中间变量,在钩子函数和视图函数中间传递数据，我们先引入全局变量g </p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs angelscript"><span class="hljs-keyword">from</span> flask <span class="hljs-keyword">import</span> g<br></code></pre></td></tr></table></figure>
+
+<p>可以给 <strong>g</strong> 绑定属性，用于在全局传递数据</p>
+<h4 id="before-first-request"><a href="#before-first-request" class="headerlink" title="before_first_request"></a>before_first_request</h4><p>注册一个函数,在处理第一个请求之前运行. </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">@blue.before_first_request</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">before_first_request</span>():</span><br>    print(<span class="hljs-string">&#x27;before_first_request&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<h4 id="before-request"><a href="#before-request" class="headerlink" title="before_request"></a>before_request</h4><p>在每个请求之前注册一个要运行的函数, 每一次请求都会执行</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">@blue.before_request</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">before_request</span>():</span><br>    print(<span class="hljs-string">&#x27;before_request&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<h4 id="after-request"><a href="#after-request" class="headerlink" title="after_request"></a>after_request</h4><p>在每个请求之后注册一个要运行的函数, 每次请求都会执行. 需要接收一个 Response 类的对象作为参数 并返回一个新的Response 对象 或者 直接返回接受到的Response 对象</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">@blue.after_request</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">after_request</span>(<span class="hljs-params">response</span>):</span><br>    print(<span class="hljs-string">&#x27;after_request&#x27;</span>)<br>    <span class="hljs-keyword">return</span> response<br></code></pre></td></tr></table></figure>
+
+<h4 id="teardown-request"><a href="#teardown-request" class="headerlink" title="teardown_request"></a>teardown_request</h4><p>注册一个函数在每个请求的末尾运行，不管是否有异常, 每次请求的最后都会执行.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">@blue.teardown_request</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">teardown_request</span>(<span class="hljs-params">exception</span>):</span><br>    print(<span class="hljs-string">&#x27;teardown_request&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="表单"><a href="#表单" class="headerlink" title="表单"></a>表单</h3><p>在Flask项目开发中针对提交表单的校验，可以使用Flask-WTF扩展库进行快速的字段校验，也可以进行页面快速渲染，并提供跨站请求伪造的保护功能。 </p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">pip <span class="hljs-keyword">install</span> flask-wtf<br></code></pre></td></tr></table></figure>
+
+<p>form表单验证</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 导入扩展类</span><br><span class="hljs-keyword">from</span> flask_wtf <span class="hljs-keyword">import</span> FlaskForm<br><span class="hljs-comment"># 导入验证字段</span><br><span class="hljs-keyword">from</span> wtforms <span class="hljs-keyword">import</span> StringField, PasswordField, SubmitField, ValidationError<br><span class="hljs-comment"># 导入表单验证（必填/密码是否一致）</span><br><span class="hljs-keyword">from</span> wtforms.validators <span class="hljs-keyword">import</span> DataRequired, EqualTo<br><br><span class="hljs-keyword">from</span> user.models <span class="hljs-keyword">import</span> User<br><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">RegisterForm</span>(<span class="hljs-params">FlaskForm</span>):</span><br><br>    username = StringField(<span class="hljs-string">&#x27;用户名&#x27;</span>, validators=[DataRequired()])<br>    pw = PasswordField(<span class="hljs-string">&#x27;密码&#x27;</span>, validators=[DataRequired()])<br>    pw2 = PasswordField(<span class="hljs-string">&#x27;确认密码&#x27;</span>, validators=[DataRequired(),<br>                      EqualTo(<span class="hljs-string">&#x27;pw&#x27;</span>,<span class="hljs-string">&#x27;密码不一致&#x27;</span>)])<br>    submit = SubmitField(<span class="hljs-string">&#x27;提交&#x27;</span>)<br><br>    <span class="hljs-comment"># 会自动调用验证username,从field.data中取值</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">validate_username</span>(<span class="hljs-params">self, field</span>):</span><br>        <span class="hljs-comment"># 验证用户是否注册</span><br>        <span class="hljs-keyword">if</span> User.query.filter_by(username=field.data).first():<br>            <span class="hljs-keyword">raise</span> ValidationError(<span class="hljs-string">&#x27;用户已经注册！&#x27;</span>)<br>        <span class="hljs-keyword">if</span> len(field.data) &lt; <span class="hljs-number">3</span> :<br>            <span class="hljs-keyword">raise</span> ValidationError(<span class="hljs-string">&#x27;密码长度小于3字符!&#x27;</span>)<br><br></code></pre></td></tr></table></figure>
+
+<p>view视图函数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> flask <span class="hljs-keyword">import</span> Blueprint, request, redirect, url_for, render_template<br><span class="hljs-comment"># 加密和解密函数</span><br><span class="hljs-keyword">from</span> werkzeug.security <span class="hljs-keyword">import</span> generate_password_hash, check_password_hash<br><br><span class="hljs-keyword">from</span> user.form <span class="hljs-keyword">import</span> RegisterForm<br><span class="hljs-keyword">from</span> user.models <span class="hljs-keyword">import</span> db, User<br><br><br><span class="hljs-meta">@blue.route(&#x27;/register/&#x27;, methods=[&#x27;GET&#x27;,&#x27;POST&#x27;])</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">register</span>():</span><br>    form = RegisterForm()<br>    <span class="hljs-keyword">if</span> request.method == <span class="hljs-string">&#x27;GET&#x27;</span>:<br>        <span class="hljs-keyword">return</span> render_template(<span class="hljs-string">&#x27;register.html&#x27;</span>, form=form)<br>    <span class="hljs-keyword">if</span> request.method == <span class="hljs-string">&#x27;POST&#x27;</span>:<br>        <span class="hljs-comment"># 判断表单中的数据是否验证通过</span><br>        <span class="hljs-keyword">if</span> form.validate_on_submit():<br>            user = User()<br>            user.username = form.username.data<br>            <span class="hljs-comment"># 利用哈希函数进行加密</span><br>            user.password = generate_password_hash(form.pw.data)<br>            db.session.add(user)<br>            db.session.commit()<br>            <span class="hljs-keyword">return</span> redirect(url_for(<span class="hljs-string">&#x27;user.login&#x27;</span>))<br><br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-keyword">return</span> render_template(<span class="hljs-string">&#x27;register.html&#x27;</span>, form=form)<br></code></pre></td></tr></table></figure>
+
+<h5 id="加密-解密"><a href="#加密-解密" class="headerlink" title="加密/解密"></a>加密/解密</h5><p>利用flask自带加密和解密函数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> werkzeug.security <span class="hljs-keyword">import</span> generate_password_hash, check_password_hash<br><br><span class="hljs-comment"># 加密</span><br>hash_password = generate_password_hash(<span class="hljs-string">&#x27;123456&#x27;</span>)<br><span class="hljs-comment"># 解密 --&gt;    pwhash--密文， password--明文 | 验证成功返回True</span><br>check_password_hash(pwhash, password)  <br></code></pre></td></tr></table></figure>
+
+<h5 id="模板展示"><a href="#模板展示" class="headerlink" title="模板展示"></a>模板展示</h5><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs html">1. 定义字段名: &#123;&#123; form.字段.label &#125;&#125;<br>2. 定义input输入框: &#123;&#123; form.字段 &#125;&#125;<br>3. 展示错误信息: &#123;&#123; form.errors.字段 &#125;&#125;<br>4. 跨站请求伪造: &#123;&#123; form.csrf_token &#125;&#125;<br><br>例如：<br><span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">action</span>=<span class="hljs-string">&quot;&quot;</span> <span class="hljs-attr">method</span>=<span class="hljs-string">&quot;post&quot;</span>&gt;</span><br>    &#123;&#123; form.csrf_token &#125;&#125;<br>    &#123;&#123; form.username.label &#125;&#125;：&#123;&#123; form.username &#125;&#125;<br>    <span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span><br>    &#123;&#123; form.pw.label &#125;&#125;：&#123;&#123; form.pw &#125;&#125;<br>    <span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span><br>    &#123;&#123; form.pw2.label &#125;&#125;：&#123;&#123; form.pw2 &#125;&#125;<br>    <span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span><br>    &#123;&#123; form.submit &#125;&#125;<br><span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span><br>&#123;&#123; form.errors.username &#125;&#125;<br>&#123;&#123; form.errors.pw &#125;&#125;<br>&#123;&#123; form.errors.pw2 &#125;&#125;<br></code></pre></td></tr></table></figure>
+<h5 id="常见字段类型"><a href="#常见字段类型" class="headerlink" title="常见字段类型"></a>常见字段类型</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python">字段类型	        说明<br>StringField	     普通文本字段<br>PasswordField	 密码文本字段<br>SubmitField	     提交按钮<br>HiddenField	     隐藏文本字段<br>TextAreaField	 多行文本字段<br>DateField	     文本字段，datetime.date格式<br>DateTimeField	 文本字段，datetime.datetime格式<br>IntegerField	 文本字段，整数类型<br>FloatField        文本字段，小数类型<br>BooleanField	 复选框，值为<span class="hljs-literal">True</span>或<span class="hljs-literal">False</span><br>RadioField        单选框<br>SelectField       下拉列表<br>FileField	      文件上传字段<br></code></pre></td></tr></table></figure>
+
+<h5 id="验证器"><a href="#验证器" class="headerlink" title="验证器"></a>验证器</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python">验证器	                 说明<br>DataRequired	确保字段有值(并且<span class="hljs-keyword">if</span>判断为真)<br>Email	        邮箱地址<br>IPAddress	    IPv4的IP地址<br>Length	        规定字符长度<br>NumberRange 	输入数值的范围<br>EqualTo	        验证两个字段的一致性<br>URL	            有效的URL<br>Regexp	        正则验证<br></code></pre></td></tr></table></figure>
+
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/categories/Flask/">Flask</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/tags/flask/">flask</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/Myblog/2018/11/15/Flask-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%92%8C%E9%82%AE%E4%BB%B6%E5%8F%91%E9%80%81/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Flask-文件上传和邮件发送</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/Myblog/2018/11/14/Flask-%E6%A8%A1%E5%9E%8B/">
+                        <span class="hidden-mobile">Flask-模型</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/Myblog/js/events.js" ></script>
+<script  src="/Myblog/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/Myblog/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/Myblog/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/Myblog/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/Myblog/js/boot.js" ></script>
+
+
+</body>
+</html>

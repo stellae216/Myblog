@@ -1,0 +1,562 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/Myblog/img/favicon.png">
+  <link rel="icon" href="/Myblog/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="Simple, so charming!">
+  <meta name="author" content="stellae">
+  <meta name="keywords" content="">
+  
+  <title>Linux简易上手指南 - stellae&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/Myblog/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/Myblog/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"stellae.gitee.io","root":"/Myblog/","version":"1.8.10","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/Myblog/js/utils.js" ></script>
+  <script  src="/Myblog/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/Myblog/">&nbsp;<strong>stellae's blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/Myblog/img/WtwSsqwYlA0.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Linux简易上手指南">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      stellae
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2018-10-08 00:04" pubdate>
+        2018年10月8日 凌晨
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.7k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      26
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Linux简易上手指南</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：8 个月前
+                
+              </p>
+            
+            <div class="markdown-body">
+              <p>计算机网络分层架构模型<br>Internet — TCP/IP协议族<br>TCP — Transfer Control Protocol - 传输控制协议<br>UDP — User Datagram Protocol - 用户数据报协议<br>IP — Internet Protocol - 网际协议</p>
+<p>TCP/IP模型<br>应用层（定义应用级的协议） - HTTP、SMTP、POP3、FTP、SSH、ICQ/QQ……<br>传输层（端到端传输数据） - TCP/UDP……<br>网络层/网际层（寻址和路由） - IP/ICMP……<br>物理链路层（数据分帧+校验） - 冗余校验码……</p>
+<h3 id="Linux基本操作"><a href="#Linux基本操作" class="headerlink" title="Linux基本操作"></a>Linux基本操作</h3><h4 id="简单使用命令"><a href="#简单使用命令" class="headerlink" title="简单使用命令"></a>简单使用命令</h4><p><a target="_blank" rel="noopener" href="http://www.runoob.com/linux/linux-command-manual.html">Linux命令大全</a><br>查看手册 – <strong>man + 命令</strong> or  <strong>命令 –help</strong></p>
+<ul>
+<li>clear 清屏</li>
+<li>w / last /who /  who am i  获取登录信息</li>
+<li>ps 查看进程</li>
+<li>kill （kill -9 ） 杀死进程（强行杀死进程）</li>
+<li>adduser 创建用户</li>
+<li>userdel 删除用户</li>
+<li>su 切换用户</li>
+<li>cd 切换</li>
+<li>pwd 查看当前路径</li>
+<li>ls 查看文件和文件夹</li>
+<li>history  查看历史命令（！编号：执行对应编号的命令）</li>
+<li>mkdir 创建文件夹</li>
+<li>rmdir 删除空文件夹</li>
+<li>cp 复制文件和目录</li>
+<li>rm 删除</li>
+<li>touch 创建文件修改文件最后访问时间</li>
+<li>mv 移动或者改名</li>
+<li>echo 回声</li>
+<li>head/tail 查看文件开头/结尾</li>
+<li>less/more 分屏查看文件</li>
+<li>wc 统计行数，单词，字节</li>
+<li>sort <file>排序</li>
+<li>uniq <file> 去重（相邻行）</li>
+<li>alias 别名（alias rmd=”rm -rf”）</li>
+<li>unalias 取消别名</li>
+<li>diff 比较</li>
+<li>vim -d 比较（详细）</li>
+<li>ln<br>硬链接 - 文件的引用，只要引用数不为零，文件就一直存在，相当于分身（ln）。<br>软链接 - 相当于文件的快捷方式（ln - s）。</li>
+<li>“&gt;” 输出重定向</li>
+<li>“&gt;&gt;” 追加输出重定向</li>
+<li>“2&gt;” 错误输出重定向</li>
+<li>“&lt;” 输入重定向</li>
+<li>“|” 管道（进程间通信）- 把前一个进程的输出作为后一个进程的输入</li>
+</ul>
+<p>系统计时任务：crontab</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs shell">*    *    *    *    *<br>-    -    -    -    -<br>|    |    |    |    |<br>|    |    |    |    |<br>|    |    |    |    +----- day of week (0 - 7) (Sunday=0 or 7)<br>|    |    |    +---------- month (1 - 12)<br>|    |    +--------------- day of month (1 - 31)<br>|    +-------------------- hour (0 - 23)<br>+------------------------- min (0 - 59)<br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h4><p><strong>注册环境变量：</strong></p>
+<p>用户环境变量位置：<code>~/.bash_profile</code></p>
+<p>系统环境变量：<code>/etc/bashrc</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">PATH=$PATH:&lt;自定义路径&gt;<br>export PATH<br></code></pre></td></tr></table></figure>
+<h4 id="服务和防火墙"><a href="#服务和防火墙" class="headerlink" title="服务和防火墙"></a>服务和防火墙</h4><p>启动、关闭、重启服务和查看服务状态<br>systemctl start <name><br>systemctl stop <name><br>systemctl restart <name><br>systemctl status <name><br>systemctl enable <name> 开启开机自启动<br>systemctl disable <name> 关闭开机自启动<br>低版本使用service命令：<br>service <name> start</p>
+<p>常用的防火墙服务有firewall和iptables<br>systemctl start firewalld 开启防火墙<br>firewall-cmd –add-service=httpd  开启服务<br>firewall-cmd –permanent –add-port=443/tcp 永久开启 开启端口<br>firewall-cmd –query-port=443/tcp 查看端口是否开启<br>firewall-cmd –query-service=httpd 查看服务是否开启<br>再重启防火墙生效</p>
+<p>top - 按CPU占用率从高到低排列进程</p>
+<p>如果需要把运行中的进程终止掉 - Ctrl + C<br>如果需要把运行中的进程放在后台 - Ctrl + Z<br>中止输入 - Ctrl + D</p>
+<p>执行命令时在命令后面加上&amp;符号，就可以把命令置于后台运行<br>jobs - 查看后台进程<br>bg %编号 - 把后台暂停的进程运行<br>fg %编号 - 把后台进程在前台运行</p>
+<h3 id="Linux系统安装软件"><a href="#Linux系统安装软件" class="headerlink" title="Linux系统安装软件"></a>Linux系统安装软件</h3><ul>
+<li>使用包管理工具进行安装 yum / rpm<br>yum search <name> 搜索<br>yum -y install <name1>  安装<br>yum -y remove <name2> 卸载<br>yum info <name> 查看信息<br>yum update <name> 更新<br>yum list installed  查看目前安装的所有软件<br>systemctl start nginx 启动服务</li>
+<li>源代码构建安装<br>wget  -&gt;  gunzip  -&gt; tar -xvf  -&gt;  make &amp;&amp; make install  -&gt; export PATH …（一次性） 或者 修改.bash_profile配置环境变量</li>
+</ul>
+<p>压缩文件<br>-gz文件 —-gzip 压缩 / gunzip 解压缩<br>-xz文件 —- xz -z压缩 / xz -d 解压缩</p>
+<h3 id="源代码构建安装实战"><a href="#源代码构建安装实战" class="headerlink" title="源代码构建安装实战"></a>源代码构建安装实战</h3><h4 id="CentOS安装python3-7"><a href="#CentOS安装python3-7" class="headerlink" title="CentOS安装python3.7"></a>CentOS安装python3.7</h4><p><strong>源码安装</strong><br>1、wget <a target="_blank" rel="noopener" href="https://www.python.org/ftp/python/3.7.0/Python-3.7.0.tgz">https://www.python.org/ftp/python/3.7.0/Python-3.7.0.tgz</a><br>2、解压缩<br>gunzip Python-3.7.0.tgz<br>3、解归档<br>tar -xvf Python-3.7.0.tar<br>4、安装底层依赖库<br><code>yum -y install zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gdbm-devel db4-devel libpcap-devel xz-devel libffi-devel</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">一般是c语言源代码，所以需要安装gcc编译器，比如git需要安装这些<br>yum install -y gcc curl libcurl-devel zlib-devel<br></code></pre></td></tr></table></figure>
+
+<p>5、安装前的配置<br>cd Python-3.7.0 进入目录，指定安装路径<br><code>./configure --prefix=/usr/local/python3 --enable-optimizations</code><br>6、构建安装<br>make &amp;&amp; make install<br>7、配置PATH环境变量（一次性的）<br>export PATH=$PATH:/usr/local/python3/bin<br>8、注册软连接（符合链接）– 非必要<br>ln -s /usr/local/python3/bin/python3 /usr/bin/python3<br>硬链接 - 文件的引用，只要引用数不为零，文件就一直存在，相当于分身（ln）<br>软链接 - 相当于文件的快捷方式（ln - s）</p>
+<h3 id="vim文本编辑器"><a href="#vim文本编辑器" class="headerlink" title="vim文本编辑器"></a>vim文本编辑器</h3><p>三种模式：命令模式、编辑模式、末行模式</p>
+<ul>
+<li>末行模式</li>
+</ul>
+<p>1、： + 命令</p>
+<ul>
+<li><p>set nu / set nonu   查看行号</p>
+</li>
+<li><p>syntax on（默认）/syntax off（关闭） 高亮显示</p>
+</li>
+<li><p>set autoindent  自动对齐</p>
+</li>
+<li><p>set ts=4  制表键为4个空格</p>
+</li>
+<li><p>set ruler 显示光标所在位置</p>
+</li>
+<li><p>set encoding=utf-8  编码方式</p>
+</li>
+<li><p>set fileencoding=uft-8  文件编码方式</p>
+</li>
+</ul>
+<p>查找和替换<br><code>：1,$s/旧/新/gice</code> （$代表到最后，s代表替换，g-全局模式，i-忽略大小写，c-确认模式，e-忽略错误）</p>
+<p>2、/ + 正则表达式 —搜索<br>n - 正向搜索<br>N - 反向搜索<br>3、？ + 正则表达式 - 反向搜索</p>
+<ul>
+<li>命令模式<br>hjkl / HML / 0$ / w - 移动光标<br>ctrl + e / ctrl + y / ctrl + f / ctrl + b 翻页<br>yy复制 / p粘贴 / dd删除 / u撤销 / ctrl + r取消撤销<br>ctrl + x –&gt; ctrl + o 代码提示</li>
+</ul>
+<p>拆分窗口<br>：vs 垂直拆分<br>：sp 水平拆分<br>  ctrl +w –&gt; ctrl +w 窗口切换光标<br>：wqa 全部窗口保存退出</p>
+<h3 id="分享一个“自慰神器”"><a href="#分享一个“自慰神器”" class="headerlink" title="分享一个“自慰神器”"></a>分享一个“自慰神器”</h3><p>可以在启动配置文件里面添加shell语句<br><code>~/.bash_profile</code>  这里修改只有root才能看到<br><code>/etc/profile</code> 这里修改，登录的用户都能看到<br>下面是添加的代码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs bash">username=`whoami`<br><span class="hljs-keyword">if</span> [ <span class="hljs-string">&quot;<span class="hljs-variable">$username</span>&quot;</span> = <span class="hljs-string">&quot;root&quot;</span> ]<br><span class="hljs-keyword">then</span><br>    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;热烈欢迎『洁帅大大』登录阿里云服务器，阿里云全体员工在此全体起立，鼓掌！！！&quot;</span><br>    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;&quot;</span><br>    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;您是超级管理员，掌控雷电，为非作歹，无所不能~~&quot;</span><br>    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;&quot;</span><br><span class="hljs-keyword">else</span><br>    <span class="hljs-built_in">read</span> -p <span class="hljs-string">&quot;请爸爸输入名字:&quot;</span> realname<br>    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;热烈欢迎『<span class="hljs-variable">$realname</span>』登录阿里云服务器，阿里云全体员工在此起立，鼓掌！！！&quot;</span><br>    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;记住，你只是一个普通用户！&quot;</span><br>    <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;&quot;</span><br><span class="hljs-keyword">fi</span><br><br></code></pre></td></tr></table></figure>
+<p>效果：<br>超级用户登录：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs routeros">Last login: Fri Oct 12 16:49:49 2018 <span class="hljs-keyword">from</span> 125.70.30.209<br><br>Welcome <span class="hljs-keyword">to</span> Alibaba Cloud Elastic Compute<span class="hljs-built_in"> Service </span>!<br><br>热烈欢迎『洁帅大大』登录阿里云服务器，阿里云全体员工在此全体起立，鼓掌！！！<br><br>您是超级管理员，掌控雷电，为非作歹，无所不能~~<br><br>[root@aliyun ~]# <br></code></pre></td></tr></table></figure>
+<p>普通用户登录：</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs elixir">请爸爸输入名字<span class="hljs-symbol">:</span>星辰<br>热烈欢迎『星辰』登录阿里云服务器，阿里云全体员工在此起立，鼓掌！！！<br>记住，你只是一个普通用户！<br><br>[stellae<span class="hljs-variable">@aliyun</span> ~]<span class="hljs-variable">$ </span><br></code></pre></td></tr></table></figure>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/categories/Linux/">Linux</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/tags/linux/">linux</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/Myblog/2018/10/15/pgsql%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95%E6%8C%87%E5%8D%97/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">pgsql常用方法指南</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/Myblog/2018/09/30/Git/">
+                        <span class="hidden-mobile">Git基础命令</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/Myblog/js/events.js" ></script>
+<script  src="/Myblog/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/Myblog/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/Myblog/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/Myblog/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/Myblog/js/boot.js" ></script>
+
+
+</body>
+</html>

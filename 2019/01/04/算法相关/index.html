@@ -1,0 +1,612 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/Myblog/img/favicon.png">
+  <link rel="icon" href="/Myblog/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="Simple, so charming!">
+  <meta name="author" content="stellae">
+  <meta name="keywords" content="">
+  
+  <title>算法相关 - stellae&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/Myblog/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/Myblog/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"stellae.gitee.io","root":"/Myblog/","version":"1.8.10","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/Myblog/js/utils.js" ></script>
+  <script  src="/Myblog/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/Myblog/">&nbsp;<strong>stellae's blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/Myblog/img/WtwSsqwYlA0.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="算法相关">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      stellae
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2019-01-04 19:41" pubdate>
+        2019年1月4日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      5k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      88
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">算法相关</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：9 个月前
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h3 id="一、查找和排序"><a href="#一、查找和排序" class="headerlink" title="一、查找和排序"></a>一、查找和排序</h3><h4 id="1、查找"><a href="#1、查找" class="headerlink" title="1、查找"></a>1、查找</h4><p>顺序查找</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">seq_search</span>(<span class="hljs-params">items: list, elem</span>) -&gt; int:</span><br>    <span class="hljs-string">&quot;&quot;&quot;顺序查找&quot;&quot;&quot;</span><br>    <span class="hljs-keyword">for</span> index, item <span class="hljs-keyword">in</span> enumerate(items):<br>        <span class="hljs-keyword">if</span> item == elem:<br>            <span class="hljs-keyword">return</span> index<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span><br></code></pre></td></tr></table></figure>
+
+<p>二分查找/折半查找</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">bin_search</span>(<span class="hljs-params">items: list, elem</span>) -&gt; int:</span><br>    <span class="hljs-string">&quot;&quot;&quot;二分查找&quot;&quot;&quot;</span><br>    start, end = <span class="hljs-number">0</span>, len(items) - <span class="hljs-number">1</span><br>    <span class="hljs-keyword">while</span> start &lt;= end:<br>        middle = (start + end) // <span class="hljs-number">2</span><br>        <span class="hljs-keyword">if</span> elem == items[middle]:<br>            <span class="hljs-keyword">return</span> middle<br>        <span class="hljs-keyword">elif</span> elem &gt; items[middle]:<br>            start = middle + <span class="hljs-number">1</span><br>        <span class="hljs-keyword">else</span>:<br>            end = middle - <span class="hljs-number">1</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="2、排序"><a href="#2、排序" class="headerlink" title="2、排序"></a>2、排序</h4><p>经典排序方法主要有：冒泡排序、选择排序、归并排序、快速排序等等。</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/onepixel/p/7674659.html">十大经典排序算法 (动图演示)</a></p>
+<p><a target="_blank" rel="noopener" href="https://visualgo.net/zh">数据结构和算法动态可视化 (Chinese)</a></p>
+<h5 id="（1）冒泡排序"><a href="#（1）冒泡排序" class="headerlink" title="（1）冒泡排序"></a>（1）冒泡排序</h5><p>冒泡排序是一种简单的排序算法。它重复地走访过要排序的数列，一次比较两个元素，如果它们的顺序错误就把它们交换过来。走访数列的工作是重复地进行直到没有再需要交换，也就是说该数列已经排序完成。这个算法的名字由来是因为越小的元素会经由交换慢慢“浮”到数列的顶端。 </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 函数设计要尽量做到无副作用(不影响调用者)</span><br><span class="hljs-comment"># *前面的参数叫位置参数，传参对号入座 ；*后面的参数叫命名关键字参数，传参必须给出参数名和值</span><br><span class="hljs-comment"># *args - 可变参数 - 元组； *kwargs - 关键字参数 - 字典</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">bubble_sort</span>(<span class="hljs-params">origin_items:list, *, comp=lambda x, y: x &gt; y</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;冒泡排序 - O(n^2) : 两两比较，大的下沉，小的上浮&quot;&quot;&quot;</span><br>  	items = origin_items[:]<br>  	length = len(items)<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(length - <span class="hljs-number">1</span>):<br>        swapped = <span class="hljs-literal">False</span><br>        <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(length - <span class="hljs-number">1</span> - i):<br>            <span class="hljs-keyword">if</span> comp(items[j], items[j + <span class="hljs-number">1</span>]):<br>                swapped = <span class="hljs-literal">True</span><br>                items[j], items[j + <span class="hljs-number">1</span>] = items[j + <span class="hljs-number">1</span>], items[j]<br>        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> swapped:<br>            <span class="hljs-keyword">break</span>  <span class="hljs-comment"># Stop iteration if the collection is sorted.</span><br>    <span class="hljs-keyword">return</span> items<br>  <br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">optimize_bubble_sort</span>(<span class="hljs-params">origin_items, *, comp=lambda x, y: x &gt; y</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;冒泡排序优化版：正反进行，并且用Bool值记录是否已经排好&quot;&quot;&quot;</span>      <br>    items = origin_items[:]<br>    length = len(items)<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(length - <span class="hljs-number">1</span>):<br>        swapped = <span class="hljs-literal">False</span><br>        <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(i, length - <span class="hljs-number">1</span> - i):<br>            <span class="hljs-keyword">if</span> items[j] &gt; items[j + <span class="hljs-number">1</span>]:<br>                items[j], items[j + <span class="hljs-number">1</span>] = items[j + <span class="hljs-number">1</span>], items[j]<br>                swapped = <span class="hljs-literal">True</span><br>        <span class="hljs-keyword">if</span> swapped:<br>            swapped = <span class="hljs-literal">False</span><br>            <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(length - <span class="hljs-number">1</span> - i, i, <span class="hljs-number">-1</span>):<br>                <span class="hljs-keyword">if</span> items[j - <span class="hljs-number">1</span>] &gt; items[j]:<br>                    items[j - <span class="hljs-number">1</span>], items[j] = items[j], items[j - <span class="hljs-number">1</span>]<br>                    swapped = <span class="hljs-literal">True</span><br>        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> swapped:<br>            <span class="hljs-keyword">break</span><br>    <span class="hljs-keyword">return</span> items<br></code></pre></td></tr></table></figure>
+
+<h5 id="（2）选择排序"><a href="#（2）选择排序" class="headerlink" title="（2）选择排序"></a>（2）选择排序</h5><p>选择排序(Selection-sort)是一种简单直观的排序算法。它的工作原理：首先在未排序序列中找到最小（大）元素，存放到排序序列的起始位置，然后，再从剩余未排序元素中继续寻找最小（大）元素，然后放到已排序序列的末尾。以此类推，直到所有元素均排序完毕。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">select_sort</span>(<span class="hljs-params">origin_items:list, comp=lambda x, y: x &lt; y</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    简单选择排序：每次从剩下的里面选最小的，依次把最小的元素放在第0,1,2...位置</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    items = origin_items[:]<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(len(items) - <span class="hljs-number">1</span>):<br>        min_index = i<br>        <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(i + <span class="hljs-number">1</span>, len(items)):<br>            <span class="hljs-keyword">if</span> comp(items[j], items[min_index]):<br>                items[j], items[min_index] = items[min_index], items[j]<br>    <span class="hljs-keyword">return</span> items<br></code></pre></td></tr></table></figure>
+
+<h5 id="（3）计数排序"><a href="#（3）计数排序" class="headerlink" title="（3）计数排序"></a>（3）计数排序</h5><p>计数排序不是基于比较的排序算法，其核心在于将输入的数据值转化为键存储在额外开辟的数组空间中。 作为一种线性时间复杂度的排序，计数排序要求输入的数据必须是有确定范围的整数。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">counting_sort</span>(<span class="hljs-params">collection</span>):</span><br>    result = []<br>    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> collection:<br>        <span class="hljs-keyword">return</span> result<br>    coll_max = max(collection)<br>    coll_min = min(collection)<br><br>    <span class="hljs-comment"># create the counting array</span><br>    counting_arr_length = coll_max + <span class="hljs-number">1</span> - coll_min<br>    counting_arr = [<span class="hljs-number">0</span> <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(counting_arr_length)]<br><br>    <span class="hljs-comment"># count how much a number appears in the collection</span><br>    <span class="hljs-keyword">for</span> number <span class="hljs-keyword">in</span> collection:<br>        counting_arr[number - coll_min] += <span class="hljs-number">1</span><br><br>    <span class="hljs-keyword">for</span> counter <span class="hljs-keyword">in</span> counting_arr:<br>        <span class="hljs-keyword">if</span> counter == <span class="hljs-number">0</span>:<br>            coll_min += <span class="hljs-number">1</span><br>            <span class="hljs-keyword">continue</span><br>        result.extend([coll_min <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(counter)])<br>        coll_min += <span class="hljs-number">1</span><br>    <span class="hljs-keyword">return</span> result<br></code></pre></td></tr></table></figure>
+
+<h5 id="（4）插入排序"><a href="#（4）插入排序" class="headerlink" title="（4）插入排序"></a>（4）插入排序</h5><p>插入排序（Insertion-Sort）的算法描述是一种简单直观的排序算法。它的工作原理是通过构建有序序列，对于未排序数据，在已排序序列中从后向前扫描，找到相应位置并插入。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">insertion_sort</span>(<span class="hljs-params">collection</span>):</span><br><br>    <span class="hljs-keyword">for</span> loop_index <span class="hljs-keyword">in</span> range(<span class="hljs-number">1</span>, len(collection)):<br>        insertion_index = loop_index<br>        <span class="hljs-keyword">while</span> (<br>            insertion_index &gt; <span class="hljs-number">0</span><br>            <span class="hljs-keyword">and</span> collection[insertion_index - <span class="hljs-number">1</span>] &gt; collection[insertion_index]<br>        ):<br>            collection[insertion_index], collection[insertion_index - <span class="hljs-number">1</span>] = (<br>                collection[insertion_index - <span class="hljs-number">1</span>],<br>                collection[insertion_index],<br>            )<br>            insertion_index -= <span class="hljs-number">1</span><br><br>    <span class="hljs-keyword">return</span> collection<br></code></pre></td></tr></table></figure>
+
+<h5 id="（5）希尔排序"><a href="#（5）希尔排序" class="headerlink" title="（5）希尔排序"></a>（5）希尔排序</h5><p>1959年Shell发明，第一个突破O(n2)的排序算法，是简单插入排序的改进版。它与插入排序的不同之处在于，它会优先比较距离较远的元素。希尔排序又叫缩小增量排序。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">shell_sort</span>(<span class="hljs-params">collection</span>):</span><br>    <span class="hljs-comment"># Marcin Ciura&#x27;s gap sequence</span><br>    gaps = [<span class="hljs-number">701</span>, <span class="hljs-number">301</span>, <span class="hljs-number">132</span>, <span class="hljs-number">57</span>, <span class="hljs-number">23</span>, <span class="hljs-number">10</span>, <span class="hljs-number">4</span>, <span class="hljs-number">1</span>]<br><br>    <span class="hljs-keyword">for</span> gap <span class="hljs-keyword">in</span> gaps:<br>        i = gap<br>        <span class="hljs-keyword">while</span> i &lt; len(collection):<br>            temp = collection[i]<br>            j = i<br>            <span class="hljs-keyword">while</span> j &gt;= gap <span class="hljs-keyword">and</span> collection[j - gap] &gt; temp:<br>                collection[j] = collection[j - gap]<br>                j -= gap<br>            collection[j] = temp<br>            i += <span class="hljs-number">1</span><br><br>    <span class="hljs-keyword">return</span> collection<br></code></pre></td></tr></table></figure>
+
+<h5 id="（6）桶排序"><a href="#（6）桶排序" class="headerlink" title="（6）桶排序"></a>（6）桶排序</h5><p>桶排序是计数排序的升级版。它利用了函数的映射关系，高效与否的关键就在于这个映射函数的确定。桶排序 (Bucket sort)的工作的原理：假设输入数据服从均匀分布，将数据分到有限数量的桶里，每个桶再分别排序（有可能再使用别的排序算法或是以递归方式继续使用桶排序进行排）。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#!/usr/bin/env python</span><br><span class="hljs-keyword">from</span> random <span class="hljs-keyword">import</span> randint<br><br><span class="hljs-comment"># time complexity is O(n)</span><br><br>DEFAULT_BUCKET_SIZE = <span class="hljs-number">10</span><br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">bucket_sort</span>(<span class="hljs-params">my_list, bucket_size=DEFAULT_BUCKET_SIZE</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;桶排序&quot;&quot;&quot;</span><br>    <span class="hljs-keyword">if</span> len(my_list) == <span class="hljs-number">0</span>:<br>        <span class="hljs-keyword">raise</span> Exception(<span class="hljs-string">&quot;Please add some elements in the array.&quot;</span>)<br><br>    min_value, max_value = min(my_list), max(my_list)<br>    bucket_count = (max_value - min_value) // bucket_size + <span class="hljs-number">1</span>   <span class="hljs-comment"># 计算桶数量</span><br>    buckets = [[] <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(int(bucket_count))]<br><br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(len(my_list)):<br>        buckets[int((my_list[i] - min_value) // bucket_size)].append(my_list[i])<br><br>    <span class="hljs-keyword">return</span> sorted(<br>        [buckets[i][j] <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(len(buckets)) <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(len(buckets[i]))]<br>    )<br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    collection = [randint(<span class="hljs-number">-20</span>, <span class="hljs-number">20</span>) <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(<span class="hljs-number">1000</span>)]<br>    print(*bucket_sort(collection), sep=<span class="hljs-string">&#x27;,&#x27;</span>)<br><br></code></pre></td></tr></table></figure>
+
+<h5 id="（7）归并排序"><a href="#（7）归并排序" class="headerlink" title="（7）归并排序"></a>（7）归并排序</h5><p>归并排序是建立在归并操作上的一种有效的排序算法。该算法是采用分治法（Divide and Conquer）的一个非常典型的应用。将已有序的子序列合并，得到完全有序的序列；即先使每个子序列有序，再使子序列段间有序。若将两个有序表合并成一个有序表，称为2-路归并。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">merge_sort</span>(<span class="hljs-params">items, comp=lambda x, y: x &lt;= y</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    归并排序 - O(n * log_2 n) - 高级排序算法</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    <span class="hljs-keyword">if</span> len(items) &lt; <span class="hljs-number">2</span>:<br>        <span class="hljs-keyword">return</span> items[:]<br>    mid = len(items) // <span class="hljs-number">2</span><br>    left = merge_sort(items[:mid])<br>    right = merge_sort(items[mid:])<br>    <span class="hljs-keyword">return</span> merge(left, right)<br>    <br><span class="hljs-comment"># 写法一：推荐</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">merge</span>(<span class="hljs-params">left, right</span>):</span><br>		<span class="hljs-string">&quot;&quot;&quot;将两个有序列表合并成一个新的有序列表&quot;&quot;&quot;</span><br>    result = []<br>    <span class="hljs-keyword">while</span> left <span class="hljs-keyword">and</span> right:<br>        result.append((left <span class="hljs-keyword">if</span> left[<span class="hljs-number">0</span>] &lt;= right[<span class="hljs-number">0</span>] <span class="hljs-keyword">else</span> right).pop(<span class="hljs-number">0</span>))<br>    <span class="hljs-keyword">return</span> result + left + right<br>    <br><span class="hljs-comment"># 写法二    </span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">merge</span>(<span class="hljs-params">items1, items2, comp=lambda x, y: x &lt;= y</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;合并：将两个有序列表合并成一个新的有序列表&quot;&quot;&quot;</span><br>    index1, index2 = <span class="hljs-number">0</span>, <span class="hljs-number">0</span><br>    result = []<br>    <span class="hljs-keyword">while</span> index1 &lt; len(items1) <span class="hljs-keyword">and</span> index2 &lt; len(items2):<br>        <span class="hljs-keyword">if</span> comp(items1[index1], items2[index2]):<br>            result.append(items1[index1])<br>            index1 += <span class="hljs-number">1</span><br>        <span class="hljs-keyword">else</span>:<br>            result.append(items2[index2])<br>            index2 += <span class="hljs-number">1</span><br>    result += items1[index1:]<br>    result += items2[index2:]<br>    <span class="hljs-keyword">return</span> result<br></code></pre></td></tr></table></figure>
+
+<h5 id="（8）快速排序"><a href="#（8）快速排序" class="headerlink" title="（8）快速排序"></a>（8）快速排序</h5><p>快速排序的基本思想：通过一趟排序将待排记录分隔成独立的两部分，其中一部分记录的关键字均比另一部分的关键字小，则可分别对这两部分记录继续进行排序，以达到整个序列有序。</p>
+<p>方法一</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">quick_sort</span>(<span class="hljs-params">collection</span>):</span><br>    length = len(collection)<br>    <span class="hljs-keyword">if</span> length &lt;= <span class="hljs-number">1</span>:<br>        <span class="hljs-keyword">return</span> collection<br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-comment"># Use the last element as the first pivot</span><br>        pivot = collection.pop()<br>        <span class="hljs-comment"># Put elements greater than pivot in greater list</span><br>        <span class="hljs-comment"># Put elements lesser than pivot in lesser list</span><br>        lesser, greater = [], []<br>        <span class="hljs-keyword">for</span> element <span class="hljs-keyword">in</span> collection:<br>            <span class="hljs-keyword">if</span> element &gt; pivot:<br>                greater.append(element)<br>            <span class="hljs-keyword">else</span>:<br>                lesser.append(element)<br>        <span class="hljs-keyword">return</span> quick_sort(lesser) + [pivot] + quick_sort(greater)<br></code></pre></td></tr></table></figure>
+
+<p>方法二</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 快速排序 - 以枢轴为界将列表中的元素划分成两个部分，左边小，右边大。选择枢轴很重要</span><br><span class="hljs-comment"># 示例：排序过程</span><br><span class="hljs-comment"># 35, 97, 12, 68, 55, 73, 81, 40</span><br><span class="hljs-comment"># 35, 12, [40], 68, 55, 73, 81, 97</span><br><span class="hljs-comment"># [12], 35, [40], 68, 55, 73, 81, [97]</span><br><span class="hljs-comment"># [12], 35, [40], 55, [68], 73, 81, [97]</span><br><span class="hljs-comment"># [12], 35, [40], 55, [68], 73, [81], [97]</span><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">quick_sort</span>(<span class="hljs-params">origin_items, comp=lambda x, y: x &lt;= y</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;快速排序&quot;&quot;&quot;</span><br>    items = origin_items[:]<br>    _quick_sort(items, <span class="hljs-number">0</span>, len(items) - <span class="hljs-number">1</span>, comp)<br>    <span class="hljs-keyword">return</span> items<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">_quick_sort</span>(<span class="hljs-params">items, start, end, comp</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;递归调用划分和排序&quot;&quot;&quot;</span><br>    <span class="hljs-keyword">if</span> start &lt; end:<br>        pos = _partition(items, start, end, comp)<br>        _quick_sort(items, start, pos - <span class="hljs-number">1</span>, comp)<br>        _quick_sort(items, pos + <span class="hljs-number">1</span>, end, comp)<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">_partition</span>(<span class="hljs-params">items, start, end, comp</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;划分&quot;&quot;&quot;</span><br>    pivot = items[end]<br>    i = start - <span class="hljs-number">1</span><br>    <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> range(start, end):<br>        <span class="hljs-keyword">if</span> comp(items[j], pivot):<br>            i += <span class="hljs-number">1</span><br>            items[i], items[j] = items[j], items[i]<br>    items[i + <span class="hljs-number">1</span>], items[end] = items[end], items[i + <span class="hljs-number">1</span>]<br>    <span class="hljs-keyword">return</span> i + <span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意：快速排序对于有序的数组，时间复杂度会退化为O(n^2)。解决这个问题的办法可以是：每次选择标定点的时候，都随机选择。</p>
+<p>但是上面的办法对于数组中有大量重复元素的情况时，依旧会造成左右分配不均衡，算法性能下降，解决办法是使用3个Partition</p>
+</blockquote>
+<p>快排算法(3个Partition)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> random <span class="hljs-keyword">import</span> randint<br><span class="hljs-keyword">from</span> time <span class="hljs-keyword">import</span> perf_counter<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">quick_sort_3partition</span>(<span class="hljs-params">sorting, left, right</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    :param sorting: 待排序列表</span><br><span class="hljs-string">    :param left: 开始下标</span><br><span class="hljs-string">    :param right: 结束下标</span><br><span class="hljs-string">    :return:</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    <span class="hljs-keyword">if</span> right &lt;= left:<br>        <span class="hljs-keyword">return</span><br>    a = index = left   <span class="hljs-comment"># a 始终是枢纽的位置   index 遍历位置</span><br>    b = right      <span class="hljs-comment"># 未排序最大下标</span><br>    pivot = sorting[left]   <span class="hljs-comment"># 枢纽值</span><br>    <span class="hljs-keyword">while</span> index &lt;= b:<br>        <span class="hljs-comment"># 将小于中轴值的元素放在列表前面</span><br>        <span class="hljs-keyword">if</span> sorting[index] &lt; pivot:<br>            <span class="hljs-comment"># 交换位置到枢纽左边，遍历下标推进</span><br>            sorting[a], sorting[index] = sorting[index], sorting[a]<br>            a += <span class="hljs-number">1</span><br>            index += <span class="hljs-number">1</span><br>        <span class="hljs-comment"># 将大于中轴值的元素放在列表后面</span><br>        <span class="hljs-keyword">elif</span> sorting[index] &gt; pivot:<br>            <span class="hljs-comment"># 交换位置到未排序最大位置，遍历下标不变</span><br>            sorting[b], sorting[index] = sorting[index], sorting[b]<br>            b -= <span class="hljs-number">1</span><br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-comment"># 遍历下标推进</span><br>            index += <span class="hljs-number">1</span><br>    <span class="hljs-comment"># 递归对左半部分进行快速排序</span><br>    quick_sort_3partition(sorting, left, a - <span class="hljs-number">1</span>)<br>    <span class="hljs-comment"># 递归对右半部分进行快速排序</span><br>    quick_sort_3partition(sorting, b + <span class="hljs-number">1</span>, right)<br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    unsorted = [randint(<span class="hljs-number">0</span>, <span class="hljs-number">1000</span>) <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(<span class="hljs-number">1000</span>)]<br>    start = perf_counter()<br>    quick_sort_3partition(unsorted, <span class="hljs-number">0</span>, len(unsorted) - <span class="hljs-number">1</span>)<br>    print(*unsorted, sep=<span class="hljs-string">&#x27;,&#x27;</span>)<br>    print(<span class="hljs-string">f&#x27;It cost <span class="hljs-subst">&#123;perf_counter() - start&#125;</span>s&#x27;</span>)<br><br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="二、常用算法"><a href="#二、常用算法" class="headerlink" title="二、常用算法"></a>二、常用算法</h3><ul>
+<li>穷举法 - 又称为暴力破解法，对所有的可能性进行验证，直到找到正确答案。 </li>
+<li>贪婪法 - 在对问题求解时，总是做出在当前看来是最好的选择，不追求最优解，快速找到满意解。 </li>
+<li>分治法 - 把一个复杂的问题分成两个或更多的相同或相似的子问题，再把子问题分成更小的子问题，直到可以直接求解的程度，最后将子问题的解进行合并得到原问题的解。 </li>
+<li>回溯法 - 回溯法又称为试探法，按选优条件向前搜索，当搜索到某一步发现原先选择并不优或达不到目标时，就退回一步重新选择。 </li>
+<li>动态规划 - 基本思想也是将待求解问题分解成若干个一问题，先求解并保存这些子问题的解，避免产生大量的重复运算。 </li>
+</ul>
+<h4 id="1、贪婪法"><a href="#1、贪婪法" class="headerlink" title="1、贪婪法"></a>1、贪婪法</h4><p>假设一偷有一个背包，最多能装20公斤赃物，他闯入一户人家，发现如下所示的物品。很显然，他不能把所有物品都装进背包，所以必须确定拿走哪些物品，留下哪些物品 。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><code class="hljs python">输入：<br><span class="hljs-number">20</span> <span class="hljs-number">6</span><br>电脑 <span class="hljs-number">200</span> <span class="hljs-number">20</span><br>收音机 <span class="hljs-number">20</span> <span class="hljs-number">4</span><br>钟 <span class="hljs-number">175</span> <span class="hljs-number">10</span><br>花瓶 <span class="hljs-number">50</span> <span class="hljs-number">2</span><br>书 <span class="hljs-number">10</span> <span class="hljs-number">1</span><br>油画 <span class="hljs-number">90</span> <span class="hljs-number">9</span><br><span class="hljs-comment"># 贪婪法：不求寻找最优解，只需要去找到满意解(局部最优解)。</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Thing</span>(<span class="hljs-params">object</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;可供小偷偷走的物品&quot;&quot;&quot;</span><br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span>(<span class="hljs-params">self, name, price, weight</span>):</span><br>        self.name = name<br>        self.price = price<br>        self.weight = weight<br><br><span class="hljs-meta">    @property</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">value</span>(<span class="hljs-params">self</span>):</span><br>        <span class="hljs-string">&quot;&quot;&quot;价值重量比&quot;&quot;&quot;</span><br>        <span class="hljs-keyword">return</span> self.price / self.weight<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">input_thing</span>():</span><br>    <span class="hljs-string">&quot;&quot;&quot;拿东西&quot;&quot;&quot;</span><br>    name, price, weight = input(<span class="hljs-string">&#x27;输入种类 价值 重量:&#x27;</span>).split()<br>    <span class="hljs-keyword">return</span> name, int(price), int(weight)<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">main</span>():</span><br>    <span class="hljs-string">&quot;&quot;&quot;主函数&quot;&quot;&quot;</span><br>    max_weight, num_of_things = map(int, input(<span class="hljs-string">&#x27;输入背包的容量和可偷物品数量:&#x27;</span>).split())<br>    list_result = []<br>    <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(num_of_things):<br>        list_result.append(Thing(*input_thing()))<br>    list_result.sort(key=<span class="hljs-keyword">lambda</span> x: x.value, reverse=<span class="hljs-literal">True</span>)<br>    totle_price, totle_weight = <span class="hljs-number">0</span>, <span class="hljs-number">0</span><br>    <span class="hljs-keyword">for</span> thing <span class="hljs-keyword">in</span> list_result:<br>        <span class="hljs-keyword">if</span> totle_weight + thing.weight &lt;= max_weight:<br>            print(<span class="hljs-string">f&#x27;小偷拿走了<span class="hljs-subst">&#123;thing.name&#125;</span>&#x27;</span>)<br>            totle_price += thing.price<br>            totle_weight += thing.weight<br>    print(<span class="hljs-string">f&#x27;总价值<span class="hljs-subst">&#123;totle_price&#125;</span>&#x27;</span>)<br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    main()<br></code></pre></td></tr></table></figure>
+
+<h4 id="2、分治法"><a href="#2、分治法" class="headerlink" title="2、分治法"></a>2、分治法</h4><p>归并算法和快排算法就是采用这种思想</p>
+<h4 id="3、回溯法"><a href="#3、回溯法" class="headerlink" title="3、回溯法"></a>3、回溯法</h4><p>回溯法例子：骑士巡逻和迷宫寻路。 </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 按选优条件向前搜索，当搜索到某一步， 发现原先选择并不优或达不到目标时，就退回一步重新选择。 </span><br><span class="hljs-keyword">import</span> sys<br><span class="hljs-keyword">import</span> time<br><span class="hljs-keyword">import</span> os<br><br><br>SIZE = <span class="hljs-number">5</span><br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">print_board</span>(<span class="hljs-params">board</span>):</span><br>    <span class="hljs-keyword">for</span> row <span class="hljs-keyword">in</span> board:<br>        <span class="hljs-keyword">for</span> col <span class="hljs-keyword">in</span> row:<br>            print(str(col).center(<span class="hljs-number">4</span>), end=<span class="hljs-string">&#x27;&#x27;</span>)<br>        print()<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">patrol</span>(<span class="hljs-params">board, row, col, step=<span class="hljs-number">1</span></span>):</span><br>    <span class="hljs-keyword">if</span> row &gt;= <span class="hljs-number">0</span> <span class="hljs-keyword">and</span> row &lt; SIZE <span class="hljs-keyword">and</span> \<br>        col &gt;= <span class="hljs-number">0</span> <span class="hljs-keyword">and</span> col &lt; SIZE <span class="hljs-keyword">and</span> \<br>        board[row][col] == <span class="hljs-number">0</span>:<br>        board[row][col] = step<br>        time.sleep(<span class="hljs-number">0.5</span>)<br>        os.system(<span class="hljs-string">&#x27;cls&#x27;</span>)   <span class="hljs-comment"># 清除控制台显示</span><br>        print_board(board)<br>        <span class="hljs-keyword">if</span> step == SIZE * SIZE:  <br>            sys.exit(<span class="hljs-number">0</span>)<br>        patrol(board, row - <span class="hljs-number">2</span>, col - <span class="hljs-number">1</span>, step + <span class="hljs-number">1</span>)<br>        patrol(board, row - <span class="hljs-number">1</span>, col - <span class="hljs-number">2</span>, step + <span class="hljs-number">1</span>)<br>        patrol(board, row + <span class="hljs-number">1</span>, col - <span class="hljs-number">2</span>, step + <span class="hljs-number">1</span>)<br>        patrol(board, row + <span class="hljs-number">2</span>, col - <span class="hljs-number">1</span>, step + <span class="hljs-number">1</span>)<br>        patrol(board, row + <span class="hljs-number">2</span>, col + <span class="hljs-number">1</span>, step + <span class="hljs-number">1</span>)<br>        patrol(board, row + <span class="hljs-number">1</span>, col + <span class="hljs-number">2</span>, step + <span class="hljs-number">1</span>)<br>        patrol(board, row - <span class="hljs-number">1</span>, col + <span class="hljs-number">2</span>, step + <span class="hljs-number">1</span>)<br>        patrol(board, row - <span class="hljs-number">2</span>, col + <span class="hljs-number">1</span>, step + <span class="hljs-number">1</span>)<br>        board[row][col] = <span class="hljs-number">0</span><br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">main</span>():</span><br>    board = [[<span class="hljs-number">0</span>] * SIZE <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(SIZE)]<br>    patrol(board, SIZE - <span class="hljs-number">1</span>, SIZE - <span class="hljs-number">1</span>)<br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    main()<br></code></pre></td></tr></table></figure>
+
+<h4 id="4、动态规划"><a href="#4、动态规划" class="headerlink" title="4、动态规划"></a>4、动态规划</h4><p>比如计算斐波那契数列，如果不采用动态规划思想，会有大量的重复运算，导致性能十分低下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> time<br><span class="hljs-keyword">from</span> contextlib <span class="hljs-keyword">import</span> contextmanager<br><br><br><span class="hljs-comment"># 动态规划 - 保存可能进行重复运算的中间结果(空间换时间)</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">fib</span>(<span class="hljs-params">n, dict_result=&#123;&#125;</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;斐波那契数列：优化&quot;&quot;&quot;</span><br>    <span class="hljs-keyword">assert</span> n &gt;= <span class="hljs-number">0</span><br>    <span class="hljs-keyword">if</span> n <span class="hljs-keyword">in</span> (<span class="hljs-number">1</span>, <span class="hljs-number">2</span>):<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">1</span><br>    <span class="hljs-keyword">try</span>:<br>        <span class="hljs-keyword">return</span> dict_result[n]<br>    <span class="hljs-keyword">except</span> KeyError:<br>        dict_result[n] = fib(n - <span class="hljs-number">1</span>) + fib(n - <span class="hljs-number">2</span>)<br>        <span class="hljs-keyword">return</span> dict_result[n]<br><br><br><span class="hljs-comment"># 定义上下文管理器</span><br><span class="hljs-meta">@contextmanager</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">timer</span>():</span><br>    <span class="hljs-string">&quot;&quot;&quot;计时&quot;&quot;&quot;</span><br>    <span class="hljs-keyword">try</span>:<br>        start = time.perf_counter()<br>        <span class="hljs-keyword">yield</span>    <span class="hljs-comment"># yield属于让步操作，让上下文语法中的代码优先执行。</span><br>    <span class="hljs-keyword">finally</span>:<br>        end = time.perf_counter()<br>        print(<span class="hljs-string">f&#x27;<span class="hljs-subst">&#123;(end - start)&#125;</span>s&#x27;</span>)<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">main</span>():</span><br>    <span class="hljs-keyword">for</span> num <span class="hljs-keyword">in</span> range(<span class="hljs-number">1</span>,<span class="hljs-number">100</span>):<br>        <span class="hljs-keyword">with</span> timer():<br>            print(<span class="hljs-string">f&#x27;<span class="hljs-subst">&#123;num&#125;</span>: <span class="hljs-subst">&#123;fib(num)&#125;</span>&#x27;</span>)<br>                      <br>            <br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    main()<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="三、数据序列化"><a href="#三、数据序列化" class="headerlink" title="三、数据序列化"></a>三、数据序列化</h3><p>序列化 - 将对象编程字节(bytes)或者字符序列(str) – 序列化 = 串行化 = 腌咸菜<br>反序列化 - 把字节序列或者字符序列还原成对象</p>
+<p>python标准库对序列化的支持：<br>json - 字符形式的序列化<br>pickle - 字节形式的序列化<br>shelve - 不常用</p>
+<h3 id="四、哈希摘要"><a href="#四、哈希摘要" class="headerlink" title="四、哈希摘要"></a>四、哈希摘要</h3><p>哈希摘要 - 数字签名/数字指纹 - 单向哈希函数(没有反函数不可逆)</p>
+<p>现在主要有：MD5、SHA1 、SHA256、SHA512</p>
+<p>MD5现在已经被破解，但是小型程序依旧可以使用，建议使用SHA256</p>
+<p><strong>应用领域：</strong></p>
+<ul>
+<li>数据库中用户敏感信息需要保存成哈希摘要。</li>
+<li>给数据生成数字签名，验证数据没有被篡改。</li>
+<li>云存储服务的秒传功能(去重功能)。</li>
+</ul>
+<p>python计算摘要示例：</p>
+<p>普通代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> hashlib<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">main</span>():</span><br>    hasher = hashlib.sha256()<br>    <span class="hljs-keyword">with</span> open(<span class="hljs-string">&#x27;./Python-3.7.2.tar.xz&#x27;</span>, <span class="hljs-string">&#x27;rb&#x27;</span>) <span class="hljs-keyword">as</span> file_stream:<br>        data = file_stream.read(<span class="hljs-number">4096</span>)<br>        <span class="hljs-keyword">while</span> data:<br>            hasher.update(data)<br>            data = file_stream.read(<span class="hljs-number">4096</span>)<br>    print(hasher.hexdigest())<br></code></pre></td></tr></table></figure>
+
+<p>利用面向对象进行代码重构（优化）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> hashlib<br><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">StreamHasher</span>(<span class="hljs-params">object</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    摘要生成器</span><br><span class="hljs-string">    @params:</span><br><span class="hljs-string">        algorithm - 哈希摘要算法</span><br><span class="hljs-string">        size - 每次读取字节</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span>(<span class="hljs-params">self, algorithm=<span class="hljs-string">&#x27;md5&#x27;</span>, size=<span class="hljs-number">4096</span></span>):</span><br>        <br>        self.size = size<br>        <span class="hljs-comment"># 用以下方法__import__可以动态加载模块，getattr可以拿到对象的属性。</span><br>        cls = getattr(__import__(<span class="hljs-string">&#x27;hashlib&#x27;</span>), algorithm.lower())<br>        self.hasher = cls()<br>        <span class="hljs-comment"># self.algorithm = algorithm.lower()</span><br>        <span class="hljs-comment"># if self.algorithm == &#x27;md5&#x27;:</span><br>        <span class="hljs-comment">#     self.hasher = hashlib.md5()</span><br>        <span class="hljs-comment"># elif self.algorithm == &#x27;sha1&#x27;:</span><br>        <span class="hljs-comment">#     self.hasher = hashlib.sha1()</span><br>        <span class="hljs-comment"># elif self.algorithm == &#x27;sha256&#x27;:</span><br>        <span class="hljs-comment">#     self.hasher = hashlib.sha256()</span><br>        <span class="hljs-comment"># elif self.algorithm == &#x27;sha512&#x27;:</span><br>        <span class="hljs-comment">#     self.hasher = hashlib.sha512()</span><br>        <span class="hljs-comment"># else:</span><br>        <span class="hljs-comment">#     raise ValueError(&#x27;不支持的哈希摘要算法&#x27;)</span><br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">hex_digest</span>(<span class="hljs-params">self, file_stream</span>):</span><br>        <span class="hljs-string">&quot;&quot;&quot;生成十六进制的字符串摘要&quot;&quot;&quot;</span><br>        <span class="hljs-comment"># data = file_stream.read(self.size)</span><br>        <span class="hljs-comment"># while data:</span><br>        <span class="hljs-comment">#     self.hasher.update(data)</span><br>        <span class="hljs-comment">#     data = file_stream.read(self.size)</span><br>        <span class="hljs-keyword">for</span> data <span class="hljs-keyword">in</span> iter(<span class="hljs-keyword">lambda</span>: file_stream.read(self.size), <span class="hljs-string">b&#x27;&#x27;</span>):<br>            <span class="hljs-comment"># iter() 能够生成一个迭代器</span><br>            <span class="hljs-comment"># b&#x27;&#x27; --&gt; 相当于一个哨兵，当迭代二进制数据为空时，停止迭代。</span><br>            self.hasher.update(data)<br>        <span class="hljs-keyword">return</span> self.hasher.hexdigest()<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__call__</span>(<span class="hljs-params">self, file_stream</span>):</span><br>        <span class="hljs-comment"># 定义此魔术方法，可以使用对象，会自动调用此方法。</span><br>        <span class="hljs-keyword">return</span> self.hex_digest(file_stream)<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">main</span>():</span><br>    hasher = StreamHasher(algorithm=<span class="hljs-string">&#x27;sha256&#x27;</span>)<br>    <span class="hljs-keyword">with</span> open(<span class="hljs-string">&#x27;./Python-3.7.2.rar&#x27;</span>, <span class="hljs-string">&#x27;rb&#x27;</span>) <span class="hljs-keyword">as</span> file_stream:<br>        print(hasher.hex_digest(file_stream))<br>        <span class="hljs-comment"># print(hasher(file_stream)) </span><br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    main()<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="五、加密和解密"><a href="#五、加密和解密" class="headerlink" title="五、加密和解密"></a>五、加密和解密</h3><ul>
+<li>对称加密：加密和解密是同一个密钥 - DES/AES</li>
+<li>非对称加密：加密和解密不是同一个密钥 - RSA</li>
+</ul>
+<p>python没有内置加密算法，可以使用第三方库 PyCrypto</p>
+<p><code>pip install pycrypto</code></p>
+<h4 id="1、AES算法"><a href="#1、AES算法" class="headerlink" title="1、AES算法"></a>1、AES算法</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> hashlib <span class="hljs-keyword">import</span> md5<br><br><span class="hljs-keyword">from</span> Crypto.Cipher <span class="hljs-keyword">import</span> AES<br><span class="hljs-keyword">from</span> Crypto <span class="hljs-keyword">import</span> Random<br><br><br><span class="hljs-comment"># AES的密钥，长度为32个字节</span><br>key = md5(<span class="hljs-string">&#x27;start&#x27;</span>.encode()).hexdigest()<br><span class="hljs-comment"># AES初始加密向量(随机生成)</span><br>iv = Random.new().read(AES.block_size)<br>print(<span class="hljs-string">&#x27;key:&#x27;</span>, key)<br>print(<span class="hljs-string">&#x27;iv:&#x27;</span>,  iv)<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">aes_encrypt</span>(<span class="hljs-params">origin_message, key</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;AES加密&quot;&quot;&quot;</span><br>    <span class="hljs-comment"># AES.MODE_CFB加密模式，CFB加密模式对加密内容没有长度限制</span><br>    cipher = AES.new(key, AES.MODE_CFB, iv)<br>    <span class="hljs-keyword">return</span> cipher.encrypt(origin_message)<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">aes_decrypt</span>(<span class="hljs-params">encrypt_message, key</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;AES解密&quot;&quot;&quot;</span><br>    cipher = AES.new(key, AES.MODE_CFB, iv)<br>    <span class="hljs-keyword">return</span> cipher.decrypt(encrypt_message)<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">main</span>():</span><br>    origin_message = <span class="hljs-string">&#x27;hello world!&#x27;</span><br>    encrypt_message = aes_encrypt(origin_message, key)<br>    print(encrypt_message)<br>    origin_message = aes_decrypt(encrypt_message, key)<br>    print(origin_message.decode())<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>向量iv可以随机生成，但是要求为16个字节</p>
+</blockquote>
+<h4 id="2、RSA算法"><a href="#2、RSA算法" class="headerlink" title="2、RSA算法"></a>2、RSA算法</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> Crypto.PublicKey <span class="hljs-keyword">import</span> RSA<br><br>key_pair = RSA.generate(<span class="hljs-number">1024</span>)   <span class="hljs-comment"># 生成密钥对</span><br>pub_key = RSA.importKey(key_pair.publickey().exportKey())  <span class="hljs-comment"># 公钥对象</span><br>pri_key = RSA.importKey(key_pair.exportKey())   <span class="hljs-comment"># 私钥对象</span><br>message = <span class="hljs-string">&#x27;hello, world!&#x27;</span><br>data = pub_key.encrypt(message.encode(), <span class="hljs-literal">None</span>)  <span class="hljs-comment"># 加密需要转换成字节串</span><br>print(data)<br>de_message = pri_key.decrypt(data)<br>print(de_message.decode())<br></code></pre></td></tr></table></figure>
+
+<p>本机通过RSA算法生成密钥对的话，需要安装<code>openssl</code>工具</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs shell">创建私钥 <br>openssl genpkey -algorithm RSA -outform PEM -out private_key.pem<br><br>利用私钥生成共钥<br>openssl rsa -in private_key.pem -outform PEM -pubout -out public_key.pem<br><br>echo &quot;hello world&quot; &gt; plain.txt<br><br>加密<br>openssl rsautl -encrypt -inkey public_key.pem -pubin -in plain.txt -out encrypted.txt<br>解密<br>openssl rsautl -decrypt -inkey private_key.pem -in encrypted.txt -out decrypted.txt<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="六、数字证书"><a href="#六、数字证书" class="headerlink" title="六、数字证书"></a>六、数字证书</h3><p>我们知道，摘要算法用来确保数据没有被篡改，非对称加密算法可以对数据进行加解密，签名算法可以确保数据完整性和抗否认性，把这些算法集合到一起，并搞一套完善的标准，这就是数字证书。</p>
+<p>因此，数字证书就是集合了多种密码学算法，用于实现数据加解密、身份认证、签名等多种功能的一种安全标准。</p>
+<p>数字证书可以防止中间人攻击，因为它采用链式签名认证，即通过根证书（Root CA）去签名下一级证书，这样层层签名，直到最终的用户证书。而Root CA证书内置于操作系统中，所以，任何经过CA认证的数字证书都可以对其本身进行校验，确保证书本身不是伪造的。</p>
+<p>本机生成证书需要安装<code>openssl</code>工具</p>
+<ul>
+<li><p>生成x509证书以及对应私钥<br><code>openssl req -newkey rsa:2048 -nodes -keyout certificate_key.pem -x509 -days 356 -out certificate.pem</code></p>
+</li>
+<li><p>查看证书内容    - Issuer 证书颁发机构   - Subject 证书拥有者    自签名证书：颁发机构和拥有者是同一个人，一般在内部局域网系统使用，不能在互联网使用。<br><code>openssl x509 -in certificate.pem -text</code></p>
+</li>
+</ul>
+<p><strong>练习实例 - Alice需要发送一个电子合同给Bob，那么证书的签发、使用和验证过程是怎么样的？</strong></p>
+<ol>
+<li><p>首先由证书机构创建自签名证书(根证书)<br><code>openssl req -newkey rsa:2048 -nodes -keyout certificate.key -x509 -days 356 -out certificate.crt</code></p>
+</li>
+<li><p>用户创建自己的私钥以及csr(证书请求)<br><code>openssl req -new -nodes -keyout Alice.key -out Alice.csr</code></p>
+</li>
+<li><p>用证书机构的私钥、根证书和Alice的csr为Alice创建数字证书<br><code>openssl x509 -req -in Alice.csr -CA certificate.crt -CAkey certificate.key -CAcreateserial -out Alice.crt</code></p>
+<blockquote>
+<p>成功后生成文件certificate.srl，记录机构颁发证书序列号 </p>
+</blockquote>
+</li>
+<li><p>Alice使用私钥对商业合同进行签名，然后把签名后的合同和Alice的数字证书一起给Bob<br><code>echo &quot;this is a encode text&quot; &gt; alice-contract</code><br><code>openssl dgst -sha256 -sign Alice.key -out alice-contract-sign.sha256 alice-contract</code></p>
+</li>
+<li><p>Bob收到合同后，要先验证Alice的证书是否合法<br><code>openssl verify Alice.crt</code>  没有指定证书，会使用操作系统内置的根证书去验证(失败)<br><code>openssl verify -CAfile certificate.crt </code>   验证成功</p>
+</li>
+<li><p>验收了Alice的证书后，使用Alice的证书中的公钥对合同的电子签名进行验证，以证明合同是否由Alice发出的</p>
+<ul>
+<li><p>从Alice的数字证书中到处导出Alice的公钥<br><code>openssl x509 -pubkey -noout -in Alice.crt &gt; Alice-pub.key</code></p>
+</li>
+<li><p>使用公钥对合同签名进行验证<br><code>openssl dgst -sha256 -verify Alice-pub.key -signature alice-contract-sign.sha256 alice-contract</code>  校验成功！</p>
+</li>
+</ul>
+</li>
+</ol>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/categories/Python/">Python</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/tags/%E7%AE%97%E6%B3%95/">算法</a>
+                    
+                      <a class="hover-with-bg" href="/Myblog/tags/%E6%8E%92%E5%BA%8F/">排序</a>
+                    
+                      <a class="hover-with-bg" href="/Myblog/tags/%E5%93%88%E5%B8%8C/">哈希</a>
+                    
+                      <a class="hover-with-bg" href="/Myblog/tags/%E5%8A%A0%E5%AF%86/">加密</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/Myblog/2019/01/05/%E8%A3%85%E9%A5%B0%E5%99%A8%E8%AF%A6%E8%A7%A3/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">装饰器详解</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/Myblog/2019/01/02/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/">
+                        <span class="hidden-mobile">单元测试</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/Myblog/js/events.js" ></script>
+<script  src="/Myblog/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/Myblog/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/Myblog/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/Myblog/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/Myblog/js/boot.js" ></script>
+
+
+</body>
+</html>

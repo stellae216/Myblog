@@ -1,0 +1,503 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/Myblog/img/favicon.png">
+  <link rel="icon" href="/Myblog/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="Simple, so charming!">
+  <meta name="author" content="stellae">
+  <meta name="keywords" content="">
+  
+  <title>如何低内存消耗解析大型XML - stellae&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/Myblog/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/Myblog/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"stellae.gitee.io","root":"/Myblog/","version":"1.8.10","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/Myblog/js/utils.js" ></script>
+  <script  src="/Myblog/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/Myblog/">&nbsp;<strong>stellae's blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/Myblog/img/WtwSsqwYlA0.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="如何低内存消耗解析大型XML">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      stellae
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-09-17 14:09" pubdate>
+        2020年9月17日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      827 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      15
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">如何低内存消耗解析大型XML</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：1 年前
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h3 id="XML简介"><a href="#XML简介" class="headerlink" title="XML简介"></a>XML简介</h3><p>XML是可扩展标记语言（eXtensible Markup Language）的缩写，它是是一种数据表示格式，可以描述非常复杂的数据结构，常用于传输和存储数据。</p>
+<p>例如，一个描述书籍的XML文档可能如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span><br><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-meta-keyword">note</span> <span class="hljs-meta-keyword">SYSTEM</span> <span class="hljs-meta-string">&quot;book.dtd&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">book</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;1&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">name</span>&gt;</span>Java核心技术<span class="hljs-tag">&lt;/<span class="hljs-name">name</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">author</span>&gt;</span>Cay S. Horstmann<span class="hljs-tag">&lt;/<span class="hljs-name">author</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">isbn</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;CN&quot;</span>&gt;</span>1234567<span class="hljs-tag">&lt;/<span class="hljs-name">isbn</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">tags</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">tag</span>&gt;</span>Java<span class="hljs-tag">&lt;/<span class="hljs-name">tag</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">tag</span>&gt;</span>Network<span class="hljs-tag">&lt;/<span class="hljs-name">tag</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">tags</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">pubDate</span>/&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">book</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>XML有几个特点：一是纯文本，默认使用UTF-8编码，二是可嵌套，适合表示结构化数据。如果把XML内容存为文件，那么它就是一个XML文件，例如<code>book.xml</code>。此外，XML内容经常通过网络作为消息传输。</p>
+<h3 id="迭代下载XML到临时文件"><a href="#迭代下载XML到临时文件" class="headerlink" title="迭代下载XML到临时文件"></a>迭代下载XML到临时文件</h3><p>如果加载大型XML，使用zeep默认会加载xml到内存自动进行解析，但是这样会造成大量内存消耗。如果是使用requests，则可以类似这样处理：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">url = <span class="hljs-string">&quot;http://wx4.sinaimg.cn/large/d030806aly1fq1vn8j0ajj21ho28bduy.jpg&quot;</span><br><br>rsp = requests.get(url, stream=<span class="hljs-literal">True</span>)<br><span class="hljs-keyword">with</span> open(<span class="hljs-string">&#x27;1.jpg&#x27;</span>, <span class="hljs-string">&#x27;wb&#x27;</span>) <span class="hljs-keyword">as</span> f:<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> rsp.iter_content(chunk_size=<span class="hljs-number">1024</span>):  <span class="hljs-comment"># 边下载边存硬盘, chunk_size 可以自由调整为可以更好地适合您的用例的数字</span><br>        f.write(i)<br></code></pre></td></tr></table></figure>
+
+<p>zeep底层也是使用request，对应我们需要这样设置：<code>stream=True</code> 和 <code>iter_content(chunk_size=1024)</code> 进行迭代加载到本地，后面自行再进行解析。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> logging<br><span class="hljs-keyword">from</span> zeep <span class="hljs-keyword">import</span> Client, Settings<br><span class="hljs-keyword">from</span> zeep.transports <span class="hljs-keyword">import</span> Transport<br><span class="hljs-keyword">from</span> requests <span class="hljs-keyword">import</span> Session <span class="hljs-keyword">as</span> ReqSession<br><span class="hljs-keyword">from</span> requests_ntlm <span class="hljs-keyword">import</span> HttpNtlmAuth<br><br>req_session = ReqSession()<br>req_session.stream = <span class="hljs-literal">True</span><br>req_session.auth = HttpNtlmAuth(<span class="hljs-string">&quot;xxxxxxx&quot;</span>, <span class="hljs-string">&quot;xxxxxx&quot;</span>)<br>transport = Transport(session=req_session)<br>setting = Settings(raw_response=<span class="hljs-literal">True</span>)    <span class="hljs-comment"># 拒绝自动解析xml</span><br><br><br>url = <span class="hljs-string">&#x27;http://xxxxxxxx/APIMP_SalesPriceList&#x27;</span><br>client = Client(url, transport=transport, settings=setting)<br><br>filtered = [&#123;<span class="hljs-string">&#x27;Field&#x27;</span>: <span class="hljs-string">&quot;&quot;</span>, <span class="hljs-string">&#x27;Criteria&#x27;</span>: <span class="hljs-string">&quot;&quot;</span>&#125;]<br>rep = client.service.ReadMultiple(filtered, bookmarkKey=<span class="hljs-string">&#x27;&#x27;</span>, setSize=<span class="hljs-string">&#x27;0&#x27;</span>)<br><span class="hljs-keyword">if</span> rep.status_code != <span class="hljs-number">200</span>:<br>  <span class="hljs-keyword">raise</span> ConnectionError(<span class="hljs-string">&quot;Request Failed!&quot;</span>)<br><span class="hljs-keyword">with</span> NamedTemporaryFile(suffix=<span class="hljs-string">&quot;.xml&quot;</span>) <span class="hljs-keyword">as</span> ntf:<br>  ntf_path = ntf.name    <span class="hljs-comment"># 临时文件路径</span><br>  logging.info(<span class="hljs-string">&quot;Download temporary xml file to local.&quot;</span>)<br>  <span class="hljs-comment"># 迭代下载xml写入临时文件</span><br>  <span class="hljs-keyword">for</span> text <span class="hljs-keyword">in</span> rep.iter_content(chunk_size=<span class="hljs-number">1024</span>):<br>    ntf.write(text)<br>    ntf.seek(<span class="hljs-number">0</span>)<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="迭代解析XML"><a href="#迭代解析XML" class="headerlink" title="迭代解析XML"></a>迭代解析XML</h3><p>上面我们已经将大型XML保存到临时文件，为了节约内存，我们需要进行迭代加载XML文件进行解析</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">parse_xml</span>(<span class="hljs-params">xml_path</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    迭代解析xml, 每次返回一整条数据</span><br><span class="hljs-string">    :return type: dict</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    context = etree.iterparse(xml_path, events=(<span class="hljs-string">&quot;end&quot;</span>,))<br>    item = dict()<br>    <span class="hljs-keyword">for</span> _, elem <span class="hljs-keyword">in</span> context:<br>        val = elem.text<br>        <span class="hljs-keyword">if</span> val <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>:<br>            <span class="hljs-keyword">if</span> item != &#123;&#125;:<br>                <span class="hljs-keyword">yield</span> item<br>                item = dict()<br>            <span class="hljs-keyword">continue</span><br>        key = str.split(elem.tag[<span class="hljs-number">1</span>:], <span class="hljs-string">&quot;&#125;&quot;</span>, <span class="hljs-number">1</span>)[<span class="hljs-number">-1</span>]<br>        item[key] = val<br>        <span class="hljs-comment"># 释放对节点的引用，回收内存</span><br>        <span class="hljs-comment"># It&#x27;s safe to call clear() here because no descendants will be accessed</span><br>        elem.clear()<br>        <span class="hljs-comment"># Also eliminate now-empty references from the root node to &lt;Title&gt;</span><br>        <span class="hljs-keyword">while</span> elem.getprevious() <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span>:<br>            <span class="hljs-keyword">del</span> elem.getparent()[<span class="hljs-number">0</span>]<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如果不释放对不需要节点的引用，同样会消耗比较大的内存</p>
+</blockquote>
+<p>所以最后应该是这样</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">with</span> NamedTemporaryFile(suffix=<span class="hljs-string">&quot;.xml&quot;</span>) <span class="hljs-keyword">as</span> ntf:<br>  ntf_path = ntf.name<br>  logging.info(<span class="hljs-string">&quot;Download temporary xml file to local.&quot;</span>)<br>  <span class="hljs-keyword">for</span> text <span class="hljs-keyword">in</span> rep.iter_content(chunk_size=chunk_size):<br>    ntf.write(text)<br>    ntf.seek(<span class="hljs-number">0</span>)<br>    logging.info(<span class="hljs-string">&quot;Download Successful, start to parse the xml file.&quot;</span>)<br>    <span class="hljs-keyword">for</span> dic <span class="hljs-keyword">in</span> parse_xml(ntf_path):<br>      <span class="hljs-keyword">yield</span> dic<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="相关文章"><a href="#相关文章" class="headerlink" title="相关文章"></a>相关文章</h3><ul>
+<li><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/0eff5fb281c0">Python Response.iter_content</a> / <a target="_blank" rel="noopener" href="https://requests.readthedocs.io/zh_CN/latest/api.html#requests.Response.iter_content">Requests iter_content</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://docs.python-zeep.org/en/master/client.html#creating-the-raw-xml-documents">Zeep Client</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.ibm.com/developerworks/library/x-hiperfparse/">High-performance XML parsing in Python with lxml</a> / <a target="_blank" rel="noopener" href="https://www.ibm.com/developerworks/cn/xml/x-hiperfparse/#resources">使用由 Python 编写的 lxml 实现高性能 XML 解析</a></p>
+</li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/categories/XML/">XML</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/tags/xml/">xml</a>
+                    
+                      <a class="hover-with-bg" href="/Myblog/tags/lxml/">lxml</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/Myblog/2021/07/10/Go%E6%97%A5%E6%9C%9F%E8%BD%AC%E6%8D%A2%E8%AF%A6%E8%A7%A3/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Go日期转换详解</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/Myblog/2020/09/15/Numba%E5%8A%A0%E9%80%9FPython%E6%89%A7%E8%A1%8C/">
+                        <span class="hidden-mobile">Numba加速Python执行</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/Myblog/js/events.js" ></script>
+<script  src="/Myblog/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/Myblog/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/Myblog/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/Myblog/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/Myblog/js/boot.js" ></script>
+
+
+</body>
+</html>

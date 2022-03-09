@@ -1,0 +1,610 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/Myblog/img/favicon.png">
+  <link rel="icon" href="/Myblog/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="Simple, so charming!">
+  <meta name="author" content="stellae">
+  <meta name="keywords" content="">
+  
+  <title>Djangorestframework - stellae&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/Myblog/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/Myblog/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"stellae.gitee.io","root":"/Myblog/","version":"1.8.10","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/Myblog/js/utils.js" ></script>
+  <script  src="/Myblog/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/Myblog/">&nbsp;<strong>stellae's blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/Myblog/img/WtwSsqwYlA0.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Djangorestframework">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      stellae
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2019-01-16 19:28" pubdate>
+        2019年1月16日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.7k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      30
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Djangorestframework</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：8 个月前
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h2 id="Djangorestframework使用"><a href="#Djangorestframework使用" class="headerlink" title="Djangorestframework使用"></a>Djangorestframework使用</h2><p>查看<a target="_blank" rel="noopener" href="https://www.django.cn/course/show-20.html">Djangorestframework中文文档</a></p>
+<p>补充：Django中使用模型查表，需要进行优化：</p>
+<ul>
+<li>查询后面加上only() / defer() - 只查/不查</li>
+<li>查询关联关系时，如果不加上限定语句，会出现1+N现象，导致查询效率十分低下<ol>
+<li>一对多：select_related(‘xxx’)</li>
+<li>多对多：prefetch_related(‘xxx’)</li>
+</ol>
+</li>
+</ul>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">pip <span class="hljs-keyword">install</span> djangorestframework<br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="settings-py配置修改"><a href="#settings-py配置修改" class="headerlink" title="settings.py配置修改"></a>settings.py配置修改</h4><p>在工程目录中的settings.py文件的INSTALLED_APPS中需要添加rest_framework</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">INSTALLED_APPS</span> = [<br>    <span class="hljs-string">&#x27;rest_framework&#x27;</span>,<br>]<br></code></pre></td></tr></table></figure>
+
+
+<h4 id="自定义序列化类"><a href="#自定义序列化类" class="headerlink" title="自定义序列化类"></a>自定义序列化类</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> rest_framework <span class="hljs-keyword">import</span> serializers<br><br><span class="hljs-keyword">from</span> common.models <span class="hljs-keyword">import</span> District<br><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DistrictSerializer</span>(<span class="hljs-params">serializers.ModelSerializer</span>):</span><br>    <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Meta</span>:</span><br>        <span class="hljs-comment"># 指定序列化的模型</span><br>        model = District<br>        <span class="hljs-comment"># 序列化字段</span><br>        fields = (<span class="hljs-string">&#x27;distid&#x27;</span>, <span class="hljs-string">&#x27;name&#x27;</span>)<br>        <span class="hljs-comment"># 如果需要序列化所有字段</span><br>        <span class="hljs-comment"># fields = &#x27;__all__&#x27;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="序列化类中自定义序列化对象"><a href="#序列化类中自定义序列化对象" class="headerlink" title="序列化类中自定义序列化对象"></a>序列化类中自定义序列化对象</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> rest_framework <span class="hljs-keyword">import</span> serializers<br><br><span class="hljs-keyword">from</span> common.models <span class="hljs-keyword">import</span> District<br><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DistrictDetailSerializer</span>(<span class="hljs-params">serializers.ModelSerializer</span>):</span><br>    <span class="hljs-comment"># 自定义序列化对象</span><br>    cities = serializers.SerializerMethodField()<br><br><span class="hljs-meta">    @staticmethod</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_cities</span>(<span class="hljs-params">district</span>):</span><br>        <span class="hljs-comment"># district代表传入的当前序列化对象</span><br>        <span class="hljs-comment"># 自定义函数名必须要叫对应的get_cities</span><br>        queryset = District.objects.filter(parent__distid=district.distid).only(<span class="hljs-string">&#x27;distid&#x27;</span>, <span class="hljs-string">&#x27;name&#x27;</span>)<br>        <span class="hljs-comment"># results = []</span><br>        <span class="hljs-comment"># for city in queryset:</span><br>        <span class="hljs-comment">#     results.append(DistrictSerializer(city).data)</span><br>        <span class="hljs-comment"># return results</span><br>        <span class="hljs-keyword">return</span> DistrictSerializer(queryset, many=<span class="hljs-literal">True</span>).data<br><br>    <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Meta</span>:</span><br>        model = District<br>        fields = (<span class="hljs-string">&#x27;distid&#x27;</span>, <span class="hljs-string">&#x27;name&#x27;</span>, <span class="hljs-string">&#x27;intro&#x27;</span>, <span class="hljs-string">&#x27;cities&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="返回接口数据"><a href="#返回接口数据" class="headerlink" title="返回接口数据"></a>返回接口数据</h4><h5 id="基于函数的视图-FBV-Function-Based-View"><a href="#基于函数的视图-FBV-Function-Based-View" class="headerlink" title="基于函数的视图 - FBV - Function-Based View"></a>基于函数的视图 - FBV - Function-Based View</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> django.views.decorators.cache <span class="hljs-keyword">import</span> cache_page<br><span class="hljs-keyword">from</span> rest_framework.decorators <span class="hljs-keyword">import</span> api_view, throttle_classes<br><span class="hljs-keyword">from</span> rest_framework.response <span class="hljs-keyword">import</span> Response<br><br><span class="hljs-keyword">from</span> common.models <span class="hljs-keyword">import</span> *<br><span class="hljs-keyword">from</span> api.queryset <span class="hljs-keyword">import</span> DistrictSerializer, DistrictDetailSerializer<br><br><br><span class="hljs-meta">@api_view([&#x27;GET&#x27;, &#x27;POST&#x27;]) # 指定视图函数支持方式，发送post请求免除csrf令牌</span><br><span class="hljs-meta">@cache_page(timeout=None, cache=&#x27;api&#x27;)   # cache=&#x27;api&#x27;指使用什么缓存</span><br><span class="hljs-meta">@throttle_classes(())   # 设置不被限流</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">provinces</span>(<span class="hljs-params">request</span>):</span><br>    <span class="hljs-comment"># 通过ORM框架从数据库中获取数据(资源)</span><br>    queryset = District.objects.filter(parent__isnull=<span class="hljs-literal">True</span>).only(<span class="hljs-string">&#x27;distid&#x27;</span>, <span class="hljs-string">&#x27;name&#x27;</span>)<br>    <span class="hljs-comment"># 通过自定义序列化类序列化数据</span><br>    serializer = DistrictSerializer(queryset, many=<span class="hljs-literal">True</span>)<br>    <span class="hljs-comment"># 通过序列化器获得序列化之后的数据(字典或列表)，生成响应</span><br>    <span class="hljs-keyword">return</span> Response(serializer.data)<br><br><br><span class="hljs-meta">@api_view([&#x27;GET&#x27;, &#x27;POST&#x27;])</span><br><span class="hljs-meta">@cache_page(timeout=None, cache=&#x27;api&#x27;)</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">cities</span>(<span class="hljs-params">request, distid</span>):</span><br>    queryset = District.objects.filter(distid=distid).only(<span class="hljs-string">&#x27;distid&#x27;</span>, <span class="hljs-string">&#x27;name&#x27;</span>).first()<br>    serializer = DistrictDetailSerializer(queryset)<br>    <span class="hljs-keyword">return</span> Response(serializer.data)<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>说明：</p>
+<ol>
+<li><p><code>@api_view([&#39;GET&#39;, &#39;POST&#39;])</code>指定方式；</p>
+</li>
+<li><p><code>@cache_page(timeout=None, cache=&#39;api&#39;)</code>指定使用缓存和超时时间；</p>
+</li>
+<li><p><code>@throttle_classes(())</code>设置当前接口不被限流。</p>
+</li>
+</ol>
+</blockquote>
+<h5 id="基于类的视图-CBV-Class-Based-View"><a href="#基于类的视图-CBV-Class-Based-View" class="headerlink" title="基于类的视图 - CBV - Class-Based View"></a>基于类的视图 - CBV - Class-Based View</h5><ol>
+<li>继承APIView及其子类(ListAPIView / CreateAPIView / …) </li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 视图函数</span><br>ListAPIView.as_view()<br></code></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>继承ModelViewSet / ReadOnlyModelViewSet - 视图函数</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 注册路由</span><br><span class="hljs-keyword">from</span> rest_framework.routers <span class="hljs-keyword">import</span> DefaultRouter<br><span class="hljs-keyword">from</span> api.views <span class="hljs-keyword">import</span> HouseTypeViewSet<br><br>router = DefaultRouter()<br>router.register(<span class="hljs-string">&#x27;housetypes&#x27;</span>, HouseTypeViewSet)<br>urlpatterns += router.urls<br></code></pre></td></tr></table></figure>
+
+<p>实例</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> django.utils.decorators <span class="hljs-keyword">import</span> method_decorator<br><span class="hljs-keyword">from</span> django.views.decorators.cache <span class="hljs-keyword">import</span> cache_page<br><span class="hljs-keyword">from</span> rest_framework.generics <span class="hljs-keyword">import</span> ListAPIView, CreateAPIView, UpdateAPIView, DestroyAPIView<br><span class="hljs-keyword">from</span> rest_framework.viewsets <span class="hljs-keyword">import</span> ModelViewSet<br><span class="hljs-keyword">from</span> rest_framework_extensions.cache.mixins <span class="hljs-keyword">import</span> CacheResponseMixin<br><br><span class="hljs-keyword">from</span> common.models <span class="hljs-keyword">import</span> *<br><span class="hljs-keyword">from</span> api.queryset <span class="hljs-keyword">import</span> DistrictSerializer, DistrictDetailSerializer, EstateDetailSerializer, HouseTypeSerializer<br><br><span class="hljs-comment"># @method_decorator(cache_page(timeout=30, cache=&#x27;api&#x27;), name=&#x27;get&#x27;)  # 将装饰函数的装饰器变成装饰类下对应方法的装饰器</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">EstateView</span>(<span class="hljs-params">CacheResponseMixin,</span></span><br><span class="hljs-class"><span class="hljs-params">                 ListAPIView,</span></span><br><span class="hljs-class"><span class="hljs-params">                 CreateAPIView,</span></span><br><span class="hljs-class"><span class="hljs-params">                 UpdateAPIView,</span></span><br><span class="hljs-class"><span class="hljs-params">                 DestroyAPIView</span>):</span><br>    queryset = Estate.objects.all().prefetch_related(<span class="hljs-string">&#x27;agents&#x27;</span>).select_related(<span class="hljs-string">&#x27;district&#x27;</span>)<br>    serializer_class = EstateDetailSerializer<br><br><br><span class="hljs-comment"># @method_decorator(cache_page(timeout=30, cache=&#x27;api&#x27;), name=&#x27;list&#x27;)  # 将装饰函数的装饰器变成装饰类下对应方法的装饰器</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HouseTypeViewSet</span>(<span class="hljs-params">CacheResponseMixin, ModelViewSet</span>):</span><br>    queryset = HouseType.objects.all()<br>    serializer_class = HouseTypeSerializer<br>    pagination_class = <span class="hljs-literal">None</span>   <span class="hljs-comment"># 指定不分页</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>说明：</p>
+<ol>
+<li><p><code>@method_decorator(cache_page(timeout=30, cache=&#39;api&#39;), name=&#39;get&#39;)</code>将类下面的指定请求方法设置缓存;</p>
+</li>
+<li><p>继承<code>ListAPIView, CreateAPIView, UpdateAPIView, DestroyAPIView</code>的CBV，接口对应拥有查看，创建，更新，删除方法；</p>
+</li>
+<li><p>继承<code>ModelViewSet</code>的CBV，接口拥有所有方法。其它类自定查找。</p>
+</li>
+<li><p>继承<code>CacheResponseMixin</code>的CBV，指定使用缓存，需要安装<code>drf-extensions</code>库支持，并进行下面配置；</p>
+</li>
+<li><p><code>queryset，serializer_class</code>分别对应重写的序列化对象和类。</p>
+</li>
+</ol>
+</blockquote>
+<p>安装<code>pip install drf-extensions</code>，配置下文<code>REST_FRAMEWORK_EXTENSIONS</code>的信息。</p>
+<h4 id="设置缓存"><a href="#设置缓存" class="headerlink" title="设置缓存"></a>设置缓存</h4><ul>
+<li>Django - <code>@cache_page</code> /  <code>@method_decorator</code></li>
+<li>drf-extensions</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><br><span class="hljs-comment"># 配置DRF扩展来支持缓存API接口调用结果</span><br>REST_FRAMEWORK_EXTENSIONS = &#123;<br>    <span class="hljs-comment"># 设置缓存超时时间</span><br>    <span class="hljs-string">&#x27;DEFAULT_CACHE_RESPONSE_TIMEOUT&#x27;</span>: <span class="hljs-number">300</span>,<br>    <span class="hljs-comment"># 设置默认缓存</span><br>    <span class="hljs-string">&#x27;DEFAULT_USE_CACHE&#x27;</span>: <span class="hljs-string">&#x27;api&#x27;</span>,<br>    <span class="hljs-comment"># 配置默认缓存单个对象的key函数</span><br>    <span class="hljs-string">&#x27;DEFAULT_OBJECT_CACHE_KEY_FUNC&#x27;</span>: <span class="hljs-string">&#x27;rest_framework_extensions.utils.default_object_cache_key_func&#x27;</span>,<br>    <span class="hljs-comment"># 配置默认缓存对象列表的key函数</span><br>    <span class="hljs-string">&#x27;DEFAULT_LIST_CACHE_KEY_FUNC&#x27;</span>: <span class="hljs-string">&#x27;rest_framework_extensions.utils.default_list_cache_key_func&#x27;</span>,<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="分页和节流"><a href="#分页和节流" class="headerlink" title="分页和节流"></a>分页和节流</h4><p>配置信息只对CBV有效</p>
+<p>节流需要使用redis - 将访问者IP设置为key</p>
+<ul>
+<li>全局分页和节流配置：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs python">REST_FRAMEWORK = &#123;<br>    <span class="hljs-comment"># 配置默认页面大小</span><br>    <span class="hljs-string">&#x27;PAGE_SIZE&#x27;</span>: <span class="hljs-number">5</span>,<br>    <span class="hljs-comment"># 配置默认的分页类</span><br>    <span class="hljs-string">&#x27;DEFAULT_PAGINATION_CLASS&#x27;</span>: <span class="hljs-string">&#x27;rest_framework.pagination.PageNumberPagination&#x27;</span>,<br>    <br>    <span class="hljs-comment"># 设置节流类型</span><br>    <span class="hljs-string">&#x27;DEFAULT_THROTTLE_CLASSES&#x27;</span>: (<br>        <span class="hljs-string">&#x27;rest_framework.throttling.AnonRateThrottle&#x27;</span>,<br>        <span class="hljs-comment"># &#x27;rest_framework.throttling.UserRateThrottle&#x27;</span><br>    ),<br>    <span class="hljs-comment"># 设置节流频率</span><br>    <span class="hljs-string">&#x27;DEFAULT_THROTTLE_RATES&#x27;</span>: &#123;<br>        <span class="hljs-string">&#x27;anon&#x27;</span>: <span class="hljs-string">&#x27;3/min&#x27;</span>,<br>        <span class="hljs-comment"># &#x27;user&#x27;: &#x27;10000/day&#x27;</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>自定义限流：继承BaseThrottle - allow_request() / wait()</li>
+<li>自定义分页：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> rest_framework.pagination <span class="hljs-keyword">import</span> PageNumberPagination<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CustomPagination</span>(<span class="hljs-params">PageNumberPagination</span>):</span><br>    <span class="hljs-comment"># 默认每页大小</span><br>    page_size = <span class="hljs-number">10</span><br>    <span class="hljs-comment"># 接受请求参数</span><br>    page_size_query_param = <span class="hljs-string">&#x27;size&#x27;</span><br>    <span class="hljs-comment"># 最大每页大小</span><br>    max_page_size = <span class="hljs-number">50</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># CBV中设置字段</span><br>pagination_class = CustomPagination<br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="过滤器"><a href="#过滤器" class="headerlink" title="过滤器"></a>过滤器</h4><p>安装第三方库<code>django-filter</code>，查看<a target="_blank" rel="noopener" href="https://django-filter.readthedocs.io/en/master/guide/rest_framework.html">官文</a>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">INSTALLED_APPS = [<br>	<span class="hljs-string">&#x27;django_filters&#x27;</span>,<br>]<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># CBV设置字段</span><br><span class="hljs-keyword">from</span> django_filters.rest_framework <span class="hljs-keyword">import</span> DjangoFilterBackend<br><span class="hljs-keyword">from</span> rest_framework.filters <span class="hljs-keyword">import</span> OrderingFilter<br><br>filter_backends = (DjangoFilterBackend, OrderingFilter)   <span class="hljs-comment"># 过滤器 / 排序器</span><br>filter_fields = (<span class="hljs-string">&#x27;district&#x27;</span>, <span class="hljs-string">&#x27;name&#x27;</span>)   <span class="hljs-comment"># 过滤字段 - 精确匹配</span><br><span class="hljs-comment"># filter_class = EstateFilter    # 自定义过滤器过滤字段</span><br>ordering = (<span class="hljs-string">&#x27;-hot&#x27;</span>, <span class="hljs-string">&#x27;estateid&#x27;</span>)   <span class="hljs-comment"># 默认查询的排序</span><br>ordering_fields = (<span class="hljs-string">&#x27;hot&#x27;</span>, )      <span class="hljs-comment"># 指定可选排序字段</span><br></code></pre></td></tr></table></figure>
+
+<p>自定义过滤 - 实现模糊匹配</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> django_filters.rest_framework <span class="hljs-keyword">import</span> FilterSet, CharFilter, NumberFilter<br><br><span class="hljs-keyword">from</span> common.models <span class="hljs-keyword">import</span> Estate<br><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">EstateFilter</span>(<span class="hljs-params">FilterSet</span>):</span><br>    name = CharFilter(lookup_expr=<span class="hljs-string">&#x27;startswith&#x27;</span>)   <span class="hljs-comment"># 支持以关键字开头的模糊查询</span><br>    district = NumberFilter(lookup_expr=<span class="hljs-string">&#x27;in&#x27;</span>)  <span class="hljs-comment"># 集合中查询</span><br>    <span class="hljs-comment"># min_price = NumberFilter(field_name=&quot;price&quot;, lookup_expr=&#x27;gte&#x27;) </span><br>    <span class="hljs-comment"># max_price = NumberFilter(field_name=&quot;price&quot;, lookup_expr=&#x27;lte&#x27;)</span><br>    <span class="hljs-comment"># 指定字段为price，不写默认和字段相同</span><br>    <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Meta</span>:</span><br>        model = Estate<br>        fields = (<span class="hljs-string">&#x27;name&#x27;</span>, <span class="hljs-string">&#x27;district&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># CBV设置字段</span><br><span class="hljs-comment"># filter_fields = (&#x27;district&#x27;, &#x27;name&#x27;)   # 过滤字段 - 精确匹配</span><br>filter_class = EstateFilter    <span class="hljs-comment"># 自定义过滤器过滤字段</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="身份认证"><a href="#身份认证" class="headerlink" title="身份认证"></a>身份认证</h4><ul>
+<li>FBV设置方式</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># FBV加装饰器</span><br><span class="hljs-keyword">from</span> rest_framework.decorators <span class="hljs-keyword">import</span> authentication_classes<br><br><span class="hljs-meta">@authentication_classes((CustomAuthentication, ))</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">estate</span>(<span class="hljs-params">request</span>):</span><br>    <span class="hljs-keyword">pass</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> rest_framework.authentication <span class="hljs-keyword">import</span> BaseAuthentication<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CustomAuthentication</span>(<span class="hljs-params">BaseAuthentication</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;身份认证&quot;&quot;&quot;</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">authenticate</span>(<span class="hljs-params">self, request</span>):</span><br>        token = request.META.get(<span class="hljs-string">&#x27;HTTP_TOKEN&#x27;</span>, <span class="hljs-string">&#x27;&#x27;</span>)   <span class="hljs-comment"># 请求头中发送token字段</span><br>        <span class="hljs-comment"># token = request.GET.get(&#x27;token&#x27;, &#x27;&#x27;)    # 请求参数发送token字段</span><br>        <span class="hljs-keyword">if</span> token:<br>            user_token = UserToken.objects.filter(token=token).first()<br>            <span class="hljs-keyword">if</span> user_token:<br>                <span class="hljs-comment"># 这里需要返回二元组前者绑定request.user, request.auth</span><br>                <span class="hljs-keyword">return</span> user_token.user, user_token   <br>        <span class="hljs-keyword">raise</span> AuthenticationFailed(<span class="hljs-string">&#x27;请提供有效的用户身份标识&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>CBV设置方式</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"> <span class="hljs-comment"># CBV设置字段</span><br>authentication_classes = (CustomAuthentication, )<br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="权限验证"><a href="#权限验证" class="headerlink" title="权限验证"></a>权限验证</h4><ul>
+<li>RBAC - Role-Based Access Control  基于角色的访问控制</li>
+<li>ACL - Access Control List  访问控制列表</li>
+</ul>
+<p>这里我们采用RBAC模式，进行权限验证需要设计对应的权限表，下面是简单的权限表设计结构：</p>
+<p><img src="https://stellae.gitee.io/myblog/images/images/TIM%E5%9B%BE%E7%89%8720190118145639.png" srcset="/Myblog/img/loading.gif" lazyload></p>
+<p>复杂的权限表设计结构：</p>
+<p><img src="https://stellae.gitee.io/myblog/images/images/TIM%E5%9B%BE%E7%89%8720190118145649.png" srcset="/Myblog/img/loading.gif" lazyload></p>
+<ul>
+<li>FBV设置方式</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># FBV加装饰器</span><br><span class="hljs-keyword">from</span> rest_framework.decorators <span class="hljs-keyword">import</span> permission_classes<br><br><span class="hljs-meta">@permission_classes((CustomAuthentication), )</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">estate</span>(<span class="hljs-params">request</span>):</span><br>    <span class="hljs-keyword">pass</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> rest_framework.permissions <span class="hljs-keyword">import</span> BasePermission<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CustomPermission</span>(<span class="hljs-params">BasePermission</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;自定义权限类&quot;&quot;&quot;</span><br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">has_permission</span>(<span class="hljs-params">self, request, view</span>):</span><br>        <span class="hljs-keyword">if</span> getattr(request.user, <span class="hljs-string">&#x27;roles&#x27;</span>, <span class="hljs-literal">None</span>):<br>            <span class="hljs-keyword">for</span> role <span class="hljs-keyword">in</span> request.user.roles.all().prefetch_related(<span class="hljs-string">&#x27;privileges&#x27;</span>):<br>                <span class="hljs-keyword">for</span> priv <span class="hljs-keyword">in</span> role.privileges.all():<br>                    <span class="hljs-keyword">if</span> priv.method == request.method <span class="hljs-keyword">and</span> request.path.startswith(priv.url):<br>                        <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>CBV设置方式</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"> <span class="hljs-comment"># CBV设置字段</span><br>permission_classes = (CustomPermisson,)<br></code></pre></td></tr></table></figure>
+
+
+
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/categories/Django/">Django</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/tags/djangorestframework/">djangorestframework</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/Myblog/2019/01/23/%E5%85%A8%E6%96%87%E6%A3%80%E7%B4%A2/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">全文检索</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/Myblog/2019/01/14/RESTful%E7%AE%80%E8%BF%B0/">
+                        <span class="hidden-mobile">RESTful简述</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/Myblog/js/events.js" ></script>
+<script  src="/Myblog/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/Myblog/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/Myblog/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/Myblog/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/Myblog/js/boot.js" ></script>
+
+
+</body>
+</html>

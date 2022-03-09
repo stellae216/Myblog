@@ -1,0 +1,504 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/Myblog/img/favicon.png">
+  <link rel="icon" href="/Myblog/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="Simple, so charming!">
+  <meta name="author" content="stellae">
+  <meta name="keywords" content="">
+  
+  <title>为什么要使用GraphQL - stellae&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/Myblog/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/Myblog/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"stellae.gitee.io","root":"/Myblog/","version":"1.8.10","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/Myblog/js/utils.js" ></script>
+  <script  src="/Myblog/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/Myblog/">&nbsp;<strong>stellae's blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/Myblog/img/WtwSsqwYlA0.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="为什么要使用GraphQL">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      stellae
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-08-05 12:34" pubdate>
+        2020年8月5日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3.7k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      50
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">为什么要使用GraphQL</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：2 年前
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h3 id="什么是GraphQL"><a href="#什么是GraphQL" class="headerlink" title="什么是GraphQL"></a>什么是GraphQL</h3><p>什么是 GraphQL？GraphQL是由 Facebook 在 2012 年创立的一门开源<strong>查询语言</strong>。</p>
+<p>在它开源之前，Facebook 就已经在内部移动端应用中使用过。为什么选用移动应用？GraphQL 作为通用的 REST 架构的替代方案而被开发出来，它允许客户端只请求其需要的数据——不多也不少，一切在客户端的主导下。</p>
+<p>在一个 RESTful 架构下，因为后端开发人员定义在各个 URL 的资源上返回的数据，而不是前端开发人员来提出数据需求，使得按需获取数据会非常困难。经常前端需要请求一个资源中所有的信息，即便只需要其中的一部分数据。这个问题被称之为过度获取（overfetching）。最恶劣的场景下，一个客户端应用不得不请求多个而不是一个资源，这通常会发起多个网络请求。这不仅会造成过度获取的问题，也会造成瀑布式的网络请求（waterfall network requests）。</p>
+<p>那么将像 GraphQL 之类的查询语言，不仅在服务端程使用，也应用到客户端的话，客户端来决定需要什么数据，这样只需要发送一个请求到服务端。在 Facebook 的 GraphQL 移动端开发场景下，这极大地减少了忘了请求，因为 GraphQL 一次只需要发起一个请求，并且传输中数据数量也减少了。</p>
+<p>Facebook 开源了 GraphQL 标准和其 JavaScript 版本的实现。后来主要编程语言也实现了标准。此外，GraphQL 周边的生态不仅仅水平上扩展了不同语言的实现，并且还出现了在 GraphQL 基础上实现了类库（比如 Apollo 和 Relay）。</p>
+<p>一个 GraphQL 操作可以是一个查询（query（读操作））、修改（mutation（写操作））以及订阅（subscription（持续读操作））。这些操作中每一种都只是根据 GraphQL 标准构造的一段字符串而已。一旦一个 GraphQL 操作从前端应用到达后端应用，首先会在后端解释整个 GraphQL schema，然后再为前端解析相关的数据。GraphQL 并没有要求网络层选型（通常是 HTTP），也没有要求传输数据格式（通常是 JSON）。甚至没有要求应用架构（通常是前后端分离架构）。它只是一个查询语言。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs text">// GraphQL 查询<br>author(id: &quot;7&quot;) &#123;<br>  id<br>  name<br>  avatarUrl<br>  articles(limit: 2) &#123;<br>    name<br>    urlSlug<br>  &#125;<br>&#125;<br><br>// GraphQL 查询结果<br>&#123;<br>  &quot;data&quot;: &#123;<br>    &quot;author&quot;: &#123;<br>      &quot;id&quot;: &quot;7&quot;,<br>      &quot;name&quot;: &quot;Robin Wieruch&quot;,<br>      &quot;avatarUrl&quot;: &quot;https://domain.com/authors/7&quot;,<br>      &quot;articles&quot;: [<br>        &#123;<br>          &quot;name&quot;: &quot;The Road to learn React&quot;,<br>          &quot;urlSlug&quot;: &quot;the-road-to-learn-react&quot;<br>        &#125;,<br>        &#123;<br>          &quot;name&quot;: &quot;React Testing Tutorial&quot;,<br>          &quot;urlSlug&quot;: &quot;react-testing-tutorial&quot;<br>        &#125;<br>      ]<br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>如你所见，一个查询请求了多个资源（作者（author）、文章（article）），在 GraphQL 中被称为字段（fileds），及时 GraphQL scheme 提供了更多是数据（比如文章中的描述（description）和发布时间（releaseDate） ），我们只会拿到这些字段的一个子集（文章中的名称（name）和 urlSlug）。相对地，在 RESTful 架构中，需要至少两个连续请求分别获取作者实体和它的文章，GraphQL 只需要一个查询就可以做到。此外，查询只需要选择必要的字段即可，而不是整个数据实体。</p>
+<p>这就是 GraphQL 的基本介绍。服务端提供了定义了可用数据的层级关系和类型的 GraphQL schema，客户端只用查询其需要的数据即可。</p>
+<h3 id="GraphQL的优点"><a href="#GraphQL的优点" class="headerlink" title="GraphQL的优点"></a>GraphQL的优点</h3><h4 id="声明式地数据获取"><a href="#声明式地数据获取" class="headerlink" title="声明式地数据获取"></a>声明式地数据获取</h4><p>如之前看到的那样，GraphQL 在使用查询语句式，使用声明式的方式获取数据。客户端在一个查询请求中，选择需要的数据和相关的字段实体。客户端根据其 UI 来决定需要的字段。你可以说这是 UI 驱动地数据获取。比方说，Airbnb 使用 GraphQL的例子，在 Airbnb 中的一个搜索界面，经常需要搜索房屋的住房体验和其他相关的一些信息，为了能在一个请求中检索所有的数据，一个 GraphQL 查询会根据 UI 选择数据中的一部分达到完美的匹配。毕竟，GraphQL 提供了极佳的关注点分离方式：客户端知道它需要什么数据，服务端知道数据的结构，以及如何从一些数据源（比如数据库、微服务、第三方 API）中拉取数据。</p>
+<h4 id="在-GraphQL-中没有过度获取"><a href="#在-GraphQL-中没有过度获取" class="headerlink" title="在 GraphQL 中没有过度获取"></a>在 GraphQL 中没有过度获取</h4><p>使用 GraphQL 不会存在过度获取的现象。使用与 Web 客户端公用的一个 RESTful API，一个移动客户端很可能会获取过多的数据，但是使用同样的 GraphQL API，移动客户端可以选择和 Web 客户端不同的数据字段。因此移动客户端能减少获取的信息，因为相对于 Web 应用的更大的屏幕，小屏幕上可能显示不了那么多信息。GraphQL 通过最开始按客户端需求选择数据，减少了传输数据的大小。</p>
+<h4 id="在-React、Angular、Node-和-Co-中的-GraphQL"><a href="#在-React、Angular、Node-和-Co-中的-GraphQL" class="headerlink" title="在 React、Angular、Node 和 Co 中的 GraphQL"></a>在 React、Angular、Node 和 Co 中的 GraphQL</h4><p>GraphQL 并不只让 React 的开发者激动。即便 Facebook 只展示了一个使用 React 的客户端程序，但是它和任何前端或者后端的解决方案是解耦的，无关的。GraphQL 的相关实现是用 JavaScript 写的，因此 GraphQL 可以用在 Angular、Vue、Express、Hapi、Koa 以及任何其他客户端或者服务端的 JavaScript 类库上，并且这还只是在 JavaScript 的生态中。GraphQL 模仿了让 REST 这么流行的一个特点：一个两个实体（比如服务端和客户端）语言无关的接口（查询语言）。这样你可以在任意编程语言中通过使用一个 GraphQL 标准的实现使用 GraphQL 了。</p>
+<h4 id="单一数据源（Single-Source-of-Truth）"><a href="#单一数据源（Single-Source-of-Truth）" class="headerlink" title="单一数据源（Single Source of Truth）"></a>单一数据源（Single Source of Truth）</h4><p>在 GraphQL 应用中存在者单一数据源：GraphQL schema。它提供了一个所有可用数据检索的源头。鉴于 GraphQL 的 schema 通常会在服务端定义，客户端可以基于 schema 读取（query）和写入（mutation）数据。因此，服务端提供了所有可用的信息，客户端只需要执行 GraphQL 查询获取部分数据，或者通过 GraphQL 修改变更部分数据。</p>
+<h4 id="GraphQL-拥抱趋势"><a href="#GraphQL-拥抱趋势" class="headerlink" title="GraphQL 拥抱趋势"></a>GraphQL 拥抱趋势</h4><p>GraphQL 适应了现在应用构建的变化趋势。你可能只有一个后端应用，但是可能会有多个依赖同一个后端应用的客户端（web 端、移动端、智能手表等等…）。因此 GraphQL 不仅能在前后端进行沟通，也能满足每一个客户端的具体要求（比如网络使用的要求、数据嵌套的要求、按需获取数据的要求），而不需要为每一个客户端定制不同的 API。</p>
+<p>另外一方面，在服务端，可能不止一个后端应用，而是一个微服务集群来提供各自具体的功能。这简直是 GraphQL 的完美使用场景，它将所有的功能编织汇总到一个 GraphQL schema 汇总。</p>
+<h4 id="拼接-GraphQL-Schema"><a href="#拼接-GraphQL-Schema" class="headerlink" title="拼接 GraphQL Schema"></a>拼接 GraphQL Schema</h4><p>拼接 Schema 使得多个 schema 可以聚合成一个。什么时候你需要考虑这个？考虑一下后端的微服务架构。每个微服务处理特定域的业务逻辑和数据。因此，每个微服务都可以定义自己的GraphQL架构。之后，使用 Schema 拼接将所有 Schema 聚合到一个可以被客户端访问的 Schema 中。最终，每个微服务都可以拥有自己的 GraphQL 端点，而一个 GraphQL API网关将所有 schema 合并到一个全局 schema 中，以便使得客户端可以使用。</p>
+<h4 id="GraphQL-自省（Introspection）"><a href="#GraphQL-自省（Introspection）" class="headerlink" title="GraphQL 自省（Introspection）"></a>GraphQL 自省（Introspection）</h4><p>GraphQL 自省允许通过 GraphQL API 检索 GraphQL schema。因为 schema 包含了包含了 GraphQL API 可以获得的所有数据信息，本身就是一份完美的自动生成的 API 文档。不仅仅是 API 的文档，也允许客户端通过mock GraphQL 的 schema 达到测试的目的，或者使用 schema 拼接的接口检索多个微服务的 schema。</p>
+<h4 id="强类型的-GraphQL"><a href="#强类型的-GraphQL" class="headerlink" title="强类型的 GraphQL"></a>强类型的 GraphQL</h4><p>GraphQL 是一门强类型的查询语言，因为它是通过 GraphQL Schema Definition Language（SDL）书写的。因为有了强类型，它就拥有了强类型编程语言一样的好处：更不容出错、可以在编辑期验证并且支持编辑器智能补全和验证相关的集成。</p>
+<h4 id="GraphQL-版本化"><a href="#GraphQL-版本化" class="headerlink" title="GraphQL 版本化"></a>GraphQL 版本化</h4><p>在 GraphQL 中没有 API 版本的说法。在 REST 中，通常会提供一个 API 的多个版本（比如 <code>http://api.domain.com/v1/</code>、<code>http://api.domain.com/v2/</code>），因为随着时间过去，可能资源的结构也会发生变化。在 GraphQL 中，API 废弃可以做到字段级别，因此当一个客户端减少到一个废弃的字段，会得到一个废弃相关的警告。当没有客户端再使用这个废弃知道后，就可以从 schema 汇总移除这个字段了。这让一个 GraphQL API 不需要使用版本化的方式来演进。</p>
+<h4 id="成长中的-GraphQL-生态"><a href="#成长中的-GraphQL-生态" class="headerlink" title="成长中的 GraphQL 生态"></a>成长中的 GraphQL 生态</h4><p>GraphQL 的生态正在发展壮大。不仅仅是 GraphQL 天然的强类型特性适宜集成编辑器和 IDE 的演进，GraphQL 相关的应用也在演进。你可能记得在处理 REST API 的时候的 <a target="_blank" rel="noopener" href="https://www.getpostman.com/">Postman</a>，现在有 <a target="_blank" rel="noopener" href="https://github.com/graphql/graphiql">GraphiQL</a> 或者 <a target="_blank" rel="noopener" href="https://github.com/prismagraphql/graphql-playground">GraphQL Playground</a>可以调试你的应用。你也可以找到如 <a target="_blank" rel="noopener" href="https://www.gatsbyjs.org/">Gatsby.js</a> 这样的使用 GraphQL 的 React 静态页面生成器。比如，使用 Gatsby.js 你可以在构建时期通过一个 GraphQL 来提供你的博客内容来源。你可能还听说过内容管理系统（CMS）（比如 <a target="_blank" rel="noopener" href="https://graphcms.com/">GraphCMS</a>）通过 GraphQL API 来提供（博客）内容。不仅在技术领域有所演进，这还有很多 GraphQL 相关 大会、聚会和社区不断涌现，并且也可以通过一些 newsletters 和 podcast 了解到 GraphQL。</p>
+<h3 id="GraphQL的缺点"><a href="#GraphQL的缺点" class="headerlink" title="GraphQL的缺点"></a>GraphQL的缺点</h3><h4 id="GraphQL-查询的复杂性"><a href="#GraphQL-查询的复杂性" class="headerlink" title="GraphQL 查询的复杂性"></a>GraphQL 查询的复杂性</h4><p>人们经常错误地认为 GraphQL 就是在后端替代了数据库。并不是这样的，GraphQL 仅仅是一个查询语言。在服务端，一个查询需要解析数据，因此一个 GraphQL 相关实现常常需要执行数据库访问，但 GraphQL 其实不关心这些。还有，GraphQL 在你需要在一个查询中获取多个字段（作者、文章、评论）的时候，它对性能瓶颈没有任何帮助。无论使用 RESTful 架构还是 GraphQL，不同资源/字段仍然需要从一个数据源去获取。</p>
+<p>因此当一个客户端需要一次查询很多嵌套字段时，前端开发通常不能很清楚他正在通过服务端访问不同的数据库获取过多的数据。这需要一种机制（比如最深查询深度、查询复杂度权重、避免递归、持久化查询）来制止来自客户端的（性能）昂贵的查询。</p>
+<h4 id="查询频率限制"><a href="#查询频率限制" class="headerlink" title="查询频率限制"></a>查询频率限制</h4><p>另一个问题是频率限制，在 REST 中，可以简单的声明”一天之中，我们只允许请求这么多资源“，在一个独立的 GraphQL 操作中很难做到这一点，因为任何操作的开销都可以是廉价的或者昂贵的。这就是那些有着公共 GraphQL API 的公司提出的特定速率限制计算，通常可以归结为前面提到的最大查询深度和查询复杂度权重问题。</p>
+<h4 id="GraphQL-缓存"><a href="#GraphQL-缓存" class="headerlink" title="GraphQL 缓存"></a>GraphQL 缓存</h4><p>一个简单缓存，相比 REST，在 GraphQL 中实现会变得极其复杂。在 REST 中你通过 URL 访问资源，因此你可以在资源级别实现缓存，因为资源使用 URL 作为其标识符。在 GraphQL 中就复杂了，因为即便它操作的是同一个实体，每个查询都各不相同。比如，一个查询中，你可能只会请求一个作者的名字，但是在另外一次查询中你可能也想知道他的电子邮箱地址。这就需要你有一个更加健全的机制中来确保字段级别的缓存，实现起来并不简单。不过，多数基于 GraphQL 构建的类库都提供了开箱即用的缓存机制。</p>
+<h3 id="为什么不用REST"><a href="#为什么不用REST" class="headerlink" title="为什么不用REST"></a>为什么不用REST</h3><p>GraphQL 是通常用来连接客户端和服务端的 RESTful 架构的替代方案。在前面的内容中，你已经多次听到 REST 了，那么什么是使用 GraphQL 而不是 RESTful ，显而易见的好处呢？</p>
+<p>因为 REST 提出通过 URL 来标识资源，最终常常会出现低效的连续请求。比方说，最开始你通过 id 来定位一个作者实体，然后你通过作者的 id 获取的某个信息来请求他所有的文章。在 GraphQL 中只需要一个请求就能办到，这是更加效率的。更进一步而言，如果你想只想获取作者的所有文章数据，而不关心作者的信息，GraphQL 允许只你选择你需要的信息。在 REST 中，你需要先获取作者的所有实体信息，即使你值关心被这个作者写的文章而已。因为过度获取这个问题，只有在使用 REST 才会出现，而 GraphQL 就不会。</p>
+<p>现在客户端应用不适合 RESTful 的服务端应用了。比方说，在 Airbnb 平台上，获取搜索结果，它为你展示了房屋、住房体验以及其他相关信息。住房和住房体验在各自的 RESTful 资源中，那么你需要支持多个网络请求。当使用 GraphQL API，你只需要在一个 GraphQL 查询中一起获取所有需要的实体（比如住房和住房体验）或者嵌套的其他相关信息（比如作者的文章信息）。</p>
+<p>最终 GraphQL 将数据有服务端主导返回什么数据变成了客户端决定需要什么什么。这就是一开始 GraphQL 被发明的原因，因为在 Facebook 的一个移动应用和他们的 web 应用需要的数据是不一样的。</p>
+<p>总之，仍然有些场景下使用 REST 来沟通客户端和服务端是有价值的途径，通常应用是资源驱动，也不需要像 GraphQL 这些的查询语言提供的灵活能力。然而，我还是推荐你尝试使用 GraphQL 来开发你的下一个客户/服务端架构。</p>
+<h3 id="相关外链"><a href="#相关外链" class="headerlink" title="相关外链"></a>相关外链</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://graphql.org/">GraphQL官方文档</a></li>
+<li><a target="_blank" rel="noopener" href="https://hasura.io/docs/1.0/graphql/manual/queries/index.html">GraphQL语法</a></li>
+<li><a target="_blank" rel="noopener" href="https://graphql.org/code/#python">GraphQL的Python实现</a></li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/categories/GraphQL/">GraphQL</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/tags/graphql/">graphql</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/Myblog/2020/08/05/Hasura-%E5%9F%BA%E4%BA%8EPostgreSQL%E7%9A%84GraphQL%E5%BC%95%E6%93%8E/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Hasura-基于PostgreSQL的GraphQL引擎</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/Myblog/2020/06/30/Airflow%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6%E6%A1%86%E6%9E%B6/">
+                        <span class="hidden-mobile">Airflow任务调度框架</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/Myblog/js/events.js" ></script>
+<script  src="/Myblog/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/Myblog/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/Myblog/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/Myblog/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/Myblog/js/boot.js" ></script>
+
+
+</body>
+</html>

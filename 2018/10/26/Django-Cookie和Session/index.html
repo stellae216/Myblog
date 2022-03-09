@@ -1,0 +1,519 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/Myblog/img/favicon.png">
+  <link rel="icon" href="/Myblog/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="Simple, so charming!">
+  <meta name="author" content="stellae">
+  <meta name="keywords" content="">
+  
+  <title>Django-Cookie和Session - stellae&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/Myblog/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/Myblog/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"stellae.gitee.io","root":"/Myblog/","version":"1.8.10","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/Myblog/js/utils.js" ></script>
+  <script  src="/Myblog/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/Myblog/">&nbsp;<strong>stellae's blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/Myblog/img/WtwSsqwYlA0.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Django-Cookie和Session">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      stellae
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2018-10-26 10:04" pubdate>
+        2018年10月26日 上午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.7k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      33
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Django-Cookie和Session</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：3 年前
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h3 id="登录验证问题"><a href="#登录验证问题" class="headerlink" title="登录验证问题"></a>登录验证问题</h3><p>产生问题：登录一个页面时，如果没有登录，访问页面时应该跳转到注册页面；如果登录成功，才可以正常访问页面。</p>
+<p>访问：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk">没登录情况： GET http:<span class="hljs-regexp">//</span><span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">8080</span><span class="hljs-regexp">/index/</span> ==&gt; login.html<br>登录情况： GET http:<span class="hljs-regexp">//</span><span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">8080</span><span class="hljs-regexp">/index/</span> ==&gt; index.html<br></code></pre></td></tr></table></figure>
+
+
+
+<p>解决思路：</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-number">1.</span>注册<br><span class="hljs-number">2.</span>登录成功（给一个标识符）<br>（<span class="hljs-number">1</span>）登录向页面的cookie中添加标识符<br>	res = <span class="hljs-constructor">HttpResponseRedirect(<span class="hljs-params">reverse</span>(&#x27;<span class="hljs-params">user</span>:<span class="hljs-params">index</span>&#x27;)</span>)<br>	res.set<span class="hljs-constructor">_cookies(<span class="hljs-params">key</span>, <span class="hljs-params">value</span>, <span class="hljs-params">max_age</span>（存活时间）)</span><br>（<span class="hljs-number">2</span>）向后端的usertoken表中存入这个标识符和登录的用户<br><span class="hljs-number">3.</span>访问任何的路由，先校验你的标识符是否正确，如果正确就访问，否则拒绝访问，跳转到注册页面，注册成功后登录可以获得随机的一个标识符。<br><span class="hljs-number">4.</span>使用的是闭包（装饰器）- 修饰登录和注销<br><span class="hljs-number">5.</span>注销<br>（<span class="hljs-number">1</span>）删除页面cookie中的标识符：delete<span class="hljs-constructor">_cookie(<span class="hljs-params">key</span>)</span><br>（<span class="hljs-number">2</span>）删除后端usertoken表中标识符对应的那一条数据<br><br></code></pre></td></tr></table></figure>
+
+
+<h3 id="方案一：Cookie-自定义"><a href="#方案一：Cookie-自定义" class="headerlink" title="方案一：Cookie(自定义)"></a>方案一：Cookie(自定义)</h3><p>案例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">login</span>(<span class="hljs-params">request</span>):</span><br>	<span class="hljs-comment"># 登录</span><br>	<span class="hljs-comment"># 验证登录完整性</span><br>    <span class="hljs-keyword">if</span> request.method == <span class="hljs-string">&#x27;GET&#x27;</span>:<br>        <span class="hljs-keyword">return</span> render(request, <span class="hljs-string">&#x27;login.html&#x27;</span>)<br>    <span class="hljs-keyword">if</span> request.method == <span class="hljs-string">&#x27;POST&#x27;</span>:<br>        user = request.POST.get(<span class="hljs-string">&#x27;user&#x27;</span>)<br>        password = request.POST.get(<span class="hljs-string">&#x27;password&#x27;</span>)<br>        <span class="hljs-comment"># 验证完整性</span><br>        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> all([user, password]):<br>            msg = <span class="hljs-string">&#x27;请填写完整的登录信息&#x27;</span><br>            <span class="hljs-keyword">return</span> render(request, <span class="hljs-string">&#x27;login.html&#x27;</span>, &#123;<span class="hljs-string">&#x27;msg&#x27;</span>:msg&#125;)<br>        <span class="hljs-comment"># 验证用户是否注册</span><br>        user =  User.objects.filter(u_user=user).first()<br>        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> user:<br>            msg = <span class="hljs-string">&#x27;该用户没有注册&#x27;</span><br>            <span class="hljs-keyword">return</span> render(request, <span class="hljs-string">&#x27;login.html&#x27;</span>, &#123;<span class="hljs-string">&#x27;msg&#x27;</span>:msg&#125;)<br>        <span class="hljs-comment"># 校验密码</span><br>        <span class="hljs-keyword">if</span> password != user.u_password:<br>            msg = <span class="hljs-string">&#x27;密码不正确&#x27;</span><br>            <span class="hljs-keyword">return</span> render(request, <span class="hljs-string">&#x27;login.html&#x27;</span>, &#123;<span class="hljs-string">&#x27;msg&#x27;</span>:msg&#125;)<br>        res = HttpResponseRedirect(reverse(<span class="hljs-string">&#x27;user:index&#x27;</span>))<br><br>        <span class="hljs-comment"># 生成随机的token（25位）</span><br>        token = <span class="hljs-string">&#x27;&#x27;</span><br>        s = <span class="hljs-string">&#x27;1234567890qazxswedcvfrtgbnhyujmkiolp&#x27;</span><br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">25</span>):<br>        	<span class="hljs-comment"># random.choice方法每次在序列中随机选一个数</span><br>            token += random.choice(s)<br>        <br>        <span class="hljs-comment"># 浏览器中设置cookie</span><br>        <span class="hljs-comment"># 设置cookie，set_cookie(key, value, max_age（存活时间）)</span><br>        res = HttpResponseRedirect(reverse(<span class="hljs-string">&#x27;user:index&#x27;</span>))<br>        res.set_cookie(<span class="hljs-string">&#x27;token&#x27;</span>, token, max_age=<span class="hljs-number">6000</span>)<br><br><br>        <span class="hljs-comment"># 在数据库中存token值</span><br>        user_token = UserToken.objects.filter(user=user).first()<br>        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> user_token:<br>            UserToken.objects.create(t_token=token, user=user)<br>        <span class="hljs-keyword">else</span>:<br>            user_token.token=token<br>            user_token.save()<br><br>        <span class="hljs-keyword">return</span> res<br>        <br><span class="hljs-comment"># 注销时清除浏览器的cookie和数据库的token        </span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">logout</span>(<span class="hljs-params">request</span>):</span><br>    <span class="hljs-keyword">if</span> request.method == <span class="hljs-string">&#x27;GET&#x27;</span>:<br>        <span class="hljs-comment"># 1、删除cookie</span><br>        res = HttpResponseRedirect(reverse(<span class="hljs-string">&#x27;user:login&#x27;</span>))<br>        res.delete_cookie(<span class="hljs-string">&#x27;token&#x27;</span>)<br>        <span class="hljs-comment"># 2、删除UserToken中的数据</span><br>        token = request.COOKIES.get(<span class="hljs-string">&#x27;token&#x27;</span>)<br>        UserToken.objects.filter(t_token=token).delete()<br><br>        <span class="hljs-keyword">return</span> res<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="装饰器（闭包）"><a href="#装饰器（闭包）" class="headerlink" title="装饰器（闭包）"></a>装饰器（闭包）</h3><p>装饰器三个条件:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-number">1</span>、外层函数套内层函数<br><span class="hljs-number">2</span>、内层函数调用外层函数的参数<br><span class="hljs-number">3</span>、外层函数返回内层函数<br><br><span class="hljs-keyword">from</span> functools <span class="hljs-keyword">import</span> wraps<br><br><span class="hljs-comment"># 大致结构：</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">record</span>(<span class="hljs-params">func</span>):</span><br><br><span class="hljs-meta">    @wraps(func)</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">wrapper</span>(<span class="hljs-params">*args, **kwargs</span>):</span><br>		<span class="hljs-comment"># 被装饰函数之前执行的代码</span><br>        ret_value = func(*args, **kwargs)<br>	    <span class="hljs-comment"># 被装饰函数之后执行的代码</span><br>        <span class="hljs-keyword">return</span> ret_value<br><br>    <span class="hljs-keyword">return</span> wrapper <br></code></pre></td></tr></table></figure>
+
+<p>装饰器案例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 装饰器</span><br><span class="hljs-keyword">from</span> django.urls <span class="hljs-keyword">import</span> reverse<br><br><span class="hljs-keyword">from</span> user.models <span class="hljs-keyword">import</span> UserToken<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">login_required</span>(<span class="hljs-params">func</span>):</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">check_login</span>(<span class="hljs-params">request</span>):</span><br>        <span class="hljs-comment"># func是被login_required装饰的函数</span><br>        token = request.COOKIES.get(<span class="hljs-string">&#x27;token&#x27;</span>)<br>        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> token:<br>            <span class="hljs-keyword">return</span> HttpResponseRedirect(reverse(<span class="hljs-string">&#x27;user:login&#x27;</span>))<br>        user_token = UserToken.objects.filter(t_token=token).first()<br>        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> user_token:<br>            <span class="hljs-comment"># token标识符有误，挑战到登录页面</span><br>            <span class="hljs-keyword">return</span> HttpResponseRedirect(reverse(<span class="hljs-string">&#x27;user:login&#x27;</span>))<br>        <span class="hljs-keyword">return</span> func(request)<br><br>    <span class="hljs-keyword">return</span> check_login<br>    <br><span class="hljs-comment"># 被装饰函数</span><br><span class="hljs-meta">@login_required</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">index</span>(<span class="hljs-params">request</span>):</span><br>    <span class="hljs-keyword">if</span> request.method == <span class="hljs-string">&#x27;GET&#x27;</span>:<br>        <span class="hljs-keyword">return</span> render(request,  <span class="hljs-string">&#x27;index.html&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="方案二：Cookie-Django自带"><a href="#方案二：Cookie-Django自带" class="headerlink" title="方案二：Cookie(Django自带)"></a>方案二：Cookie(Django自带)</h3><p>案例：</p>
+<p>创建<code>forms.py</code>文件，用来对form表单数据进行验证</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> django <span class="hljs-keyword">import</span> forms<br><span class="hljs-keyword">from</span> django.contrib.auth.models <span class="hljs-keyword">import</span> User<br><span class="hljs-comment"># User是django自带的表，数据库中为表auth_user</span><br><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserRegister</span>(<span class="hljs-params">forms.Form</span>):</span><br>    name = forms.CharField(max_length=<span class="hljs-number">10</span>, min_length=<span class="hljs-number">2</span>, required=<span class="hljs-literal">True</span>, error_messages=&#123;<span class="hljs-string">&#x27;required&#x27;</span>:<span class="hljs-string">&#x27;姓名必填&#x27;</span>,<br>                                                                                       <span class="hljs-string">&#x27;min_length&#x27;</span>:<span class="hljs-string">&#x27;用户名最短2个字符&#x27;</span>,<br>                                                                                       <span class="hljs-string">&#x27;max_length&#x27;</span>:<span class="hljs-string">&#x27;用户名最长10个字符&#x27;</span>&#125;)<br>    pw = forms.CharField(max_length=<span class="hljs-number">20</span>, min_length=<span class="hljs-number">6</span>, required=<span class="hljs-literal">True</span>, error_messages=&#123;<span class="hljs-string">&#x27;required&#x27;</span>:<span class="hljs-string">&#x27;密码必填&#x27;</span>,<br>                                                                                       <span class="hljs-string">&#x27;min_length&#x27;</span>:<span class="hljs-string">&#x27;密码最短6个字符&#x27;</span>,<br>                                                                                       <span class="hljs-string">&#x27;max_length&#x27;</span>:<span class="hljs-string">&#x27;密码最长20个字符&#x27;</span>&#125;)<br>    pw2 = forms.CharField(max_length=<span class="hljs-number">20</span>, min_length=<span class="hljs-number">6</span>, required=<span class="hljs-literal">True</span>, error_messages=&#123;<span class="hljs-string">&#x27;required&#x27;</span>:<span class="hljs-string">&#x27;确认密码必填&#x27;</span>,<br>                                                                                       <span class="hljs-string">&#x27;min_length&#x27;</span>:<span class="hljs-string">&#x27;密码最短6个字符&#x27;</span>,<br>                                                                                       <span class="hljs-string">&#x27;max_length&#x27;</span>:<span class="hljs-string">&#x27;密码最长20个字符&#x27;</span>&#125;)<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">clean</span>(<span class="hljs-params">self</span>):</span><br>        user = User.objects.filter(username=self.cleaned_data.get(<span class="hljs-string">&#x27;name&#x27;</span>))<br>        pw = self.cleaned_data.get(<span class="hljs-string">&#x27;pw&#x27;</span>)<br>        pw2 = self.cleaned_data.get(<span class="hljs-string">&#x27;pw2&#x27;</span>)<br><br>        <span class="hljs-keyword">if</span> user:<br>        	<span class="hljs-comment"># 抛出异常</span><br>            <span class="hljs-keyword">raise</span> forms.ValidationError(&#123;<span class="hljs-string">&#x27;name&#x27;</span>:<span class="hljs-string">&#x27;用户已经注册&#x27;</span>&#125;)<br>        <span class="hljs-keyword">if</span> pw != pw2:<br>            <span class="hljs-keyword">raise</span>  forms.ValidationError(&#123;<span class="hljs-string">&#x27;pw&#x27;</span>:<span class="hljs-string">&#x27;两次输入密码不同！&#x27;</span>&#125;)<br>        <span class="hljs-keyword">return</span> self.cleaned_data<br><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserLogin</span>(<span class="hljs-params">forms.Form</span>):</span><br>    name = forms.CharField(max_length=<span class="hljs-number">10</span>, min_length=<span class="hljs-number">2</span>, required=<span class="hljs-literal">True</span>, error_messages=&#123;<span class="hljs-string">&#x27;required&#x27;</span>:<span class="hljs-string">&#x27;姓名必填&#x27;</span>,<br>                                                                                       <span class="hljs-string">&#x27;min_length&#x27;</span>:<span class="hljs-string">&#x27;姓名最短2个字符&#x27;</span>,<br>                                                                                       <span class="hljs-string">&#x27;max_length&#x27;</span>:<span class="hljs-string">&#x27;姓名最长10个字符&#x27;</span>&#125;)<br>    pw = forms.CharField(max_length=<span class="hljs-number">20</span>, min_length=<span class="hljs-number">6</span>, required=<span class="hljs-literal">True</span>, error_messages=&#123;<span class="hljs-string">&#x27;required&#x27;</span>:<span class="hljs-string">&#x27;密码必填&#x27;</span>,<br>                                                                                       <span class="hljs-string">&#x27;min_length&#x27;</span>:<span class="hljs-string">&#x27;密码最短6个字符&#x27;</span>,<br>                                                                                       <span class="hljs-string">&#x27;max_length&#x27;</span>:<span class="hljs-string">&#x27;密码最长20个字符&#x27;</span>&#125;)<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">clean</span>(<span class="hljs-params">self</span>):</span><br>        user = User.objects.filter(username=self.cleaned_data.get(<span class="hljs-string">&#x27;name&#x27;</span>))<br>        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> user:<br>            <span class="hljs-keyword">raise</span> forms.ValidationError(&#123;<span class="hljs-string">&#x27;name&#x27;</span>:<span class="hljs-string">&#x27;该账号没有注册&#x27;</span>&#125;)<br><br>        <span class="hljs-keyword">return</span> self.cleaned_data<br></code></pre></td></tr></table></figure>
+
+<p><code>views.py</code>文件</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> django.contrib.auth.decorators <span class="hljs-keyword">import</span> login_required<br><span class="hljs-keyword">from</span> django.contrib.auth.models <span class="hljs-keyword">import</span> User<br><span class="hljs-keyword">from</span> django.contrib <span class="hljs-keyword">import</span> auth<br><span class="hljs-keyword">from</span> django.http <span class="hljs-keyword">import</span> HttpResponseRedirect<br><span class="hljs-keyword">from</span> django.shortcuts <span class="hljs-keyword">import</span> render<br><span class="hljs-keyword">from</span> django.urls <span class="hljs-keyword">import</span> reverse<br><br><span class="hljs-keyword">from</span> user.forms <span class="hljs-keyword">import</span> UserRegister,UserLogin<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">register</span>(<span class="hljs-params">request</span>):</span><br>    <span class="hljs-comment"># 注册</span><br>    <span class="hljs-keyword">if</span> request.method == <span class="hljs-string">&#x27;GET&#x27;</span>:<br>        <span class="hljs-keyword">return</span> render(request, <span class="hljs-string">&#x27;register.html&#x27;</span>)<br><br>    <span class="hljs-keyword">if</span> request.method == <span class="hljs-string">&#x27;POST&#x27;</span>:<br>        data = request.POST<br>        <span class="hljs-comment"># 校验form表单传递的参数</span><br>        form = UserRegister(data)<br>        <span class="hljs-keyword">if</span> form.is_valid():<br>            <span class="hljs-comment"># 使用django自带的User，导入django.contrib.auth.models</span><br>            User.objects.create_user(username=form.cleaned_data.get(<span class="hljs-string">&#x27;name&#x27;</span>), password=form.cleaned_data.get(<span class="hljs-string">&#x27;pw&#x27;</span>))<br>            <span class="hljs-keyword">return</span> HttpResponseRedirect(reverse(<span class="hljs-string">&#x27;user:login&#x27;</span>))<br><br>        <span class="hljs-keyword">else</span>:<br>            error = form.errors<br>            <span class="hljs-keyword">return</span> render(request, <span class="hljs-string">&#x27;register.html&#x27;</span>, &#123;<span class="hljs-string">&#x27;error&#x27;</span>:error&#125;)<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">login</span>(<span class="hljs-params">request</span>):</span><br>    <span class="hljs-comment"># 登录</span><br>    <span class="hljs-keyword">if</span> request.method == <span class="hljs-string">&#x27;GET&#x27;</span>:<br>        <span class="hljs-keyword">return</span> render(request, <span class="hljs-string">&#x27;login.html&#x27;</span>)<br><br>    <span class="hljs-keyword">if</span> request.method == <span class="hljs-string">&#x27;POST&#x27;</span>:<br>        data = request.POST<br>        form = UserLogin(data)<br>        <span class="hljs-comment"># 如果验证通过form.is_valid()值为True，否则为False</span><br>        <span class="hljs-keyword">if</span> form.is_valid():<br>            <span class="hljs-comment"># 使用auth.authenticate获取对象，使用随机标识符也叫做签名token</span><br>            user = auth.authenticate(username=form.cleaned_data.get(<span class="hljs-string">&#x27;name&#x27;</span>), password=form.cleaned_data.get(<span class="hljs-string">&#x27;pw&#x27;</span>))<br>            <span class="hljs-keyword">if</span> user:<br>                <span class="hljs-comment"># 登录，向request.user属性赋值，赋值为登录系统的用户对象</span><br>                <span class="hljs-comment"># 1、向页面的cookie中设置sessionid值（标识符）</span><br>                <span class="hljs-comment"># 2、向django_session表中设置对应的值</span><br>                auth.login(request, user)<br>                <span class="hljs-keyword">return</span> HttpResponseRedirect(reverse(<span class="hljs-string">&#x27;user:index&#x27;</span>))<br>            <span class="hljs-keyword">else</span>:<br>                <span class="hljs-keyword">return</span> render(request, <span class="hljs-string">&#x27;login.html&#x27;</span>, &#123;<span class="hljs-string">&#x27;msg&#x27;</span>:<span class="hljs-string">&#x27;密码错误&#x27;</span>&#125;)<br><br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-keyword">return</span> render(request, <span class="hljs-string">&#x27;login.html&#x27;</span>, &#123;<span class="hljs-string">&#x27;errors&#x27;</span>:form.errors&#125;)<br><br><span class="hljs-comment"># 使用django自带的装饰器(验证用户是否登录)</span><br><span class="hljs-meta">@login_required</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">index</span>(<span class="hljs-params">request</span>):</span><br>    <span class="hljs-keyword">if</span> request.method == <span class="hljs-string">&#x27;GET&#x27;</span>:<br>        <span class="hljs-keyword">return</span> render(request, <span class="hljs-string">&#x27;index.html&#x27;</span>)<br><br><span class="hljs-meta">@login_required</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">logout</span>(<span class="hljs-params">request</span>):</span><br>    <span class="hljs-keyword">if</span> request.method == <span class="hljs-string">&#x27;GET&#x27;</span>:<br>        auth.logout(request)<br>        <span class="hljs-keyword">return</span> HttpResponseRedirect(reverse(<span class="hljs-string">&#x27;user:login&#x27;</span>))<br></code></pre></td></tr></table></figure>
+
+<p>注：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 自己设置token时，可以导入以下方法来加密和解密</span><br><span class="hljs-keyword">from</span> django.contrib.auth.hashers <span class="hljs-keyword">import</span> make_password, check_password<br></code></pre></td></tr></table></figure>
+
+<h3 id="方案三：Session-会话保持-Django自带"><a href="#方案三：Session-会话保持-Django自带" class="headerlink" title="方案三：Session(会话保持) - Django自带"></a>方案三：Session(会话保持) - Django自带</h3><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">cookie和<span class="hljs-keyword">session</span>存放位置<br>cookie：存放在客户端<br><span class="hljs-keyword">session</span>：存放在服务端<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>登录时</li>
+</ul>
+<figure class="highlight vala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs vala"><span class="hljs-meta"># 向cookie中设置sessionid值</span><br><span class="hljs-meta"># 向django_session表中存sessionid值</span><br>request.session[<span class="hljs-string">&#x27;user_id&#x27;</span>] = user.id<br><span class="hljs-keyword">return</span> HttpResponseRedirect(reverse(<span class="hljs-string">&#x27;user:index&#x27;</span>))<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>装饰器验证是否登录</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">login_required</span>(<span class="hljs-params">func</span>):</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">check_login</span>(<span class="hljs-params">request</span>):</span><br>        <span class="hljs-keyword">try</span>:<br>            request.session[<span class="hljs-string">&#x27;user_id&#x27;</span>]<br>        <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:<br>            <span class="hljs-keyword">return</span> HttpResponseRedirect(reverse(<span class="hljs-string">&#x27;user:login&#x27;</span>))<br>        <span class="hljs-keyword">return</span> func(request)<br><br>    <span class="hljs-keyword">return</span> check_login<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>注销时删除设置的user_id</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-tag">del</span> <span class="hljs-selector-tag">request</span><span class="hljs-selector-class">.session</span><span class="hljs-selector-attr">[<span class="hljs-string">&#x27;user_id&#x27;</span>]</span><br></code></pre></td></tr></table></figure>
+
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/categories/Django/">Django</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/tags/django/">django</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/Myblog/2018/10/29/Django-middleware/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Django-middleware</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/Myblog/2018/10/25/Django%E6%A8%A1%E6%9D%BF%E5%92%8C%E7%BB%A7%E6%89%BF%E4%BB%A5%E5%8F%8A%E8%BF%87%E6%BB%A4%E5%99%A8/">
+                        <span class="hidden-mobile">Django模板和继承以及过滤器</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/Myblog/js/events.js" ></script>
+<script  src="/Myblog/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/Myblog/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/Myblog/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/Myblog/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/Myblog/js/boot.js" ></script>
+
+
+</body>
+</html>

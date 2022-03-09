@@ -1,0 +1,598 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/Myblog/img/favicon.png">
+  <link rel="icon" href="/Myblog/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="Simple, so charming!">
+  <meta name="author" content="stellae">
+  <meta name="keywords" content="">
+  
+  <title>FastAPI项目实战 - stellae&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/Myblog/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/Myblog/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"stellae.gitee.io","root":"/Myblog/","version":"1.8.10","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/Myblog/js/utils.js" ></script>
+  <script  src="/Myblog/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/Myblog/">&nbsp;<strong>stellae's blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/Myblog/img/WtwSsqwYlA0.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="FastAPI项目实战">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      stellae
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-03-25 16:06" pubdate>
+        2020年3月25日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.7k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      53
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">FastAPI项目实战</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：2 年前
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h3 id="FastAPI基础"><a href="#FastAPI基础" class="headerlink" title="FastAPI基础"></a>FastAPI基础</h3><p>FastAPI是一种现代，快速（高性能）的Web框架，用于基于标准Python类型提示使用Python 3.6+构建API。</p>
+<p>主要功能是：</p>
+<ul>
+<li><strong>快速</strong>：非常高的性能，看齐NodeJS和Go。现有最快的Python框架之一。</li>
+<li><strong>快速编码</strong>：将功能开发速度提高约200％至300％。</li>
+<li><strong>更少的错误</strong>：减少约40％的人为错误（开发人员）。</li>
+<li><strong>直观</strong>：强大的编辑器支持。完成无处不在。调试时间更少。</li>
+<li><strong>简易</strong>：旨在易于使用和学习。减少阅读文档的时间。</li>
+<li><strong>短</strong>：最小化代码重复。每个参数声明中的多个功能。更少的错误。</li>
+<li><strong>健壮</strong>：获取可用于生产的代码。具有自动交互式文档。</li>
+<li><strong>基于标准</strong>：基于（并完全兼容）API的开放标准：<a target="_blank" rel="noopener" href="https://github.com/OAI/OpenAPI-Specification">OpenAPI</a>（以前称为Swagger）和<a target="_blank" rel="noopener" href="http://json-schema.org/">JSON Schema</a>。</li>
+</ul>
+<p><strong>使用FastAPI</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">pip install fastapi<br>pip install uvicorn<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>使用ASGI server</p>
+</blockquote>
+<h3 id="FastAPI项目实战"><a href="#FastAPI项目实战" class="headerlink" title="FastAPI项目实战"></a>FastAPI项目实战</h3><h4 id="项目目录结构"><a href="#项目目录结构" class="headerlink" title="项目目录结构"></a>项目目录结构</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs shell">.<br>├── app<br>│   ├── __init__.py<br>│   ├── config<br>│   │   ├── __init__.py<br>│   ├── models<br>│   │   ├── __init__.py<br>│   └── resources<br>│       ├── __init__.py<br>│       ├── items.py     # 介绍ORM以及开启事务 <br>│       └── users.py     # 介绍FastAPI基本使用<br>├── docker-compose.yaml<br>├── main.py<br>└── requirements.txt<br><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如果需要使用静态文件可以参考 <a target="_blank" rel="noopener" href="https://fastapi.tiangolo.com/tutorial/static-files/">传送门</a>。</p>
+</blockquote>
+<h4 id="docker-compose-yaml"><a href="#docker-compose-yaml" class="headerlink" title="docker-compose.yaml"></a>docker-compose.yaml</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">version:</span> <span class="hljs-string">&#x27;3.7&#x27;</span><br><br><span class="hljs-attr">services:</span><br><br>  <span class="hljs-attr">db:</span><br>    <span class="hljs-attr">image:</span> <span class="hljs-string">postgres:11.7-alpine</span><br>    <span class="hljs-attr">volumes:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">postgres_data:/var/lib/postgresql/data/</span><br>    <span class="hljs-attr">ports:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-number">5432</span><span class="hljs-string">:5432</span><br>    <span class="hljs-attr">environment:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">POSTGRES_USER=test</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">POSTGRES_PASSWORD=test</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">POSTGRES_DB=test</span><br><br><br><span class="hljs-attr">volumes:</span><br>  <span class="hljs-attr">postgres_data:</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>通过docker创建本地数据库</p>
+</blockquote>
+<h4 id="main-py"><a href="#main-py" class="headerlink" title="main.py"></a>main.py</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> uvicorn<br><br><span class="hljs-keyword">from</span> app <span class="hljs-keyword">import</span> get_app<br><br><br>app = get_app()<br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    <span class="hljs-comment"># uvicorn.run(app, host=&quot;0.0.0.0&quot;, port=8000)</span><br>    uvicorn.run(<span class="hljs-string">&quot;main:app&quot;</span>, reload=<span class="hljs-literal">True</span>, host=<span class="hljs-string">&quot;0.0.0.0&quot;</span>, port=<span class="hljs-number">8000</span>)<br><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<ul>
+<li>使用<code>uvicorn.run</code>启动，如果需要设置<code>reload=True</code>，必须替换<code>app</code> -&gt; <code>&quot;&lt;module&gt;:&lt;attribute&gt;&quot;</code></li>
+<li>同样可以使用命令<code>uvicorn main:app --reload</code>启动服务。其中<code>main</code>为启动文件，<code>app</code>为<code>FastAPI()</code>，<code>--reload</code>指修改代码自动重启，一般用户开发模式</li>
+</ul>
+</blockquote>
+<h4 id="app-init-py"><a href="#app-init-py" class="headerlink" title="app/init.py"></a>app/init.py</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> time<br><br><span class="hljs-keyword">from</span> fastapi <span class="hljs-keyword">import</span> FastAPI, Request<br><span class="hljs-keyword">from</span> fastapi.middleware.cors <span class="hljs-keyword">import</span> CORSMiddleware<br><span class="hljs-keyword">from</span> fastapi.middleware.gzip <span class="hljs-keyword">import</span> GZipMiddleware<br><br><span class="hljs-keyword">from</span> .resources <span class="hljs-keyword">import</span> router<br><span class="hljs-keyword">from</span> .models <span class="hljs-keyword">import</span> database<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_app</span>() -&gt; FastAPI:</span><br>    app = FastAPI()<br><br>    origins = [<br>        <span class="hljs-string">&quot;http://localhost.tiangolo.com&quot;</span>,<br>        <span class="hljs-string">&quot;https://localhost.tiangolo.com&quot;</span>,<br>        <span class="hljs-string">&quot;http://localhost&quot;</span>,<br>        <span class="hljs-string">&quot;http://localhost:8080&quot;</span>,<br>    ]<br><br>    <span class="hljs-comment"># 开启cors（跨源资源共享）</span><br>    app.add_middleware(<br>        CORSMiddleware,<br>        allow_origins=origins,<br>        allow_credentials=<span class="hljs-literal">True</span>,<br>        allow_methods=[<span class="hljs-string">&quot;*&quot;</span>],<br>        allow_headers=[<span class="hljs-string">&quot;*&quot;</span>],<br>    )<br>    <span class="hljs-comment"># 500字节以上才开启gzip</span><br>    app.add_middleware(<br>        GZipMiddleware,<br>        minimum_size=<span class="hljs-number">500</span><br>    )<br>    <br>    <span class="hljs-comment"># 添加中间件计算程序运行时间</span><br><span class="hljs-meta">    @app.middleware(&quot;http&quot;)</span><br>    <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">add_process_time_header</span>(<span class="hljs-params">request: Request, call_next</span>):</span><br>        start_time = time.time()<br>        response = <span class="hljs-keyword">await</span> call_next(request)<br>        process_time = time.time() - start_time<br>        response.headers[<span class="hljs-string">&quot;X-Process-Time&quot;</span>] = str(process_time)<br>        <span class="hljs-keyword">return</span> response<br><br>    app.include_router(router, prefix=<span class="hljs-string">&quot;/api&quot;</span>)<br>    <br>    <span class="hljs-comment"># 添加数据库连接和关闭事件</span><br><span class="hljs-meta">    @app.on_event(&quot;startup&quot;)</span><br>    <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">startup</span>():</span><br>        <span class="hljs-keyword">await</span> database.connect()<br><br><span class="hljs-meta">    @app.on_event(&quot;shutdown&quot;)</span><br>    <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">shutdown</span>():</span><br>        <span class="hljs-keyword">await</span> database.disconnect()<br><br>    <span class="hljs-keyword">return</span> app<br><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<ul>
+<li><p>该<code>CORSMiddleware</code>实现使用的默认参数默认情况下是限制性的，因此您需要显式启用特定的来源，方法或标头，以便允许浏览器在跨域上下文中使用它们。</p>
+<p>支持以下参数：</p>
+<ul>
+<li><code>allow_origins</code>-应该允许进行跨域请求的来源列表。例如<code>[&#39;https://example.org&#39;, &#39;https://www.example.org&#39;]</code>。您可以<code>[&#39;*&#39;]</code>用来允许任何来源。</li>
+<li><code>allow_origin_regex</code>-一个正则表达式字符串，与应允许进行跨域请求的原点匹配。例如。<code>&#39;https://.*\.example\.org&#39;</code>。</li>
+<li><code>allow_methods</code>-跨域请求应允许的HTTP方法列表。默认为<code>[&#39;GET&#39;]</code>。您可以使用<code>[&#39;*&#39;]</code>允许所有标准方法。</li>
+<li><code>allow_headers</code>-跨域请求应支持的HTTP请求标头列表。默认为<code>[]</code>。您可以<code>[&#39;*&#39;]</code>用来允许所有标头。的<code>Accept</code>，<code>Accept-Language</code>，<code>Content-Language</code>和<code>Content-Type</code>头总是允许CORS请求。</li>
+<li><code>allow_credentials</code>-表示跨域请求应支持cookie。默认为<code>False</code>。</li>
+<li><code>expose_headers</code>-指出应使浏览器可以访问的所有响应标头。默认为<code>[]</code>。</li>
+<li><code>max_age</code>-设置浏览器缓存CORS响应的最长时间（以秒为单位）。默认为<code>60</code>。</li>
+</ul>
+</li>
+<li><p>添加中间件有以上两种方式，其他 <a target="_blank" rel="noopener" href="https://fastapi.tiangolo.com/advanced/middleware/">middleware用法</a>。</p>
+</li>
+</ul>
+</blockquote>
+<h4 id="app-config-init-py"><a href="#app-config-init-py" class="headerlink" title="app/config/init.py"></a>app/config/init.py</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">DATABASE_URL = <span class="hljs-string">&quot;postgresql://test:test@127.0.0.1:5432/test&quot;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="app-models-init-py"><a href="#app-models-init-py" class="headerlink" title="app/models/init.py"></a>app/models/init.py</h4><p><strong>这里需要安装以下三方库，来支持异步连接pgsql</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">pip install psycopg2-binary==2.8.5<br>pip install asyncpg==0.20.1<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> sqlalchemy <span class="hljs-keyword">as</span> sa<br><span class="hljs-keyword">from</span> databases <span class="hljs-keyword">import</span> Database<br><br><span class="hljs-keyword">from</span> app.config <span class="hljs-keyword">import</span> DATABASE_URL<br><br><br>database = Database(DATABASE_URL)<br>metadata = sa.MetaData()<br><br><br>Room = sa.Table(<br>    <span class="hljs-string">&quot;user&quot;</span>,    <span class="hljs-comment"># table name</span><br>    metadata,<br>    sa.Column(<span class="hljs-string">&quot;id&quot;</span>, sa.Integer, primary_key=<span class="hljs-literal">True</span>),<br>    sa.Column(<span class="hljs-string">&quot;code&quot;</span>, sa.VARCHAR(<span class="hljs-number">64</span>)),<br>    sa.Column(<span class="hljs-string">&quot;name&quot;</span>, sa.VARCHAR(<span class="hljs-number">32</span>)),<br>    sa.Column(<span class="hljs-string">&quot;phone&quot;</span>, sa.VARCHAR(<span class="hljs-number">64</span>)),<br>    sa.Column(<span class="hljs-string">&quot;status&quot;</span>, sa.Boolean),<br>    sa.Column(<span class="hljs-string">&quot;note&quot;</span>, sa.Text)<br>)<br><br><br>Item = sa.Table(<br>    <span class="hljs-string">&quot;item&quot;</span>,<br>    metadata,<br>    sa.Column(<span class="hljs-string">&quot;id&quot;</span>, sa.Integer, primary_key=<span class="hljs-literal">True</span>),<br>    sa.Column(<span class="hljs-string">&quot;code&quot;</span>, sa.VARCHAR(<span class="hljs-number">64</span>)),<br>    sa.Column(<span class="hljs-string">&quot;name&quot;</span>, sa.VARCHAR(<span class="hljs-number">32</span>)),<br>    sa.Column(<span class="hljs-string">&quot;description&quot;</span>, sa.VARCHAR(<span class="hljs-number">256</span>)),<br>    sa.Column(<span class="hljs-string">&quot;status&quot;</span>, sa.Boolean),<br>)<br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    engine = sa.create_engine(DATABASE_URL)<br>    metadata.create_all(engine)<br>    print(<span class="hljs-string">&quot;create table successful!&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>因为要异步连接数据库，所以ORM不能使用session层，需要使用database层操作数据库。</p>
+</blockquote>
+<h4 id="app-resources-init-py"><a href="#app-resources-init-py" class="headerlink" title="app/resources/init.py"></a>app/resources/init.py</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> fastapi <span class="hljs-keyword">import</span> APIRouter<br><br><span class="hljs-keyword">from</span> .items <span class="hljs-keyword">import</span> router <span class="hljs-keyword">as</span> router_item<br><span class="hljs-keyword">from</span> .users <span class="hljs-keyword">import</span> router <span class="hljs-keyword">as</span> router_users<br><br><br>router = APIRouter()<br><br>router.include_router(router_item, tags=[<span class="hljs-string">&quot;items&quot;</span>], prefix=<span class="hljs-string">&quot;/items&quot;</span>)<br>router.include_router(router_users, tags=[<span class="hljs-string">&quot;users&quot;</span>], prefix=<span class="hljs-string">&quot;/users&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注册分路由(<code>tags</code>标记swagger)</p>
+</blockquote>
+<h4 id="app-resources-users-py"><a href="#app-resources-users-py" class="headerlink" title="app/resources/users.py"></a>app/resources/users.py</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> typing <span class="hljs-keyword">import</span> Optional, List, Tuple, Dict, Set<br><span class="hljs-keyword">from</span> pydantic <span class="hljs-keyword">import</span> BaseModel, validator, root_validator, Field, HttpUrl, EmailStr<br><span class="hljs-keyword">from</span> pydantic.errors <span class="hljs-keyword">import</span> PydanticValueError<br><span class="hljs-keyword">from</span> fastapi <span class="hljs-keyword">import</span> APIRouter, HTTPException, Query, Path, Body, Header, Cookie, Form, File, UploadFile, BackgroundTasks<br><br>router = APIRouter()<br><br><br><span class="hljs-meta">@router.get(&quot;/&quot;)</span><br><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">users_root</span>(<span class="hljs-params">page: int = Query(<span class="hljs-params"><span class="hljs-number">1</span>, gt=<span class="hljs-number">0</span></span>), per_page: int = Query(<span class="hljs-params"><span class="hljs-number">10</span>, gt=<span class="hljs-number">0</span></span>), limit: Optional[int] = None</span>):</span><br>    <span class="hljs-comment"># query params: page, per_page 默认值为1，10，并且会强制转换成对应类型</span><br>    <span class="hljs-comment"># Query可以执行额外的验证，第一个参数是默认值，参数title和description用于swagger文档</span><br>    <span class="hljs-comment"># limit: Optional[int] = None 用来告诉limit值可能为None</span><br>    users = list(range(<span class="hljs-number">100</span>))<br>    <span class="hljs-keyword">return</span> &#123;<span class="hljs-string">&quot;users&quot;</span>: users[(page<span class="hljs-number">-1</span>)*per_page: page*per_page], <span class="hljs-string">&quot;limit&quot;</span>: limit&#125;<br><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Suggestion</span>(<span class="hljs-params">BaseModel</span>):</span><br>    pic: List[str] = Query(<span class="hljs-literal">None</span>, max_length=<span class="hljs-number">5</span>)<br>    content: Optional[str] = <span class="hljs-literal">None</span><br>    is_deal: bool = <span class="hljs-literal">False</span><br><br><br><span class="hljs-meta">@router.post(&quot;/&#123;user_id&#125;/suggestions&quot;)</span><br><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">read_users</span>(<span class="hljs-params">suggestion: Suggestion, user_id: int = Path(<span class="hljs-params">..., gt=<span class="hljs-number">0</span></span>)</span>):</span><br>  	<span class="hljs-comment"># suggestion 指定主体参数</span><br>    <span class="hljs-comment"># Path 可以额外验证路径参数， ...代表为必须</span><br>    <span class="hljs-keyword">return</span> &#123;<span class="hljs-string">&quot;user_id&quot;</span>: user_id, <span class="hljs-string">&quot;suggestion&quot;</span>: suggestion&#125;<br><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span>(<span class="hljs-params">BaseModel</span>):</span><br>    username: str = Field(<span class="hljs-literal">None</span>, title=<span class="hljs-string">&quot;The title of the username&quot;</span>, max_length=<span class="hljs-number">10</span>)<br>    full_name: str = <span class="hljs-literal">None</span><br>    email: EmailStr<br>      <br><span class="hljs-meta">    @validator(&quot;username&quot;)</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">username_validator</span>(<span class="hljs-params">cls, username</span>):</span><br>        <span class="hljs-keyword">if</span> username.isdigit():<br>            <span class="hljs-keyword">raise</span> ValueError(<span class="hljs-string">&#x27;incorrect username&#x27;</span>)<br>        <span class="hljs-keyword">return</span> username<br><span class="hljs-meta">    @root_validator</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">root_validator_test</span>(<span class="hljs-params">cls, fields</span>):</span><br>      	<span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> any(fields.values(<span class="hljs-string">&quot;at least one parameter&quot;</span>)):<br>          	<span class="hljs-keyword">raise</span> PydanticValueError()<br>        <span class="hljs-keyword">return</span> fields<br><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Token</span>(<span class="hljs-params">BaseModel</span>):</span><br>    token: str = Field(..., description=<span class="hljs-string">&quot;The description of the token&quot;</span>)<br>    status: bool = <span class="hljs-literal">True</span>    <br><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Image</span>(<span class="hljs-params">BaseModel</span>):</span><br>    url: HttpUrl<br>    name: str<br><br><br><span class="hljs-meta">@router.post(&quot;/&#123;user_id&#125;/tokens&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">read_tokens</span>(<span class="hljs-params">user_id, user: User, token: Token, importance: int = Body(<span class="hljs-params">..., gt=<span class="hljs-number">0</span></span>)</span>):</span><br>    <span class="hljs-comment"># Body可以在多个主体参数外，额外定义数据</span><br>    <span class="hljs-keyword">return</span> &#123;<span class="hljs-string">&quot;user_id&quot;</span>: user_id, <span class="hljs-string">&quot;user&quot;</span>: user, <span class="hljs-string">&quot;token&quot;</span>: token, <span class="hljs-string">&quot;importance&quot;</span>: importance&#125;<br>  <br>  <br><span class="hljs-meta">@router.post(&quot;/uploadfile&quot;)</span><br><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">upload_file</span>(<span class="hljs-params">file: UploadFile = File(<span class="hljs-params">...</span>)</span>):</span><br>    <span class="hljs-comment"># 用于解析，需要安装python-multipart库</span><br>    <span class="hljs-comment"># file: bytes = File(...)  可以直接获取二进制数据。大文件建议用UploadFile，对内存更友好</span><br>    <span class="hljs-keyword">return</span> &#123;<span class="hljs-string">&quot;message&quot;</span>: <span class="hljs-string">&quot;success&quot;</span>, <span class="hljs-string">&quot;filename&quot;</span>: file.filename&#125;<br>  <br>  <br><br>  <br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">write_notification</span>(<span class="hljs-params">email: str, message=<span class="hljs-string">&quot;&quot;</span></span>):</span><br>    <span class="hljs-keyword">with</span> open(<span class="hljs-string">&quot;log.txt&quot;</span>, mode=<span class="hljs-string">&quot;w&quot;</span>) <span class="hljs-keyword">as</span> email_file:<br>        content = <span class="hljs-string">f&quot;notification for <span class="hljs-subst">&#123;email&#125;</span>: <span class="hljs-subst">&#123;message&#125;</span>&quot;</span><br>        email_file.write(content)<br><br><br><span class="hljs-meta">@router.post(&quot;/send-notification/&#123;email&#125;&quot;)</span><br><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">send_notification</span>(<span class="hljs-params">email: str, background_tasks: BackgroundTasks</span>):</span><br>  	<span class="hljs-string">&quot;&quot;&quot;后台任务&quot;&quot;&quot;</span><br>    background_tasks.add_task(write_notification, email, message=<span class="hljs-string">&quot;some notification&quot;</span>)<br>    <span class="hljs-keyword">return</span> &#123;<span class="hljs-string">&quot;message&quot;</span>: <span class="hljs-string">&quot;Notification sent in the background&quot;</span>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<ul>
+<li><code>Query, Path, Body, Header, Cookie, Form, File, BackgroundTasks</code> 分别为 <code>请求参数，位置参数，请求体，header，cookie，form，上传文件, 后台任务</code> 。具体使用如上例子所示，指定默认值为<code>...</code>代表为必选，可以指定参数title和description用于swagger文档。</li>
+</ul>
+<p>form上传文件示例：写入临时文件进行读取</p>
+<blockquote>
+<p>需要安装解析库<code>python-multipart</code></p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> tempfile <span class="hljs-keyword">import</span> NamedTemporaryFile<br><span class="hljs-keyword">from</span> fastapi <span class="hljs-keyword">import</span> APIRouter, File, UploadFile<br><br><span class="hljs-keyword">from</span> app.minio_server <span class="hljs-keyword">import</span> MinioServer<br><span class="hljs-keyword">from</span> app.utils <span class="hljs-keyword">import</span> file_hasher<br><br>router = APIRouter()<br><br><span class="hljs-meta">@router.post(&quot;&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">upload_file</span>(<span class="hljs-params">file: UploadFile = File(<span class="hljs-params">..., description = <span class="hljs-string">&quot;使用form表单上传文件&quot;</span></span>)</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;上传文件&quot;&quot;&quot;</span><br>    file_name = file.filename<br>    prefix, suffix = file_name.split(<span class="hljs-string">&quot;.&quot;</span>)<br>    content_type = file.content_type<br>    b_data = file.file.read()<br>    minio_server = MinioServer()<br>    <span class="hljs-keyword">with</span> NamedTemporaryFile(suffix=<span class="hljs-string">&quot;.&quot;</span> + suffix) <span class="hljs-keyword">as</span> ntf:<br>        ntf.write(b_data)<br>        temp_file_path = ntf.name<br>        save_name = file_hasher(temp_file_path) + <span class="hljs-string">&quot;.&quot;</span> + suffix<br>        file_url = minio_server.up_file(save_name, temp_file_path, content_type)<br>    <span class="hljs-keyword">return</span> &#123;<span class="hljs-string">&quot;url&quot;</span>: file_url&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p><code>Optional, List, Tuple, Dict, Set</code>分别为 <code>可选，列表，元组，字典，集合</code>。</p>
+</li>
+<li><p>模型中自定义<code>validator</code>修饰的函数，可以执行额外的验证。传送门 =&gt; <a target="_blank" rel="noopener" href="https://pydantic-docs.helpmanual.io/usage/validators/">pydantic validator</a></p>
+</li>
+<li><p>嵌套模型，可以修改模型为自定义，例如:</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Image</span>(<span class="hljs-params">BaseModel</span>):</span><br>    url: str<br>    name: str<br><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Item</span>(<span class="hljs-params">BaseModel</span>):</span><br>    name: str<br>    description: str = <span class="hljs-literal">None</span><br>    price: float<br>    tax: float = <span class="hljs-literal">None</span><br>    tags: Set[str] = []<br>    image: Image = <span class="hljs-literal">None</span>   <span class="hljs-comment"># 此处为模型嵌套</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li>返回异常 - <code>raise HTTPException(status_code=403, detail=&quot;not found item&quot;)</code></li>
+</ul>
+</blockquote>
+<h4 id="app-resources-items-py"><a href="#app-resources-items-py" class="headerlink" title="app/resources/items.py"></a>app/resources/items.py</h4><p><strong>这里主要介绍ORM对数据库执行CRUD操作</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> typing <span class="hljs-keyword">import</span> List<br><br><span class="hljs-keyword">from</span> pydantic <span class="hljs-keyword">import</span> BaseModel<br><span class="hljs-keyword">from</span> fastapi <span class="hljs-keyword">import</span> APIRouter, Path<br><br><span class="hljs-keyword">from</span> ..models <span class="hljs-keyword">import</span> database, Item<br><br><br>router = APIRouter()<br><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ItemModel</span>(<span class="hljs-params">BaseModel</span>):</span><br>    code: str<br>    name: str<br>    description: str<br>    status: bool<br><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ItemsModel</span>(<span class="hljs-params">BaseModel</span>):</span><br>    code_list: List[str]<br>    name: str<br>    description: str<br>    status: bool<br><br><br><span class="hljs-comment"># 查询单个数据</span><br><span class="hljs-meta">@router.get(&quot;/&#123;item_id&#125;&quot;)</span><br><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">items_get</span>(<span class="hljs-params">item_id: int = Path(<span class="hljs-params">..., gt=<span class="hljs-number">0</span></span>)</span>):</span><br>    r_item = <span class="hljs-keyword">await</span> database.fetch_one(Item.select(Item.c.id == item_id))<br>    <span class="hljs-keyword">return</span> &#123;<span class="hljs-string">&quot;item&quot;</span>: r_item&#125;<br><br><br><span class="hljs-comment"># 添加数据</span><br><span class="hljs-meta">@router.post(&quot;/&quot;)</span><br><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">items_insert</span>(<span class="hljs-params">item: ItemModel</span>):</span><br>    item_id = <span class="hljs-keyword">await</span> database.execute(Item.insert(), item.__dict__)<br>    <span class="hljs-keyword">return</span> &#123;<span class="hljs-string">&quot;item&quot;</span>: dict(item, **&#123;<span class="hljs-string">&quot;id&quot;</span>: item_id&#125;)&#125;<br><br><br><span class="hljs-comment"># 修改单个数据</span><br><span class="hljs-meta">@router.patch(&quot;/&#123;item_id&#125;&quot;)</span><br><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">item_update</span>(<span class="hljs-params">item: ItemModel, item_id: int = Path(<span class="hljs-params">..., gt=<span class="hljs-number">0</span></span>)</span>):</span><br>    <span class="hljs-keyword">await</span> database.execute(Item.update().where(Item.c.id == item_id), item.__dict__)<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span><br><br><br><span class="hljs-comment"># 删除单个数据</span><br><span class="hljs-meta">@router.delete(&quot;/&#123;item_id&#125;&quot;)</span><br><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">item_delete</span>(<span class="hljs-params">item_id: int = Path(<span class="hljs-params">..., gt=<span class="hljs-number">0</span></span>)</span>):</span><br>    <span class="hljs-keyword">await</span> database.execute(Item.delete().where(Item.c.id == item_id))<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span><br><br><br><span class="hljs-comment"># 开启事务环境，模拟批量修改数据</span><br><span class="hljs-meta">@router.put(&quot;/update_items&quot;)</span><br><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">update_items</span>(<span class="hljs-params">items: ItemsModel</span>):</span><br>    data = items.__dict__<br>    code_list = data.pop(<span class="hljs-string">&quot;code_list&quot;</span>)   <span class="hljs-comment"># code_list: [&#x27;A&#x27;, &#x27;B&#x27;, &#x27;C&#x27;]</span><br><br>    transaction = database.transaction()<br>    <span class="hljs-keyword">await</span> transaction.start()   <span class="hljs-comment"># 开启事务</span><br>    <span class="hljs-keyword">for</span> code <span class="hljs-keyword">in</span> code_list:<br>        <span class="hljs-keyword">await</span> database.execute(Item.update().where(Item.c.code == code), data)<br>        <span class="hljs-keyword">if</span> code == <span class="hljs-string">&#x27;A&#x27;</span>:<br>            <span class="hljs-keyword">await</span> transaction.commit()   <span class="hljs-comment"># 提交sql并销毁事务</span><br>            <span class="hljs-keyword">await</span> transaction.start()    <span class="hljs-comment"># 开启新的事务</span><br>        <span class="hljs-keyword">if</span> code == <span class="hljs-string">&#x27;B&#x27;</span>:<br>            <span class="hljs-keyword">await</span> transaction.rollback()   <span class="hljs-comment"># 执行sql回滚</span><br>            <span class="hljs-keyword">await</span> transaction.start()<br>        <span class="hljs-keyword">if</span> code == <span class="hljs-string">&#x27;C&#x27;</span>:<br>            <span class="hljs-keyword">await</span> transaction.commit()<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p><code>commit()</code> 和 <code>rollback()</code>方法会销毁事务环境，所以不能在没有任何修改操作重复提交，否则会报错。</p>
+</blockquote>
+<p>开启事务方式可以也可以这么写…</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">@router.put(&quot;/update_items&quot;)</span><br><span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">update_items</span>(<span class="hljs-params">items: ItemsModel</span>):</span><br>    data = items.__dict__<br>    code_list = data.pop(<span class="hljs-string">&quot;code_list&quot;</span>)   <span class="hljs-comment"># code_list: [&#x27;A&#x27;, &#x27;B&#x27;, &#x27;C&#x27;]</span><br>    <br>    <span class="hljs-keyword">async</span> <span class="hljs-keyword">with</span> database.transaction() <span class="hljs-keyword">as</span> transaction:<br>        <span class="hljs-keyword">for</span> code <span class="hljs-keyword">in</span> code_list:<br>            <span class="hljs-keyword">await</span> database.execute(Item.update().where(Item.c.code == code), data)<br>            <span class="hljs-keyword">if</span> code == <span class="hljs-string">&#x27;A&#x27;</span>:<br>                <span class="hljs-keyword">await</span> transaction.commit()<br>                <span class="hljs-keyword">await</span> transaction.start()<br>            <span class="hljs-keyword">if</span> code == <span class="hljs-string">&#x27;B&#x27;</span>:<br>                <span class="hljs-keyword">await</span> transaction.rollback()<br>                <span class="hljs-keyword">await</span> transaction.start()<br>            <span class="hljs-keyword">if</span> code == <span class="hljs-string">&#x27;C&#x27;</span>:<br>                <span class="hljs-keyword">pass</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p><code>async with</code> 异步上下文语法，会在自动调用<code>__aenter__()</code> 和 <code>__aexit__()</code> 方法。</p>
+<p><code>__aenter__()</code>会调用<code>start()</code>方法开启一个事务。</p>
+<p><code>__aexit__()</code>如果发生异常，会执行<code>rollback()</code>进行回滚；否则执行<code>commit()</code>进行提交。</p>
+</blockquote>
+<h4 id="下载导出文件"><a href="#下载导出文件" class="headerlink" title="下载导出文件"></a>下载导出文件</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> starlette.responses <span class="hljs-keyword">import</span> Response<br><br><span class="hljs-meta">@router.get(&quot;/&#123;edition_id:int&#125;/word-report&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">export_edition_information</span>(<span class="hljs-params">edition_id: int, db: Session = Depends(<span class="hljs-params">get_db</span>)</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;广告信息导出 =&gt; WORD&quot;&quot;&quot;</span><br>    edition = db.query(Edition).filter_by(id=edition_id).first()<br>    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> edition:<br>        <span class="hljs-keyword">raise</span> HTTPException(<span class="hljs-number">403</span>, <span class="hljs-string">&quot;广告不存在&quot;</span>)<br>    law_items = db.query(LawItem).filter(LawItem.id.in_(edition.laws)).order_by(LawItem.id).all()<br><br>    type_dict = dict(zip([<span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>], [<span class="hljs-string">&quot;网站&quot;</span>, <span class="hljs-string">&quot;小程序和APP&quot;</span>, <span class="hljs-string">&quot;自媒体&quot;</span>]))<br>    data = dict(edition.to_dict(),<br>                law_items=[i.to_dict() <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> law_items],<br>                edition_type=type_dict[edition.type])<br>    <span class="hljs-comment"># 写入WORD文档</span><br>    docx_name = <span class="hljs-string">f&quot;<span class="hljs-subst">&#123;edition.name&#125;</span>.docx&quot;</span><br>    bytes_value = gen_word_template(data=data)<br>    header = &#123;<span class="hljs-string">&quot;content-disposition&quot;</span>: <span class="hljs-string">f&quot;attachment; filename*=utf-8&#x27;&#x27;<span class="hljs-subst">&#123;parse.quote(docx_name)&#125;</span>&quot;</span>,<br>              <span class="hljs-string">&quot;Access-Control-Expose-Headers&quot;</span>: <span class="hljs-string">&quot;content-disposition&quot;</span>&#125;<br>    resp = Response(bytes_value, headers=header, media_type=<span class="hljs-string">&quot;application/msword&quot;</span>)<br>    <span class="hljs-keyword">return</span> resp<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<ul>
+<li><p><code>filename*=utf-8&#39;&#39;</code> 设置文件名和编码</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Access-Control-Expose-Headers">Access-Control-Expose-Headers</a> 暴露哪些响应头给前端获取</p>
+</li>
+</ul>
+</blockquote>
+<h3 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://fastapi.tiangolo.com/">FastAPI官方文档</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/nsidnev/fastapi-realworld-example-app">FastAPI项目实例</a></li>
+<li><a target="_blank" rel="noopener" href="https://pydantic-docs.helpmanual.io/">pydantic官方文档</a></li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/categories/FastAPI/">FastAPI</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/tags/fastapi/">fastapi</a>
+                    
+                      <a class="hover-with-bg" href="/Myblog/tags/python/">python</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/Myblog/2020/04/09/Pandoc%E6%A0%BC%E5%BC%8F%E8%BD%AC%E6%8D%A2%E5%B7%A5%E5%85%B7/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Pandoc格式转换工具</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/Myblog/2020/03/18/python%E5%AE%9E%E7%8E%B0FCM%E6%8E%A8%E9%80%81%E8%AF%A6%E8%A7%A3/">
+                        <span class="hidden-mobile">python实现FCM推送详解</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/Myblog/js/events.js" ></script>
+<script  src="/Myblog/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/Myblog/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/Myblog/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/Myblog/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/Myblog/js/boot.js" ></script>
+
+
+</body>
+</html>

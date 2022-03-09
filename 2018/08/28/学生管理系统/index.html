@@ -1,0 +1,481 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/Myblog/img/favicon.png">
+  <link rel="icon" href="/Myblog/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="Simple, so charming!">
+  <meta name="author" content="stellae">
+  <meta name="keywords" content="">
+  
+  <title>学生管理系统 - stellae&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/Myblog/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/Myblog/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"stellae.gitee.io","root":"/Myblog/","version":"1.8.10","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/Myblog/js/utils.js" ></script>
+  <script  src="/Myblog/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/Myblog/">&nbsp;<strong>stellae's blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/Myblog/img/WtwSsqwYlA0.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="学生管理系统">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      stellae
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2018-08-28 18:57" pubdate>
+        2018年8月28日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3.3k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      61
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">学生管理系统</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：7 个月前
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h3 id="学生管理系统"><a href="#学生管理系统" class="headerlink" title="学生管理系统"></a>学生管理系统</h3><p>练手小项目：学生管理系统</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs angelscript">=================================================<br>XXX学生管理系统功能点<br><span class="hljs-number">1.</span>添加学生信息<br><span class="hljs-number">2.</span>查看学生信息<br><span class="hljs-number">3.</span>修改学生信息<br><span class="hljs-number">4.</span>删除学生信息<br><span class="hljs-number">5.</span>退出<br>要求<br><span class="hljs-number">1.</span>在一个系统中可以保存多个学生信息<br><span class="hljs-number">2.</span>添加学生（输入姓名、年龄、电话）到<span class="hljs-number">1</span>中的变量中<br><span class="hljs-number">3.</span>修改学生的电话（输入姓名，和电话）<br><span class="hljs-number">4.</span>删除学生（输入姓名，将其对应的信息从系统中删除）<br><span class="hljs-number">5.</span>退出系统<br></code></pre></td></tr></table></figure>
+
+<h4 id="python版本"><a href="#python版本" class="headerlink" title="python版本"></a>python版本</h4><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><code class="hljs vim">name = <span class="hljs-string">&#x27;&#x27;</span>   #存储用户信息<br>age = <span class="hljs-string">&#x27;&#x27;</span><br>tel = <span class="hljs-string">&#x27;&#x27;</span><br>python1806 = []<br><br><span class="hljs-keyword">while</span> True:<br>    <span class="hljs-keyword">print</span>(<span class="hljs-string">&#x27;=================================================&#x27;</span>)<br>    <span class="hljs-keyword">print</span>(<span class="hljs-string">&#x27;                  1.添加学生信息&#x27;</span>)<br>    <span class="hljs-keyword">print</span>(<span class="hljs-string">&#x27;                  2.查看学生信息&#x27;</span>)<br>    <span class="hljs-keyword">print</span>(<span class="hljs-string">&#x27;                  3.修改学生信息&#x27;</span>)<br>    <span class="hljs-keyword">print</span>(<span class="hljs-string">&#x27;                  4.删除学生信息&#x27;</span>)<br>    <span class="hljs-keyword">print</span>(<span class="hljs-string">&#x27;                  5.退出&#x27;</span>)<br>    <span class="hljs-keyword">print</span>(<span class="hljs-string">&#x27;=================================================&#x27;</span>)<br>    n = <span class="hljs-built_in">input</span>(<span class="hljs-string">&#x27;请输入你想执行的功能：&#x27;</span>)<br>    <span class="hljs-keyword">if</span> n == <span class="hljs-string">&#x27;1&#x27;</span>:    #添加信息<br>        name = <span class="hljs-built_in">input</span>(<span class="hljs-string">&#x27;请添加学生姓名：&#x27;</span>)<br>        age = <span class="hljs-built_in">input</span>(<span class="hljs-string">&#x27;请添加学生年龄：&#x27;</span>)<br>        tel = <span class="hljs-built_in">input</span>(<span class="hljs-string">&#x27;请添加学生电话：&#x27;</span>)<br>        dict_new = &#123;<span class="hljs-string">&#x27;name&#x27;</span>: name, <span class="hljs-string">&#x27;age&#x27;</span>: age, <span class="hljs-string">&#x27;tel&#x27;</span>: tel&#125;<br>        python1806.<span class="hljs-keyword">append</span>(dict_new)<br>        <span class="hljs-keyword">continue</span><br>    elif n == <span class="hljs-string">&#x27;2&#x27;</span>:    #查看信息<br>        <span class="hljs-keyword">for</span> <span class="hljs-built_in">index</span> in <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(python1806)):<br>            <span class="hljs-keyword">print</span>(<span class="hljs-string">&#x27;姓名：%s ，年龄：%s ，电话：%s&#x27;</span>%(python1806[<span class="hljs-built_in">index</span>][<span class="hljs-string">&#x27;name&#x27;</span>]\<br>                                             ,python1806[<span class="hljs-built_in">index</span>][<span class="hljs-string">&#x27;age&#x27;</span>],\<br>                                         python1806[<span class="hljs-built_in">index</span>][<span class="hljs-string">&#x27;tel&#x27;</span>]))<br>    elif n == <span class="hljs-string">&#x27;3&#x27;</span>:    #修改信息<br>        temp_index = []    #姓名相同时，临时存储姓名<br>        name_change = <span class="hljs-built_in">input</span>(<span class="hljs-string">&#x27;请输入你想要修改信息的学生姓名：&#x27;</span>)<br>        <span class="hljs-keyword">for</span> <span class="hljs-built_in">index</span> in <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(python1806)):    #依次查找学生信息<br>            <span class="hljs-keyword">if</span> python1806[<span class="hljs-built_in">index</span>][<span class="hljs-string">&#x27;name&#x27;</span>] == name_change:   #找到对应学生，修改信息<br>                temp_index.<span class="hljs-keyword">append</span>(<span class="hljs-built_in">index</span>)  #姓名相同学生所对应的下标都存在temp_index表里面去<br>            elif <span class="hljs-built_in">index</span> == <span class="hljs-built_in">len</span>(python1806) - <span class="hljs-number">1</span>:  #没有查找到对应学生<br>                <span class="hljs-keyword">if</span> not temp_index:<br>                    <span class="hljs-keyword">print</span>(<span class="hljs-string">&#x27;你输入的学生不存在！！&#x27;</span>)<br>                    <span class="hljs-keyword">break</span><br>        <span class="hljs-built_in">count</span> = []   #保存提示序号<br>        <span class="hljs-keyword">for</span> <span class="hljs-keyword">x</span> in <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(temp_index)):   #给予用户相同姓名学生信息提示,进行选择修改<br>            <span class="hljs-keyword">print</span>(<span class="hljs-string">&#x27;%d、姓名：%s 年龄：%s 电话：%s&#x27;</span>%(<span class="hljs-keyword">x</span>,python1806[temp_index[<span class="hljs-keyword">x</span>]][<span class="hljs-string">&#x27;name&#x27;</span>],\<br>                                          python1806[temp_index[<span class="hljs-keyword">x</span>]][<span class="hljs-string">&#x27;age&#x27;</span>], \<br>                                          python1806[temp_index[<span class="hljs-keyword">x</span>]][<span class="hljs-string">&#x27;tel&#x27;</span>]))<br>            <span class="hljs-built_in">count</span>.<span class="hljs-keyword">append</span>(<span class="hljs-keyword">x</span>)<br>        <span class="hljs-keyword">if</span> coun<span class="hljs-variable">t:</span><br>            num = <span class="hljs-keyword">int</span>(<span class="hljs-built_in">input</span>(<span class="hljs-string">&#x27;请输入你要修改的相同姓名学生编号：&#x27;</span>))<br>        <span class="hljs-keyword">for</span> i in <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(<span class="hljs-built_in">count</span>)):<br>            <span class="hljs-keyword">if</span> num == i:<br>                age_change = <span class="hljs-built_in">input</span>(<span class="hljs-string">&#x27;修改年龄为：&#x27;</span>)<br>                tel_change = <span class="hljs-built_in">input</span>(<span class="hljs-string">&#x27;修改电话为：&#x27;</span>)<br>                python1806[temp_index[<span class="hljs-built_in">count</span>[i]]][<span class="hljs-string">&#x27;age&#x27;</span>] = age_change<br>                python1806[temp_index[<span class="hljs-built_in">count</span>[i]]][<span class="hljs-string">&#x27;tel&#x27;</span>] = tel_change<br>                <span class="hljs-keyword">print</span>(<span class="hljs-string">&#x27;修改成功！&#x27;</span>)<br>            elif num &lt; <span class="hljs-number">0</span> <span class="hljs-built_in">or</span> num &gt;= <span class="hljs-built_in">len</span>(<span class="hljs-built_in">count</span>):<br>                <span class="hljs-keyword">print</span>(<span class="hljs-string">&#x27;输入错误！&#x27;</span>)<br>                <span class="hljs-keyword">break</span><br>        <span class="hljs-keyword">continue</span><br>    elif n == <span class="hljs-string">&#x27;4&#x27;</span>:    #删除信息<br>        temp_index = []  # 姓名相同时，临时存储姓名<br>        name_del = <span class="hljs-built_in">input</span>(<span class="hljs-string">&#x27;请输入你想要删除信息的学生姓名：&#x27;</span>)<br>        <span class="hljs-keyword">for</span> <span class="hljs-built_in">index</span> in <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(python1806)):  # 依次查找学生信息<br>            <span class="hljs-keyword">if</span> python1806[<span class="hljs-built_in">index</span>][<span class="hljs-string">&#x27;name&#x27;</span>] == name_de<span class="hljs-variable">l:</span>  # 找到对应学生<br>                temp_index.<span class="hljs-keyword">append</span>(<span class="hljs-built_in">index</span>)  # 姓名相同学生所对应的下标都存在temp_index表里面去<br>            elif <span class="hljs-built_in">index</span> == <span class="hljs-built_in">len</span>(python1806) - <span class="hljs-number">1</span>:  # 没有查找到对应学生<br>                <span class="hljs-keyword">if</span> not temp_index:<br>                    <span class="hljs-keyword">print</span>(<span class="hljs-string">&#x27;你输入的学生不存在！！&#x27;</span>)<br>                    <span class="hljs-keyword">break</span><br>        <span class="hljs-built_in">count</span> = []  # 保存提示序号<br>        <span class="hljs-keyword">for</span> <span class="hljs-keyword">x</span> in <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(temp_index)):  # 给予用户相同姓名学生信息提示,进行选择删除<br>            <span class="hljs-keyword">print</span>(<span class="hljs-string">&#x27;%d、姓名：%s 年龄：%s 电话：%s&#x27;</span> % (<span class="hljs-keyword">x</span>, python1806[temp_index[<span class="hljs-keyword">x</span>]][<span class="hljs-string">&#x27;name&#x27;</span>], \<br>                                            python1806[temp_index[<span class="hljs-keyword">x</span>]][<span class="hljs-string">&#x27;age&#x27;</span>], \<br>                                            python1806[temp_index[<span class="hljs-keyword">x</span>]][<span class="hljs-string">&#x27;tel&#x27;</span>]))<br>            <span class="hljs-built_in">count</span>.<span class="hljs-keyword">append</span>(<span class="hljs-keyword">x</span>)<br>        <span class="hljs-keyword">if</span> coun<span class="hljs-variable">t:</span><br>            num = <span class="hljs-keyword">int</span>(<span class="hljs-built_in">input</span>(<span class="hljs-string">&#x27;请输入你要删除的相同姓名学生编号：&#x27;</span>))<br>        <span class="hljs-keyword">for</span> i in <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(<span class="hljs-built_in">count</span>)):<br>            <span class="hljs-keyword">if</span> num == i:<br>                del python1806[temp_index[<span class="hljs-built_in">count</span>[i]]]<br>                <span class="hljs-keyword">print</span>(<span class="hljs-string">&#x27;删除成功！&#x27;</span>)<br>            elif num &lt; <span class="hljs-number">0</span> <span class="hljs-built_in">or</span> num &gt;= <span class="hljs-built_in">len</span>(<span class="hljs-built_in">count</span>):<br>                <span class="hljs-keyword">print</span>(<span class="hljs-string">&#x27;输入错误！&#x27;</span>)<br>                <span class="hljs-keyword">break</span><br>        <span class="hljs-keyword">continue</span><br>    elif n == <span class="hljs-string">&#x27;5&#x27;</span>:   #退出<br>        <span class="hljs-keyword">exit</span>(<span class="hljs-string">&#x27;系统已退出...&#x27;</span>)<br>    <span class="hljs-keyword">else</span>:    #输入不合法，提示重新输入<br>        <span class="hljs-keyword">print</span>(<span class="hljs-string">&#x27;输入错误，请按照提示输入！&#x27;</span>)<br>        <span class="hljs-keyword">while</span> True:<br>            <span class="hljs-keyword">print</span>(<span class="hljs-string">&#x27;请选择：1（继续）、2（退出）：&#x27;</span>)<br>            n = <span class="hljs-built_in">input</span>(<span class="hljs-string">&#x27;请输入数字：&#x27;</span>)<br>            <span class="hljs-keyword">if</span> n == <span class="hljs-string">&#x27;1&#x27;</span>:    #输入合法性判断<br>                <span class="hljs-keyword">break</span><br>            elif n == <span class="hljs-string">&#x27;2&#x27;</span>:<br>                <span class="hljs-keyword">exit</span>(<span class="hljs-string">&#x27;退出系统...&#x27;</span>)<br>            <span class="hljs-keyword">else</span>:    #输入错误，提示重新输入<br>                <span class="hljs-keyword">print</span>(<span class="hljs-string">&#x27;输入错误！请重新输入！&#x27;</span>)<br>                <span class="hljs-keyword">continue</span><br>        <span class="hljs-keyword">continue</span><br></code></pre></td></tr></table></figure>
+
+<p>扩展要求：<br>1、增加文件文件操作，让所有增加、修改、删除操作后的结果保存在文件里面。<br>2、增加用户登录系统，不同用户只能管理自己所对应的学生系统</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-string">&quot;&quot;&quot;__author__=Deathfeeling&quot;&quot;&quot;</span><br><span class="hljs-comment"># 要求：</span><br><span class="hljs-comment"># 1、增加文件文件操作，让所有增加、修改、删除操作后的结果保存在结果里面。</span><br><span class="hljs-comment"># 2、增加用户登录系统，不同用户只能管理自己所对应的学生系统</span><br><br><br><br>manager_name = <span class="hljs-string">&#x27;&#x27;</span>  <span class="hljs-comment">#存储管理员信息</span><br>manager_passwd = <span class="hljs-string">&#x27;&#x27;</span><br>manager =[]<br><br><span class="hljs-comment">#登录界面</span><br><span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>    print(<span class="hljs-string">&#x27;==========================================================&#x27;</span>)<br>    print(<span class="hljs-string">&#x27;      Welcome To QianFeng Student Manager System &#x27;</span>)<br>    print(<span class="hljs-string">&#x27;                      1.Login&#x27;</span>)<br>    print(<span class="hljs-string">&#x27;                      2.Logon&#x27;</span>)<br>    print(<span class="hljs-string">&#x27;                      3.Out&#x27;</span>)<br>    print(<span class="hljs-string">&#x27;==========================================================&#x27;</span>)<br>    n = input(<span class="hljs-string">&#x27;请输入你想执行的功能：&#x27;</span>)<br>    <span class="hljs-keyword">if</span> n == <span class="hljs-string">&#x27;1&#x27;</span>:  <span class="hljs-comment"># 注册</span><br>        manager_name = input(<span class="hljs-string">&#x27;请输入用户名：&#x27;</span>)<br>        manager_passwd = input(<span class="hljs-string">&#x27;请输入密码：&#x27;</span>)<br>        manager_passwd_re = input(<span class="hljs-string">&#x27;请确认密码：&#x27;</span>)<br>        <span class="hljs-keyword">if</span> manager_passwd != manager_passwd_re:   <span class="hljs-comment">#判断两次输入密码是否相同</span><br>            print(<span class="hljs-string">&#x27;两次输入密码不正确，请重新注册！&#x27;</span>)<br>            <span class="hljs-keyword">continue</span><br>        <span class="hljs-keyword">elif</span> manager_passwd == manager_passwd_re:<br>            print(<span class="hljs-string">&#x27;注册成功！&#x27;</span>)<br>            dict_manager = &#123;<span class="hljs-string">&#x27;name&#x27;</span>:manager_name,<span class="hljs-string">&#x27;passwd&#x27;</span>:manager_passwd&#125;<br>            manager.append(dict_manager)<br>            <span class="hljs-comment">#将注册信息追加在manager.txt文件中</span><br>            f = open(<span class="hljs-string">&#x27;./manager.txt&#x27;</span>,<span class="hljs-string">&#x27;a&#x27;</span>)<br>            f.write(str(dict_manager[<span class="hljs-string">&#x27;name&#x27;</span>]) + <span class="hljs-string">&#x27; &#x27;</span>)<br>            f.write(str(dict_manager[<span class="hljs-string">&#x27;passwd&#x27;</span>]) + <span class="hljs-string">&#x27;\n&#x27;</span>)<br>            f.close()<br>            <span class="hljs-keyword">continue</span><br>    <span class="hljs-keyword">elif</span> n == <span class="hljs-string">&#x27;2&#x27;</span>:  <span class="hljs-comment"># 登录</span><br>        logon_name = input(<span class="hljs-string">&#x27;请输入用户名：&#x27;</span>)<br>        logon_passwd = input(<span class="hljs-string">&#x27;请输入密码：&#x27;</span>)<br>        <span class="hljs-comment"># 打开manager.txt文件，查看有没有相应管理员信息</span><br>        <span class="hljs-keyword">try</span>:<br>            f_logon = open(<span class="hljs-string">&#x27;./manager.txt&#x27;</span>,<span class="hljs-string">&#x27;r&#x27;</span>)<br>            f_logon_1 = f_logon.readline()<br>            <span class="hljs-keyword">while</span> f_logon_1:<br>                info = f_logon_1.split()   <span class="hljs-comment">#把字符串的空格前后分割成两个字符串存在一个列表中</span><br>                <span class="hljs-keyword">if</span> info[<span class="hljs-number">0</span>] == logon_name <span class="hljs-keyword">and</span> info[<span class="hljs-number">1</span>] == logon_passwd:<br>                    print(<span class="hljs-string">&#x27;登录成功！&#x27;</span>)<br>                    temp = <span class="hljs-number">1</span><br>                    <span class="hljs-keyword">break</span><br>                f_logon_1 = f_logon.readline()<br>            <span class="hljs-keyword">else</span>:<br>                temp = <span class="hljs-number">0</span><br>                print(<span class="hljs-string">&#x27;账号或者密码不正确!请重新输入!&#x27;</span>)<br>            f_logon.close()<br>            <span class="hljs-keyword">if</span> temp:   <span class="hljs-comment">#temp=1,跳出循环进入系统管理界面</span><br>                <span class="hljs-keyword">break</span><br>            <span class="hljs-keyword">elif</span> <span class="hljs-keyword">not</span> temp: <span class="hljs-comment">#temp = 0 ,表示密码不正确，重新输入</span><br>                <span class="hljs-keyword">continue</span><br>        <span class="hljs-keyword">except</span> IOError:   <span class="hljs-comment">#没有找到文件抛出异常，提示用户注册</span><br>            print(<span class="hljs-string">&#x27;没有查找到相关信息，请注册！&#x27;</span>)<br>            <span class="hljs-keyword">continue</span><br>    <span class="hljs-keyword">elif</span> n == <span class="hljs-string">&#x27;3&#x27;</span>:  <span class="hljs-comment"># 退出</span><br>        exit(<span class="hljs-string">&#x27;系统已退出...&#x27;</span>)<br>    <span class="hljs-keyword">else</span>:  <span class="hljs-comment"># 输入不合法，提示重新输入</span><br>        print(<span class="hljs-string">&#x27;输入错误，请按照提示输入！&#x27;</span>)<br>        <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>            print(<span class="hljs-string">&#x27;请选择：1（继续）、2（退出）：&#x27;</span>)<br>            n = input(<span class="hljs-string">&#x27;请输入数字：&#x27;</span>)<br>            <span class="hljs-keyword">if</span> n == <span class="hljs-string">&#x27;1&#x27;</span>:  <span class="hljs-comment"># 输入合法性判断</span><br>                <span class="hljs-keyword">break</span><br>            <span class="hljs-keyword">elif</span> n == <span class="hljs-string">&#x27;2&#x27;</span>:<br>                exit(<span class="hljs-string">&#x27;退出系统...&#x27;</span>)<br>            <span class="hljs-keyword">else</span>:  <span class="hljs-comment"># 输入错误，提示重新输入</span><br>                print(<span class="hljs-string">&#x27;输入错误！请重新输入！&#x27;</span>)<br>                <span class="hljs-keyword">continue</span><br>        <span class="hljs-keyword">continue</span><br><br><span class="hljs-comment">#学生管理系统</span><br>name = <span class="hljs-string">&#x27;&#x27;</span>   <span class="hljs-comment">#存储学生用户信息</span><br>age = <span class="hljs-string">&#x27;&#x27;</span><br>tel = <span class="hljs-string">&#x27;&#x27;</span><br><span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>    print(<span class="hljs-string">&#x27;=================================================&#x27;</span>)<br>    print(<span class="hljs-string">&#x27;                  1.添加学生信息&#x27;</span>)<br>    print(<span class="hljs-string">&#x27;                  2.查看学生信息&#x27;</span>)<br>    print(<span class="hljs-string">&#x27;                  3.修改学生信息&#x27;</span>)<br>    print(<span class="hljs-string">&#x27;                  4.删除学生信息&#x27;</span>)<br>    print(<span class="hljs-string">&#x27;                  5.退出&#x27;</span>)<br>    print(<span class="hljs-string">&#x27;=================================================&#x27;</span>)<br>    n = input(<span class="hljs-string">&#x27;请输入你想执行的功能：&#x27;</span>)<br>    <span class="hljs-keyword">if</span> n == <span class="hljs-string">&#x27;1&#x27;</span>:    <span class="hljs-comment">#添加信息</span><br>        name = input(<span class="hljs-string">&#x27;请添加学生姓名：&#x27;</span>)<br>        age = input(<span class="hljs-string">&#x27;请添加学生年龄：&#x27;</span>)<br>        tel = input(<span class="hljs-string">&#x27;请添加学生电话：&#x27;</span>)<br>        student_file = open(logon_name + <span class="hljs-string">&#x27;.txt&#x27;</span>, <span class="hljs-string">&#x27;a&#x27;</span>)  <span class="hljs-comment"># 打开并创建管理员对应的学生管理文件</span><br>        student_file.write(name+<span class="hljs-string">&#x27; &#x27;</span>+age+<span class="hljs-string">&#x27; &#x27;</span>+tel+<span class="hljs-string">&#x27;\n&#x27;</span>)<br>        student_file.close()<br>        print(<span class="hljs-string">&#x27;添加成功！&#x27;</span>)<br>        <span class="hljs-keyword">continue</span><br>    <span class="hljs-keyword">elif</span> n == <span class="hljs-string">&#x27;2&#x27;</span>:    <span class="hljs-comment">#查看信息</span><br>        <span class="hljs-keyword">try</span>:<br>            student_file = open(logon_name + <span class="hljs-string">&#x27;.txt&#x27;</span>,<span class="hljs-string">&#x27;r&#x27;</span>)<br>            re = student_file.readline()<br>            <span class="hljs-keyword">while</span> re:<br>                list1 = re.split()   <span class="hljs-comment">#以空格为界，切分成3个字符串元素组成的列表</span><br>                print(<span class="hljs-string">&#x27;姓名：%s 年龄：%s 电话：%s&#x27;</span>%(list1[<span class="hljs-number">0</span>],list1[<span class="hljs-number">1</span>],list1[<span class="hljs-number">2</span>]))<br>                re = student_file.readline()<br>            student_file.close()<br>        <span class="hljs-keyword">except</span> IOError:<br>            print(<span class="hljs-string">&#x27;没有任何学生信息，请添加！&#x27;</span>)<br>            <span class="hljs-keyword">continue</span><br><br>    <span class="hljs-keyword">elif</span> n == <span class="hljs-string">&#x27;3&#x27;</span>:    <span class="hljs-comment">#修改信息</span><br>        temp_samename = []    <span class="hljs-comment">#姓名相同时，临时存储姓名</span><br>        list2_name_index = []  <span class="hljs-comment">#存相同名字学生对应list2的下标</span><br>        name_change = input(<span class="hljs-string">&#x27;请输入你想要修改信息的学生姓名：&#x27;</span>)<br>        list2 = []   <span class="hljs-comment">#存储文件信息</span><br>        student_file = open(logon_name + <span class="hljs-string">&#x27;.txt&#x27;</span>,<span class="hljs-string">&#x27;r&#x27;</span>) <span class="hljs-comment">#先按行读入列表</span><br>        re = student_file.readline().rstrip(<span class="hljs-string">&#x27;\n&#x27;</span>) <span class="hljs-comment">#rstip(&#x27;\n&#x27;)去掉字符串末尾的换行符</span><br>        <span class="hljs-keyword">while</span> re :<br>            list2.append(re)<br>            re = student_file.readline().rstrip(<span class="hljs-string">&#x27;\n&#x27;</span>)<br><br>        nn1 = <span class="hljs-number">0</span><br>        <span class="hljs-keyword">for</span> count <span class="hljs-keyword">in</span> range(len(list2)):<br>            temp_list = list2[count].split()<br>            <span class="hljs-keyword">if</span> temp_list[<span class="hljs-number">0</span>] == name_change:<br>                temp_samename.append(list2[:].pop(count))<br>                list2_name_index.append(count)<br>            <span class="hljs-keyword">elif</span> count == len(list2) - <span class="hljs-number">1</span>:<br>                <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> temp_samename:<br>                    nn1 = <span class="hljs-number">1</span><br>                    print(<span class="hljs-string">&#x27;没有查找到对应学生&#x27;</span>)<br>        <span class="hljs-keyword">if</span> nn1 == <span class="hljs-number">1</span>:    <span class="hljs-comment">#没有查找的到对应学生回到管理页面</span><br>            <span class="hljs-keyword">continue</span><br>        count_1 = <span class="hljs-number">0</span><br>        <span class="hljs-comment">#相同姓名学生处理</span><br>        <span class="hljs-keyword">for</span> index <span class="hljs-keyword">in</span> temp_samename:<br>            temp_list_1 = index.split()<br>            print(<span class="hljs-string">&#x27;%d、姓名：%s 年龄：%s 电话：%s&#x27;</span> % (count_1,temp_list_1[<span class="hljs-number">0</span>], temp_list_1[<span class="hljs-number">1</span>], temp_list_1[<span class="hljs-number">2</span>]))<br>            count_1 += <span class="hljs-number">1</span><br>        n = input(<span class="hljs-string">&#x27;请输入你要修改的学生信息（数字）：&#x27;</span>)<br>        <span class="hljs-keyword">for</span> index <span class="hljs-keyword">in</span> range(len(temp_samename)):<br>            <span class="hljs-keyword">if</span> n == str(index):<br>                nn = temp_samename[index].split()<br>                nn[<span class="hljs-number">1</span>] = input(<span class="hljs-string">&#x27;请输入你想要修改的年龄：&#x27;</span>)<br>                nn[<span class="hljs-number">2</span>] = input(<span class="hljs-string">&#x27;请输入你想要修改的电话：&#x27;</span>)<br>                temp_samename[int(n)]= nn[<span class="hljs-number">0</span>] + <span class="hljs-string">&#x27; &#x27;</span> + nn[<span class="hljs-number">1</span>] + <span class="hljs-string">&#x27; &#x27;</span> + nn[<span class="hljs-number">2</span>]<br>                print(<span class="hljs-string">&#x27;修改成功！&#x27;</span>)<br>                <span class="hljs-keyword">break</span><br>            <span class="hljs-keyword">elif</span> index == len(temp_samename) <span class="hljs-number">-1</span> :<br>                <span class="hljs-keyword">if</span> n != str(index):<br>                    print(<span class="hljs-string">&#x27;输入错误！&#x27;</span>)<br>                    <span class="hljs-keyword">break</span><br>        <span class="hljs-comment">#把修改后的姓名表替换到list2表中</span><br>        nn2 = <span class="hljs-number">0</span><br>        <span class="hljs-keyword">for</span> index <span class="hljs-keyword">in</span> list2_name_index:<br>            list2[index] = temp_samename[nn2]<br>            nn2 += <span class="hljs-number">1</span><br>        <span class="hljs-comment">#再把修改后的列表值写入文件</span><br>        student_file.close()<br>        student_file_2 = open(logon_name + <span class="hljs-string">&#x27;.txt&#x27;</span>,<span class="hljs-string">&#x27;w&#x27;</span>)<br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> list2:<br>            student_file_2.write(i+<span class="hljs-string">&#x27;\n&#x27;</span>)<br>        student_file_2.close()<br>        <span class="hljs-keyword">continue</span><br><br>    <span class="hljs-keyword">elif</span> n == <span class="hljs-string">&#x27;4&#x27;</span>:    <span class="hljs-comment">#删除信息</span><br>        temp_samename = []    <span class="hljs-comment">#姓名相同时，临时存储姓名</span><br>        list2_name_index = []  <span class="hljs-comment">#存相同名字学生对应list2的下标</span><br>        name_change = input(<span class="hljs-string">&#x27;请输入你想要删除信息的学生姓名：&#x27;</span>)<br>        list2 = []   <span class="hljs-comment">#存储文件信息</span><br>        student_file = open(logon_name + <span class="hljs-string">&#x27;.txt&#x27;</span>,<span class="hljs-string">&#x27;r&#x27;</span>) <span class="hljs-comment">#先按行读入列表</span><br>        re = student_file.readline().rstrip(<span class="hljs-string">&#x27;\n&#x27;</span>) <span class="hljs-comment">#rstip(&#x27;\n&#x27;)去掉字符串末尾的换行符</span><br>        <span class="hljs-keyword">while</span> re :<br>            list2.append(re)<br>            re = student_file.readline().rstrip(<span class="hljs-string">&#x27;\n&#x27;</span>)<br><br>        nn1 = <span class="hljs-number">0</span><br>        <span class="hljs-keyword">for</span> count <span class="hljs-keyword">in</span> range(len(list2)):<br>            temp_list = list2[count].split()<br>            <span class="hljs-keyword">if</span> temp_list[<span class="hljs-number">0</span>] == name_change:<br>                temp_samename.append(list2[:].pop(count))<br>                list2_name_index.append(count)<br>            <span class="hljs-keyword">elif</span> count == len(list2) - <span class="hljs-number">1</span>:<br>                <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> temp_samename:<br>                    nn1 = <span class="hljs-number">1</span><br>                    print(<span class="hljs-string">&#x27;没有查找到对应学生&#x27;</span>)<br>        <span class="hljs-keyword">if</span> nn1 == <span class="hljs-number">1</span>:    <span class="hljs-comment">#没有查找的到对应学生回到管理页面</span><br>            <span class="hljs-keyword">continue</span><br>        count_1 = <span class="hljs-number">0</span><br>        <span class="hljs-comment">#相同姓名学生处理</span><br>        <span class="hljs-keyword">for</span> index <span class="hljs-keyword">in</span> temp_samename:<br>            temp_list_1 = index.split()<br>            print(<span class="hljs-string">&#x27;%d、姓名：%s 年龄：%s 电话：%s&#x27;</span> % (count_1,temp_list_1[<span class="hljs-number">0</span>], temp_list_1[<span class="hljs-number">1</span>], temp_list_1[<span class="hljs-number">2</span>]))<br>            count_1 += <span class="hljs-number">1</span><br>        n = input(<span class="hljs-string">&#x27;请输入你要删除的学生信息（数字）：&#x27;</span>)<br>        <span class="hljs-keyword">for</span> index <span class="hljs-keyword">in</span> range(len(temp_samename)):<br>            <span class="hljs-keyword">if</span> n == str(index):   <span class="hljs-comment">#删除指定编号的学生，查找原list2表对应元素进行删除</span><br>                list2.pop(list2_name_index[index])<br>                print(<span class="hljs-string">&#x27;删除成功！&#x27;</span>)<br>                <span class="hljs-keyword">break</span><br>            <span class="hljs-keyword">elif</span> index == len(temp_samename) - <span class="hljs-number">1</span>:<br>                <span class="hljs-keyword">if</span> n != str(index):<br>                    print(<span class="hljs-string">&#x27;输入错误！&#x27;</span>)<br>                    <span class="hljs-keyword">break</span><br>        <span class="hljs-comment">#再把修改后的列表值写入文件</span><br>        student_file.close()<br>        student_file_2 = open(logon_name + <span class="hljs-string">&#x27;.txt&#x27;</span>,<span class="hljs-string">&#x27;w&#x27;</span>)<br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> list2:<br>            student_file_2.write(i+<span class="hljs-string">&#x27;\n&#x27;</span>)<br>        student_file_2.close()<br>        <span class="hljs-keyword">continue</span><br>    <span class="hljs-keyword">elif</span> n == <span class="hljs-string">&#x27;5&#x27;</span>:   <span class="hljs-comment">#退出</span><br>        exit(<span class="hljs-string">&#x27;系统已退出...&#x27;</span>)<br>    <span class="hljs-keyword">else</span>:    <span class="hljs-comment">#输入不合法，提示重新输入</span><br>        print(<span class="hljs-string">&#x27;输入错误，请按照提示输入！&#x27;</span>)<br>        <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:<br>            print(<span class="hljs-string">&#x27;请选择：1（继续）、2（退出）：&#x27;</span>)<br>            n = input(<span class="hljs-string">&#x27;请输入数字：&#x27;</span>)<br>            <span class="hljs-keyword">if</span> n == <span class="hljs-string">&#x27;1&#x27;</span>:    <span class="hljs-comment">#输入合法性判断</span><br>                <span class="hljs-keyword">break</span><br>            <span class="hljs-keyword">elif</span> n == <span class="hljs-string">&#x27;2&#x27;</span>:<br>                exit(<span class="hljs-string">&#x27;退出系统...&#x27;</span>)<br>            <span class="hljs-keyword">else</span>:    <span class="hljs-comment">#输入错误，提示重新输入</span><br>                print(<span class="hljs-string">&#x27;输入错误！请重新输入！&#x27;</span>)<br>                <span class="hljs-keyword">continue</span><br>        <span class="hljs-keyword">continue</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="golang版本"><a href="#golang版本" class="headerlink" title="golang版本"></a>golang版本</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>	<span class="hljs-string">&quot;bufio&quot;</span><br>	<span class="hljs-string">&quot;errors&quot;</span><br>	<span class="hljs-string">&quot;fmt&quot;</span><br>	<span class="hljs-string">&quot;os&quot;</span><br>	<span class="hljs-string">&quot;strconv&quot;</span><br>	<span class="hljs-string">&quot;strings&quot;</span><br>)<br><br><br><span class="hljs-keyword">var</span> studentMap <span class="hljs-keyword">map</span>[<span class="hljs-keyword">string</span>]Student = <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-keyword">string</span>]Student)<br><br><br><span class="hljs-keyword">type</span> Student <span class="hljs-keyword">struct</span> &#123;<br>	name <span class="hljs-keyword">string</span><br>	age <span class="hljs-keyword">int</span><br>	phone <span class="hljs-keyword">string</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">getStudent</span><span class="hljs-params">(name <span class="hljs-keyword">string</span>)</span> <span class="hljs-params">(*Student, error)</span></span> &#123;<br>	s, ok := studentMap[name]<br>	<span class="hljs-keyword">if</span> ok &#123;<br>		<span class="hljs-keyword">return</span> &amp;s, <span class="hljs-literal">nil</span><br>	&#125;<br>	<span class="hljs-keyword">return</span> &amp;s, errors.New(<span class="hljs-string">&quot;student not found! &quot;</span>)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">addStudent</span><span class="hljs-params">()</span> <span class="hljs-title">Student</span></span> &#123;<br>	reader := bufio.NewReader(os.Stdin)<br>	fmt.Print(<span class="hljs-string">&quot;请输入学生姓名: &quot;</span>)<br>	name, _ := reader.ReadString(<span class="hljs-string">&#x27;\n&#x27;</span>)<br>	fmt.Print(<span class="hljs-string">&quot;请输入学生年龄: &quot;</span>)<br>	ageString, _ := reader.ReadString(<span class="hljs-string">&#x27;\n&#x27;</span>)<br>	age, _ := strconv.Atoi(replaceString(ageString))<br>	fmt.Print(<span class="hljs-string">&quot;请输入学生电话: &quot;</span>)<br>	phone, _ := reader.ReadString(<span class="hljs-string">&#x27;\n&#x27;</span>)<br>	<span class="hljs-keyword">return</span> Student&#123; replaceString(name), age, replaceString(phone)&#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">updateStudent</span><span class="hljs-params">(sName <span class="hljs-keyword">string</span>)</span> <span class="hljs-params">(newStudent Student)</span></span> &#123;<br>	reader := bufio.NewReader(os.Stdin)<br>	fmt.Print(<span class="hljs-string">&quot;请更新后的学生信息!\n学生姓名: &quot;</span>)<br>	name, _ := reader.ReadString(<span class="hljs-string">&#x27;\n&#x27;</span>)<br>	name = replaceString(name)<br>	fmt.Print(<span class="hljs-string">&quot;请输入学生年龄: &quot;</span>)<br>	ageString, _ := reader.ReadString(<span class="hljs-string">&#x27;\n&#x27;</span>)<br>	age, _ := strconv.Atoi(replaceString(ageString))<br>	fmt.Print(<span class="hljs-string">&quot;请输入学生电话: &quot;</span>)<br>	phone, _ := reader.ReadString(<span class="hljs-string">&#x27;\n&#x27;</span>)<br>	phone = replaceString(phone)<br>	<span class="hljs-built_in">delete</span>(studentMap, sName)<br>	newStudent = Student&#123; name, age, phone&#125;<br>	studentMap[name] = newStudent<br>	<span class="hljs-keyword">return</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">deleteStudent</span><span class="hljs-params">(s *Student)</span></span> &#123;<br>	<span class="hljs-built_in">delete</span>(studentMap, s.name)<br>&#125;<br><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">replaceString</span><span class="hljs-params">(s <span class="hljs-keyword">string</span>)</span> <span class="hljs-title">string</span></span> &#123;<br>	<span class="hljs-keyword">return</span> strings.Replace(s, <span class="hljs-string">&quot;\n&quot;</span>, <span class="hljs-string">&quot;&quot;</span>, <span class="hljs-number">-1</span>)<br>&#125;<br><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">mainMenu</span><span class="hljs-params">()</span> <span class="hljs-params">(operate <span class="hljs-keyword">int</span>)</span></span> &#123;<br>	fmt.Println(<span class="hljs-string">`</span><br><span class="hljs-string">	=================================================</span><br><span class="hljs-string">                      0.查看所有学生信息</span><br><span class="hljs-string">                      1.添加学生信息</span><br><span class="hljs-string">                      2.查看学生信息</span><br><span class="hljs-string">                      3.修改学生信息</span><br><span class="hljs-string">                      4.删除学生信息</span><br><span class="hljs-string">                      5.退出</span><br><span class="hljs-string">    =================================================`</span>)<br>	fmt.Print(<span class="hljs-string">&quot;输入您想执行的功能: &quot;</span>)<br>	reader := bufio.NewReader(os.Stdin)<br>	readString, _ := reader.ReadString(<span class="hljs-string">&#x27;\n&#x27;</span>)<br>	operate, _ = strconv.Atoi(replaceString(readString))<br>	<span class="hljs-keyword">return</span><br>&#125;<br><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	fmt.Println(<span class="hljs-string">&quot;欢迎来到XXX学生管理系统&quot;</span>)<br>	reader := bufio.NewReader(os.Stdin)<br>	end:<br>		<span class="hljs-keyword">for</span> &#123;<br>			operate := mainMenu()<br>			<span class="hljs-keyword">switch</span> operate &#123;<br>				<span class="hljs-keyword">case</span> <span class="hljs-number">0</span>:<br>					<span class="hljs-keyword">for</span> _, s := <span class="hljs-keyword">range</span> studentMap &#123;<br>						fmt.Println(s)<br>					&#125;<br>				<span class="hljs-keyword">case</span> <span class="hljs-number">1</span>:<br>					s := addStudent()<br>					studentMap[s.name] = s<br>				<span class="hljs-keyword">case</span> <span class="hljs-number">2</span>:<br>					fmt.Print(<span class="hljs-string">&quot;请输入查找学生姓名: &quot;</span>)<br>					name, _ := reader.ReadString(<span class="hljs-string">&#x27;\n&#x27;</span>)<br>					student, err := getStudent(replaceString(name))<br>					<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>						fmt.Println(err.Error())<br>					&#125; <span class="hljs-keyword">else</span> &#123;<br>						fmt.Println(<span class="hljs-string">&quot;找到学生: &quot;</span>, *student)<br>					&#125;<br>				<span class="hljs-keyword">case</span> <span class="hljs-number">3</span>:<br>					fmt.Print(<span class="hljs-string">&quot;请输入更新学生姓名: &quot;</span>)<br>					name, _ := reader.ReadString(<span class="hljs-string">&#x27;\n&#x27;</span>)<br>					student, err := getStudent(replaceString(name))<br>					<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>						fmt.Println(err.Error())<br>						<span class="hljs-keyword">continue</span><br>					&#125;<br>					newStudent := updateStudent(student.name)<br>					fmt.Println(<span class="hljs-string">&quot;更新后的学生信息: &quot;</span>, newStudent)<br>				<span class="hljs-keyword">case</span> <span class="hljs-number">4</span>:<br>					fmt.Print(<span class="hljs-string">&quot;请输入删除学生姓名: &quot;</span>)<br>					name, _ := reader.ReadString(<span class="hljs-string">&#x27;\n&#x27;</span>)<br>					student, err := getStudent(replaceString(name))<br>					<span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>						fmt.Println(err.Error())<br>						<span class="hljs-keyword">continue</span><br>					&#125;<br>					deleteStudent(student)<br>					fmt.Println(<span class="hljs-string">&quot;删除成功！&quot;</span>)<br>				<span class="hljs-keyword">case</span> <span class="hljs-number">5</span>:<br>					fmt.Println(<span class="hljs-string">&quot;程序退出...&quot;</span>)<br>					<span class="hljs-keyword">break</span> end<br>				<span class="hljs-keyword">default</span>:<br>					fmt.Println(<span class="hljs-string">&quot;输入错误，请重新输入...&quot;</span>)<br>			&#125;<br>		&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/categories/Python/">Python</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/tags/%E5%AD%A6%E7%94%9F%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/">学生管理系统</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/Myblog/2018/08/29/%E5%87%BD%E6%95%B0%E5%9F%BA%E7%A1%8001/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">函数基础01</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/Myblog/2018/08/28/%E5%AE%B9%E5%99%A802-%E5%AD%97%E5%85%B8%E5%92%8C%E9%9B%86%E5%90%88/">
+                        <span class="hidden-mobile">容器02-字典和集合</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/Myblog/js/events.js" ></script>
+<script  src="/Myblog/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/Myblog/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/Myblog/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/Myblog/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/Myblog/js/boot.js" ></script>
+
+
+</body>
+</html>

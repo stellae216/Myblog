@@ -1,0 +1,524 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/Myblog/img/favicon.png">
+  <link rel="icon" href="/Myblog/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="Simple, so charming!">
+  <meta name="author" content="stellae">
+  <meta name="keywords" content="">
+  
+  <title>pygame - stellae&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/Myblog/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/Myblog/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"stellae.gitee.io","root":"/Myblog/","version":"1.8.10","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/Myblog/js/utils.js" ></script>
+  <script  src="/Myblog/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/Myblog/">&nbsp;<strong>stellae's blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/Myblog/img/WtwSsqwYlA0.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="pygame">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      stellae
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2018-09-04 19:06" pubdate>
+        2018年9月4日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.5k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      50
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">pygame</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：3 年前
+                
+              </p>
+            
+            <div class="markdown-body">
+              <p><strong>安装：pip install Pygame</strong></p>
+<h4 id="1、初始化游戏模块"><a href="#1、初始化游戏模块" class="headerlink" title="1、初始化游戏模块"></a>1、初始化游戏模块</h4><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs csharp">pygame.<span class="hljs-keyword">init</span>()<br></code></pre></td></tr></table></figure>
+<h4 id="2、创建游戏窗口"><a href="#2、创建游戏窗口" class="headerlink" title="2、创建游戏窗口"></a>2、创建游戏窗口</h4><p>set_mode((100, 200)) : 单位像素</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">window</span> = pygame.display.set_mode((<span class="hljs-number">400</span>, <span class="hljs-number">600</span>)）<br><span class="hljs-comment">#窗口大小：元组，元组中的两个值表示宽度和高度</span><br></code></pre></td></tr></table></figure>
+<p>程序结束窗口会自动关闭，所以需要循环或者其他方式让窗口手动关闭。</p>
+<h4 id="3、给窗口填充颜色"><a href="#3、给窗口填充颜色" class="headerlink" title="3、给窗口填充颜色"></a>3、给窗口填充颜色</h4><p>颜色：计算机三原色（红、绿、蓝），每个颜色对应的值范围是0-255.可以改变三原色的值可以调配出不同的颜色。<br>颜色值：是一个元组，有三个元素，分别代表红绿蓝（rgb）。<br>(255, 0 ,0) –&gt; 红色<br>(0, 0, 0) –&gt; 黑色<br>(255, 255 , 255) –&gt; 白色</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs angelscript">window.fill((<span class="hljs-number">255</span>, <span class="hljs-number">255</span>, <span class="hljs-number">255</span>))<br></code></pre></td></tr></table></figure>
+<h4 id="4、让游戏一直运行，直到点关闭按钮才结束"><a href="#4、让游戏一直运行，直到点关闭按钮才结束" class="headerlink" title="4、让游戏一直运行，直到点关闭按钮才结束"></a>4、让游戏一直运行，直到点关闭按钮才结束</h4><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-keyword">while</span> True:<br>    <span class="hljs-comment">#获取游戏过程中产生的所有事件</span><br>    <span class="hljs-keyword">for</span> event <span class="hljs-keyword">in</span> pygame.event.get():<br>        <span class="hljs-comment"># type判断事件的类型（QUIT：点击×）</span><br>        <span class="hljs-keyword">if</span> event.type == pygame.QUIT:<br>            <span class="hljs-keyword">exit</span>() <span class="hljs-comment">#退出程序</span><br></code></pre></td></tr></table></figure>
+<p><strong>a、事件的type — 决定发生的是什么事件</strong></p>
+<p>QUIT ： 关闭按钮被点击事件</p>
+<p>鼠标事件:<br>MOUSEBUTTONDOWN: 鼠标按下事件<br>MOUSEBUTTONUP: 鼠标按下松开时对应的事件<br>MOUSEMOTION：鼠标移动事件</p>
+<p>键盘事件:<br>KEYDOWN： 键盘按下<br>KEYUP:  键盘弹起</p>
+<p><strong>b.事件的pos(event.pos) — 鼠标事件发生的位置(坐标)</strong></p>
+<p><strong>c.事件的key(event.key) — 键盘事件被按的键对应的编码值</strong></p>
+<p>应用：</p>
+<figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs mel"><span class="hljs-keyword">for</span> <span class="hljs-keyword">event</span> <span class="hljs-keyword">in</span> pygame.<span class="hljs-keyword">event</span>.get():<br>    # 不同的事件发生后，对应type值不一样<br>    <span class="hljs-keyword">if</span> <span class="hljs-keyword">event</span>.type == pygame.QUIT:<br>        <span class="hljs-keyword">print</span>(<span class="hljs-string">&#x27;点击关闭按钮&#x27;</span>)<br>        exit()<br>    elif <span class="hljs-keyword">event</span>.type == pygame.MOUSEBUTTONDOWN:<br>        # 鼠标按下要做的事情就写在这儿<br>        <span class="hljs-keyword">print</span>(<span class="hljs-keyword">event</span>.pos)<br>        <span class="hljs-keyword">print</span>(<span class="hljs-string">&#x27;鼠标按下&#x27;</span>)<br>        # 鼠标按下一次画一个球<br>        # pygame.draw.<span class="hljs-keyword">circle</span>(<span class="hljs-keyword">window</span>, (randint(<span class="hljs-number">0</span>, <span class="hljs-number">255</span>), randint(<span class="hljs-number">0</span>, <span class="hljs-number">255</span>),\<br>        #                             randint(<span class="hljs-number">0</span>,<span class="hljs-number">255</span>)), <span class="hljs-keyword">event</span>.pos, randint(<span class="hljs-number">20</span>, <span class="hljs-number">50</span>))<br>        # pygame.display.flip()<br><br>    elif <span class="hljs-keyword">event</span>.type == pygame.MOUSEBUTTONUP:<br>        <span class="hljs-keyword">print</span>(<span class="hljs-string">&#x27;鼠标弹起&#x27;</span>, <span class="hljs-keyword">event</span>.pos)<br>    elif <span class="hljs-keyword">event</span>.type == pygame.MOUSEMOTION:<br>        # 鼠标按下一次画一个球<br>        pygame.draw.<span class="hljs-keyword">circle</span>(<span class="hljs-keyword">window</span>, (randint(<span class="hljs-number">0</span>, <span class="hljs-number">255</span>), randint(<span class="hljs-number">0</span>, <span class="hljs-number">255</span>), \<br>                                    randint(<span class="hljs-number">0</span>, <span class="hljs-number">255</span>)), <span class="hljs-keyword">event</span>.pos, <span class="hljs-number">20</span>)<br>        pygame.display.flip()<br>        # <span class="hljs-keyword">print</span>(<span class="hljs-string">&#x27;鼠标正在移动&#x27;</span>, <span class="hljs-keyword">event</span>.pos)<br>        pass<br>    elif <span class="hljs-keyword">event</span>.type == pygame.KEYDOWN:<br>        <span class="hljs-keyword">print</span>(<span class="hljs-string">&#x27;键盘按下&#x27;</span>, <span class="hljs-keyword">event</span>.key, chr(<span class="hljs-keyword">event</span>.key))<br>    elif <span class="hljs-keyword">event</span>.type == pygame.KEYUP:<br>        <span class="hljs-keyword">print</span>(<span class="hljs-string">&#x27;键盘弹起&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<h4 id="5、图片相关"><a href="#5、图片相关" class="headerlink" title="5、图片相关"></a>5、图片相关</h4><p>获取本地的一张图片，返回图片对象<br>image.load(路径)<br><strong>（1）获取图片，创建图片对象</strong></p>
+<figure class="highlight sqf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sqf"><span class="hljs-built_in">image</span> = pygame.<span class="hljs-built_in">image</span>.<span class="hljs-built_in">load</span>(<span class="hljs-string">&#x27;./files/luffy4.jpg&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<p><strong>获取图片的宽和高</strong></p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-built_in">image</span>.get_size() ： 获取屏幕宽和高，返回一个元组（宽、高）<br></code></pre></td></tr></table></figure>
+<p><strong>形变：</strong><br>a、缩放<br><code>transform.scale(缩放对象，目标大小)</code><br>将制定的对象缩放到指定的大小，会返回缩放后的对象。</p>
+<figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs maxima">new_image = pygame.<span class="hljs-built_in">transform</span>.<span class="hljs-built_in">scale</span>(<span class="hljs-built_in">image</span>,(<span class="hljs-number">100</span>,<span class="hljs-number">100</span>))<br></code></pre></td></tr></table></figure>
+<p>b、旋转缩放（指定缩放比例）<br><code>transform.rotozoom(Surface, angle, scale)</code><br>Surface:旋转缩放对象<br>angle：旋转角度( 0<del>360)<br>scale：缩放比例（初始为1）<br>c、旋转<br><code>transform.rotate(Surface, angle)</code><br>Surface：旋转对象<br>angle：旋转角度（0</del>360）<br><strong>（2）渲染图片（将图片画在纸上）</strong></p>
+<figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs coffeescript"><span class="hljs-built_in">window</span>.blit(渲染对象， 位置)<br></code></pre></td></tr></table></figure>
+<p>位置：坐标（x，y）</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs lisp">window = blit(<span class="hljs-name">image</span>, (<span class="hljs-number">0</span>,<span class="hljs-number">0</span>))<br></code></pre></td></tr></table></figure>
+<p>坐标计算如下图：<br><img src="https://upload-images.jianshu.io/upload_images/13692175-634fb6606cff822e.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/Myblog/img/loading.gif" lazyload></p>
+<h6 id="（3）展示内容-将纸展示"><a href="#（3）展示内容-将纸展示" class="headerlink" title="（3）展示内容(将纸展示)"></a>（3）展示内容(将纸展示)</h6><p>一般第一次用这个方法</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-tag">pygame</span><span class="hljs-selector-class">.display</span><span class="hljs-selector-class">.flip</span>()<br></code></pre></td></tr></table></figure>
+<p>一定范围刷新</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-tag">pygame</span><span class="hljs-selector-class">.display</span><span class="hljs-selector-class">.update</span>()<br></code></pre></td></tr></table></figure>
+<h4 id="6、文字相关"><a href="#6、文字相关" class="headerlink" title="6、文字相关"></a>6、文字相关</h4><h6 id="（1）、字体对象"><a href="#（1）、字体对象" class="headerlink" title="（1）、字体对象"></a>（1）、字体对象</h6><p>a、系统字体（一般不支持中文）<br><code>font = pygame.font.SysFont(&#39;Times&#39;, 30)</code><br>SysFont(name, size, bold=False, italic=False)<br>bold : 是否加粗<br>italic：是否倾斜<br>b、自定义字体对象（支持 ttf 文件）<br>Font(字体文件路径，字体大小)<br>font = pygame.font.Font(‘./file/aa.ttf’, 30)</p>
+<h6 id="（2）、根据字体去创建文字对象"><a href="#（2）、根据字体去创建文字对象" class="headerlink" title="（2）、根据字体去创建文字对象"></a>（2）、根据字体去创建文字对象</h6><p>render(text, antialias, color，background=None)<br>text : 需要显示的文字（字符串）<br>antialias：是否平滑（布尔）<br>color：（颜色）<br>background：背景颜色</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">text</span> = font.render(<span class="hljs-string">&#x27;hello&#x27;</span>, <span class="hljs-literal">True</span>, (<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">255</span>))<br></code></pre></td></tr></table></figure>
+<p>（3）、渲染文字<br>window.blit(text, (50,50))<br>（4）、展示内容<br>pygame.display.flip()</p>
+<h4 id="7、图形相关"><a href="#7、图形相关" class="headerlink" title="7、图形相关"></a>7、图形相关</h4><h5 id="（1）、直线"><a href="#（1）、直线" class="headerlink" title="（1）、直线"></a>（1）、直线</h5><h6 id="a、线段"><a href="#a、线段" class="headerlink" title="a、线段"></a>a、线段</h6><p><code>pygame.draw.line(Surface, color, start_pos, end_pos, width=1)</code><br>Surface：画在哪儿<br>color：线的颜色<br>start_pos：起点<br>end_pos：终点<br>width：宽度</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-comment">#水平线</span><br><span class="hljs-attribute">pygame</span>.draw.line(window, (<span class="hljs-number">255</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>), (<span class="hljs-number">50</span>, <span class="hljs-number">100</span>), (<span class="hljs-number">200</span>, <span class="hljs-number">100</span>))<br></code></pre></td></tr></table></figure>
+<h6 id="b、多条线段（折线）"><a href="#b、多条线段（折线）" class="headerlink" title="b、多条线段（折线）"></a>b、多条线段（折线）</h6><p>lines(Surface, color, closed, pointlist, blend=1)<br>colsed：是否闭合</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs angelscript">pygame.draw.lines(window, (<span class="hljs-number">0</span>, <span class="hljs-number">255</span>, <span class="hljs-number">0</span>), False, [(<span class="hljs-number">100</span>,<span class="hljs-number">200</span>), (<span class="hljs-number">150</span>,<span class="hljs-number">120</span>), (<span class="hljs-number">140</span>,<span class="hljs-number">150</span>)])<br></code></pre></td></tr></table></figure>
+<h6 id="c、圆"><a href="#c、圆" class="headerlink" title="c、圆"></a>c、圆</h6><p><code>pygame.draw.circle(Surface,color,pos,radius,width=0)</code><br>Surface:圆心半径<br>color:颜色<br>pos:位置<br>radius:半径<br>width:线段，0-&gt;填充</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs angelscript">pygame.draw.circle(window,(<span class="hljs-number">255</span>,<span class="hljs-number">255</span>,<span class="hljs-number">0</span>),(<span class="hljs-number">250</span>,<span class="hljs-number">275</span>),<span class="hljs-number">100</span>,<span class="hljs-number">0</span>)<br></code></pre></td></tr></table></figure>
+<h6 id="d、矩形"><a href="#d、矩形" class="headerlink" title="d、矩形"></a>d、矩形</h6><p><code>pygame.draw.rect(Surface,color,Rect,width=0)</code><br>Surface:画在哪儿<br>color:颜色<br>Rect:范围(元组，元组中有四个元素，分别是x,y,width,height)<br>width:线宽，0-&gt;填充</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs angelscript">pygame.draw.rect(window,(<span class="hljs-number">255</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>),(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">50</span>,<span class="hljs-number">100</span>))<br><br></code></pre></td></tr></table></figure>
+<h6 id="e、多边形"><a href="#e、多边形" class="headerlink" title="e、多边形"></a>e、多边形</h6><figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs maxima">pygame.<span class="hljs-built_in">draw</span>.<span class="hljs-built_in">polygon</span>(Surface,<span class="hljs-built_in">color</span>,pointlist,<span class="hljs-built_in">width</span>=<span class="hljs-number">0</span>)<br></code></pre></td></tr></table></figure>
+<h6 id="f、椭圆"><a href="#f、椭圆" class="headerlink" title="f、椭圆"></a>f、椭圆</h6><figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs maxima">pygame.<span class="hljs-built_in">draw</span>.<span class="hljs-built_in">ellipse</span>(Surface.<span class="hljs-built_in">color</span>,Rect,<span class="hljs-built_in">width</span>=<span class="hljs-number">0</span>)<br>#内切矩形原理<br></code></pre></td></tr></table></figure>
+<h6 id="g、弧线"><a href="#g、弧线" class="headerlink" title="g、弧线"></a>g、弧线</h6><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs angelscript">pygame.draw.arc(Surface,color,Rect,start_angle,end_angle,width=<span class="hljs-number">1</span>)<br>#start_angle: <span class="hljs-number">0</span><span class="hljs-number">-2</span>pi<br>#stop_angle:<br>#pi --- <span class="hljs-number">180</span>°   <span class="hljs-number">1</span>° --- pi/<span class="hljs-number">180</span><br>#<span class="hljs-number">59</span>° = pi/<span class="hljs-number">180</span> * <span class="hljs-number">59</span><br></code></pre></td></tr></table></figure>
+<h5 id="（2）、展示"><a href="#（2）、展示" class="headerlink" title="（2）、展示"></a>（2）、展示</h5><p><code>pygame.display.flip()</code></p>
+<h4 id="8、一些游戏效果原理"><a href="#8、一些游戏效果原理" class="headerlink" title="8、一些游戏效果原理"></a>8、一些游戏效果原理</h4><h5 id="（1）、动画原理"><a href="#（1）、动画原理" class="headerlink" title="（1）、动画原理"></a>（1）、动画原理</h5><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">import</span> pygame<br><br><span class="hljs-attribute">if</span> __name__ == &#x27;__main__&#x27;:<br>    <span class="hljs-comment"># 初始化</span><br>    <span class="hljs-attribute">pygame</span>.init()<br>    <span class="hljs-attribute">window</span> = pygame.display.set_mode((<span class="hljs-number">400</span>, <span class="hljs-number">600</span>))<br>    <span class="hljs-attribute">window</span>.fill((<span class="hljs-number">255</span>, <span class="hljs-number">255</span>, <span class="hljs-number">255</span>))<br>    <span class="hljs-attribute">pygame</span>.display.flip()<br><br>    <span class="hljs-comment"># 球的圆心坐标</span><br>    <span class="hljs-attribute">x</span> = <span class="hljs-number">100</span><br>    <span class="hljs-attribute">y</span> = <span class="hljs-number">100</span><br>    <span class="hljs-attribute">r</span> = <span class="hljs-number">50</span><br>    <span class="hljs-attribute">add</span> = <span class="hljs-number">4</span><br>    <span class="hljs-attribute">y_speed</span> = <span class="hljs-number">2</span><br>    <span class="hljs-comment"># 游戏循环</span><br>    <span class="hljs-attribute">while</span> True:<br><br>        <span class="hljs-comment"># 延迟</span><br>        <span class="hljs-comment"># pygame.time.delay(10)</span><br><br>        <span class="hljs-comment"># 将之前纸上的内容给覆盖</span><br>        <span class="hljs-attribute">window</span>.fill((<span class="hljs-number">255</span>, <span class="hljs-number">255</span>, <span class="hljs-number">255</span>))<br>        <span class="hljs-comment"># 不断的画圆</span><br>        <span class="hljs-attribute">pygame</span>.draw.circle(window, (<span class="hljs-number">255</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>), (x, y), r)<br>        <span class="hljs-attribute">pygame</span>.display.update()<br><br>        <span class="hljs-comment"># 改变y值让圆在垂直方向移动</span><br>        <span class="hljs-attribute">y</span> += y_speed<br>        <span class="hljs-comment"># r += add</span><br>        <span class="hljs-comment"># if r &gt;= 120 or r &lt;= 20:</span><br>        <span class="hljs-comment">#     add *= -1</span><br>        <span class="hljs-comment"># 边界检测</span><br>        <span class="hljs-attribute">if</span> y &gt; <span class="hljs-number">600</span> - r:<br>            <span class="hljs-attribute">y</span> = <span class="hljs-number">600</span> - r<br>            <span class="hljs-attribute">y_speed</span> = -<span class="hljs-number">2</span><br>        <span class="hljs-attribute">elif</span> y &lt; <span class="hljs-number">50</span>:<br>            <span class="hljs-attribute">y</span> = <span class="hljs-number">50</span><br>            <span class="hljs-attribute">y_speed</span> = <span class="hljs-number">2</span><br><br>        <span class="hljs-comment"># 事件检测</span><br>        <span class="hljs-attribute">for</span> event in pygame.event.get():<br>            <span class="hljs-attribute">if</span> event.type == pygame.QUIT:<br>                <span class="hljs-attribute">exit</span>()<br></code></pre></td></tr></table></figure>
+<p>设置延迟：毫秒<br><code>pygame.time.delay（毫秒）</code></p>
+<h5 id="（2）、按住不放原理"><a href="#（2）、按住不放原理" class="headerlink" title="（2）、按住不放原理"></a>（2）、按住不放原理</h5><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-string">import</span> <span class="hljs-string">pygame</span><br><br><span class="hljs-string">if</span> <span class="hljs-string">__name__</span> <span class="hljs-string">==</span> <span class="hljs-attr">&#x27;__main__&#x27;:</span><br>    <span class="hljs-comment"># 游戏初始化</span><br>    <span class="hljs-string">pygame.init()</span><br>    <span class="hljs-string">window</span> <span class="hljs-string">=</span> <span class="hljs-string">pygame.display.set_mode((400,</span> <span class="hljs-number">600</span><span class="hljs-string">))</span><br>    <span class="hljs-string">window.fill((255,</span> <span class="hljs-number">255</span><span class="hljs-string">,</span> <span class="hljs-number">255</span><span class="hljs-string">))</span><br>    <span class="hljs-comment"># pygame.display.flip()</span><br><br>    <span class="hljs-comment"># 1.显示一张图片</span><br>    <span class="hljs-string">image</span> <span class="hljs-string">=</span> <span class="hljs-string">pygame.image.load(&#x27;./files/luffy4.jpg&#x27;)</span><br>    <span class="hljs-comment"># 缩放</span><br>    <span class="hljs-string">image</span> <span class="hljs-string">=</span> <span class="hljs-string">pygame.transform.rotozoom(image,</span> <span class="hljs-number">0</span><span class="hljs-string">,</span> <span class="hljs-number">0.5</span><span class="hljs-string">)</span><br>    <span class="hljs-string">window.blit(image,</span> <span class="hljs-string">(100,</span> <span class="hljs-number">100</span><span class="hljs-string">))</span><br>    <span class="hljs-comment"># 获取图片的宽度和高度</span><br>    <span class="hljs-string">image_w,</span> <span class="hljs-string">image_h</span> <span class="hljs-string">=</span> <span class="hljs-string">image.get_size()</span><br><br>    <span class="hljs-string">pygame.display.flip()</span><br><br>    <span class="hljs-comment"># 用来存储图片是否移动</span><br>    <span class="hljs-string">flag</span> <span class="hljs-string">=</span> <span class="hljs-literal">False</span><br><br>    <span class="hljs-comment"># 保存图片的坐标</span><br>    <span class="hljs-string">image_x,</span> <span class="hljs-string">image_y</span> <span class="hljs-string">=</span> <span class="hljs-number">100</span><span class="hljs-string">,</span> <span class="hljs-number">100</span><br><br>    <span class="hljs-comment"># 游戏循环</span><br>    <span class="hljs-attr">while True:</span><br>        <span class="hljs-string">for</span> <span class="hljs-string">event</span> <span class="hljs-string">in</span> <span class="hljs-string">pygame.event.get():</span><br>            <span class="hljs-string">if</span> <span class="hljs-string">event.type</span> <span class="hljs-string">==</span> <span class="hljs-attr">pygame.QUIT:</span><br>                <span class="hljs-string">exit()</span><br><br>            <span class="hljs-comment"># 鼠标按下</span><br>            <span class="hljs-string">if</span> <span class="hljs-string">event.type</span> <span class="hljs-string">==</span> <span class="hljs-attr">pygame.MOUSEBUTTONDOWN:</span><br>                <span class="hljs-comment"># 判断按下的位置是否在图片上</span><br>                <span class="hljs-string">m_x,</span> <span class="hljs-string">m_y</span> <span class="hljs-string">=</span> <span class="hljs-string">event.pos</span><br>                <span class="hljs-string">if</span> <span class="hljs-string">image_x&lt;=m_x&lt;=image_x+image_w</span> <span class="hljs-string">and</span> <span class="hljs-string">image_y&lt;=m_y&lt;=image_y+image_h:</span><br>                    <span class="hljs-string">flag</span> <span class="hljs-string">=</span> <span class="hljs-literal">True</span><br>            <span class="hljs-string">elif</span> <span class="hljs-string">event.type</span> <span class="hljs-string">==</span> <span class="hljs-attr">pygame.MOUSEBUTTONUP:</span><br>                <span class="hljs-string">flag</span> <span class="hljs-string">=</span> <span class="hljs-literal">False</span><br>            <span class="hljs-comment"># 鼠标移动事件</span><br>            <span class="hljs-comment"># (鼠标在移动并且flag是True)</span><br>            <span class="hljs-string">if</span> <span class="hljs-string">event.type</span> <span class="hljs-string">==</span> <span class="hljs-attr">pygame.MOUSEMOTION and flag:</span><br>                <span class="hljs-comment"># 填充背景色,覆盖原来的内容</span><br>                <span class="hljs-string">window.fill((255,</span> <span class="hljs-number">255</span><span class="hljs-string">,</span> <span class="hljs-number">255</span><span class="hljs-string">))</span><br>                <span class="hljs-comment"># 在鼠标移动的位置渲染图片</span><br>                <span class="hljs-comment"># window.blit(image, event.pos)</span><br>                <span class="hljs-string">center_x,</span> <span class="hljs-string">center_y</span> <span class="hljs-string">=</span> <span class="hljs-string">event.pos</span><br>                <span class="hljs-string">image_x,</span> <span class="hljs-string">image_y</span> <span class="hljs-string">=</span> <span class="hljs-string">center_x</span> <span class="hljs-bullet">-</span> <span class="hljs-string">image_w/2,</span> <span class="hljs-string">center_y-image_h/2</span><br>                <span class="hljs-string">window.blit(image,</span> <span class="hljs-string">(image_x,</span> <span class="hljs-string">image_y))</span><br>                <span class="hljs-comment"># 更新屏幕的显示</span><br>                <span class="hljs-string">pygame.display.update()</span><br></code></pre></td></tr></table></figure>
+
+<p>##pygame小游戏</p>
+<h5 id="1、小球碰撞"><a href="#1、小球碰撞" class="headerlink" title="1、小球碰撞"></a>1、小球碰撞</h5><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><code class="hljs vim"><span class="hljs-string">&quot;&quot;</span><span class="hljs-string">&quot;__author__=星辰&quot;</span><span class="hljs-string">&quot;&quot;</span><br>import pygame<br>import random<br>from time import <span class="hljs-keyword">sleep</span><br><span class="hljs-keyword">if</span> __name__==<span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    pygame.init()<br>    window = pygame.<span class="hljs-keyword">display</span>.set_mode((<span class="hljs-number">800</span>,<span class="hljs-number">600</span>))<br>    window.fill((<span class="hljs-number">255</span>,<span class="hljs-number">255</span>,<span class="hljs-number">255</span>))<br>    pygame.<span class="hljs-keyword">display</span>.flip()<br>    list_balls=[]<br>    <span class="hljs-keyword">while</span> True:<br><br>        <span class="hljs-keyword">if</span> list_ball<span class="hljs-variable">s:</span><br>            <span class="hljs-keyword">for</span> <span class="hljs-keyword">ball</span> in list_ball<span class="hljs-variable">s:</span><br>                <span class="hljs-keyword">x</span>,<span class="hljs-keyword">y</span>=<span class="hljs-keyword">ball</span>[<span class="hljs-string">&#x27;pos&#x27;</span>]<br>                r=<span class="hljs-keyword">ball</span>[<span class="hljs-string">&#x27;re&#x27;</span>]<br>                <span class="hljs-built_in">index</span>=list_balls.<span class="hljs-built_in">index</span>(<span class="hljs-keyword">ball</span>)<br>                <span class="hljs-keyword">if</span> <span class="hljs-built_in">index</span>&lt;<span class="hljs-built_in">len</span>(list_balls)-<span class="hljs-number">1</span>:<br>                    <span class="hljs-keyword">while</span> <span class="hljs-built_in">index</span>+<span class="hljs-number">1</span>&lt;<span class="hljs-built_in">len</span>(list_balls):<br>                        ball2=list_balls[<span class="hljs-built_in">index</span>+<span class="hljs-number">1</span>]<br>                        x2,y2=ball2[<span class="hljs-string">&#x27;pos&#x27;</span>]<br>                        <span class="hljs-keyword">if</span> (x2-<span class="hljs-keyword">x</span>)**<span class="hljs-number">2</span>+(y2-<span class="hljs-keyword">y</span>)**<span class="hljs-number">2</span>&lt;=(<span class="hljs-number">2</span>*r)**<span class="hljs-number">2</span>:<br>                            <span class="hljs-keyword">if</span> <span class="hljs-keyword">x</span>&gt;=x2:<br>                                <span class="hljs-keyword">ball</span>[<span class="hljs-string">&#x27;xs&#x27;</span>]=<span class="hljs-number">1</span><br>                                ball2[<span class="hljs-string">&#x27;xs&#x27;</span>]=-<span class="hljs-number">1</span><br>                            <span class="hljs-keyword">if</span> <span class="hljs-keyword">x</span>&lt;=x2:<br>                                <span class="hljs-keyword">ball</span>[<span class="hljs-string">&#x27;xs&#x27;</span>] = -<span class="hljs-number">1</span><br>                                ball2[<span class="hljs-string">&#x27;xs&#x27;</span>] = <span class="hljs-number">1</span><br><br>                            <span class="hljs-keyword">if</span> <span class="hljs-keyword">y</span>&gt;=y2:<br>                                <span class="hljs-keyword">ball</span>[<span class="hljs-string">&#x27;ys&#x27;</span>]=-<span class="hljs-number">1</span><br>                                ball2[<span class="hljs-string">&#x27;ys&#x27;</span>]=<span class="hljs-number">1</span><br>                            <span class="hljs-keyword">if</span> <span class="hljs-keyword">y</span>&lt;=y2:<br>                                <span class="hljs-keyword">ball</span>[<span class="hljs-string">&#x27;ys&#x27;</span>]=<span class="hljs-number">1</span><br>                                ball2[<span class="hljs-string">&#x27;ys&#x27;</span>]=-<span class="hljs-number">1</span><br>                        <span class="hljs-built_in">index</span> +=<span class="hljs-number">1</span><br><br>                <span class="hljs-keyword">if</span> <span class="hljs-keyword">x</span>+r&gt;=<span class="hljs-number">800</span>:<br>                    xs = -<span class="hljs-number">1</span><br>                    <span class="hljs-keyword">ball</span>[<span class="hljs-string">&#x27;xs&#x27;</span>]=xs<br>                <span class="hljs-keyword">if</span> <span class="hljs-keyword">x</span>-r&lt;=<span class="hljs-number">0</span>:<br>                    xs = <span class="hljs-number">1</span><br>                    <span class="hljs-keyword">ball</span>[<span class="hljs-string">&#x27;xs&#x27;</span>] = xs<br>                <span class="hljs-keyword">if</span> <span class="hljs-keyword">y</span>+r&gt;=<span class="hljs-number">600</span>:<br>                    ys = -<span class="hljs-number">1</span><br>                    <span class="hljs-keyword">ball</span>[<span class="hljs-string">&#x27;ys&#x27;</span>]=ys<br>                <span class="hljs-keyword">if</span> <span class="hljs-keyword">y</span>-r&lt;=<span class="hljs-number">0</span>:<br>                    ys=<span class="hljs-number">1</span><br>                    <span class="hljs-keyword">ball</span>[<span class="hljs-string">&#x27;ys&#x27;</span>] = ys<br>                <span class="hljs-keyword">x</span> += <span class="hljs-keyword">ball</span>[<span class="hljs-string">&#x27;xs&#x27;</span>]<br>                <span class="hljs-keyword">y</span> += <span class="hljs-keyword">ball</span>[<span class="hljs-string">&#x27;ys&#x27;</span>]<br>                <span class="hljs-keyword">ball</span>[<span class="hljs-string">&#x27;pos&#x27;</span>]=(<span class="hljs-keyword">x</span>,<span class="hljs-keyword">y</span>)<br>                pygame.draw.circle(window,<span class="hljs-keyword">ball</span>[<span class="hljs-string">&#x27;rgb&#x27;</span>],(<span class="hljs-keyword">x</span>,<span class="hljs-keyword">y</span>),<span class="hljs-keyword">ball</span>[<span class="hljs-string">&#x27;re&#x27;</span>],<span class="hljs-keyword">ball</span>[<span class="hljs-string">&#x27;width&#x27;</span>])<br>            <span class="hljs-keyword">sleep</span>(<span class="hljs-number">0.01</span>)<br>            pygame.<span class="hljs-keyword">display</span>.flip()<br><br>            window.fill((<span class="hljs-number">255</span>,<span class="hljs-number">255</span>,<span class="hljs-number">255</span>))<br><br><br>        <span class="hljs-keyword">for</span> event in pygame.event.<span class="hljs-built_in">get</span>():<br>            <span class="hljs-keyword">if</span> event.<span class="hljs-built_in">type</span>==pygame.QUIT:<br>                <span class="hljs-keyword">exit</span>(<span class="hljs-number">0</span>)<br>            <span class="hljs-keyword">if</span> event.<span class="hljs-built_in">type</span>==pygame.MOUSEBUTTONDOWN:<br>                dic_ball = &#123;&#125;<br>                dic_ball[<span class="hljs-string">&#x27;rgb&#x27;</span>]=(random.randint(<span class="hljs-number">0</span>,<span class="hljs-number">255</span>),random.randint(<span class="hljs-number">0</span>,<span class="hljs-number">255</span>),random.randint(<span class="hljs-number">0</span>,<span class="hljs-number">255</span>))<br>                dic_ball[<span class="hljs-string">&#x27;pos&#x27;</span>]=event.pos<br>                dic_ball[<span class="hljs-string">&#x27;re&#x27;</span>]=<span class="hljs-number">20</span><br>                dic_ball[<span class="hljs-string">&#x27;width&#x27;</span>]=<span class="hljs-number">0</span><br>                dic_ball[<span class="hljs-string">&#x27;xs&#x27;</span>]=[-<span class="hljs-number">1</span>,<span class="hljs-number">1</span>][random.randint(<span class="hljs-number">0</span>,<span class="hljs-number">1</span>)]<br>                dic_ball[<span class="hljs-string">&#x27;ys&#x27;</span>]=[-<span class="hljs-number">1</span>,<span class="hljs-number">1</span>][random.randint(<span class="hljs-number">0</span>,<span class="hljs-number">1</span>)]<br>                # pygame.draw.circle(window,dic_ball[<span class="hljs-string">&#x27;rgb&#x27;</span>],dic_ball[<span class="hljs-string">&#x27;pos&#x27;</span>],dic_ball[<span class="hljs-string">&#x27;re&#x27;</span>],dic_ball[<span class="hljs-string">&#x27;width&#x27;</span>])<br>                list_balls.<span class="hljs-keyword">append</span>(dic_ball)<br>                pygame.<span class="hljs-keyword">display</span>.flip()<br>                <span class="hljs-keyword">sleep</span>(<span class="hljs-number">0.01</span>)<br>                window.fill((<span class="hljs-number">255</span>,<span class="hljs-number">255</span>,<span class="hljs-number">255</span>))<br></code></pre></td></tr></table></figure>
+<h5 id="2、接球游戏"><a href="#2、接球游戏" class="headerlink" title="2、接球游戏"></a>2、接球游戏</h5><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><code class="hljs angelscript"><span class="hljs-keyword">import</span> pygame<br><span class="hljs-keyword">import</span> random<br><span class="hljs-keyword">from</span> time <span class="hljs-keyword">import</span> sleep<br><span class="hljs-keyword">if</span> __name__==<span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    pygame.init()<br>    mx = <span class="hljs-number">0</span><br>    my = <span class="hljs-number">300</span><br>    m_width=<span class="hljs-number">100</span><br>    m_height=<span class="hljs-number">10</span><br>    window = pygame.display.set_mode((<span class="hljs-number">600</span>,<span class="hljs-number">400</span>))<br>    window.fill((<span class="hljs-number">255</span>,<span class="hljs-number">255</span>,<span class="hljs-number">255</span>))<br>    pygame.draw.rect(window,(<span class="hljs-number">255</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>),(mx,my,m_width,m_height),<span class="hljs-number">0</span>)<br>    pygame.display.flip()<br><br><br><br>    xs=<span class="hljs-number">1</span><br>    ys=<span class="hljs-number">1</span><br>    x=random.randint(<span class="hljs-number">0</span>,<span class="hljs-number">600</span>)<br>    y=random.randint(<span class="hljs-number">0</span>,<span class="hljs-number">400</span>)<br><br><br>    <span class="hljs-keyword">while</span> True:<br>        pygame.draw.circle(window, (<span class="hljs-number">255</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>), (x, y), <span class="hljs-number">20</span>, <span class="hljs-number">0</span>)<br>        pygame.draw.rect(window, (<span class="hljs-number">255</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>), (mx, my, m_width, m_height), <span class="hljs-number">0</span>)<br>        pygame.display.update()  # 可以刷新指定的范围<br>        x +=xs<br>        y +=ys<br>        window.fill((<span class="hljs-number">255</span>,<span class="hljs-number">255</span>,<span class="hljs-number">255</span>))<br>        <span class="hljs-keyword">if</span> mx&lt;=(x+<span class="hljs-number">20</span>)&lt;=mx+m_width <span class="hljs-keyword">and</span> y+<span class="hljs-number">20</span>&gt;=<span class="hljs-number">300</span> :<br>            <span class="hljs-keyword">if</span> xs&gt;<span class="hljs-number">0</span>:<br>                xs = <span class="hljs-number">1</span><br>            <span class="hljs-keyword">else</span>:<br>                xs = <span class="hljs-number">-1</span><br>            ys = <span class="hljs-number">-1</span><br>        elif x+<span class="hljs-number">20</span>==<span class="hljs-number">600</span> :<br>            xs = <span class="hljs-number">-1</span><br>        <span class="hljs-keyword">if</span> (x<span class="hljs-number">-20</span>)==<span class="hljs-number">0</span>:<br>            xs = <span class="hljs-number">1</span><br>        <span class="hljs-keyword">if</span> (y<span class="hljs-number">-20</span>)==<span class="hljs-number">0</span>:<br>            ys = <span class="hljs-number">1</span><br>        <span class="hljs-keyword">if</span> (y+<span class="hljs-number">20</span>)&gt;<span class="hljs-number">320</span>:<br>            exit(<span class="hljs-number">0</span>)<br><br><br>        sleep(<span class="hljs-number">0.01</span>)<br>        <span class="hljs-keyword">for</span> event <span class="hljs-keyword">in</span> pygame.event.<span class="hljs-keyword">get</span>():<br>            <span class="hljs-keyword">if</span> event.type == pygame.QUIT:<br>                exit(<span class="hljs-number">0</span>)<br>            <span class="hljs-keyword">if</span> event.type == pygame.MOUSEMOTION:<br>                mx,my=event.pos<br>                mx=mx-m_width/<span class="hljs-number">2</span><br>                my=<span class="hljs-number">300</span><br><br></code></pre></td></tr></table></figure>
+<h5 id="3、大球吃小球"><a href="#3、大球吃小球" class="headerlink" title="3、大球吃小球"></a>3、大球吃小球</h5><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">import</span> pygame<br><span class="hljs-attribute">import</span> random<br><span class="hljs-attribute">from</span> time import sleep<br><span class="hljs-attribute">if</span> __name__==&#x27;__main__&#x27;:<br>    <span class="hljs-attribute">pygame</span>.init()<br>    <span class="hljs-attribute">window</span> = pygame.display.set_mode((<span class="hljs-number">800</span>,<span class="hljs-number">600</span>))<br>    <span class="hljs-attribute">window</span>.fill((<span class="hljs-number">255</span>,<span class="hljs-number">255</span>,<span class="hljs-number">255</span>))<br>    <span class="hljs-attribute">pygame</span>.display.flip()<br>    <span class="hljs-attribute">list_balls</span>=[]<br>    <span class="hljs-attribute">while</span> True:<br><br>        <span class="hljs-attribute">if</span> list_balls:<br>            <span class="hljs-attribute">for</span> ball in list_balls:<br>                <span class="hljs-attribute">x</span>,y=ball[&#x27;pos&#x27;]<br>                <span class="hljs-attribute">r1</span>=ball[&#x27;re&#x27;]<br>                <span class="hljs-attribute">if</span> r<span class="hljs-number">1</span>&gt;=<span class="hljs-number">150</span>:<br>                    <span class="hljs-attribute">ball</span>[&#x27;re&#x27;]=<span class="hljs-number">10</span><br>                    <span class="hljs-attribute">r1</span>=<span class="hljs-number">10</span><br>                <span class="hljs-attribute">index</span>=list_balls.index(ball)<br>                <span class="hljs-attribute">if</span> index&lt;len(list_balls)-<span class="hljs-number">1</span>:<br>                    <span class="hljs-attribute">while</span> index+<span class="hljs-number">1</span>&lt;len(list_balls):<br>                        <span class="hljs-attribute">ball2</span>=list_balls[index+<span class="hljs-number">1</span>]<br>                        <span class="hljs-attribute">r2</span> = ball<span class="hljs-number">2</span>[&#x27;re&#x27;]<br>                        <span class="hljs-attribute">x2</span>,y<span class="hljs-number">2</span>=ball<span class="hljs-number">2</span>[&#x27;pos&#x27;]<br>                        <span class="hljs-attribute">if</span> (x<span class="hljs-number">2</span>-x)**<span class="hljs-number">2</span>+(y<span class="hljs-number">2</span>-y)**<span class="hljs-number">2</span>&lt;=(r<span class="hljs-number">1</span>+r<span class="hljs-number">2</span>)**<span class="hljs-number">2</span>:<br>                            <span class="hljs-attribute">if</span> r<span class="hljs-number">1</span>&gt;r<span class="hljs-number">2</span>:<br>                                <span class="hljs-attribute">ball</span>[&#x27;re&#x27;]=int(r<span class="hljs-number">1</span>+r<span class="hljs-number">2</span>/<span class="hljs-number">2</span>)<br>                                <span class="hljs-attribute">list_balls</span>.remove(ball<span class="hljs-number">2</span>)<br>                            <span class="hljs-attribute">if</span> r<span class="hljs-number">1</span>&lt;=r<span class="hljs-number">2</span>:<br>                                <span class="hljs-attribute">ball2</span>[&#x27;re&#x27;] =int(r<span class="hljs-number">2</span> + r<span class="hljs-number">1</span> / <span class="hljs-number">2</span>)<br>                                <span class="hljs-attribute">list_balls</span>.remove(ball)<br>                        <span class="hljs-attribute">index</span> +=<span class="hljs-number">1</span><br><br>                <span class="hljs-attribute">if</span> x+r<span class="hljs-number">1</span>&gt;=<span class="hljs-number">800</span>:<br>                    <span class="hljs-attribute">xs</span> = -<span class="hljs-number">1</span><br>                    <span class="hljs-attribute">ball</span>[&#x27;xs&#x27;]=xs<br>                <span class="hljs-attribute">if</span> x-r<span class="hljs-number">1</span>&lt;=<span class="hljs-number">0</span>:<br>                    <span class="hljs-attribute">xs</span> = <span class="hljs-number">1</span><br>                    <span class="hljs-attribute">ball</span>[&#x27;xs&#x27;] = xs<br>                <span class="hljs-attribute">if</span> y+r<span class="hljs-number">1</span>&gt;=<span class="hljs-number">600</span>:<br>                    <span class="hljs-attribute">ys</span> = -<span class="hljs-number">1</span><br>                    <span class="hljs-attribute">ball</span>[&#x27;ys&#x27;]=ys<br>                <span class="hljs-attribute">if</span> y-r<span class="hljs-number">1</span>&lt;=<span class="hljs-number">0</span>:<br>                    <span class="hljs-attribute">ys</span>=<span class="hljs-number">1</span><br>                    <span class="hljs-attribute">ball</span>[&#x27;ys&#x27;] = ys<br>                <span class="hljs-attribute">x</span> += ball[&#x27;xs&#x27;]<br>                <span class="hljs-attribute">y</span> += ball[&#x27;ys&#x27;]<br>                <span class="hljs-attribute">ball</span>[&#x27;pos&#x27;]=(x,y)<br>                <span class="hljs-attribute">pygame</span>.draw.circle(window,ball[&#x27;rgb&#x27;],(x,y),ball[&#x27;re&#x27;],ball[&#x27;width&#x27;])<br>            <span class="hljs-attribute">sleep</span>(<span class="hljs-number">0</span>.<span class="hljs-number">001</span>)<br>            <span class="hljs-attribute">pygame</span>.display.flip()<br><br>            <span class="hljs-attribute">window</span>.fill((<span class="hljs-number">255</span>,<span class="hljs-number">255</span>,<span class="hljs-number">255</span>))<br><br><br>        <span class="hljs-attribute">for</span> event in pygame.event.get():<br>            <span class="hljs-attribute">if</span> event.type==pygame.QUIT:<br>                <span class="hljs-attribute">exit</span>(<span class="hljs-number">0</span>)<br>            <span class="hljs-attribute">if</span> event.type==pygame.MOUSEBUTTONDOWN:<br>                <span class="hljs-attribute">dic_ball</span> = &#123;&#125;<br>                <span class="hljs-attribute">dic_ball</span>[&#x27;rgb&#x27;]=(random.randint(<span class="hljs-number">0</span>,<span class="hljs-number">255</span>),random.randint(<span class="hljs-number">0</span>,<span class="hljs-number">255</span>),random.randint(<span class="hljs-number">0</span>,<span class="hljs-number">255</span>))<br>                <span class="hljs-attribute">dic_ball</span>[&#x27;pos&#x27;]=event.pos<br>                <span class="hljs-attribute">dic_ball</span>[&#x27;re&#x27;]=random.randint(<span class="hljs-number">10</span>,<span class="hljs-number">30</span>)<br>                <span class="hljs-attribute">dic_ball</span>[&#x27;width&#x27;]=<span class="hljs-number">0</span><br>                <span class="hljs-attribute">dic_ball</span>[&#x27;xs&#x27;]=[-<span class="hljs-number">1</span>,<span class="hljs-number">1</span>][random.randint(<span class="hljs-number">0</span>,<span class="hljs-number">1</span>)]<br>                <span class="hljs-attribute">dic_ball</span>[&#x27;ys&#x27;]=[-<span class="hljs-number">1</span>,<span class="hljs-number">1</span>][random.randint(<span class="hljs-number">0</span>,<span class="hljs-number">1</span>)]<br>                <span class="hljs-comment"># pygame.draw.circle(window,dic_ball[&#x27;rgb&#x27;],dic_ball[&#x27;pos&#x27;],dic_ball[&#x27;re&#x27;],dic_ball[&#x27;width&#x27;])</span><br>                <span class="hljs-attribute">list_balls</span>.append(dic_ball)<br>                <span class="hljs-attribute">pygame</span>.display.flip()<br>                <span class="hljs-attribute">sleep</span>(<span class="hljs-number">0</span>.<span class="hljs-number">01</span>)<br>                <span class="hljs-attribute">window</span>.fill((<span class="hljs-number">255</span>,<span class="hljs-number">255</span>,<span class="hljs-number">255</span>))<br><br></code></pre></td></tr></table></figure>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/categories/Python/">Python</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/tags/pygame/">pygame</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/Myblog/2018/09/06/%E7%B1%BB%E5%92%8C%E5%AF%B9%E8%B1%A101/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">类和对象01</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/Myblog/2018/09/03/%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%E5%92%8C%E5%BC%82%E5%B8%B8%E6%8D%95%E8%8E%B7/">
+                        <span class="hidden-mobile">文件操作和异常捕获</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/Myblog/js/events.js" ></script>
+<script  src="/Myblog/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/Myblog/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/Myblog/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/Myblog/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/Myblog/js/boot.js" ></script>
+
+
+</body>
+</html>

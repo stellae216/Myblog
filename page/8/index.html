@@ -1,0 +1,873 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/Myblog/img/favicon.png">
+  <link rel="icon" href="/Myblog/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="Simple, so charming!">
+  <meta name="author" content="stellae">
+  <meta name="keywords" content="">
+  
+  <title>stellae&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/Myblog/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"stellae.gitee.io","root":"/Myblog/","version":"1.8.10","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/Myblog/js/utils.js" ></script>
+  <script  src="/Myblog/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 100vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/Myblog/">&nbsp;<strong>stellae's blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/Myblog/img/tokYjYqaPB0.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.2)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Simple, so charming!">
+              
+            </span>
+
+            
+          </div>
+
+          
+            <div class="scroll-down-bar">
+              <i class="iconfont icon-arrowdown"></i>
+            </div>
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div class="py-5" id="board"
+          style=margin-top:0>
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/Myblog/2018/11/18/Flask-%E7%BC%93%E5%AD%98%E6%9C%BA%E5%88%B6/" target="_blank">
+          Flask-缓存机制
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/Myblog/2018/11/18/Flask-%E7%BC%93%E5%AD%98%E6%9C%BA%E5%88%B6/" target="_blank">
+          
+          
+            
+          
+          HTTP缓存机制在Flask的实现HTTP缓存头的参数包括：
+
+Cache-Control（用于本地缓存）
+Expires（用于本地缓存）
+Last-Modified(协商缓存)
+Etag(协商缓存)。
+
+1.HTTP缓存头（1）Cache_Control
+指定请求和响应遵循的缓存机制。在请求消息或响应消息中设置Cache- Control并不会修改另一个消息处理过程中的缓 存处理过程。
+
+请求时
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2018-11-18 17:56" pubdate>
+              2018-11-18
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/Myblog/categories/Flask/">Flask</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/Myblog/tags/%E7%BC%93%E5%AD%98/">缓存</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/Myblog/2018/11/17/Flask-Compress/" target="_blank">
+          Flask-Compress
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/Myblog/2018/11/17/Flask-Compress/" target="_blank">
+          
+          
+            
+          
+          Flask-Compress安装flask-compress第三方包
+1pip install flask-compress
+
+
+
+项目配置1234567891011121314from flask import Flaskfrom flask_compress import Compressapp = Flask(__name__)# 开启gzipCompress(app)# 配置最小压缩大小a
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2018-11-17 17:56" pubdate>
+              2018-11-17
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/Myblog/categories/Flask/">Flask</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/Myblog/tags/gzip/">gzip</a>
+            
+              <a href="/Myblog/tags/compress/">compress</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/Myblog/2018/11/16/Flask-%E4%BB%A3%E7%90%86HTTP%E8%AF%B7%E6%B1%82/" target="_blank">
+          Flask-代理HTTP请求
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/Myblog/2018/11/16/Flask-%E4%BB%A3%E7%90%86HTTP%E8%AF%B7%E6%B1%82/" target="_blank">
+          
+          
+            
+          
+          添加 HTTP Method Overrides某些 HTTP 代理不支持任意的 HTTP 方法或更新的 HTTP 方法（比如 PATCH）。 这种情况下，通过另一种完全违背协议的 HTTP 方法来“代理” HTTP 方法是可行的。
+这个方法使客户端发出 HTTP POST 请求并设置 X-HTTP-Method-Override 标头的值为想要的 HTTP 方法（比如 PATCH ）。
+这很容易
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2018-11-16 16:25" pubdate>
+              2018-11-16
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/Myblog/categories/Flask/">Flask</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/Myblog/tags/flask/">flask</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/Myblog/2018/11/16/Flask-%E4%BB%A3%E7%A0%81%E5%8A%9F%E8%83%BD%E6%8B%86%E5%88%86/" target="_blank">
+          Flask-代码功能拆分
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/Myblog/2018/11/16/Flask-%E4%BB%A3%E7%A0%81%E5%8A%9F%E8%83%BD%E6%8B%86%E5%88%86/" target="_blank">
+          
+          
+            
+          
+          为了便于管理，应该把代码拆分成以下几个板块
+manage.py1234567891011121314151617181920from flask import Flaskfrom flask_script import Managerfrom user.views import bluefrom util.config import Configfrom util.function import 
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2018-11-16 15:25" pubdate>
+              2018-11-16
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/Myblog/categories/Flask/">Flask</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/Myblog/tags/flask/">flask</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/Myblog/2018/11/15/Flask-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%92%8C%E9%82%AE%E4%BB%B6%E5%8F%91%E9%80%81/" target="_blank">
+          Flask-文件上传和邮件发送
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/Myblog/2018/11/15/Flask-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%92%8C%E9%82%AE%E4%BB%B6%E5%8F%91%E9%80%81/" target="_blank">
+          
+          
+            
+          
+          文件上传12345678&lt;!--up_load.html--&gt;&#123;% block content %&#125;&lt;form action=&quot;&quot; method=&quot;post&quot; enctype=&quot;multipart/form-data&quot;&gt;    上传图片：&lt;input type=&quot;file&quo
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2018-11-15 19:25" pubdate>
+              2018-11-15
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/Myblog/categories/Flask/">Flask</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/Myblog/tags/flask/">flask</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/Myblog/2018/11/15/Flask-%E9%92%A9%E5%AD%90%E5%92%8C%E8%A1%A8%E5%8D%95/" target="_blank">
+          Flask-钩子和表单
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/Myblog/2018/11/15/Flask-%E9%92%A9%E5%AD%90%E5%92%8C%E8%A1%A8%E5%8D%95/" target="_blank">
+          
+          
+            
+          
+          钩子函数flask中具有四种钩子被做成了修饰器,我们在后端可以进行调用做相关的操作，使用钩子函数时，我们需要借助flask的全局变量g，g作为中间变量,在钩子函数和视图函数中间传递数据，我们先引入全局变量g 
+1from flask import g
+
+可以给 g 绑定属性，用于在全局传递数据
+before_first_request注册一个函数,在处理第一个请求之前运行. 
+123@blue.b
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2018-11-15 18:25" pubdate>
+              2018-11-15
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/Myblog/categories/Flask/">Flask</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/Myblog/tags/flask/">flask</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/Myblog/2018/11/14/Flask-%E6%A8%A1%E5%9E%8B/" target="_blank">
+          Flask-模型
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/Myblog/2018/11/14/Flask-%E6%A8%A1%E5%9E%8B/" target="_blank">
+          
+          
+            
+          
+          Flask默认并没有提供任何数据库操作的API
+我们可以选择任何适合自己项目的数据库来使用
+SQLAlchemy是一个很强大的关系型数据库框架，支持多种数据库后台。SQLAlchemy提供了高层ORM，也提供了使用数据库原生SQL的低层功能。
+ORM：
+123456将对对象的操作转换为原生SQL优点	易用性，可以有效减少重复SQL	性能损耗少	设计灵活，可以轻松实现复杂查询	移植性好
+
+
+
+模型定
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2018-11-14 16:25" pubdate>
+              2018-11-14
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/Myblog/categories/Flask/">Flask</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/Myblog/tags/flask/">flask</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/Myblog/2018/11/13/Flask-Session%E5%92%8CCookie/" target="_blank">
+          Flask-Session和Cookie
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/Myblog/2018/11/13/Flask-Session%E5%92%8CCookie/" target="_blank">
+          
+          
+            
+          
+          Cookie存放 –&gt; 客户端创建： 
+123456789Cookie是通过服务器创建的Response来创建的设置：set_cookie(&#x27;key&#x27;, value, max_ages=&#x27;&#x27;, expires=&#x27;&#x27;)删除, 有三种删除方式		1. 直接清空浏览器的cookie	2. delete_cookie(&#x27;key&#
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2018-11-13 07:25" pubdate>
+              2018-11-13
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/Myblog/categories/Flask/">Flask</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/Myblog/tags/flask/">flask</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/Myblog/2018/11/12/Flask%E5%9F%BA%E7%A1%80/" target="_blank">
+          Flask基础
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/Myblog/2018/11/12/Flask%E5%9F%BA%E7%A1%80/" target="_blank">
+          
+          
+            
+          
+          一. Flask介绍1. Flask介绍Flask是一个基于Python实现的web开发的微框架
+中文文档地址
+flask扩展三方库
+二. 安装Flask1.虚拟环境搭建12345virtualenv --no-site-packages flaskenv激活windows下虚拟环境cd Scriptsactivate
+
+2. 安装1pip install flask
+
+三. 基于Flask的最小
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2018-11-12 08:25" pubdate>
+              2018-11-12
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/Myblog/categories/Flask/">Flask</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/Myblog/tags/flask/">flask</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/Myblog/2018/11/09/Django-%E5%9B%BD%E9%99%85%E5%8C%96/" target="_blank">
+          Django-国际化
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/Myblog/2018/11/09/Django-%E5%9B%BD%E9%99%85%E5%8C%96/" target="_blank">
+          
+          
+            
+          
+          所谓的国际化，是指使用不同语言的用户在访问同一个网站页面时能够看到符合其自身语言的文本页面。 用户可以选择对应的语言浏览网页。
+配置setting.py1234567891011121314LANGUAGES = (    (&#x27;en&#x27;, (&#x27;English&#x27;)),    (&#x27;zh-hans&#x27;, (&#x27;中文简体&#x27;)),  
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2018-11-09 18:45" pubdate>
+              2018-11-09
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/Myblog/categories/Django/">Django</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/Myblog/tags/%E5%9B%BD%E9%99%85%E5%8C%96/">国际化</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+
+
+  <nav aria-label="navigation">
+    <span class="pagination" id="pagination">
+      <a class="extend prev" rel="prev" href="/Myblog/page/7/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/Myblog/">1</a><span class="space">&hellip;</span><a class="page-number" href="/Myblog/page/6/#board">6</a><a class="page-number" href="/Myblog/page/7/#board">7</a><span class="page-number current">8</span><a class="page-number" href="/Myblog/page/9/#board">9</a><a class="page-number" href="/Myblog/page/10/#board">10</a><span class="space">&hellip;</span><a class="page-number" href="/Myblog/page/13/#board">13</a><a class="extend next" rel="next" href="/Myblog/page/9/#board"><i class="iconfont icon-arrowright"></i></a>
+    </span>
+  </nav>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/Myblog/js/events.js" ></script>
+<script  src="/Myblog/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/Myblog/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/Myblog/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/Myblog/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/Myblog/js/boot.js" ></script>
+
+
+</body>
+</html>

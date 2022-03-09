@@ -1,0 +1,662 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/Myblog/img/favicon.png">
+  <link rel="icon" href="/Myblog/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="Simple, so charming!">
+  <meta name="author" content="stellae">
+  <meta name="keywords" content="">
+  
+  <title>Django基础 - stellae&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/Myblog/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/Myblog/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"stellae.gitee.io","root":"/Myblog/","version":"1.8.10","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/Myblog/js/utils.js" ></script>
+  <script  src="/Myblog/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/Myblog/">&nbsp;<strong>stellae's blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/Myblog/img/WtwSsqwYlA0.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Django基础">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      stellae
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2018-10-22 10:04" pubdate>
+        2018年10月22日 上午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.7k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      29
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Django基础</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：3 年前
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h3 id="MVC-Mode-View-Controller"><a href="#MVC-Mode-View-Controller" class="headerlink" title="MVC(Mode View Controller)"></a>MVC(Mode View Controller)</h3><p>Model: 即数据存取层。用于封装于应用程序的业务逻辑相关的数据，以及对数据的处理。说白了就是模型对象负责在数据库中存取数据</p>
+<p>View: 即表现层。负责数据的显示和呈现。渲染的html页面给用户，或者返回数据给用户。</p>
+<p>Controller: 即业务逻辑层。负责从用户端收集用户的输入，进行业务逻辑处理，包括向模型中发送数据，进行CRUD操作。</p>
+<h3 id="Django的模式简介-MVT模式"><a href="#Django的模式简介-MVT模式" class="headerlink" title="Django的模式简介 - MVT模式"></a>Django的模式简介 - MVT模式</h3><p>严格来说，Django的模式应该是MVT模式，本质上和MVC没什么区别，也是各组件之间为了保持松耦合关系，只是定义上有些许不同。</p>
+<p>Model： 负责业务与数据库(ORM)的对象</p>
+<p>View： 负责业务逻辑并适当调用Model和Template</p>
+<p>Template: 负责把页面渲染展示给用户</p>
+<p>注意： Django中还有一个url分发器，也叫作路由。主要用于将url请求发送给不同的View处理，View在进行相关的业务逻辑处理。</p>
+<h3 id="安装虚拟环境"><a href="#安装虚拟环境" class="headerlink" title="安装虚拟环境"></a>安装虚拟环境</h3><h5 id="安装virtualenv"><a href="#安装virtualenv" class="headerlink" title="安装virtualenv"></a>安装virtualenv</h5><p><code>pip install  virtualenv</code></p>
+<h5 id="创建虚拟环境"><a href="#创建虚拟环境" class="headerlink" title="创建虚拟环境"></a>创建虚拟环境</h5><p>进入你需要创建虚拟环境的目录</p>
+<p><code>virtualenv --no-site-packages djenv</code></p>
+<p>参数说明：<code>--no-site-packages</code>获得一个纯净的Python虚拟环境，<code>-p + &lt;版本路径&gt;</code>指定python版本</p>
+<h5 id="进入-退出env"><a href="#进入-退出env" class="headerlink" title="进入/退出env"></a>进入/退出env</h5><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk">进入 cd djenv<span class="hljs-regexp">/Scripts/</span>文件夹    再使用activate命令<br>退出 deactivate<br></code></pre></td></tr></table></figure>
+<h3 id="安装Django"><a href="#安装Django" class="headerlink" title="安装Django"></a>安装Django</h3><p><code>python3.6 + django</code></p>
+<p>安装django</p>
+<p><code>pip install django</code></p>
+<p>安装数据库驱动</p>
+<p><code>pip install pymysql</code></p>
+<h3 id="创建Django项目"><a href="#创建Django项目" class="headerlink" title="创建Django项目"></a>创建Django项目</h3><p>在虚拟环境下</p>
+<p><code>django-admin startproject &lt;文件名&gt;</code></p>
+<p>用pycharm打开项目，并使用创建好的虚拟环境</p>
+<ul>
+<li><p>Django目录结构：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs css">.<br>├── <span class="hljs-selector-tag">day01</span><br>│   ├── __<span class="hljs-selector-tag">init__</span><span class="hljs-selector-class">.py</span> <br>│   ├── <span class="hljs-selector-tag">settings</span><span class="hljs-selector-class">.py</span> <br>│   ├── <span class="hljs-selector-tag">urls</span><span class="hljs-selector-class">.py</span><br>│   └── <span class="hljs-selector-tag">wsgi</span><span class="hljs-selector-class">.py</span><br>└── <span class="hljs-selector-tag">manage</span><span class="hljs-selector-class">.py</span> <span class="hljs-selector-tag">-</span> 工具集管理入口<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>终端启动:</p>
+<p><code>python manage.py runserver 0.0.0.0:8080</code></p>
+<p>修改manage.py 中：</p>
+<p><code>LANGUAGE_CODE = &#39;zh-hans&#39;</code> - 字体</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-comment"># 避免出现插入时间出现偏移</span><br><span class="hljs-comment"># 设置时区(东八区)</span><br><span class="hljs-attr">TIME_ZONE</span> = <span class="hljs-string">&#x27;Asia/Shanghai&#x27;</span><br><span class="hljs-attr">USE_TZ</span> = <span class="hljs-literal">False</span><br></code></pre></td></tr></table></figure>
+
+<p><code>ALLOWED_HOSTS = [&#39;*&#39;]</code></p>
+<p>启动添加0.0.0.0表示允许所有ip访问</p>
+</li>
+</ul>
+<h3 id="连接数据库"><a href="#连接数据库" class="headerlink" title="连接数据库"></a>连接数据库</h3><ul>
+<li><p>修改<code>manager.py</code>文件</p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs 1c">DATABASES = &#123;<br>  &#x27;default&#x27;: &#123;<br>      &#x27;ENGINE&#x27;: &#x27;django.db.backends.mysql&#x27;,<br>      &#x27;NAME&#x27;: &#x27;dj6&#x27;,<br>      &#x27;USER&#x27;: &#x27;root&#x27;,<br>      &#x27;PASSWORD&#x27;: &#x27;<span class="hljs-number">123456</span>&#x27;,<br>      &#x27;HOST&#x27;: &#x27;127.0.0.1&#x27;,<br>      &#x27;PORT&#x27;: <span class="hljs-number">3306</span><br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>修改<code>__init__.py</code>文件</p>
+<p>因为python3不能直接连接数据库</p>
+<figure class="highlight elm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs elm"><span class="hljs-keyword">import</span> pymysql<br><br><span class="hljs-title">pymysql</span>.install_as_MySQLdb()<br></code></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+<ul>
+<li><p>映射模型到数据库中(自动创建一些表)</p>
+<p><code>python manage.py migrate</code></p>
+</li>
+<li><p>创建超级管理员</p>
+<p><code>createsuperuser</code></p>
+</li>
+</ul>
+<h3 id="创建应用"><a href="#创建应用" class="headerlink" title="创建应用"></a>创建应用</h3><ul>
+<li>创建应用</li>
+</ul>
+<p><code>python manage.py startapp &lt;app_name&gt;</code></p>
+<p>执行上面的命令会创建<app_name>目录，结构如下：</p>
+<ul>
+<li><code>__init__.py</code>：一个空文件，告诉 Python 这个目录应该被认为是一个 Python 包。</li>
+<li><code>admin.py</code>：可以用来注册模型，让Django自动创建管理界面。</li>
+<li><code>apps.py</code>：当前应用的配置。</li>
+<li><code>migrations</code>：存放与模型有关的数据库迁移信息。<ul>
+<li><code>__init__.py</code>：一个空文件，告诉 Python 这个目录应该被认为是一个 Python 包。</li>
+</ul>
+</li>
+<li><code>models.py</code>：存放应用的数据模型，即实体类及其之间的关系（MVC/MVT中的M）。</li>
+<li><code>tests.py</code>：包含测试应用各项功能的测试类和测试函数。</li>
+<li><code>views.py</code>：处理请求并返回响应的函数（MVC中的C，MVT中的V）。</li>
+</ul>
+<p>在<code>settings</code>里面<code>INSTALLED_APPS</code>添加<app_name>字段</p>
+<h4 id="简单调试"><a href="#简单调试" class="headerlink" title="简单调试"></a>简单调试</h4><figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs angelscript"><span class="hljs-keyword">from</span> app <span class="hljs-keyword">import</span> views<br><br># <span class="hljs-number">127.0</span><span class="hljs-number">.0</span><span class="hljs-number">.1</span>:<span class="hljs-number">8080</span>/hello<br>path(<span class="hljs-string">&#x27;hello/&#x27;</span>, views.hello),<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>响应函数</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> django.http <span class="hljs-keyword">import</span> HttpResponse<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">hello</span>(<span class="hljs-params">request</span>):</span><br>    <span class="hljs-keyword">return</span> HttpResponse(<span class="hljs-string">&#x27;Hello,Deathfeeling.&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<h4 id="定义模型"><a href="#定义模型" class="headerlink" title="定义模型"></a>定义模型</h4><figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs nix">class Student(models.Model):<br>    <span class="hljs-comment"># 定义s_name字段，varchar类型，最长不超过6字符，唯一</span><br>    <span class="hljs-attr">s_name</span> = models.CharField(<span class="hljs-attr">max_length=6,</span> <span class="hljs-attr">unique=True)</span><br>    <span class="hljs-comment"># 定义s_age字段，int类型, 默认长度18</span><br>    <span class="hljs-attr">s_age</span> = models.IntegerField(<span class="hljs-attr">default=18)</span><br>    <span class="hljs-comment"># 定义s_gender字段， int：类型</span><br>    <span class="hljs-attr">s_gender</span> = models.BooleanField(<span class="hljs-attr">default=1)</span><br>    <span class="hljs-comment"># 定义创建时间</span><br>    <span class="hljs-attr">create_time</span> = models.DateTimeField(<span class="hljs-attr">auto_now_add=True,</span> <span class="hljs-attr">null=True)</span> <span class="hljs-comment"># 创建时赋予时间，以后不修改</span><br>    <span class="hljs-comment"># 定义修改时间</span><br>    <span class="hljs-attr">operate_time</span> = models.DateTimeField(<span class="hljs-attr">auto_now=True,</span> <span class="hljs-attr">null=True)</span> <span class="hljs-comment"># 每次修改赋予新的时间</span><br><br>    class Meta:<br>        <span class="hljs-comment"># 定义模型迁移到数据库中时的表名</span><br>        <span class="hljs-comment"># 表名是student</span><br>        <span class="hljs-attr">db_table</span> = &#x27;student&#x27;<br></code></pre></td></tr></table></figure>
+
+<h4 id="迁移"><a href="#迁移" class="headerlink" title="迁移"></a>迁移</h4><p><code>python manage.py makemigrations</code> 生成迁移文件</p>
+<p><code>python manage.py migrate</code> 迁移表</p>
+<p>数据库中会生成对应创建的表</p>
+<h4 id="模型的CRUD"><a href="#模型的CRUD" class="headerlink" title="模型的CRUD"></a>模型的CRUD</h4><h6 id="配置url"><a href="#配置url" class="headerlink" title="配置url"></a>配置url</h6><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">from</span> app <span class="hljs-keyword">import</span> views<br><br>path(<span class="hljs-string">&#x27;create_stu/&#x27;</span>, views.create_stu),<br></code></pre></td></tr></table></figure>
+
+<p>其他类似</p>
+<h6 id="插入数据"><a href="#插入数据" class="headerlink" title="插入数据"></a>插入数据</h6><p>执行该方法的时候，插入数据</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">create_stu</span><span class="hljs-params">(request)</span></span><span class="hljs-symbol">:</span><br>    <span class="hljs-comment"># 第一种方式：创建学生</span><br>    <span class="hljs-comment"># stu = Student()</span><br>    <span class="hljs-comment"># stu.s_name = &#x27;Deathfeeling&#x27;</span><br>    <span class="hljs-comment"># stu.s_age = 18</span><br>    <span class="hljs-comment"># stu.save()</span><br><br>    <span class="hljs-comment"># 第二种方式 - 推荐</span><br>    Student.objects.create(s_name=<span class="hljs-string">&#x27;小王&#x27;</span>, s_age=<span class="hljs-number">19</span>)<br><br>    <span class="hljs-keyword">return</span> HttpResponse(<span class="hljs-string">&#x27;创建成功！&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<h6 id="查询数据"><a href="#查询数据" class="headerlink" title="查询数据"></a>查询数据</h6><ul>
+<li>配置url</li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">path</span><span class="hljs-params">(<span class="hljs-string">&#x27;sel_stu/&#x27;</span>, views.sel_stu)</span></span>,<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p>查询</p>
+<ul>
+<li><p>查询所有</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">sel_stu</span><span class="hljs-params">(request)</span></span><span class="hljs-symbol">:</span><br><span class="hljs-comment"># 实现查询 </span><br>    stus = Student.objects.all() <span class="hljs-comment"># 查询所有对象的信息</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>过滤 - filter() : first() 获取第一个,last() 获取最后一个</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-comment"># 查询到指定的对象的信息</span><br><span class="hljs-attr">stus</span> = Student.objects.filter(s_name=<span class="hljs-string">&#x27;星辰&#x27;</span>)<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>get() - 容易出错，所以不推荐使用。</p>
+<p>注意：1、条件不满足获取不到数据，报错；2、条件返回数据多个，报错。</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">stus = Student.objects.<span class="hljs-builtin-name">get</span>(<span class="hljs-attribute">s_name</span>=<span class="hljs-string">&#x27;星辰&#x27;</span>)<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>模糊查询</p>
+<ul>
+<li><p>包含</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">stus</span> = Student.objects.filter(s_name__contains=<span class="hljs-string">&#x27;王&#x27;</span>)<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>以*开始</p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs autoit"><span class="hljs-meta"># s_name__startswith=<span class="hljs-string">&#x27;*&#x27;</span></span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>以*结束</p>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs autoit"><span class="hljs-meta"># s_name__endswith=<span class="hljs-string">&#x27;*&#x27;</span></span><br></code></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>大于等于gt/gte 小于等于lt/lte</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">stus</span> = Student.objects.filter(s_age__gt=<span class="hljs-number">19</span>)<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>排序 - order_by()</p>
+<ul>
+<li><p>升序</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">stus = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Student</span>.</span></span>objects.order<span class="hljs-constructor">_by(&#x27;<span class="hljs-params">id</span>&#x27;)</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>降序</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">stus = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Student</span>.</span></span>objects.order<span class="hljs-constructor">_by(&#x27;-<span class="hljs-params">id</span>&#x27;)</span><br></code></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>查询不满足条件的数据 - exclude()</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">stus</span> = Student.objects.exclude(s_age=<span class="hljs-number">19</span>)<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>统计个数 - count(), len()</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs stylus">stus_count = stus.count()<br><span class="hljs-function"><span class="hljs-title">print</span><span class="hljs-params">(stus_count)</span></span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>values() - 返回列表嵌套字典</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">stus_values</span> = stus.values()<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>id=pk</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">stus</span> = Student.objects.filter(id=<span class="hljs-number">2</span>)<br><span class="hljs-attr">stus</span> = Student.objects.filter(pk=<span class="hljs-number">2</span>)<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>或条件 - Q() - 对应包</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">stus = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Student</span>.</span></span>objects.filter(<span class="hljs-constructor">Q(<span class="hljs-params">s_age</span>=20)</span> <span class="hljs-pattern-match">| <span class="hljs-constructor">Q(<span class="hljs-params">s_gender</span>=0)</span>)</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>且条件</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">stus = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Student</span>.</span></span>objects.filter(<span class="hljs-constructor">Q(<span class="hljs-params">s_age</span>=20)</span> &amp; <span class="hljs-constructor">Q(<span class="hljs-params">s_gender</span>=1)</span>)<br>stus = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Student</span>.</span></span>objects.filter(<span class="hljs-constructor">Q(<span class="hljs-params">s_age</span>=20)</span>, <span class="hljs-constructor">Q(<span class="hljs-params">s_gender</span>=1)</span>)<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>非条件</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">stus = <span class="hljs-module-access"><span class="hljs-module"><span class="hljs-identifier">Student</span>.</span></span>objects.filter(~<span class="hljs-constructor">Q(<span class="hljs-params">s_age</span>=20)</span>)<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>比较 - F() - 和Q()是一个包，导入即可</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-comment"># 查询语文成绩比数学成绩大的学生信息</span><br><span class="hljs-attr">stus</span> = Student.objects.filter(chinese__gt=F(<span class="hljs-string">&#x27;math&#x27;</span>))<br></code></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+</li>
+</ul>
+<h6 id="删除数据"><a href="#删除数据" class="headerlink" title="删除数据"></a>删除数据</h6><ul>
+<li><p>配置url</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">path</span><span class="hljs-params">(<span class="hljs-string">&#x27;del_stu/&#x27;</span>, views.del_stu)</span></span>,<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>删除</p>
+</li>
+</ul>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">del_stu</span><span class="hljs-params">(request)</span></span><span class="hljs-symbol">:</span><br>    <span class="hljs-comment"># 删除</span><br>    Student.objects.filter(s_name=<span class="hljs-string">&#x27;small唐&#x27;</span>).delete()<br>    <span class="hljs-keyword">return</span> HttpResponse(<span class="hljs-string">&#x27;删除成功！&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<h6 id="更新数据"><a href="#更新数据" class="headerlink" title="更新数据"></a>更新数据</h6><ul>
+<li>配置url</li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">path</span><span class="hljs-params">(<span class="hljs-string">&#x27;update_stu/&#x27;</span>, views.update_stu)</span></span>,<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>更新</li>
+</ul>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs routeros">def update_stu(request):<br>    # 第一种方法<br>    stu = Student.objects.filter(<span class="hljs-attribute">s_name</span>=<span class="hljs-string">&#x27;小明&#x27;</span>).first()<br>    # Student.objects.<span class="hljs-builtin-name">get</span>(<span class="hljs-attribute">s_name</span>=<span class="hljs-string">&#x27;小明&#x27;</span>)<br>    stu.s_name = <span class="hljs-string">&#x27;小花&#x27;</span><br>    stu.save(<br>    <br>    # 第二种方法 - 推荐<br>    Student.objects.filter(<span class="hljs-attribute">s_name</span>=<span class="hljs-string">&#x27;小花&#x27;</span>).update(s_name=&#x27;小明&#x27;)<br>    return HttpResponse(<span class="hljs-string">&#x27;修改成功！&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<h3 id="添加templates"><a href="#添加templates" class="headerlink" title="添加templates"></a>添加templates</h3><p>添加url</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">path</span><span class="hljs-params">(<span class="hljs-string">&#x27;all_stu/&#x27;</span>, views.all_stu)</span></span>,<br></code></pre></td></tr></table></figure>
+
+<p>响应函数</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs ruby"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">all_stu</span><span class="hljs-params">(request)</span></span><span class="hljs-symbol">:</span><br>    <span class="hljs-comment"># 获取所有学生信息</span><br>    stus = Student.objects.all()<br>    <span class="hljs-comment"># 返回页面</span><br>    <span class="hljs-keyword">return</span> render(request, <span class="hljs-string">&#x27;stus.html&#x27;</span>, &#123;<span class="hljs-string">&#x27;students&#x27;</span><span class="hljs-symbol">:stus</span>&#125;)<br></code></pre></td></tr></table></figure>
+
+<p>项目根目录下添加templates文件夹，在设置文件中修改：</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs lua"><span class="hljs-string">&#x27;DIRS&#x27;</span>: [<span class="hljs-built_in">os</span>.<span class="hljs-built_in">path</span>.join(BASE_DIR, <span class="hljs-string">&#x27;templates&#x27;</span>)],<br></code></pre></td></tr></table></figure>
+
+<p>说明：<code>os.path.join(BASE_DIR, &#39;templates&#39;)</code>表示项目根目录下的tempates文件夹。</p>
+<p>添加stus.html文件</p>
+<figure class="highlight django"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs django"><span class="hljs-template-tag">&#123;% <span class="hljs-name"><span class="hljs-name">for</span></span> stu <span class="hljs-keyword">in</span> students %&#125;</span><br><span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>姓名：</span><span class="hljs-template-variable">&#123;&#123; stu.s_name &#125;&#125;</span><span class="xml">，年龄：</span><span class="hljs-template-variable">&#123;&#123; stu.s_age &#125;&#125;</span><span class="xml"><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span></span><br><span class="hljs-template-tag">&#123;% <span class="hljs-name"><span class="hljs-name">endfor</span></span> %&#125;</span><br></code></pre></td></tr></table></figure>
+
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/categories/Django/">Django</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/tags/django/">django</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/Myblog/2018/10/24/Django%E6%A8%A1%E5%9E%8B%E5%85%B3%E8%81%94%E5%85%B3%E7%B3%BB/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Django模型关联关系</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/Myblog/2018/10/18/Redis/">
+                        <span class="hidden-mobile">Redis</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/Myblog/js/events.js" ></script>
+<script  src="/Myblog/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/Myblog/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/Myblog/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/Myblog/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/Myblog/js/boot.js" ></script>
+
+
+</body>
+</html>

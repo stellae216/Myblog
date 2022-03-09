@@ -1,0 +1,529 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/Myblog/img/favicon.png">
+  <link rel="icon" href="/Myblog/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="Simple, so charming!">
+  <meta name="author" content="stellae">
+  <meta name="keywords" content="">
+  
+  <title>RESTful简述 - stellae&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/Myblog/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/Myblog/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"stellae.gitee.io","root":"/Myblog/","version":"1.8.10","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/Myblog/js/utils.js" ></script>
+  <script  src="/Myblog/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/Myblog/">&nbsp;<strong>stellae's blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/Myblog/img/WtwSsqwYlA0.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="RESTful简述">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      stellae
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2019-01-14 10:33" pubdate>
+        2019年1月14日 上午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.8k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      26
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">RESTful简述</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：3 年前
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h2 id="REST（Representational-State-Transfer-）"><a href="#REST（Representational-State-Transfer-）" class="headerlink" title="REST（Representational State Transfer ）"></a>REST（Representational State Transfer ）</h2><p>REST翻译是”表现层状态转化” ，是所有Web应用都应该遵守的架构设计指导原则。 </p>
+<p><strong>REST核心: 资源， 状态转移， 统一接口</strong> </p>
+<p><strong>资源:</strong> 是REST最明显的特征,是指对某类信息实体的抽象，资源是服务器上一个可命名的抽象概念，资源是以名词为核心来组织的，首先关注的是名词。</p>
+<p><strong>状态转移:</strong> 是指客户端痛服务端进行交互的过程中，客户端能够通过对资源的表述，实现操作资源的目的</p>
+<p><strong>统一接口:</strong> REST要求，必须通过统一的接口来对资源执行各种操作。对于每个资源只能执行一组有限的操作。 比如，客户端通过HTTP的4个请求方式(POST, GET, PUT, PATCH)来操作资源，也就意味着不管你的url是什么，不管请求的资源是什么但操作的资源接口都是统一的。</p>
+<p>GET用来获取资源，POST用来新建资源（也可以用于更新资源），PUT(PATCH)用来更新资源，DELETE用来删除资源。 </p>
+<p>本文参考阮一峰老师的文章：<a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2011/09/restful.html">《理解RESTful架构》</a> <a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2014/05/restful_api.html">《RESTful API 设计指南》</a> <a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2018/10/restful-api-best-practices.html">《RESTful API 最佳实践》</a></p>
+<h3 id="API设计"><a href="#API设计" class="headerlink" title="API设计"></a>API设计</h3><p>为移动端或者PC端设计网络API接口一个非常重要的原则是：<strong>根据业务实体而不是用户界面或操作来设计</strong>。如果API接口的设计是根据用户的操作或者界面上的功能设置来设计，随着需求的变更，用户界面也会进行调整，需要的数据也在发生变化，那么后端开发者就要不停的调整API，或者给一个API设计出多个版本，这些都会使项目的开发和维护成本增加。  </p>
+<h4 id="1-API定义规范"><a href="#1-API定义规范" class="headerlink" title="1. API定义规范"></a>1. API定义规范</h4><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">http:<span class="hljs-regexp">//</span>xxx.com<span class="hljs-regexp">/api/</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="2-路径"><a href="#2-路径" class="headerlink" title="2. 路径"></a>2. 路径</h4><p>在RESTful架构中，每个网址代表一种资源（resource），所以网址中不能有动词，只能有名词，而且所用的名词往往与数据库的表格名对应。一般来说，数据库中的表都是同种记录的”集合”（collection），所以API中的名词也应该使用复数。</p>
+<p>举例来说，有一个API提供动物园（zoo）的信息，还包括各种动物和雇员的信息，则它的路径应该设计成下面这样。</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs awk">https:<span class="hljs-regexp">//</span>api.example.com<span class="hljs-regexp">/v1/</span>zoos<br><br>https:<span class="hljs-regexp">//</span>api.example.com<span class="hljs-regexp">/v1/</span>animals<br><br>https:<span class="hljs-regexp">//</span>api.example.com<span class="hljs-regexp">/v1/</span>employees<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-HTTP动词"><a href="#3-HTTP动词" class="headerlink" title="3. HTTP动词"></a>3. HTTP动词</h4><figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">GET</span>（<span class="hljs-keyword">SELECT</span>）：从服务器取出资源（一项或多项）。<br>POST（<span class="hljs-keyword">CREATE</span>）：在服务器新建一个资源。<br>PUT（<span class="hljs-keyword">UPDATE</span>）：在服务器更新资源（客户端提供改变后的完整资源）。<br>PATCH（<span class="hljs-keyword">UPDATE</span>）：在服务器更新资源（客户端提供改变的属性）。<br><span class="hljs-keyword">DELETE</span>（<span class="hljs-keyword">DELETE</span>）：从服务器删除资源。<br></code></pre></td></tr></table></figure>
+
+<p>例子：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs gradle">GET /zoos：列出所有动物园<br><br>POST /zoos：新建一个动物园<br><br>GET <span class="hljs-regexp">/zoos/I</span>D：获取某个指定动物园的信息<br><br>PUT <span class="hljs-regexp">/zoos/I</span>D：更新某个指定动物园的信息（提供该动物园的全部信息）<br><br>PATCH <span class="hljs-regexp">/zoos/I</span>D：更新某个指定动物园的信息（提供该动物园的部分信息）<br><br><span class="hljs-keyword">DELETE</span> <span class="hljs-regexp">/zoos/I</span>D：删除某个动物园<br><br>GET <span class="hljs-regexp">/zoos/I</span>D/animals：列出某个指定动物园的所有动物<br><br><span class="hljs-keyword">DELETE</span> <span class="hljs-regexp">/zoos/I</span>D<span class="hljs-regexp">/animals/I</span>D：删除某个指定动物园的指定动物<br></code></pre></td></tr></table></figure>
+
+<h4 id="4-filter过滤"><a href="#4-filter过滤" class="headerlink" title="4. filter过滤"></a>4. filter过滤</h4><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs routeros">?<span class="hljs-attribute">limit</span>=10：指定返回记录的数量<br>?<span class="hljs-attribute">offset</span>=10：指定返回记录的开始位置。<br>?<span class="hljs-attribute">page</span>=2&amp;per_page=100：指定第几页，以及每页的记录数。<br>?<span class="hljs-attribute">sortby</span>=name&amp;order=asc：指定返回结果按照哪个属性排序，以及排序顺序。<br>?<span class="hljs-attribute">animal_type_id</span>=1：指定筛选条件<br></code></pre></td></tr></table></figure>
+
+<h4 id="5-状态码"><a href="#5-状态码" class="headerlink" title="5. 状态码"></a>5. 状态码</h4><figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">200 </span>OK - [<span class="hljs-keyword">GET</span>]：服务器成功返回用户请求的数据，该操作是幂等的（Idempotent）。<br><br><span class="hljs-symbol">201 </span>CREATED - [POST/<span class="hljs-keyword">PUT</span>/PATCH]：用户新建或修改数据成功。<br><br><span class="hljs-symbol">202 </span>Accepted - [*]：表示一个请求已经进入后台排队（异步任务）<br><br><span class="hljs-symbol">204 </span>NO CONTENT - [<span class="hljs-keyword">DELETE</span>]：用户删除数据成功。<br><br><span class="hljs-symbol">400 </span>INVALID REQUEST - [POST/<span class="hljs-keyword">PUT</span>/PATCH]：用户发出的请求有错误，服务器没有进行新建或修改数据的操作，该操作是幂等的。<br><br><span class="hljs-symbol">401 </span>Unauthorized - [*]：表示用户没有权限（令牌、用户名、密码错误）。<br><br><span class="hljs-symbol">403 </span>Forbidden - [*] 表示用户得到授权（与<span class="hljs-number">401</span>错误相对），但是访问是被禁止的。<br><br><span class="hljs-symbol">404 </span><span class="hljs-keyword">NOT</span> FOUND - [*]：用户发出的请求针对的是不存在的记录，服务器没有进行操作，该操作是幂等的。<br><br><span class="hljs-symbol">406 </span><span class="hljs-keyword">Not</span> Acceptable - [<span class="hljs-keyword">GET</span>]：用户请求的格式不可得（比如用户请求JSON格式，但是只有XML格式）。<br><br><span class="hljs-symbol">410 </span>Gone -[<span class="hljs-keyword">GET</span>]：用户请求的资源被永久删除，且不会再得到的。<br><br><span class="hljs-symbol">422 </span>Unprocesable entity - [POST/<span class="hljs-keyword">PUT</span>/PATCH] 当创建一个对象时，发生一个验证错误。<br><br><span class="hljs-symbol">500 </span>INTERNAL SERVER <span class="hljs-keyword">ERROR</span> - [*]：服务器发生错误，用户将无法判断发出的请求是否成功。<br></code></pre></td></tr></table></figure>
+
+<h4 id="6-返回结果"><a href="#6-返回结果" class="headerlink" title="6. 返回结果"></a>6. 返回结果</h4><p>服务器返回的数据格式，应该尽量使用JSON，避免使用XML。 </p>
+<p>针对不同操作，服务器向用户返回的结果应该符合以下规范。 </p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs gradle">GET /collection：返回资源对象的列表（数组）<br>GET <span class="hljs-regexp">/collection/</span>resource：返回单个资源对象<br>POST /collection：返回新生成的资源对象<br>PUT <span class="hljs-regexp">/collection/</span>resource：返回完整的资源对象<br>PATCH <span class="hljs-regexp">/collection/</span>resource：返回完整的资源对象<br><span class="hljs-keyword">DELETE</span> <span class="hljs-regexp">/collection/</span>resource：返回一个空文档<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="文档撰写实例"><a href="#文档撰写实例" class="headerlink" title="文档撰写实例"></a>文档撰写实例</h3><p>一般我们撰写接口文档+提供模拟数据(给前端移动端提供假的数据接口)，可以选用以下工具<br><a target="_blank" rel="noopener" href="http://rap2.taobao.org/">RAP2</a> / <a target="_blank" rel="noopener" href="https://apizza.net/pro/#/">apizza</a> / Swagger-UI</p>
+<p>下面以设计评论接口为例，简单说明接口文档应该如何撰写。 </p>
+<ol>
+<li><p><strong>GET</strong> <code>/comments/&#123;article-id&#125;</code></p>
+<p>开发者：星辰</p>
+<p>最后更新时间：2018年8月10日</p>
+<p>维护者：银河</p>
+<p>最后更新时间：2018年12月16日</p>
+<p>标签：v 1.0</p>
+<p>接口说明：获取指定文章的所有评论</p>
+<p>使用帮助：默认返回20条数据，需要在请求头中设置身份标识（key）</p>
+<p>请求参数：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs routeros">参数名  类型    是否必填  参数位置  说明     <br>page   整数       否     查询参数  页码，默认值1        <br>size  整数        否     查询参数  每次获取评论数量（10~100），默认值20 <br>key   字符串      是     请求头    用户的身份标识             <br></code></pre></td></tr></table></figure>
+<p>响应信息：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs JSON">&#123;<br>    <span class="hljs-attr">&quot;code&quot;</span>: <span class="hljs-number">10000</span>,<br>    <span class="hljs-attr">&quot;message&quot;</span>: <span class="hljs-string">&quot;获取评论成功&quot;</span>,<br>    <span class="hljs-attr">&quot;page&quot;</span>: <span class="hljs-number">1</span>,<br>    <span class="hljs-attr">&quot;size&quot;</span>: <span class="hljs-number">10</span>,<br>    <span class="hljs-attr">&quot;totalPage&quot;</span>: <span class="hljs-number">35</span>,<br>    <span class="hljs-attr">&quot;contents&quot;</span>: [<br>        &#123;<br>            <span class="hljs-attr">&quot;userId&quot;</span>: <span class="hljs-number">1700095</span>,<br>            <span class="hljs-attr">&quot;nickname&quot;</span>: <span class="hljs-string">&quot;星辰&quot;</span>,<br>            <span class="hljs-attr">&quot;pubDate&quot;</span>: <span class="hljs-string">&quot;2018年7月31日&quot;</span>,<br>            <span class="hljs-attr">&quot;content&quot;</span>: <span class="hljs-string">&quot;小编是不是有病呀&quot;</span>,<br>            <span class="hljs-comment">/* ... */</span><br>        &#125;,<br>        &#123;<br>        	&quot;userId&quot;, 1995322,<br>            &quot;nickname&quot;: &quot;银河&quot;,<br>            &quot;pubDate&quot;: &quot;2018年8月2日&quot;,<br>            &quot;content&quot;: &quot;楼上说得好&quot;,<br>            <span class="hljs-comment">/* ... */</span><br>        &#125;<br>    ]<br>    <span class="hljs-comment">/* ... */</span><br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>POST</strong> <code>/comments/&#123;article-id&#125;</code></p>
+<p>开发者：星辰</p>
+<p>最后更新时间：2018年8月10日</p>
+<p>维护者：银河</p>
+<p>最后更新时间：2018年11月30日</p>
+<p>标签：v 1.2</p>
+<p>接口说明：为指定的文章创建评论</p>
+<p>使用帮助：暂无</p>
+<p>请求参数：</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs properties"><span class="hljs-meta">参数名</span>   <span class="hljs-string">类型   是否必填   参数位置   说明    </span><br><span class="hljs-attr">userId</span>  <span class="hljs-string">字符串    是       消息体   用户ID     </span><br><span class="hljs-attr">key</span>     <span class="hljs-string">字符串    是       请求头   用户的令牌 </span><br><span class="hljs-attr">content</span> <span class="hljs-string">字符串    是       消息体   评论的内容 </span><br></code></pre></td></tr></table></figure>
+<p>响应信息：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs JSON">&#123;<br>    <span class="hljs-attr">&quot;code&quot;</span>: <span class="hljs-number">10001</span>,<br>    <span class="hljs-attr">&quot;message&quot;</span>: <span class="hljs-string">&quot;创建评论成功&quot;</span>,<br>    <span class="hljs-attr">&quot;comment&quot;</span>: &#123;<br>        <span class="hljs-attr">&quot;pubDate&quot;</span>: <span class="hljs-string">&quot;2018年7月31日&quot;</span>,<br>        <span class="hljs-attr">&quot;content&quot;</span>: <span class="hljs-string">&quot;小编是不是有病呀&quot;</span><br>        <span class="hljs-comment">/* ... */</span><br>    &#125;<br>    <span class="hljs-comment">/* ... */</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+</li>
+</ol>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/categories/Restful/">Restful</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/tags/restful/">restful</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/Myblog/2019/01/16/Djangorestframework/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Djangorestframework</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/Myblog/2019/01/11/Python%E5%AE%9E%E7%94%A8%E5%8A%9F%E8%83%BD/">
+                        <span class="hidden-mobile">Python实用功能</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/Myblog/js/events.js" ></script>
+<script  src="/Myblog/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/Myblog/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/Myblog/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/Myblog/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/Myblog/js/boot.js" ></script>
+
+
+</body>
+</html>

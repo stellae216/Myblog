@@ -1,0 +1,510 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/Myblog/img/favicon.png">
+  <link rel="icon" href="/Myblog/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="Simple, so charming!">
+  <meta name="author" content="stellae">
+  <meta name="keywords" content="">
+  
+  <title>容器02-字典和集合 - stellae&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/Myblog/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/Myblog/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"stellae.gitee.io","root":"/Myblog/","version":"1.8.10","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/Myblog/js/utils.js" ></script>
+  <script  src="/Myblog/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/Myblog/">&nbsp;<strong>stellae's blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/Myblog/img/WtwSsqwYlA0.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="容器02-字典和集合">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      stellae
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2018-08-28 18:55" pubdate>
+        2018年8月28日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.7k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      29
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">容器02-字典和集合</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：3 年前
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h2 id="字典和集合"><a href="#字典和集合" class="headerlink" title="字典和集合"></a>字典和集合</h2><h3 id="一、字典–dict"><a href="#一、字典–dict" class="headerlink" title="一、字典–dict"></a>一、字典–dict</h3><p><strong>字典：容器类型，以键值对作为元素。（字典里面存的数据全是以键值对出现的）</strong></p>
+<p><strong>字典是可变的（增删改）— 指字典中的键值对的值和个数是可变的</strong></p>
+<ul>
+<li>键值对 –&gt; 键：值（key：value）<br>{key1：value1，key2：value2，…}<br>注意：<br>key–必须唯一，不可变的（数字、布尔、字符串、元组，推荐使用字符串）<br>值 – 没有要求<h5 id="1、声明字典"><a href="#1、声明字典" class="headerlink" title="1、声明字典"></a>1、声明字典</h5><code>dict1 = &#123;1:100, &#39;a&#39;:97, True:&#39;布尔&#39;, (10,11):&#39;start&#39;&#125;</code><h5 id="2、获取字典的元素对应的值（字典存数据实质是存值，key是获取value的手段）"><a href="#2、获取字典的元素对应的值（字典存数据实质是存值，key是获取value的手段）" class="headerlink" title="2、获取字典的元素对应的值（字典存数据实质是存值，key是获取value的手段）"></a>2、获取字典的元素对应的值（字典存数据实质是存值，key是获取value的手段）</h5><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs stylus">person = &#123;<span class="hljs-string">&#x27;name&#x27;</span>:<span class="hljs-string">&#x27;星辰&#x27;</span>,<span class="hljs-string">&#x27;age&#x27;</span>:<span class="hljs-number">20</span>&#125;<br><span class="hljs-function"><span class="hljs-title">print</span><span class="hljs-params">(person[<span class="hljs-string">&#x27;name&#x27;</span>])</span></span><br></code></pre></td></tr></table></figure>
+通过 key 获取 value 时，如果key不存在会发生keyError异常</li>
+</ul>
+<p><strong>- dict[‘key’] 和 dict.get(‘key’) 方法使用区别</strong></p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs routeros">person = &#123;<span class="hljs-string">&#x27;name&#x27;</span>:<span class="hljs-string">&#x27;星辰&#x27;</span>,<span class="hljs-string">&#x27;age&#x27;</span>:20&#125;<br><span class="hljs-builtin-name">print</span>(person[<span class="hljs-string">&#x27;name&#x27;</span>])<br><span class="hljs-comment">#下面两种方式结果相同</span><br><span class="hljs-builtin-name">print</span>(person.<span class="hljs-builtin-name">get</span>(<span class="hljs-string">&#x27;age&#x27;</span>))<br><span class="hljs-builtin-name">print</span>(person[<span class="hljs-string">&#x27;age&#x27;</span>])     <br><span class="hljs-comment">#下面两种方式结果不同</span><br><span class="hljs-builtin-name">print</span>(person.<span class="hljs-builtin-name">get</span>(<span class="hljs-string">&#x27;sex&#x27;</span>))     #如果key不存在返回None<br><span class="hljs-builtin-name">print</span>(person[<span class="hljs-string">&#x27;sex&#x27;</span>])   #报错<br></code></pre></td></tr></table></figure>
+<p>使用情况总结：<br>1、确定key肯定存在，用 dict[] 语法获取 value ；<br>2、key值可能不存在，不存在的时候不希望报错，而是对它进行特殊处理，使用dict.get(‘key’)方法</p>
+<h5 id="3、遍历字典"><a href="#3、遍历字典" class="headerlink" title="3、遍历字典"></a>3、遍历字典</h5><p><strong>遍历字典直接取到的是字典所有 key 值</strong></p>
+<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs processing">person = &#123;<span class="hljs-string">&#x27;name&#x27;</span>:<span class="hljs-string">&#x27;星辰&#x27;</span>,<span class="hljs-string">&#x27;age&#x27;</span>:<span class="hljs-number">20</span>&#125;<br><span class="hljs-keyword">for</span> <span class="hljs-built_in">key</span> in person:<br>  <span class="hljs-built_in">print</span>(<span class="hljs-built_in">key</span>)<br>  <span class="hljs-built_in">print</span>(person[<span class="hljs-built_in">key</span>])<br>  <span class="hljs-built_in">print</span>()<br><br>name<br>星辰<br><br>age<br><span class="hljs-number">20</span><br></code></pre></td></tr></table></figure>
+<h5 id="4、改（修改key对应的value）"><a href="#4、改（修改key对应的value）" class="headerlink" title="4、改（修改key对应的value）"></a>4、改（修改key对应的value）</h5><p>语法：dict[key] = 新值</p>
+<h5 id="5、增（添加键值对）"><a href="#5、增（添加键值对）" class="headerlink" title="5、增（添加键值对）"></a>5、增（添加键值对）</h5><p><strong>增加语法和修改语法一样，如果存在即为修改，不存在即为增加。</strong><br>语法：dict[key] = 值</p>
+<h5 id="5、删（删除键值对）"><a href="#5、删（删除键值对）" class="headerlink" title="5、删（删除键值对）"></a>5、删（删除键值对）</h5><p>语法：<br>（1）、del dict [key]<br>（2）、dict.pop（key）— 与列表类似，将值取出来保存,不是键值对。</p>
+<h5 id="6、运算符-–-in-、not-in"><a href="#6、运算符-–-in-、not-in" class="headerlink" title="6、运算符 – in 、not in"></a>6、运算符 – in 、not in</h5><p>不支持 ‘ + ‘ 和 ‘ * ‘ 操作<br><strong>查找 值 在不在字典中</strong></p>
+<h5 id="7、一些关于字典的方法"><a href="#7、一些关于字典的方法" class="headerlink" title="7、一些关于字典的方法"></a>7、一些关于字典的方法</h5><p><img src="https://upload-images.jianshu.io/upload_images/13692175-dc1f3f9e864bfa5b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" srcset="/Myblog/img/loading.gif" lazyload alt="字典相关函数.png"><br>说明：</p>
+<ul>
+<li>dict.copy()：拷贝字典中所有元素，放在一个新的字典中（浅拷贝–见Day6）。</li>
+<li>dict.fromkeys(序列，默认值=None)： 将序列中的每个值作为key，默认值为value创建一个新的字典<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs stylus">dict = &#123;&#125;<br>dict = dict.fromkeys(<span class="hljs-string">&#x27;abcd&#x27;</span>,<span class="hljs-number">111</span>)<br><span class="hljs-function"><span class="hljs-title">print</span><span class="hljs-params">(dict)</span></span><br><br>&#123;<span class="hljs-string">&#x27;a&#x27;</span>: <span class="hljs-number">111</span>, <span class="hljs-string">&#x27;b&#x27;</span>: <span class="hljs-number">111</span>, <span class="hljs-string">&#x27;c&#x27;</span>: <span class="hljs-number">111</span>, <span class="hljs-string">&#x27;d&#x27;</span>: <span class="hljs-number">111</span>&#125;<br></code></pre></td></tr></table></figure></li>
+<li>dict.setdefault(key,default=None)：添加键值对，默认为None，不能修改。</li>
+<li>dict1.update(dict2)：将dict2的键值对更新（添加）到dict1中：（1）如果dict2中的key在dict1中存在，就用key2对应的值更新key1的值（2）不存在就添加。<h5 id="8、字典和列表的组合使用–重点"><a href="#8、字典和列表的组合使用–重点" class="headerlink" title="8、字典和列表的组合使用–重点"></a>8、字典和列表的组合使用–重点</h5></li>
+</ul>
+<p><strong>列表和字典选择：<br>列表–保存数据是一个类型。<br>字典–保存数据类型不同。</strong></p>
+<p><strong>应用：学生管理系统</strong><br>a、一个系统可以存储多个学生<br>b、一个学生可以存储：姓名，电话，籍贯，专业等<br>c、添加、删除、修改学生信息</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-comment">#1、列表中有字典</span><br>student_system = [ &#123;<span class="hljs-string">&#x27;name&#x27;</span>:<span class="hljs-string">&#x27;stu1&#x27;</span>, <span class="hljs-string">&#x27;age&#x27;</span>:18, <span class="hljs-string">&#x27;tel&#x27;</span>:110&#125;,<br>                   &#123;<span class="hljs-string">&#x27;name&#x27;</span>:<span class="hljs-string">&#x27;stu2&#x27;</span>, <span class="hljs-string">&#x27;age&#x27;</span>:19, <span class="hljs-string">&#x27;tel&#x27;</span>:120&#125;,<br>                   &#123;<span class="hljs-string">&#x27;name&#x27;</span>:<span class="hljs-string">&#x27;stu3&#x27;</span>, <span class="hljs-string">&#x27;age&#x27;</span>:20, <span class="hljs-string">&#x27;tel&#x27;</span>:130&#125;]<br><span class="hljs-comment">#取出第一个学生的籍贯</span><br><span class="hljs-builtin-name">print</span>(student_system[0][<span class="hljs-string">&#x27;name&#x27;</span>])<br><br><span class="hljs-comment">#2、字典中有列表</span><br>py_class = &#123;<br>    <span class="hljs-string">&#x27;class_name&#x27;</span>:<span class="hljs-string">&#x27;python1806&#x27;</span>,<br>    <span class="hljs-string">&#x27;student&#x27;</span>:[&#123;<span class="hljs-string">&#x27;name&#x27;</span>:<span class="hljs-string">&#x27;stu1&#x27;</span>, <span class="hljs-string">&#x27;age&#x27;</span>:18, <span class="hljs-string">&#x27;tel&#x27;</span>:110&#125;,<br>               &#123;<span class="hljs-string">&#x27;name&#x27;</span>:<span class="hljs-string">&#x27;stu2&#x27;</span>, <span class="hljs-string">&#x27;age&#x27;</span>:19, <span class="hljs-string">&#x27;tel&#x27;</span>:120&#125;,<br>               &#123;<span class="hljs-string">&#x27;name&#x27;</span>:<span class="hljs-string">&#x27;stu3&#x27;</span>, <span class="hljs-string">&#x27;age&#x27;</span>:20, <span class="hljs-string">&#x27;tel&#x27;</span>:130&#125;<br>    ],<br>&#125;<br><span class="hljs-comment">#取班级名</span><br><span class="hljs-builtin-name">print</span>(py_class[<span class="hljs-string">&#x27;class_name&#x27;</span>])<br><span class="hljs-comment">#取第三个学生的名字</span><br><span class="hljs-builtin-name">print</span>(py_class[<span class="hljs-string">&#x27;student&#x27;</span>][2][<span class="hljs-string">&#x27;name&#x27;</span>])<br><br>python1806<br>stu3<br></code></pre></td></tr></table></figure>
+<p>扩展：</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs vim"># 练习<span class="hljs-number">1</span>：在班级python1806添加一个学生，要学生自己输入信息：名字，年龄，id<br>name = <span class="hljs-built_in">input</span>(<span class="hljs-string">&#x27;请输入您的名字：&#x27;</span>)<br>age = <span class="hljs-keyword">int</span>(<span class="hljs-built_in">input</span>(<span class="hljs-string">&#x27;输入您的年龄：&#x27;</span>))<br>id = <span class="hljs-built_in">input</span>(<span class="hljs-string">&#x27;请输入您的id：&#x27;</span>)<br>student = &#123;<span class="hljs-string">&#x27;name&#x27;</span>:name, <span class="hljs-string">&#x27;age&#x27;</span>:age, <span class="hljs-string">&#x27;id&#x27;</span>:id&#125;<br>class_python1806 = [&#123;<span class="hljs-string">&#x27;name&#x27;</span>:<span class="hljs-string">&#x27;stu1&#x27;</span>, <span class="hljs-string">&#x27;age&#x27;</span>:<span class="hljs-number">18</span>, <span class="hljs-string">&#x27;tel&#x27;</span>:<span class="hljs-number">110</span>&#125;,<br>                    &#123;<span class="hljs-string">&#x27;name&#x27;</span>:<span class="hljs-string">&#x27;stu2&#x27;</span>, <span class="hljs-string">&#x27;age&#x27;</span>:<span class="hljs-number">19</span>, <span class="hljs-string">&#x27;tel&#x27;</span>:<span class="hljs-number">120</span>&#125;,<br>                    &#123;<span class="hljs-string">&#x27;name&#x27;</span>:<span class="hljs-string">&#x27;stu3&#x27;</span>, <span class="hljs-string">&#x27;age&#x27;</span>:<span class="hljs-number">20</span>, <span class="hljs-string">&#x27;tel&#x27;</span>:<span class="hljs-number">130</span>&#125;<br>                     ]<br>class_python1806.<span class="hljs-keyword">append</span>(student)<br><span class="hljs-keyword">print</span>(class_python1806)<br><br>#练习<span class="hljs-number">2</span>：输入一个学生的姓名，根据姓名取删除对应的学生<br>name_del = <span class="hljs-built_in">input</span>(<span class="hljs-string">&#x27;输入您要删除的学生姓名：&#x27;</span>)<br><span class="hljs-keyword">for</span> i in <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(class_python1806)):<br>    <span class="hljs-keyword">if</span> class_python1806[i][<span class="hljs-string">&#x27;name&#x27;</span>] == name_de<span class="hljs-variable">l:</span><br>        del class_python1806[i]<br><span class="hljs-keyword">print</span>(class_python1806)<br><br>结果：<br>请输入您的名字：<span class="hljs-number">111</span><br>输入您的年龄：<span class="hljs-number">11</span><br>请输入您的id：<span class="hljs-number">11</span><br>[&#123;<span class="hljs-string">&#x27;name&#x27;</span>: <span class="hljs-string">&#x27;stu1&#x27;</span>, <span class="hljs-string">&#x27;age&#x27;</span>: <span class="hljs-number">18</span>, <span class="hljs-string">&#x27;tel&#x27;</span>: <span class="hljs-number">110</span>&#125;, &#123;<span class="hljs-string">&#x27;name&#x27;</span>: <span class="hljs-string">&#x27;stu2&#x27;</span>, <span class="hljs-string">&#x27;age&#x27;</span>: <span class="hljs-number">19</span>, <span class="hljs-string">&#x27;tel&#x27;</span>: <span class="hljs-number">120</span>&#125;, &#123;<span class="hljs-string">&#x27;name&#x27;</span>: <span class="hljs-string">&#x27;stu3&#x27;</span>, <span class="hljs-string">&#x27;age&#x27;</span>: <span class="hljs-number">20</span>, <span class="hljs-string">&#x27;tel&#x27;</span>: <span class="hljs-number">130</span>&#125;, &#123;<span class="hljs-string">&#x27;name&#x27;</span>: <span class="hljs-string">&#x27;111&#x27;</span>, <span class="hljs-string">&#x27;age&#x27;</span>: <span class="hljs-number">11</span>, <span class="hljs-string">&#x27;id&#x27;</span>: <span class="hljs-string">&#x27;11&#x27;</span>&#125;]<br>输入您要删除的学生姓名：<span class="hljs-number">111</span><br>[&#123;<span class="hljs-string">&#x27;name&#x27;</span>: <span class="hljs-string">&#x27;stu1&#x27;</span>, <span class="hljs-string">&#x27;age&#x27;</span>: <span class="hljs-number">18</span>, <span class="hljs-string">&#x27;tel&#x27;</span>: <span class="hljs-number">110</span>&#125;, &#123;<span class="hljs-string">&#x27;name&#x27;</span>: <span class="hljs-string">&#x27;stu2&#x27;</span>, <span class="hljs-string">&#x27;age&#x27;</span>: <span class="hljs-number">19</span>, <span class="hljs-string">&#x27;tel&#x27;</span>: <span class="hljs-number">120</span>&#125;, &#123;<span class="hljs-string">&#x27;name&#x27;</span>: <span class="hljs-string">&#x27;stu3&#x27;</span>, <span class="hljs-string">&#x27;age&#x27;</span>: <span class="hljs-number">20</span>, <span class="hljs-string">&#x27;tel&#x27;</span>: <span class="hljs-number">130</span>&#125;]<br><br></code></pre></td></tr></table></figure>
+
+<h3 id="二、集合-–-set"><a href="#二、集合-–-set" class="headerlink" title="二、集合 – set"></a>二、集合 – set</h3><p>集合是python中的一种容器类型：无序的，可变的，值唯一</p>
+<h5 id="1、声明一个集合"><a href="#1、声明一个集合" class="headerlink" title="1、声明一个集合"></a>1、声明一个集合</h5><p>set1 = {1, ‘abc’}<br>将其他序列转换为集合，自动去重<br><code>set2 = set(&#39;name name&#39;) --&gt; &#123;&#39;n&#39;, &#39;a&#39;, &#39; &#39;, &#39;e&#39;, &#39;m&#39;&#125;</code><br>一般容器类型都不能放入集合，比如列表，字典等</p>
+<h5 id="2、查（获取集合中的元素）"><a href="#2、查（获取集合中的元素）" class="headerlink" title="2、查（获取集合中的元素）"></a>2、查（获取集合中的元素）</h5><p><strong>集合是不能直接单独获取其中某一个元素的。<br>只能遍历获取每一个元素</strong></p>
+<h5 id="3、增"><a href="#3、增" class="headerlink" title="3、增"></a>3、增</h5><p>a、set.add(元素)<br>b、set1.update(set2)  – 将set2元素添加到set1中</p>
+<h5 id="4、删"><a href="#4、删" class="headerlink" title="4、删"></a>4、删</h5><p>set.remove(元素)<br>set.clear()  —  全删</p>
+<h5 id="5、数学相关的集合运算-—-重点"><a href="#5、数学相关的集合运算-—-重点" class="headerlink" title="5、数学相关的集合运算 — 重点"></a>5、数学相关的集合运算 — 重点</h5><ul>
+<li>判断包含情况：<br>集合1 &gt;= 集合2：判断集合1中是否包含集合2</li>
+<li>求并集：|<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs angelscript">set1 = &#123;<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>&#125;<br>set2 = &#123;<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>&#125;<br>print(set1 | set2)<br><br>&#123;<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>&#125;<br></code></pre></td></tr></table></figure></li>
+<li>求交集：&amp;<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs angelscript">set1 = &#123;<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>&#125;<br>set2 = &#123;<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>&#125;<br>print(set1 &amp; set2)<br><br>&#123;<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>&#125;<br></code></pre></td></tr></table></figure></li>
+<li>求差集：-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs angelscript">set1 = &#123;<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>&#125;<br>set2 = &#123;<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>&#125;<br>print(set1 &amp; set2)<br><br>&#123;<span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>&#125;<br></code></pre></td></tr></table></figure></li>
+<li>求补集：^<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs angelscript">set1 = &#123;<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>&#125;<br>set2 = &#123;<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>&#125;<br>print(set1 ^ set2)<br><br>&#123;<span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>&#125;<br></code></pre></td></tr></table></figure>
+补充：<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs livecodeserver"><span class="hljs-built_in">sum</span>（）：python中对序列求和的方法<br>dir（）：可以查找一些内置函数<br>isinstance(<span class="hljs-keyword">a</span>, b)：比较<span class="hljs-keyword">a</span>、b类型是否相同，返回True和False<br>isinstance(<span class="hljs-keyword">a</span>, 类型)：判断<span class="hljs-keyword">a</span>是否为一个类型<br>str.<span class="hljs-built_in">split</span>():把字符串以空格分开，返回一个列表<br>re.sub(<span class="hljs-string">&#x27;[要替换的字符]&#x27;</span>, <span class="hljs-string">&#x27;新字符&#x27;</span>,字符串)<br></code></pre></td></tr></table></figure></li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/categories/Python/">Python</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/tags/%E5%AE%B9%E5%99%A8/">容器</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/Myblog/2018/08/28/%E5%AD%A6%E7%94%9F%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">学生管理系统</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/Myblog/2018/08/27/%E5%AE%B9%E5%99%A801-%E5%88%97%E8%A1%A8%E5%92%8C%E5%85%83%E7%BB%84/">
+                        <span class="hidden-mobile">容器01-列表和元组</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/Myblog/js/events.js" ></script>
+<script  src="/Myblog/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/Myblog/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/Myblog/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/Myblog/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/Myblog/js/boot.js" ></script>
+
+
+</body>
+</html>

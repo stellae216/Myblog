@@ -1,0 +1,590 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/Myblog/img/favicon.png">
+  <link rel="icon" href="/Myblog/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="Simple, so charming!">
+  <meta name="author" content="stellae">
+  <meta name="keywords" content="">
+  
+  <title>Flask-缓存机制 - stellae&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/Myblog/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/Myblog/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"stellae.gitee.io","root":"/Myblog/","version":"1.8.10","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/Myblog/js/utils.js" ></script>
+  <script  src="/Myblog/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/Myblog/">&nbsp;<strong>stellae's blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/Myblog/img/WtwSsqwYlA0.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Flask-缓存机制">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      stellae
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2018-11-18 17:56" pubdate>
+        2018年11月18日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.6k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      41
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Flask-缓存机制</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：1 年前
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h3 id="HTTP缓存机制在Flask的实现"><a href="#HTTP缓存机制在Flask的实现" class="headerlink" title="HTTP缓存机制在Flask的实现"></a>HTTP缓存机制在Flask的实现</h3><p>HTTP缓存头的参数包括：</p>
+<ul>
+<li>Cache-Control（用于本地缓存）</li>
+<li>Expires（用于本地缓存）</li>
+<li>Last-Modified(协商缓存)</li>
+<li>Etag(协商缓存)。</li>
+</ul>
+<h4 id="1-HTTP缓存头"><a href="#1-HTTP缓存头" class="headerlink" title="1.HTTP缓存头"></a>1.HTTP缓存头</h4><p><strong>（1）Cache_Control</strong></p>
+<p>指定请求和响应遵循的缓存机制。在请求消息或响应消息中设置Cache- Control并不会修改另一个消息处理过程中的缓 存处理过程。</p>
+<ul>
+<li>请求时的缓存指令包括no-cache、no-store、max-age、max-stale、min-fresh、only-if- cached；</li>
+<li>响应消息中的指令包括public、private、no-cache、no-store、no-transform、must- revalidate、proxy-revalidate、max-age。</li>
+</ul>
+<p><strong>（2）Expires</strong></p>
+<p>是一个绝对时间，作用与cache-control的max-age相类似，表示资源信息失效的时间。</p>
+<p><strong>（3）Last-Modified</strong></p>
+<p>被访问的资源的最近一次更改时间(http1.0)</p>
+<p><strong>（4）ETag</strong></p>
+<p>资源的一个唯一标志（http1.1），通过这个标识，可以实现客户端与服务端的协商机制。它的作用与Last-Modified是相类似的。</p>
+<p><strong>事实上，上述四者的实现机制上，可以归纳为：</strong></p>
+<ul>
+<li>cache-control/Expires：资源有效时间定义机制</li>
+<li>Last-Modified/ETag：资源更新传输协商机制</li>
+</ul>
+<h4 id="2-HTTP缓存机制"><a href="#2-HTTP缓存机制" class="headerlink" title="2.HTTP缓存机制"></a>2.HTTP缓存机制</h4><p><strong>（1）cache-control/Expires：资源有效时间定义机制</strong></p>
+<p>最好的请求是不必与服务器进行通信的请求：通过响应的本地副本，我们可以避免所有的网络延迟以及数据传输的数据成本。为此，HTTP 规范允许服务器返回 <a target="_blank" rel="noopener" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html">一系列不同的 Cache-Control 指令</a>，控制浏览器或者其他中继缓存如何缓存某个响应以及缓存多长时间。</p>
+<p><strong>参数说明：</strong></p>
+<ul>
+<li><p>no-cache和 no-store<br> no-cache表示必须先与服务器确认返回的响应是否被更改，然后才能使用该响应来满足后续对同一个网址的请求。因此，如果存在合适的验证令牌 (ETag)，no-cache 会发起往返通信来验证缓存的响应，如果资源未被更改，可以避免下载。相比之下，no-store更加简单，直接禁止浏览器和所有中继缓存存储返回的任何版本的响应 - 例如：一个包含个人隐私数据或银行数据的响应。每次用户请求该资源时，都会向服务器发送一个请求，每次都会下载完整的响应。</p>
+</li>
+<li><p>public和private<br> 如果响应被标记为public，即使有关联的 HTTP 认证，甚至响应状态码无法正常缓存，响应也可以被缓存。大多数情况下，public不是必须的，因为明确的缓存信息（例如max-age）已表示 响应可以被缓存。相比之下，浏览器可以缓存private响应，但是通常只为单个用户缓存，因此，不允许任何中继缓存对其进行缓存 - 例如，用户浏览器可以缓存包含用户私人信息的 HTML 网页，但是 CDN 不能缓存。</p>
+</li>
+<li><p>max-age<br> 该指令指定从当前请求开始，允许获取的响应被重用的最长时间（单位为秒） - 例如：max-age=60表示响应可以再缓存和重用 60 秒。</p>
+</li>
+<li><p>expires<br> Cache-Control 头在 HTTP/1.1 规范中定义，取代了之前用来定义响应缓存策略的头（例如 Expires）。当前的所有浏览器都支持 Cache-Control，因此，使用它就够了。</p>
+</li>
+<li><p>cache-control</p>
+<p>在请求端和服务端的命令相互独立，cache-control不会因为请求设置的值而修改响应设置，反之亦然。这里考虑到一种场景，响应头中设置了一定的缓存时间，然而请求端仍然需要获取最新结果，则将请求头的缓存设置中加上“max-age=0”，则强制服务端响应这个请求。</p>
+</li>
+</ul>
+<p><strong>（2）Last-Modified/ETag：资源更新传输协商机制</strong></p>
+<ul>
+<li><p>Last-Modified</p>
+<p>在浏览器第一次请求某一个URL时，服务器端的返回状态会是200，内容是你请求的资源，同时有一个Last-Modified的属性标记此文件在服务期端最后被修改的时间，格式类似这样:</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs angelscript">Last-Modified: Fri, <span class="hljs-number">12</span> May <span class="hljs-number">2006</span> <span class="hljs-number">18</span>:<span class="hljs-number">53</span>:<span class="hljs-number">33</span> GMT<br></code></pre></td></tr></table></figure>
+
+<p>客户端第二次请求此URL时，根据 HTTP 协议的规定，浏览器会向服务器传送 If-Modified-Since 报头，询问该时间之后文件是否有被修改过:</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs angelscript">If-Modified-Since: Fri, <span class="hljs-number">12</span> May <span class="hljs-number">2006</span> <span class="hljs-number">18</span>:<span class="hljs-number">53</span>:<span class="hljs-number">33</span> GMT<br></code></pre></td></tr></table></figure>
+
+<p>如果服务器端的资源没有变化，则自动返回 HTTP 304 （Not Changed.）状态码，内容为空，这样就节省了传输数据量。当服务器端代码发生改变或者重启服务器时，则重新发出资源，返回和第一次请求时类似。从而保证不向客户端重复发出资源，也保证当服务器有变化时，客户端能够得到最新的资源。</p>
+</li>
+<li><p>ETag</p>
+<p>HTTP 协议规格说明定义ETag为“被请求变量的实体值” 。另一种说法是，ETag是一个可以与Web资源关联的记号（token）。典型的Web资源可以一个Web页，但也可能是JSON或XML文档。服务器单独负责判断记号是什么及其含义，并在HTTP响应头中将其传送到客户端，以下是服务器端返回的格式：</p>
+<figure class="highlight avrasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs avrasm"><span class="hljs-symbol">ETag:</span> <span class="hljs-string">&quot;50b1c1d4f775c61:df3&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>客户端的查询更新格式是这样的：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs dart">If-None-<span class="hljs-built_in">Match</span>: W/<span class="hljs-string">&quot;50b1c1d4f775c61:df3&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>如果ETag没改变，则返回状态304然后不返回，这也和Last-Modified一样。</p>
+</li>
+</ul>
+<h4 id="3-基于Flask实现-cache-control"><a href="#3-基于Flask实现-cache-control" class="headerlink" title="3.基于Flask实现 cache-control"></a>3.基于Flask实现 cache-control</h4><p>此扩展本身不提供任何缓存。其唯一目的是在响应上设置Cache-Control和相关的HTTP标头，以便您所在辖区中评估Cache-Control标头（例如Varnish Cache）的客户端，中间代理或反向代理为您进行缓存。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">pip install Flask-CacheControl<br></code></pre></td></tr></table></figure>
+
+<p>Example</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># init</span><br><span class="hljs-keyword">from</span> flask_cachecontrol <span class="hljs-keyword">import</span> FlaskCacheControl, cache, cache_for, dont_cache<br><br>flask_cache_control = FlaskCacheControl()<br>flask_cache_control.init_app(app)<br><br><span class="hljs-comment"># route</span><br><span class="hljs-meta">@app.route(&#x27;/&#x27;)</span><br><span class="hljs-meta">@cache_for(hours=3)</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">index_view</span>():</span><br>    <span class="hljs-keyword">return</span> render_template(<span class="hljs-string">&#x27;index_template&#x27;</span>)<br><br><span class="hljs-meta">@app.route(&#x27;/stats&#x27;)</span><br><span class="hljs-meta">@cache(max_age=3600, public=True)</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">stats_view</span>():</span><br>    <span class="hljs-keyword">return</span> render_template(<span class="hljs-string">&#x27;stats_template&#x27;</span>)<br><br><span class="hljs-meta">@app.route(&#x27;/dashboard&#x27;)</span><br><span class="hljs-meta">@dont_cache()</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">dashboard_view</span>():</span><br>    <span class="hljs-keyword">return</span> render_template(<span class="hljs-string">&#x27;dashboard_template&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="4-基于Flask实现-ETag-Last-Modified"><a href="#4-基于Flask实现-ETag-Last-Modified" class="headerlink" title="4.基于Flask实现 ETag/Last-Modified"></a>4.基于Flask实现 ETag/Last-Modified</h4><p>ETag没有flask扩展包，这里有一篇<a target="_blank" rel="noopener" href="http://flask.pocoo.org/snippets/95/">官方的文章</a>介绍实现方法。对方法总结一下：</p>
+<ul>
+<li>给flask.response.set_etag()做一个猴子补丁（Monkeypatching）。</li>
+<li>猴子补丁的内容为，校验请求包的“IF-MATCH”与“IF-NONE-MATCH”信息（即请求包的ETag字段），如果不合法则直接返回错误；如果合法，则执行校验etag，将本次新生成的etag码与请求包中的“IF-NONE-MATCH”码相匹配，则抛出“NotModified”异常（执行304状态码及空包返回），如果不匹配，则进行全数据返回且包含了新的ETag信息。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs python">_old_set_etag = werkzeug.ETagResponseMixin.set_etag<br><span class="hljs-meta">@functools.wraps(werkzeug.ETagResponseMixin.set_etag)</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">_new_set_etag</span>(<span class="hljs-params">self, etag, weak=False</span>):</span><br>    <span class="hljs-comment"># only check the first time through; when called twice</span><br>    <span class="hljs-comment"># we&#x27;re modifying</span><br>    <span class="hljs-keyword">if</span> (hasattr(flask.g, <span class="hljs-string">&#x27;condtnl_etags_start&#x27;</span>) <span class="hljs-keyword">and</span><br>                               flask.g.condtnl_etags_start):<br>        <span class="hljs-keyword">if</span> flask.request.method <span class="hljs-keyword">in</span> (<span class="hljs-string">&#x27;PUT&#x27;</span>, <span class="hljs-string">&#x27;DELETE&#x27;</span>, <span class="hljs-string">&#x27;PATCH&#x27;</span>):<br>            <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> flask.request.if_match:<br>                <span class="hljs-keyword">raise</span> PreconditionRequired<br>            <span class="hljs-keyword">if</span> etag <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> flask.request.if_match:<br>                flask.abort(<span class="hljs-number">412</span>)<br>        <span class="hljs-keyword">elif</span> (flask.request.method == <span class="hljs-string">&#x27;GET&#x27;</span> <span class="hljs-keyword">and</span><br>              flask.request.if_none_match <span class="hljs-keyword">and</span><br>              etag <span class="hljs-keyword">in</span> flask.request.if_none_match):<br>            <span class="hljs-keyword">raise</span> NotModified<br>        flask.g.condtnl_etags_start = <span class="hljs-literal">False</span><br>    _old_set_etag(self, etag, weak)<br>werkzeug.ETagResponseMixin.set_etag = _new_set_etag<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>校验ETag的行为在API的响应代码中执行。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs python">app = flask.Flask(__name__)<br>d = &#123;<span class="hljs-string">&#x27;a&#x27;</span>: <span class="hljs-string">&#x27;This is &quot;a&quot;.\n&#x27;</span>, <span class="hljs-string">&#x27;b&#x27;</span>: <span class="hljs-string">&#x27;This is &quot;b&quot;.\n&#x27;</span>&#125;<br><span class="hljs-meta">@app.route(&#x27;/&lt;path&gt;&#x27;,</span><br>           methods = [<span class="hljs-string">&#x27;GET&#x27;</span>, <span class="hljs-string">&#x27;PUT&#x27;</span>, <span class="hljs-string">&#x27;DELETE&#x27;</span>, <span class="hljs-string">&#x27;PATCH&#x27;</span>])<br><span class="hljs-meta">@conditional</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">view</span>(<span class="hljs-params">path</span>):</span><br>    <span class="hljs-keyword">try</span>:<br>        <span class="hljs-comment"># SHA1 should generate well-behaved etags</span><br>        etag = hashlib.sha1(d[path]).hexdigest()<br>        <span class="hljs-keyword">if</span> flask.request.method == <span class="hljs-string">&#x27;GET&#x27;</span>:<br>            response = flask.make_response(d[path])<br>            response.set_etag(etag)<br>        <span class="hljs-keyword">else</span>:<br>            response = flask.Response(status=<span class="hljs-number">204</span>)<br>            <span class="hljs-keyword">del</span> response.headers[<span class="hljs-string">&#x27;content-type&#x27;</span>]<br>            response.set_etag(etag)<br>            <span class="hljs-keyword">if</span> flask.request.method == <span class="hljs-string">&#x27;DELETE&#x27;</span>:<br>                <span class="hljs-keyword">del</span> d[path]<br>                <span class="hljs-keyword">del</span> response.headers[<span class="hljs-string">&#x27;etag&#x27;</span>]<br>            <span class="hljs-keyword">else</span>:<br>                <span class="hljs-keyword">if</span> flask.request.method == <span class="hljs-string">&#x27;PUT&#x27;</span>:<br>                    d[path] = flask.request.data<br>                <span class="hljs-keyword">else</span>: <span class="hljs-comment"># (PATCH)</span><br>                    <span class="hljs-comment"># lame PATCH technique</span><br>                    d[path] += flask.request.data<br>             response.set_etag(hashlib.sha1(d[path])<br>                                      .hexdigest())<br>        <span class="hljs-keyword">return</span> response<br>    <span class="hljs-keyword">except</span> KeyError:<br>        flask.abort(<span class="hljs-number">404</span>)<br>app.run()<br></code></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/41773c3e4e56">参考文章</a> / <a target="_blank" rel="noopener" href="https://github.com/twiebe/Flask-CacheControl">Flask-CacheControl</a> / <a target="_blank" rel="noopener" href="https://www.runoob.com/http/http-header-fields.html">HTTP响应头</a></p>
+<h3 id="数据库缓存在Flask的实现"><a href="#数据库缓存在Flask的实现" class="headerlink" title="数据库缓存在Flask的实现"></a>数据库缓存在Flask的实现</h3><p>安装Flask-Cache</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">pip install Flask-Cache<br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> flask <span class="hljs-keyword">import</span> Flask<br><span class="hljs-keyword">from</span> flask.ext.cache <span class="hljs-keyword">import</span> Cache<br><br>app = Flask(__name__)<br><span class="hljs-comment"># Check Configuring Flask-Cache section for more details</span><br>cache = Cache(app,config=&#123;<span class="hljs-string">&#x27;CACHE_TYPE&#x27;</span>: <span class="hljs-string">&#x27;simple&#x27;</span>&#125;)<br><br><span class="hljs-meta">@app.route(&quot;/get_info&quot;)</span><br><span class="hljs-meta">@cache.cached(timeout=30, key_prefix=&quot;get_info&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_info</span>():</span><br>    <span class="hljs-keyword">print</span> <span class="hljs-string">&quot;no cache!&quot;</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;it is ok!&quot;</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>timeout设置过期时间；key_prefix设置cache_key，不设置此值默认使用path.request；unless接受一个bool值，设置为True不会使用缓存机制</p>
+</blockquote>
+<h4 id="Flask-Cache支持缓存类型"><a href="#Flask-Cache支持缓存类型" class="headerlink" title="Flask-Cache支持缓存类型"></a>Flask-Cache支持缓存类型</h4><ul>
+<li><strong>null</strong>：无缓存。相关配置项如下：</li>
+</ul>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm"><span class="hljs-keyword">CACHE_ARGS	</span>在缓存类实例化过程中解包和传递的可选列表<br><span class="hljs-keyword">CACHE_OPTIONS	</span>可选字典在缓存类实例化期间传递<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>simple</strong>：使用本地python字典进行存储(Werkzeug)，这不是线程安全的。相关配置项如下：</li>
+</ul>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs objectivec"><span class="hljs-built_in">CACHE_DEFAULT_TIMEOUT</span>	默认过期/超时时间，单位为秒<br><span class="hljs-built_in">CACHE_THRESHOLD</span>	缓存的最大条目数<br><span class="hljs-built_in">CACHE_ARGS</span>	在缓存类实例化过程中解包和传递的可选列表<br><span class="hljs-built_in">CACHE_OPTIONS</span>	可选字典在缓存类实例化期间传递<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>filesystem</strong>：使用文件系统来存储缓存的值。相关配置项如下：</li>
+</ul>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs objectivec"><span class="hljs-built_in">CACHE_DEFAULT_TIMEOUT</span>	默认过期/超时时间，单位为秒<br><span class="hljs-built_in">CACHE_DIR</span>	存储缓存的目录<br><span class="hljs-built_in">CACHE_THRESHOLD</span>	缓存的最大条目数<br><span class="hljs-built_in">CACHE_ARGS</span>	在缓存类实例化过程中解包和传递的可选列表<br><span class="hljs-built_in">CACHE_OPTIONS</span>	可选字典在缓存类实例化期间传递<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>memcached</strong>：使用memcached服务器作为缓存后端，支持pylibmc或memcache或Google应用程序引擎memcache库。相关配置项如下：</li>
+</ul>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs objectivec"><span class="hljs-built_in">CACHE_DEFAULT_TIMEOUT</span>	默认过期/超时时间，单位为秒<br><span class="hljs-built_in">CACHE_KEY_PREFIX</span>	设置cache_key的前缀<br><span class="hljs-built_in">CAHCE_MEMCACHED_SERVERS</span>	服务器地址的列表或元组<br><span class="hljs-built_in">CACHE_ARGS</span>	在缓存类实例化过程中解包和传递的可选列表<br><span class="hljs-built_in">CACHE_OPTIONS</span>	可选字典在缓存类实例化期间传递<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>redis</strong>：使用Redis作为缓存后端。相关配置项如下：</li>
+</ul>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs objectivec"><span class="hljs-built_in">CACHE_DEFAULT_TIMEOUT</span>	默认过期/超时时间，单位为秒<br><span class="hljs-built_in">CACHE_KEY_PREFIX</span>	设置cache_key的前缀<br><span class="hljs-built_in">CACHE_REDIS_HOST</span>	redis地址<br><span class="hljs-built_in">CACHE_REDIS_PORT</span>	redis端口<br><span class="hljs-built_in">CACHE_REDIS_PASSWORD</span>	redis密码<br><span class="hljs-built_in">CACHE_REDIS_DB</span>	使用哪个库<br><span class="hljs-built_in">CACHE_REDIS_URL</span>	连接到Redis服务器的URL。示例redis:<span class="hljs-comment">//user:password@localhost:6379/2</span><br><span class="hljs-built_in">CACHE_ARGS</span>	在缓存类实例化过程中解包和传递的可选列表<br><span class="hljs-built_in">CACHE_OPTIONS</span>	可选字典在缓存类实例化期间传递<br></code></pre></td></tr></table></figure>
+
+<p><strong>Example for Redis</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> flask <span class="hljs-keyword">import</span> Flask<br><span class="hljs-keyword">from</span> flask.ext.cache <span class="hljs-keyword">import</span> Cache<br><br>app = Flask(__name__)<br><span class="hljs-comment"># Check Configuring Flask-Cache section for more details</span><br>cache = Cache(app,config=&#123;<span class="hljs-string">&#x27;CACHE_TYPE&#x27;</span>: <span class="hljs-string">&#x27;redis&#x27;</span>,<br>                          <span class="hljs-string">&#x27;CACHE_REDIS_URL&#x27;</span>: <span class="hljs-string">&#x27;redis://user:password@localhost:6379/2&#x27;</span>&#125;)<br><br><span class="hljs-meta">@app.route(&quot;/get_info&quot;)</span><br><span class="hljs-meta">@cache.cached(timeout=30, key_prefix=&quot;get_info&quot;)</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_info</span>():</span><br>    <span class="hljs-keyword">print</span> <span class="hljs-string">&quot;no cache!&quot;</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;it is ok!&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="http://www.pythondoc.com/flask-cache/">Flask-Cache</a></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/categories/Flask/">Flask</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/tags/%E7%BC%93%E5%AD%98/">缓存</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/Myblog/2018/11/23/Flask-%E9%A1%B9%E7%9B%AE%E4%B8%8A%E7%BA%BF/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Flask-项目上线</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/Myblog/2018/11/17/Flask-Compress/">
+                        <span class="hidden-mobile">Flask-Compress</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/Myblog/js/events.js" ></script>
+<script  src="/Myblog/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/Myblog/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/Myblog/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/Myblog/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/Myblog/js/boot.js" ></script>
+
+
+</body>
+</html>

@@ -1,0 +1,529 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/Myblog/img/favicon.png">
+  <link rel="icon" href="/Myblog/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="Simple, so charming!">
+  <meta name="author" content="stellae">
+  <meta name="keywords" content="">
+  
+  <title>Scrapy - stellae&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/Myblog/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/Myblog/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"stellae.gitee.io","root":"/Myblog/","version":"1.8.10","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/Myblog/js/utils.js" ></script>
+  <script  src="/Myblog/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/Myblog/">&nbsp;<strong>stellae's blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/Myblog/img/WtwSsqwYlA0.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Scrapy">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      stellae
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2018-12-05 15:22" pubdate>
+        2018年12月5日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.6k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      33
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Scrapy</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：3 年前
+                
+              </p>
+            
+            <div class="markdown-body">
+              <p><strong>Scrapy 是一个爬取效率高、扩展性强、跨平台运行的爬虫框架。</strong></p>
+<p>scrapy支持提取数据的几种方式：</p>
+<ul>
+<li>CSS</li>
+<li>XPATH</li>
+<li>RE（正则） </li>
+</ul>
+<h4 id="安装Scrapy"><a href="#安装Scrapy" class="headerlink" title="安装Scrapy"></a>安装Scrapy</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">pip install scrapy<br></code></pre></td></tr></table></figure>
+
+<p>如果没有安装一些依赖库需要先安装</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">pip install wheel<br>pip install lxml<br>pip install pypiwin32<br></code></pre></td></tr></table></figure>
+
+<p>scrapy依赖twiste，进入<a target="_blank" rel="noopener" href="https://www.lfd.uci.edu/~gohlke/pythonlibs/">传送门</a>下载对应的twiste版本，下载python版本和位数对应的twiste版本，比如python3.6.5-32位则选择<code>Twisted‑18.9.0‑cp36‑cp36m‑win32.whl</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">pip install Twisted‑<span class="hljs-number">18.9</span><span class="hljs-number">.0</span>‑cp36‑cp36m‑win32.whl<br></code></pre></td></tr></table></figure>
+
+<h4 id="创建Scrapy项目"><a href="#创建Scrapy项目" class="headerlink" title="创建Scrapy项目"></a>创建Scrapy项目</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 创建一个scrapy项目，然后会有提示，进入项目创建蜘蛛文件</span><br>scrapy startproject project_name<br><span class="hljs-comment"># 创建蜘蛛文件</span><br>cd project_name<br>scrapy genspider example example.com  <span class="hljs-comment">#  蜘蛛名 域名</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="配置项目"><a href="#配置项目" class="headerlink" title="配置项目"></a>配置项目</h4><p>防止被爬网站的robots.txt起作用</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># settings文件</span><br>ROBOTSTXT_OBEY = <span class="hljs-literal">False</span><br></code></pre></td></tr></table></figure>
+
+<p>设置保存为中文</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 保存为中文</span><br>FEED_EXPORT_ENCODING = <span class="hljs-string">&#x27;utf-8&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<p>运行项目</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">scrapy crawl spider<br><br><span class="hljs-comment"># 保存到文件 (csv, xml, pickle, marshal)</span><br>scrapy crawl spider -o spider.json<br></code></pre></td></tr></table></figure>
+
+<p>或者可以起一个run.py文件，执行文件即可运行项目</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-keyword">from</span> scrapy <span class="hljs-keyword">import</span> cmdline<br><br># cmdline.<span class="hljs-keyword">execute</span>([<span class="hljs-string">&#x27;scrapy&#x27;</span>, <span class="hljs-string">&#x27;crawl&#x27;</span>, <span class="hljs-string">&#x27;cat&#x27;</span>])<br>cmdline.<span class="hljs-keyword">execute</span>(<span class="hljs-string">&#x27;scrapy crawl cat -o maoyan_top.json&#x27;</span>.split(<span class="hljs-string">&#x27; &#x27;</span>))<br></code></pre></td></tr></table></figure>
+
+<h4 id="Scrapy项目实例（爬取数据保存到数据库）"><a href="#Scrapy项目实例（爬取数据保存到数据库）" class="headerlink" title="Scrapy项目实例（爬取数据保存到数据库）"></a>Scrapy项目实例（爬取数据保存到数据库）</h4><p>项目爬取数据存储方式分别为Json，Pymysql，Pymongo，MongoEngine</p>
+<p>蜘蛛文件</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> scrapy<br><br><span class="hljs-keyword">from</span> day8.items <span class="hljs-keyword">import</span> Day8Item<br><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">FootballSpider</span>(<span class="hljs-params">scrapy.Spider</span>):</span><br>    <span class="hljs-comment"># 蜘蛛名</span><br>    name = <span class="hljs-string">&#x27;spider&#x27;</span><br>    <span class="hljs-comment"># 域名</span><br>    allowed_domains = [<span class="hljs-string">&#x27;maoyan.com&#x27;</span>]<br>    <span class="hljs-comment"># 爬取开始网址</span><br>    start_urls = [<span class="hljs-string">&#x27;http://maoyan.com/board/4&#x27;</span>]<br><br>    <span class="hljs-comment"># 构造请求</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">start_requests</span>(<span class="hljs-params">self</span>):</span><br>        <span class="hljs-string">&quot;&quot;&quot;发出请求，返回请求，方法自动调用&quot;&quot;&quot;</span><br>        headers = &#123;<br>            <span class="hljs-string">&#x27;User-Agent&#x27;</span>: <span class="hljs-string">&#x27;Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; 360SE)&#x27;</span>,<br>            <span class="hljs-string">&#x27;Accept&#x27;</span>: <span class="hljs-string">&#x27;application/json, text/plain, */*&#x27;</span>,<br>            <span class="hljs-string">&#x27;Accept-Encoding&#x27;</span>: <span class="hljs-string">&#x27;gzip, deflate, sdch&#x27;</span>,<br>            <span class="hljs-string">&#x27;Accept-Language&#x27;</span>: <span class="hljs-string">&#x27;zh-CN,zh;q=0.8,en;q=0.6,ja;q=0.4,zh-TW;q=0.2,mt;q=0.2&#x27;</span>,<br>            <span class="hljs-string">&#x27;Connection&#x27;</span>: <span class="hljs-string">&#x27;keep-alive&#x27;</span>,<br>            <span class="hljs-string">&#x27;X-Requested-With&#x27;</span>: <span class="hljs-string">&#x27;XMLHttpRequest&#x27;</span>,<br>            <span class="hljs-string">&#x27;Content-Type&#x27;</span>: <span class="hljs-string">&#x27;application/x-www-form-urlencoded; charset=UTF-8&#x27;</span>,<br>        &#125;<br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">10</span>):<br>            <span class="hljs-keyword">yield</span> scrapy.Request(url=<span class="hljs-string">&#x27;http://maoyan.com/board/4?offset=%d&#x27;</span> %(i * <span class="hljs-number">10</span>),<br>                                 headers=headers,<br>                                 method=<span class="hljs-string">&#x27;GET&#x27;</span>,<br>                                 callback=self.parse,<br>                                 )<br><br>    <span class="hljs-comment"># 解析响应</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">parse</span>(<span class="hljs-params">self, response</span>):</span><br>        <span class="hljs-string">&quot;&quot;&quot;解析页面&quot;&quot;&quot;</span><br>        <span class="hljs-comment"># 支持css，xpath，re方式提取数据</span><br>        <span class="hljs-comment"># extract()可以将对象转换成列表</span><br>        <span class="hljs-comment"># extract_first()拿到第一个元素，和extract()[0]想过相同。</span><br>        title = response.selector.xpath(<span class="hljs-string">&#x27;//div[@class=&quot;movie-item-info&quot;]/p[@class=&quot;name&quot;]/a/@title&#x27;</span>).extract()  <span class="hljs-comment"># 列表</span><br>        point_one = response.selector.xpath(<span class="hljs-string">&#x27;//div[@class=&quot;movie-item-number score-num&quot;]/p/i[@class=&quot;integer&quot;]/text()&#x27;</span>).extract()<br>        point_two = response.selector.xpath(<span class="hljs-string">&#x27;//div[@class=&quot;movie-item-number score-num&quot;]/p/i[@class=&quot;fraction&quot;]/text()&#x27;</span>).extract()<br>        point = []<br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(len(point_one)):<br>            point_temp = str(point_one[i]) + str(point_two[i])<br>            point.append(point_temp)<br>        star = response.selector.xpath(<span class="hljs-string">&#x27;//div[@class=&quot;movie-item-info&quot;]/p[@class=&quot;star&quot;]/text()&#x27;</span>).extract()<br>        releasetime = response.selector.xpath(<span class="hljs-string">&#x27;//div[@class=&quot;movie-item-info&quot;]/p[@class=&quot;releasetime&quot;]/text()&#x27;</span>).extract()<br>        response.selector.xpath(<span class="hljs-string">&#x27;sdsdsd&#x27;</span>).extract_first()<br>        <span class="hljs-keyword">for</span> index <span class="hljs-keyword">in</span> range(len(title)):<br>            item = Day8Item()<br>            item[<span class="hljs-string">&#x27;title&#x27;</span>] = title[index]<br>            item[<span class="hljs-string">&#x27;point&#x27;</span>] = point[index]<br>            item[<span class="hljs-string">&#x27;star&#x27;</span>] = star[index].strip()<br>            item[<span class="hljs-string">&#x27;releasetime&#x27;</span>] = releasetime[index]<br>            <span class="hljs-keyword">yield</span> item<br></code></pre></td></tr></table></figure>
+
+<p>items.py文件</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> scrapy<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Day8Item</span>(<span class="hljs-params">scrapy.Item</span>):</span><br>    <span class="hljs-comment"># define the fields for your item here like:</span><br>    title = scrapy.Field()<br>    point = scrapy.Field()<br>    star = scrapy.Field()<br>    releasetime = scrapy.Field()<br></code></pre></td></tr></table></figure>
+
+<p>pipelines.py文件</p>
+<p>注意里面的方法文件名不能写错，对应方法scrapy会自动调用</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># -*- coding: utf-8 -*-</span><br><span class="hljs-keyword">import</span>  pymysql<br><span class="hljs-keyword">import</span>  pymongo<br><span class="hljs-keyword">from</span> mongoengine <span class="hljs-keyword">import</span>  *<br><br><span class="hljs-keyword">from</span> day8.modles <span class="hljs-keyword">import</span> Movie<br><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MaoyanMysqlPipeline</span>(<span class="hljs-params">object</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;pymysql方式插入mysql&quot;&quot;&quot;</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span>(<span class="hljs-params">self, host, port, database, username, password</span>):</span><br>        self.host = host<br>        self.port = port<br>        self.database = database<br>        self.username = username<br>        self.password = password<br><br><span class="hljs-meta">    @classmethod</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">from_crawler</span>(<span class="hljs-params">cls, crawler</span>):</span><br>        <span class="hljs-string">&quot;&quot;&quot;返回数据，初始化实例&quot;&quot;&quot;</span><br>        <span class="hljs-keyword">return</span> cls(host=crawler.settings.get(<span class="hljs-string">&quot;MYSQL_HOST&quot;</span>),<br>                    port=crawler.settings.get(<span class="hljs-string">&quot;MYSQL_PORT&quot;</span>),<br>                    username=crawler.settings.get(<span class="hljs-string">&quot;MYSQL_USERNAME&quot;</span>),<br>                    password=crawler.settings.get(<span class="hljs-string">&quot;MYSQL_PASSWORD&quot;</span>),<br>                    database=crawler.settings.get(<span class="hljs-string">&quot;MYSQL_DATABASE&quot;</span>),<br>                    )<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">open_spider</span>(<span class="hljs-params">self, spider</span>):</span><br>        self.db = pymysql.connect(host=self.host, port=self.port, user=self.username, db=self.database, password=self.password)<br>        self.cursor = self.db.cursor()<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">close_spider</span>(<span class="hljs-params">self, spider</span>):</span><br>        self.db.close()<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">process_item</span>(<span class="hljs-params">self, item, spider</span>):</span><br>        sql = <span class="hljs-string">&#x27;insert into maoyan_top (title, point, star, releasetime) values (&quot;%s&quot;,&quot;%s&quot;,&quot;%s&quot;,&quot;%s&quot;)&#x27;</span>%(item[<span class="hljs-string">&#x27;title&#x27;</span>], item[<span class="hljs-string">&#x27;point&#x27;</span>], item[<span class="hljs-string">&#x27;star&#x27;</span>], item[<span class="hljs-string">&#x27;releasetime&#x27;</span>])<br>        self.cursor.execute(sql)<br>        self.db.commit()<br>        <span class="hljs-keyword">return</span> item<br><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MaoyanPymongoPipeline</span>(<span class="hljs-params">object</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;pymongo方式插入mongodb&quot;&quot;&quot;</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span>(<span class="hljs-params">self, database</span>):</span><br>        self.database = database<br><br><span class="hljs-meta">    @classmethod</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">from_crawler</span>(<span class="hljs-params">cls, crawler</span>):</span><br>        <span class="hljs-keyword">return</span> cls(database=crawler.settings.get(<span class="hljs-string">&quot;MONGO_DB&quot;</span>),)<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">open_spider</span>(<span class="hljs-params">self, spider</span>):</span><br>        self.client = pymongo.MongoClient()<br>        self.db = self.client[self.database]<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">close_spider</span>(<span class="hljs-params">self, spider</span>):</span><br>        self.client.close()<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">process_item</span>(<span class="hljs-params">self, item, spider</span>):</span><br>        movie = &#123;&#125;<br>        movie[<span class="hljs-string">&#x27;title&#x27;</span>] = item[<span class="hljs-string">&#x27;title&#x27;</span>]<br>        movie[<span class="hljs-string">&#x27;point&#x27;</span>] = item[<span class="hljs-string">&#x27;point&#x27;</span>]<br>        movie[<span class="hljs-string">&#x27;star&#x27;</span>] = item[<span class="hljs-string">&#x27;star&#x27;</span>]<br>        movie[<span class="hljs-string">&#x27;releasetime&#x27;</span>] = item[<span class="hljs-string">&#x27;releasetime&#x27;</span>]<br>        self.db.maoyan.insert_one(movie)<br>        <span class="hljs-keyword">return</span> item<br><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MaoyanMongoPipeline</span>(<span class="hljs-params">object</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;mongoengine操作模型方式插入mongodb&quot;&quot;&quot;</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span>(<span class="hljs-params">self, database</span>):</span><br>        self.database = database<br><br><span class="hljs-meta">    @classmethod</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">from_crawler</span>(<span class="hljs-params">cls, crawler</span>):</span><br>        <span class="hljs-keyword">return</span> cls(database=crawler.settings.get(<span class="hljs-string">&quot;MONGO_DB&quot;</span>),)<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">open_spider</span>(<span class="hljs-params">self, spider</span>):</span><br>        connect(self.database)<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">close_spider</span>(<span class="hljs-params">self, spider</span>):</span><br>        <span class="hljs-keyword">pass</span><br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">process_item</span>(<span class="hljs-params">self, item, spider</span>):</span><br>        movie = Movie()<br>        movie.title = item[<span class="hljs-string">&#x27;title&#x27;</span>]<br>        movie.point = item[<span class="hljs-string">&#x27;point&#x27;</span>]<br>        movie.star = item[<span class="hljs-string">&#x27;star&#x27;</span>]<br>        movie.releasetime = item[<span class="hljs-string">&#x27;releasetime&#x27;</span>]<br>        movie.save()<br>        <span class="hljs-keyword">return</span> item<br></code></pre></td></tr></table></figure>
+
+<p>modles.py文件</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> mongoengine <span class="hljs-keyword">import</span> *<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Movie</span>(<span class="hljs-params">Document</span>):</span><br>    title = StringField(max_length=<span class="hljs-number">256</span>)<br>    point = StringField(max_length=<span class="hljs-number">50</span>)<br>    star = StringField(max_length=<span class="hljs-number">256</span>)<br>    releasetime = StringField(max_length=<span class="hljs-number">128</span>)<br></code></pre></td></tr></table></figure>
+
+<p>settings.py文件</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs python">BOT_NAME = <span class="hljs-string">&#x27;day8&#x27;</span><br><br>SPIDER_MODULES = [<span class="hljs-string">&#x27;day8.spiders&#x27;</span>]<br>NEWSPIDER_MODULE = <span class="hljs-string">&#x27;day8.spiders&#x27;</span><br><br>ROBOTSTXT_OBEY = <span class="hljs-literal">False</span><br><br>ITEM_PIPELINES = &#123;<br>    <span class="hljs-comment"># 数字越小，优先级越高</span><br>    <span class="hljs-string">&#x27;day8.pipelines.MaoyanMysqlPipeline&#x27;</span>: <span class="hljs-number">300</span>,    <span class="hljs-comment"># Pymysql</span><br>    <span class="hljs-string">&#x27;day8.pipelines.MaoyanPymongoPipeline&#x27;</span>: <span class="hljs-number">500</span>,     <span class="hljs-comment"># Pymongo</span><br>    <span class="hljs-string">&#x27;day8.pipelines.MaoyanMongoPipeline&#x27;</span>: <span class="hljs-number">700</span>,    <span class="hljs-comment"># MongoEngine</span><br>&#125;<br><br><span class="hljs-comment"># 保存为中文</span><br>FEED_EXPORT_ENCODING = <span class="hljs-string">&#x27;utf-8&#x27;</span><br><br><span class="hljs-comment"># mysql_settings</span><br>MYSQL_HOST = <span class="hljs-string">&#x27;127.0.0.1&#x27;</span><br>MYSQL_PORT = <span class="hljs-number">3306</span><br>MYSQL_USERNAME = <span class="hljs-string">&#x27;root&#x27;</span><br>MYSQL_PASSWORD = <span class="hljs-string">&#x27;123456&#x27;</span><br>MYSQL_DATABASE = <span class="hljs-string">&#x27;maoyan&#x27;</span><br><br><span class="hljs-comment"># mongo setting</span><br>MONGO_DB = <span class="hljs-string">&#x27;maoyan&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<p>run.py启动文件</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> scrapy <span class="hljs-keyword">import</span> cmdline<br><br><span class="hljs-comment"># cmdline.execute([&#x27;scrapy&#x27;, &#x27;crawl&#x27;, &#x27;cat&#x27;])</span><br>cmdline.execute(<span class="hljs-string">&#x27;scrapy crawl cat -o maoyan_top.json&#x27;</span>.split(<span class="hljs-string">&#x27; &#x27;</span>))<br></code></pre></td></tr></table></figure>
+
+<h4 id="Scrapy保存图片"><a href="#Scrapy保存图片" class="headerlink" title="Scrapy保存图片"></a>Scrapy保存图片</h4><p>pipelines.py</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> scrapy <span class="hljs-keyword">import</span> Request<br><span class="hljs-keyword">from</span> scrapy.exceptions <span class="hljs-keyword">import</span> DropItem<br><span class="hljs-keyword">from</span> scrapy.pipelines.images <span class="hljs-keyword">import</span> ImagesPipeline<br><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ZhankuImagePipeline</span>(<span class="hljs-params">ImagesPipeline</span>):</span><br><br>    <span class="hljs-comment"># 构造图片url请求</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_media_requests</span>(<span class="hljs-params">self, item, info</span>):</span><br>        <span class="hljs-keyword">yield</span> Request(item[<span class="hljs-string">&#x27;preview_url&#x27;</span>])<br><br>    <span class="hljs-comment"># 返回图片文件名</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">file_path</span>(<span class="hljs-params">self, request, response=None, info=None</span>):</span><br>        url = request.url<br>        file_name = url.split(<span class="hljs-string">&#x27;/&#x27;</span>)[<span class="hljs-number">-1</span>]<br>        <span class="hljs-keyword">return</span>  file_name<br><br>    <span class="hljs-comment"># 判断图片下载请求是否成功</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">item_completed</span>(<span class="hljs-params">self, results, item, info</span>):</span><br>        image_paths = [x[<span class="hljs-string">&#x27;path&#x27;</span>] <span class="hljs-keyword">for</span> ok, x <span class="hljs-keyword">in</span> results <span class="hljs-keyword">if</span> ok]<br>        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> image_paths:<br>            <span class="hljs-keyword">raise</span> DropItem(<span class="hljs-string">&#x27;Image Downloaded Failed&#x27;</span>)<br>        <span class="hljs-keyword">return</span> item<br></code></pre></td></tr></table></figure>
+<p>settings文件中配置保存路径和开启管道</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">ITEM_PIPELINES = &#123;<br>   <span class="hljs-string">&#x27;zhancool.pipelines.ZhancoolImagePipeline&#x27;</span>: <span class="hljs-number">300</span>,<br>&#125;<br><span class="hljs-comment"># 图片保存路径</span><br>IMAGES_STORE = <span class="hljs-string">&#x27;./images&#x27;</span><br><br></code></pre></td></tr></table></figure>
+
+<h4 id="Scrapy分布式"><a href="#Scrapy分布式" class="headerlink" title="Scrapy分布式"></a>Scrapy分布式</h4><p>不同的主机的调度器从共享队列中获取爬取队列。最好使用redis列表或有序集合，提供重复过滤，调度器会从redis队列中取没有爬取的继续爬取。</p>
+<p>redis本身不支持分布式，安装scrapy-redis </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">pip install scrapy-redis<br></code></pre></td></tr></table></figure>
+<p>注意：爬取下来的数据不要存在本机，应该存放在共同的位置</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># settings里面配置，即可实现分布式</span><br><span class="hljs-comment"># REDIS_URL中存放共享队列位置（目标redis）</span><br><br>SCHEDULER = <span class="hljs-string">&#x27;scrapy_redis.scheduler.Scheduler&#x27;</span><br>DUPEFILTER_CLASS = <span class="hljs-string">&#x27;scrapy_redis.dupefilter.RFPDupeFilter&#x27;</span><br><span class="hljs-comment"># redis://user:pass@hostname:9001</span><br>REDIS_URL = <span class="hljs-string">&#x27;redis://@10.7.153.176:6379&#x27;</span><br></code></pre></td></tr></table></figure>
+
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/categories/Spider/">Spider</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/tags/scrapy/">scrapy</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/Myblog/2018/12/13/Powerdesigner%E5%92%8C%E9%80%86%E5%90%91%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Powerdesigner和逆向生成模型</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/Myblog/2018/12/04/MongoDB/">
+                        <span class="hidden-mobile">MongoDB</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/Myblog/js/events.js" ></script>
+<script  src="/Myblog/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/Myblog/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/Myblog/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/Myblog/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/Myblog/js/boot.js" ></script>
+
+
+</body>
+</html>

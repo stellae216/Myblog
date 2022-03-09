@@ -1,0 +1,529 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/Myblog/img/favicon.png">
+  <link rel="icon" href="/Myblog/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="Simple, so charming!">
+  <meta name="author" content="stellae">
+  <meta name="keywords" content="">
+  
+  <title>flask-babel多国语言支持 - stellae&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/Myblog/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/Myblog/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"stellae.gitee.io","root":"/Myblog/","version":"1.8.10","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/Myblog/js/utils.js" ></script>
+  <script  src="/Myblog/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/Myblog/">&nbsp;<strong>stellae's blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/Myblog/img/WtwSsqwYlA0.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="flask-babel多国语言支持">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      stellae
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2019-11-19 21:42" pubdate>
+        2019年11月19日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.4k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      21
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">flask-babel多国语言支持</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：8 个月前
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h3 id="Flask-babel简介"><a href="#Flask-babel简介" class="headerlink" title="Flask-babel简介"></a>Flask-babel简介</h3><p>Flask-babel 是基于 Flask 的 i18n 扩展。</p>
+<p>安装它的时候会顺便安装 <a target="_blank" rel="noopener" href="http://babel.edgewall.org/">Babel</a>、<a target="_blank" rel="noopener" href="http://pytz.sourceforge.net/">pytz</a>、<a target="_blank" rel="noopener" href="http://pypi.python.org/pypi/speaklater">speaklater</a> 这三个包，其中 Babel 是 Python 的一个国际化工具包。pytz 是处理时区的工具包，speaklater 相当于是 Babel 的一个辅助工具。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">pip install flask-babel<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="大致使用流程"><a href="#大致使用流程" class="headerlink" title="大致使用流程"></a>大致使用流程</h3><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs txt">1.开始，你需要初始化设置，flask扩展固定流程<br>2.在本地建一个babel.cfg文件，设置需要翻译的文件和应用jinja2文件。<br>3.然后记住几个命令，利用这几个命令，生成文件，流程大概是这样 --babel.cfg---*.pot --*.po----*.mo<br>*.po里的内容是需要我们翻译的。<br>*.mo是我们编译生成的文件。<br>4.使用mo文件数据(gettext或者jinja2模版渲染)<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="Flask-babel实战"><a href="#Flask-babel实战" class="headerlink" title="Flask-babel实战"></a>Flask-babel实战</h3><p><code>app/__init__.py</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> flask_babel <span class="hljs-keyword">import</span> Babel<br><span class="hljs-keyword">from</span> flask <span class="hljs-keyword">import</span> g<br><br><span class="hljs-keyword">from</span> ..utils.function <span class="hljs-keyword">import</span> get_text<br><br>babel = Babel(app)<br><br><br><span class="hljs-meta">@app.before_request</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">before_request</span>():</span><br>    g._out = get_text()<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>创建钩子函数，将国际化输出函数绑定到全局变量g上，方便视图函数使用。</p>
+</blockquote>
+<p><code>config/default.py</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">LANGUAGES = [<span class="hljs-string">&#x27;zh&#x27;</span>, <span class="hljs-string">&#x27;en&#x27;</span>, <span class="hljs-string">&#x27;es&#x27;</span>]    <span class="hljs-comment"># 支持的语言列表（对应需要生成不同的语言目录）</span><br></code></pre></td></tr></table></figure>
+
+
+
+<p><code>app/resources/*.py</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 业务接口代码</span><br><br><span class="hljs-keyword">from</span> flask <span class="hljs-keyword">import</span> g<br><span class="hljs-keyword">from</span> flask_babel <span class="hljs-keyword">import</span> _<br><br><span class="hljs-meta">@api.route(&quot;/foo&quot;)</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Manage</span>(<span class="hljs-params">Resource</span>):</span><br><br><span class="hljs-meta">    @staticmethod</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get</span>():</span><br>      a = _(<span class="hljs-string">&#x27;hello world！&#x27;</span>)<br>      b = _(<span class="hljs-string">&#x27;my name is xingchen&#x27;</span>)<br>      <span class="hljs-keyword">return</span> jsonify(&#123;<span class="hljs-string">&#x27;a&#x27;</span>: a, <span class="hljs-string">&#x27;b&#x27;</span>: b, <span class="hljs-string">&#x27;a1&#x27;</span>: g._out(a), <span class="hljs-string">&#x27;b1&#x27;</span>: g._out(b)&#125;)<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>使用<code>_()</code>标记需要翻译的文本，后面执行命令会扫描对应文件标记处，生成<code>.pot</code>文件</p>
+</blockquote>
+<p>创建方法用于处理客户端发送的带<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Language">Accept-Language</a>头部的请求-携带语言信息</p>
+<p><code>app/utils/function.py</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> gettext<br><br><span class="hljs-keyword">from</span> flask <span class="hljs-keyword">import</span> request, current_app<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_language</span>():</span><br>    <span class="hljs-string">&quot;&quot;&quot;获取用户语言&quot;&quot;&quot;</span><br>    language = request.headers.get(<span class="hljs-string">&#x27;Accept-Language&#x27;</span>)<br>    <span class="hljs-keyword">if</span> language <span class="hljs-keyword">in</span> current_app.config[<span class="hljs-string">&#x27;LANGUAGES&#x27;</span>]:<br>        <span class="hljs-keyword">return</span> language<br>    <span class="hljs-keyword">return</span><br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_text</span>(<span class="hljs-params">domain=<span class="hljs-string">&#x27;messages&#x27;</span>, localedir=<span class="hljs-string">&#x27;translations&#x27;</span></span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;获取对应国际化输出对象&quot;&quot;&quot;</span><br>    language = get_language()<br>    <span class="hljs-keyword">if</span> language:<br>        <span class="hljs-keyword">try</span>:<br>            <span class="hljs-keyword">return</span> gettext.translation(domain, localedir, languages=[language]).gettext<br>        <span class="hljs-keyword">except</span> FileNotFoundError:<br>            <span class="hljs-keyword">pass</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">lambda</span> x: x<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意：官方flask-babel只能在jinja2渲染的文本中使用mo文件，所以这里我使用了gettext库，指定mo文件和语言使用翻译数据。</p>
+</blockquote>
+<h3 id="Flask-babel相关命令"><a href="#Flask-babel相关命令" class="headerlink" title="Flask-babel相关命令"></a>Flask-babel相关命令</h3><h4 id="创建babel-cfg文件"><a href="#创建babel-cfg文件" class="headerlink" title="创建babel.cfg文件"></a>创建babel.cfg文件</h4><figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs txt">[python: app/**.py]<br>[jinja2: app/templates/**.html]<br>extensions=jinja2.ext.autoescape,jinja2.ext.with_<br></code></pre></td></tr></table></figure>
+
+<p>前两行分别定义了Python和Jinja2模板文件的文件名匹配模式，Python文件多个写多行即可。 第三行定义了Jinja2模板引擎提供的两个扩展，以帮助Flask-Babel正确解析模板文件。</p>
+<h4 id="提取文本到pot文件"><a href="#提取文本到pot文件" class="headerlink" title="提取文本到pot文件"></a>提取文本到pot文件</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">pybabel extract -F babel.cfg -o messages.pot .<br><span class="hljs-meta">#</span><span class="bash"> pybabel extract -F babel.cfg -k _l -o messages.pot .</span><br></code></pre></td></tr></table></figure>
+
+<p><code>pybabel extract</code>命令读取<code>-F</code>选项中给出的配置文件，然后从命令给出的目录（当前目录或本处的<code>.</code> ）扫描与配置的源匹配的目录中的所有代码和模板文件。 默认情况下，<code>pybabel</code>将查找<code>_()</code>以作为文本标记，但我也使用了重命名为<code>_l()</code>的延迟版本，所以我需要用<code>-k _l</code>来告诉该工具也要查找它 。 <code>-o</code>选项提供输出文件的名称。</p>
+<p>我应该注意，<em>messages.pot</em>文件不需要合并到项目中。 这是一个只要再次运行上面的命令，就可以在需要时轻松地重新生成的文件。 因此，不需要将该文件提交到源代码管理。</p>
+<h4 id="生成对应语言目录及po文件"><a href="#生成对应语言目录及po文件" class="headerlink" title="生成对应语言目录及po文件"></a>生成对应语言目录及po文件</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">pybabel init -i messages.pot -d translations -l zh<br></code></pre></td></tr></table></figure>
+
+<p><code>pybabel init</code>命令将<em>messages.pot</em>文件作为输入，并将语言目录写入<code>-d</code>选项中指定的目录中，<code>-l</code>选项中指定的是翻译语言。 我将在<em>translations</em>目录中安装所有翻译，因为这是Flask-Babel默认提取翻译文件的地方。 该命令将在该目录内为西班牙数据文件创建一个<em>zh</em>子目录。 特别是，将会有一个名为<code>translations/zh/LC_MESSAGES/messages.po</code>的新文件，是需要翻译的文件路径。</p>
+<p>如果你想支持其他语言，只需要各自的语言代码重复上述命令，就能使得每种语言都有一个包含<em>messages.po</em>文件的存储库。</p>
+<p>在每个语言存储库中创建的<code>messages.po</code>文件使用的格式是语言翻译的事实标准。</p>
+<p><strong>最流行的翻译应用程序是开源的<a target="_blank" rel="noopener" href="http://www.poedit.net/">poedit</a>。</strong></p>
+<p><strong>此时生成po文件后需要进行翻译后再进行后续操作。</strong></p>
+<h4 id="编译所有mo文件"><a href="#编译所有mo文件" class="headerlink" title="编译所有mo文件"></a>编译所有mo文件</h4><p><em>messages.po</em>文件是一种用于翻译的源文件。 当你想开始使用这些翻译后的文本时，这个文件需要被编译成一种格式，这种格式在运行时可以被应用程序使用。 要编译应用程序的所有翻译，可以使用<code>pybabel compile</code>命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">pybabel compile -d translations<br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="更新翻译文件"><a href="#更新翻译文件" class="headerlink" title="更新翻译文件"></a>更新翻译文件</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">pybabel extract -F babel.cfg -o messages.pot .<br>pybabel update -i messages.pot -d translations<br>pybabel compile -d translations<br></code></pre></td></tr></table></figure>
+
+<p><code>extract</code>命令与我之前执行的命令相同，但现在它会生成<em>messages.pot</em>的新版本，其中包含所有以前的文本以及最近用<code>_()</code>或<code>_l()</code>包装的文本。 <code>update</code>调用采用新的<code>messages.pot</code>文件并将其合并到与项目相关的所有<em>messages.po</em>文件中。 这将是一个智能合并，其中任何现有的文本将被单独保留，而只有在<em>messages.pot</em>中添加或删除的条目才会受到影响。</p>
+<p><em>messages.po</em>文件更新后，你就可以继续新的测试了，再次编译它，以便对应用生效。</p>
+<p>参考文章：<a target="_blank" rel="noopener" href="https://wizardforcel.gitbooks.io/the-flask-mega-tutorial-2017-zh/docs/13.html">flask-babel中文文档</a> / <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/f996de352d7a">flask-babel使用流程</a> / <a target="_blank" rel="noopener" href="https://blog.csdn.net/orangleliu/article/details/79706260">gettext获取mo文件数据</a></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/categories/Flask/">Flask</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/tags/%E5%9B%BD%E9%99%85%E5%8C%96/">国际化</a>
+                    
+                      <a class="hover-with-bg" href="/Myblog/tags/babel/">babel</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/Myblog/2019/11/24/%E7%BF%BB%E8%AF%91po%E6%96%87%E4%BB%B6%E5%8D%8A%E8%87%AA%E5%8A%A8%E8%84%9A%E6%9C%AC/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">翻译po文件半自动脚本</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/Myblog/2019/11/13/Git%E7%9A%84%E5%A5%87%E6%8A%80%E6%B7%AB%E5%B7%A7/">
+                        <span class="hidden-mobile">Git的奇技淫巧</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/Myblog/js/events.js" ></script>
+<script  src="/Myblog/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/Myblog/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/Myblog/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/Myblog/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/Myblog/js/boot.js" ></script>
+
+
+</body>
+</html>

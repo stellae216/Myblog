@@ -1,0 +1,563 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/Myblog/img/favicon.png">
+  <link rel="icon" href="/Myblog/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="Simple, so charming!">
+  <meta name="author" content="stellae">
+  <meta name="keywords" content="">
+  
+  <title>Django项目上线 - stellae&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/Myblog/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/Myblog/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"stellae.gitee.io","root":"/Myblog/","version":"1.8.10","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/Myblog/js/utils.js" ></script>
+  <script  src="/Myblog/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/Myblog/">&nbsp;<strong>stellae's blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/Myblog/img/WtwSsqwYlA0.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Django项目上线">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      stellae
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2018-11-09 16:52" pubdate>
+        2018年11月9日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.8k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      31
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Django项目上线</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：2 年前
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h3 id="安装MariaDB"><a href="#安装MariaDB" class="headerlink" title="安装MariaDB"></a>安装MariaDB</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sql">yum -y <span class="hljs-keyword">install</span> mariadb mariadb-<span class="hljs-keyword">server</span><br></code></pre></td></tr></table></figure>
+
+<p>安装完成MariaDB，首先启动MariaDB </p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs crmsh">systemctl <span class="hljs-literal">start</span> mariadb<br></code></pre></td></tr></table></figure>
+
+<p>设置开机启动 </p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros">systemctl <span class="hljs-builtin-name">enable</span> mariadb<br></code></pre></td></tr></table></figure>
+
+<p>设置密码</p>
+<p>命令: <code>mysql_secure_installation </code></p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">Enter <span class="hljs-keyword">current</span> <span class="hljs-keyword">password</span> <span class="hljs-keyword">for</span> root:&lt;–初次运行直接回车<br><br>设置密码<br><br><span class="hljs-keyword">Set</span> root <span class="hljs-keyword">password</span>? [Y/n] &lt;– 是否设置root用户密码，输入y并回车或直接回车<br><br><span class="hljs-built_in">New</span> <span class="hljs-keyword">password</span>: &lt;– 设置root用户的密码<br>Re-enter <span class="hljs-built_in">new</span> <span class="hljs-keyword">password</span>: &lt;– 再输入一次你设置的密码<br><br>其他配置<br><br>Remove anonymous users? [Y/n] &lt;– 是否删除匿名用户，回车<br><br>Disallow root <span class="hljs-keyword">login</span> remotely? [Y/n] &lt;–是否禁止root远程登录,回车,<br><br>Remove test <span class="hljs-keyword">database</span> <span class="hljs-keyword">and</span> <span class="hljs-keyword">access</span> <span class="hljs-keyword">to</span> it? [Y/n] &lt;– 是否删除test数据库，回车<br><br>Reload privilege <span class="hljs-keyword">tables</span> now? [Y/n] &lt;– 是否重新加载权限表，回车<br><br>初始化MariaDB完成，接下来测试登录<br><br>mysql -u root -p<br></code></pre></td></tr></table></figure>
+
+<h4 id="开启远程连接"><a href="#开启远程连接" class="headerlink" title="开启远程连接"></a>开启远程连接</h4><p>在mysql数据库中的user表中可以看到默认是只能本地连接的，所有可以添加一个新的用户，该用户可以远程访问 </p>
+<h4 id="1-创建用户"><a href="#1-创建用户" class="headerlink" title="1. 创建用户"></a>1. 创建用户</h4><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-comment"># 先使用数据库</span><br>use mysql;<br><br><span class="hljs-comment"># 针对ip可以访问</span><br>create<span class="hljs-built_in"> user </span><span class="hljs-string">&#x27;root&#x27;</span>@<span class="hljs-string">&#x27;192.168.10.10&#x27;</span> identified by <span class="hljs-string">&#x27;password&#x27;</span>;<br><br><span class="hljs-comment">#全部ip可以访问</span><br> create<span class="hljs-built_in"> user </span><span class="hljs-string">&#x27;root&#x27;</span>@<span class="hljs-string">&#x27;%&#x27;</span> identified by <span class="hljs-string">&#x27;password&#x27;</span>;<br></code></pre></td></tr></table></figure>
+
+<h4 id="2-授权"><a href="#2-授权" class="headerlink" title="2. 授权"></a>2. 授权</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-comment"># 给用户最大权限</span><br><span class="hljs-keyword">grant</span> <span class="hljs-keyword">all</span> <span class="hljs-keyword">privileges</span> <span class="hljs-keyword">on</span> *.* <span class="hljs-keyword">to</span> <span class="hljs-string">&#x27;root&#x27;</span>@<span class="hljs-string">&#x27;%&#x27;</span> <span class="hljs-keyword">identified</span> <span class="hljs-keyword">by</span> <span class="hljs-string">&#x27;password&#x27;</span>;<br><br><span class="hljs-comment"># 给部分权限(test 数据库)</span><br><br><span class="hljs-keyword">grant</span> <span class="hljs-keyword">all</span> <span class="hljs-keyword">privileges</span> <span class="hljs-keyword">on</span> test.* <span class="hljs-keyword">to</span> <span class="hljs-string">&#x27;root&#x27;</span>@<span class="hljs-string">&#x27;%&#x27;</span> <span class="hljs-keyword">identified</span> <span class="hljs-keyword">by</span> <span class="hljs-string">&#x27;password&#x27;</span> <span class="hljs-keyword">with</span> <span class="hljs-keyword">grant</span> <span class="hljs-keyword">option</span>;<br><br><span class="hljs-comment"># 刷新权限表</span><br><span class="hljs-keyword">flush</span> <span class="hljs-keyword">privileges</span>;<br><br><span class="hljs-comment"># 查看</span><br><span class="hljs-keyword">show</span> <span class="hljs-keyword">grants</span> <span class="hljs-keyword">for</span> <span class="hljs-string">&#x27;root&#x27;</span>@<span class="hljs-string">&#x27;localhost&#x27;</span>;<br></code></pre></td></tr></table></figure>
+
+<p>接下来就可以在远程的数据库可视化工具中直接访问该服务器中的mysql了。 </p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-comment"># 访问数据库</span><br><span class="hljs-attribute">mysql</span> -u root -p<br></code></pre></td></tr></table></figure>
+
+<h3 id="安装python3-6"><a href="#安装python3-6" class="headerlink" title="安装python3.6"></a>安装python3.6</h3><p>在centos中，系统默认只提供python2.7的版本，但是项目我们使用的python3.6的版本。所有我们自己安装python3 </p>
+<h4 id="安装Python3的方法"><a href="#安装Python3的方法" class="headerlink" title="安装Python3的方法"></a>安装Python3的方法</h4><p>首先安装依赖包</p>
+<p>安装Python3.6所需要的依赖包：</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">yum</span> -y groupinstall <span class="hljs-string">&quot;Development tools&quot;</span><br><br><span class="hljs-attribute">yum</span> -y install zlib-devel bzip<span class="hljs-number">2</span>-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gdbm-devel db<span class="hljs-number">4</span>-devel libpcap-devel xz-devel<br></code></pre></td></tr></table></figure>
+
+<p>安装Python3.7还需额外安装依赖包：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">yum <span class="hljs-keyword">install</span> libffi-devel -y<br></code></pre></td></tr></table></figure>
+
+<p>然后根据自己需求下载不同版本的Python3，我下载的是Python3.6.2 </p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs awk">wget https:<span class="hljs-regexp">//</span>www.python.org<span class="hljs-regexp">/ftp/</span>python<span class="hljs-regexp">/3.6.2/</span>Python-<span class="hljs-number">3.6</span>.<span class="hljs-number">2</span>.tar.xz<br><br>然后解压压缩包，进入该目录，安装Python3<br><br>tar -xvJf  Python-<span class="hljs-number">3.6</span>.<span class="hljs-number">2</span>.tar.xz<br>cd Python-<span class="hljs-number">3.6</span>.<span class="hljs-number">2</span><br>.<span class="hljs-regexp">/configure --prefix=/u</span>sr<span class="hljs-regexp">/local/</span>python3<br>make &amp;&amp; make install<br></code></pre></td></tr></table></figure>
+
+<p>最后创建软链接 </p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs awk">ln -s <span class="hljs-regexp">/usr/</span>local<span class="hljs-regexp">/python3/</span>bin<span class="hljs-regexp">/python3 /u</span>sr<span class="hljs-regexp">/bin/</span>python3<br><br>ln -s <span class="hljs-regexp">/usr/</span>local<span class="hljs-regexp">/python3/</span>bin<span class="hljs-regexp">/pip3 /u</span>sr<span class="hljs-regexp">/bin/</span>pip3<br></code></pre></td></tr></table></figure>
+
+<h3 id="安装环境"><a href="#安装环境" class="headerlink" title="安装环境"></a>安装环境</h3><h4 id="1-安装virtualenv"><a href="#1-安装virtualenv" class="headerlink" title="1. 安装virtualenv"></a>1. 安装virtualenv</h4><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">yum <span class="hljs-keyword">install</span> python-virtualenv<br></code></pre></td></tr></table></figure>
+
+<h4 id="2-创建虚拟环境"><a href="#2-创建虚拟环境" class="headerlink" title="2. 创建虚拟环境"></a>2. 创建虚拟环境</h4><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs awk">virtualenv --no-site-packages -p <span class="hljs-regexp">/usr/</span>local<span class="hljs-regexp">/python3/</span>bin/python3 freshenv<br><br><span class="hljs-comment"># 进入虚拟环境，激活虚拟环境</span><br>source &lt;目录&gt;<span class="hljs-regexp">/bin/</span>activate<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-安装环境需要的包"><a href="#3-安装环境需要的包" class="headerlink" title="3. 安装环境需要的包"></a>3. 安装环境需要的包</h4><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-comment"># 创建文本文件，写入需要安装的包，用一下命令安装虚拟环境需要的包</span><br><span class="hljs-regexp">/home/</span>env<span class="hljs-regexp">/freshenv/</span>bin/pip3 install -r reqyirement.txt <br></code></pre></td></tr></table></figure>
+
+<h3 id="项目部署"><a href="#项目部署" class="headerlink" title="项目部署"></a>项目部署</h3><p>项目部署结构：</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs dockerfile">├── conf  <span class="hljs-comment"># 配置文件</span><br>├── <span class="hljs-keyword">env</span>   <span class="hljs-comment"># 虚拟环境</span><br>├── logs  <span class="hljs-comment"># 日志信息</span><br>├── media <span class="hljs-comment"># 媒体文件（公共资源目录）</span><br>└── src	  <span class="hljs-comment"># 代码文件</span><br></code></pre></td></tr></table></figure>
+
+<p>出现问题：Django的项目中，在工程目录下settings.py文件中有一个DEBUG=True参数，如果DEBUG=False则会出现js,css，img无法加载的情况出现。 </p>
+<p>原因如下：</p>
+<p>Django框架仅在开发模式下提供静态文件服务。当我开启DEBUG模式时，Django内置的服务器是提供静态文件的服务的，所以css等文件访问都没有问题，但是关闭DEBUG模式后，Django便不提供静态文件服务了。想一想这是符合Django的哲学的：这部分事情标准服务器都很擅长，就让服务器去做吧！</p>
+<h4 id="1-测试环境中部署方式"><a href="#1-测试环境中部署方式" class="headerlink" title="1. 测试环境中部署方式"></a>1. 测试环境中部署方式</h4><p>在测试环境中一般都直接使用python manage.py runserver 0.0.0.0:80的方式去运行项目（python：指定虚拟环境python路径， manage.py也最好指定绝对路径）。其中就涉及到DEBUG=False的修改，静态目录的修改等，具体修改如下： </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs python">a) 修改settings.py配置文件中的DEBUG=<span class="hljs-literal">False</span>模式，修改ALLOEWD_HOST=[<span class="hljs-string">&#x27;*&#x27;</span>]<br><br>b) 修改工程目录下的urls.py<br><br><span class="hljs-keyword">from</span> django.views.static <span class="hljs-keyword">import</span> serve<br><span class="hljs-keyword">from</span> fresh_shop  <span class="hljs-keyword">import</span> settings<br><br><span class="hljs-keyword">from</span> goods <span class="hljs-keyword">import</span> views<br><span class="hljs-keyword">from</span> fresh_shop.settings <span class="hljs-keyword">import</span> MEDIA_ROOT, MEDIA_URL<br><br>urlpatterns = [<br>    url(<span class="hljs-string">r&#x27;^admin/&#x27;</span>, admin.site.urls),<br>    url(<span class="hljs-string">r&#x27;^axf/&#x27;</span>, include(<span class="hljs-string">&#x27;axf.urls&#x27;</span>, namespace=<span class="hljs-string">&#x27;axf&#x27;</span>)),<br><br>	<span class="hljs-comment"># 增加以下的url路由</span><br>	<span class="hljs-comment"># 添加index页面，并且设置为路由不能被屏蔽</span><br>    url(<span class="hljs-string">r&#x27;^static/(?P&lt;path&gt;.*)$&#x27;</span>, serve, &#123;<span class="hljs-string">&quot;document_root&quot;</span>: settings.STATICFILES_DIRS[<span class="hljs-number">0</span>]&#125;),<br>	url(<span class="hljs-string">r&#x27;^media/(?P&lt;path&gt;.*)$&#x27;</span>, serve, &#123;<span class="hljs-string">&quot;document_root&quot;</span>: settings.MEDIA_ROOT&#125;),<br>	url(<span class="hljs-string">r&#x27;^$&#x27;</span>, views.index),<br><br><br>    url(<span class="hljs-string">r&#x27;^$&#x27;</span>, views.home)<br>]<br></code></pre></td></tr></table></figure>
+
+<h4 id="2-正式环境中部署方式"><a href="#2-正式环境中部署方式" class="headerlink" title="2. 正式环境中部署方式"></a>2. 正式环境中部署方式</h4><p>正式环境中部署为nginx+uwsgi来部署django项目 </p>
+<h4 id="配置nginx"><a href="#配置nginx" class="headerlink" title="配置nginx"></a>配置nginx</h4><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">yum <span class="hljs-keyword">install</span> nginx<br></code></pre></td></tr></table></figure>
+
+<p>运行nginx</p>
+<p>Nginx不会自行启动。要运行Nginx</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs crmsh">systemctl <span class="hljs-literal">start</span> nginx<br></code></pre></td></tr></table></figure>
+
+<p>nginx的运行命令： </p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk">systemctl status nginx 查看nginx的状态<br>systemctl start<span class="hljs-regexp">/stop/</span>enable<span class="hljs-regexp">/disable nginx 启动/</span>关闭<span class="hljs-regexp">/设置开机启动/</span>禁止开机启动<br></code></pre></td></tr></table></figure>
+
+<p>创建目录<code>/home/conf</code></p>
+<p>添加freshnginx.conf和freshuwsgi.ini文件</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs nginx"><span class="hljs-section">server</span> &#123;<br>     <span class="hljs-attribute">listen</span>       <span class="hljs-number">80</span>;<br>     <span class="hljs-attribute">server_name</span> <span class="hljs-number">120.78.83.46</span> localhost;<br>	<br>     <span class="hljs-comment"># 日志</span><br>     <span class="hljs-attribute">access_log</span> /home/logs/access.log;<br>     <span class="hljs-attribute">error_log</span> /home/logs/error.log;<br>	<br>	 <span class="hljs-comment"># 端口8890用于nginx和uwsgi交互</span><br>     <span class="hljs-attribute">location</span> / &#123;<br>         <span class="hljs-attribute">include</span> uwsgi_params;<br>         <span class="hljs-attribute">uwsgi_pass</span> <span class="hljs-number">127.0.0.1:8890</span>;<br>     &#125;<br>     <span class="hljs-comment"># static</span><br>     <span class="hljs-attribute">location</span> /static/ &#123;<br>         <span class="hljs-attribute">alias</span> /home/src/fresh_shop/static/;<br>         <span class="hljs-attribute">expires</span> <span class="hljs-number">30d</span>;<br>     &#125;<br>     <span class="hljs-comment"># media</span><br>     <span class="hljs-attribute">location</span> /media/ &#123;<br>         <span class="hljs-attribute">alias</span> /home/media/;<br>     &#125;<br><br> &#125;<br></code></pre></td></tr></table></figure>
+
+<p>修改nginx配置文件让自己写的配置文件生效</p>
+<p><code>vim /etc/nginx/nginx.conf</code></p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-comment"># 在37行添加</span><br>include <span class="hljs-regexp">/home/</span>conf/freshnginx.conf;<br></code></pre></td></tr></table></figure>
+
+<h4 id="配置uwsgi"><a href="#配置uwsgi" class="headerlink" title="配置uwsgi"></a>配置uwsgi</h4><h5 id="安装uwsgi"><a href="#安装uwsgi" class="headerlink" title="安装uwsgi"></a>安装uwsgi</h5><p>在虚拟环境中安装uwsgi</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">/home/</span>env<span class="hljs-regexp">/freshenv/</span>bin/pip3 install uwsgi<br></code></pre></td></tr></table></figure>
+
+<p>配置项目代码，配置<code>uwsgi.ini</code></p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[uwsgi]</span><br><span class="hljs-comment"># 守护进程</span><br><span class="hljs-attr">master</span> = <span class="hljs-literal">true</span><br><br><span class="hljs-comment"># 进程个数</span><br><span class="hljs-attr">processes</span> = <span class="hljs-number">4</span><br><br><span class="hljs-comment"># 项目地址</span><br><span class="hljs-attr">chdir</span> = /home/src/fresh_shop<br><br><span class="hljs-comment"># python路径</span><br><span class="hljs-attr">pythonpath</span> = /home/env/freshenv/bin/python3<br><br><span class="hljs-comment"># 第一个 app 指明 py 文件，第二个 app 指明 Flask 实例</span><br><span class="hljs-attr">module</span> = app:app<br><br><span class="hljs-comment"># 和nginx通信地址:端口</span><br><span class="hljs-attr">socket</span> = <span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">8890</span><br><br><span class="hljs-comment"># 日志文件地址</span><br><span class="hljs-attr">logto</span> = /home/logs/freshuwsgi.log<br></code></pre></td></tr></table></figure>
+
+<h3 id="运行项目"><a href="#运行项目" class="headerlink" title="运行项目"></a>运行项目</h3><p>重启nginx后执行以下代码即可</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-regexp">/home/</span>env<span class="hljs-regexp">/freshenv/</span>bin/uwsgi --ini freshnginx.ini<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>如果需要后台运行，加上参数<code>-d</code> 即可。</p>
+</blockquote>
+<h3 id="配置HTTPS"><a href="#配置HTTPS" class="headerlink" title="配置HTTPS"></a>配置HTTPS</h3><ol>
+<li><p>申请安装证书</p>
+</li>
+<li><p>查看阿里云安装指南，复制配置文件信息到服务器进行修改(如：nginx)</p>
+<p>修改全局配置文件（<code>/etc/nginx/nginx.conf</code>），包含局部配置文件（<code>/root/project/conf/nginx.conf</code>）。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs shell">server &#123;<br>    listen      80;<br>    server_name _;<br>    access_log /root/project/logs/access.log;<br>    error_log /root/project/logs/error.log;<br>    location / &#123;<br>        include uwsgi_params;<br>        uwsgi_pass 172.17.31.4:8000;<br>    &#125;<br>    location /static/ &#123;<br>        alias /root/project/stat/;<br>        expires 30d;<br>    &#125;<br>&#125;<br>server &#123;<br>    listen      443;<br>    server_name _;<br>    ssl         on;<br>    access_log /root/project/logs/access.log;<br>    error_log /root/project/logs/error.log;<br>    ssl_certificate     /root/project/conf/1758481_lvhaojie.xyz.pem;<br>    ssl_certificate_key /root/project/conf/1758481_lvhaojie.xyz.key;<br>    ssl_session_timeout 5m;<br>    ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;<br>    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;<br>    ssl_prefer_server_ciphers on;<br>    location / &#123;<br>        include uwsgi_params;<br>        uwsgi_pass 172.17.31.4:8000;<br>    &#125;<br>    location /static/ &#123;<br>        alias /root/project/stat/;<br>        expires 30d;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>在项目配置文件中添加对应Https信息</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 保持HTTPS连接的时间</span><br>SECURE_HSTS_SECONDS = <span class="hljs-number">3600</span><br>SECURE_HSTS_INCLUDE_SUBDOMAINS = <span class="hljs-literal">True</span><br>SECURE_HSTS_PRELOAD = <span class="hljs-literal">True</span><br><br><span class="hljs-comment"># 自动重定向到安全连接</span><br>SECURE_SSL_REDIRECT = <span class="hljs-literal">True</span><br><br><span class="hljs-comment"># 避免浏览器自作聪明推断内容类型</span><br>SECURE_CONTENT_TYPE_NOSNIFF = <span class="hljs-literal">True</span><br><br><span class="hljs-comment"># 避免跨站脚本攻击</span><br>SECURE_BROWSER_XSS_FILTER = <span class="hljs-literal">True</span><br><br><span class="hljs-comment"># COOKIE只能通过HTTPS进行传输</span><br>SESSION_COOKIE_SECURE = <span class="hljs-literal">True</span><br>CSRF_COOKIE_SECURE = <span class="hljs-literal">True</span><br><br><span class="hljs-comment"># 防止点击劫持攻击手段 - 修改HTTP协议响应头</span><br><span class="hljs-comment"># 当前网站是不允许使用&lt;iframe&gt;标签进行加载的</span><br>X_FRAME_OPTIONS = <span class="hljs-string">&#x27;DENY&#x27;</span><br></code></pre></td></tr></table></figure>
+
+
+
+
+
+</li>
+</ol>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/categories/Django/">Django</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/tags/django/">django</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/Myblog/2018/11/09/Django-%E5%9B%BD%E9%99%85%E5%8C%96/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Django-国际化</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/Myblog/2018/10/31/Django-%E6%9D%83%E9%99%90%E6%8E%A7%E5%88%B6/">
+                        <span class="hidden-mobile">Django-权限控制</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/Myblog/js/events.js" ></script>
+<script  src="/Myblog/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/Myblog/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/Myblog/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/Myblog/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/Myblog/js/boot.js" ></script>
+
+
+</body>
+</html>

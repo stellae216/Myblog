@@ -1,0 +1,887 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/Myblog/img/favicon.png">
+  <link rel="icon" href="/Myblog/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="Simple, so charming!">
+  <meta name="author" content="stellae">
+  <meta name="keywords" content="">
+  
+  <title>stellae&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/Myblog/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"stellae.gitee.io","root":"/Myblog/","version":"1.8.10","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/Myblog/js/utils.js" ></script>
+  <script  src="/Myblog/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 100vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/Myblog/">&nbsp;<strong>stellae's blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/Myblog/img/tokYjYqaPB0.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.2)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Simple, so charming!">
+              
+            </span>
+
+            
+          </div>
+
+          
+            <div class="scroll-down-bar">
+              <i class="iconfont icon-arrowdown"></i>
+            </div>
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div class="py-5" id="board"
+          style=margin-top:0>
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/Myblog/2022/01/22/Golang%E8%87%AA%E5%8A%A8%E5%8C%96%E4%B9%8Brobotgo/" target="_blank">
+          Golang自动化之robotgo
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/Myblog/2022/01/22/Golang%E8%87%AA%E5%8A%A8%E5%8C%96%E4%B9%8Brobotgo/" target="_blank">
+          
+          
+            
+          
+          什么是robotgoGolang 跨平台自动化系统，用于控制键盘、鼠标、位图、图像、读取屏幕，进程、窗口句柄以及全局事件监听。RobotGo 支持 Mac, Windows, and Linux(X11)系统
+安装robotgo建议安装go1.17版本，亲测有效。
+
+mac环境
+
+123456// Xcode Command Line Toolsxcode-select --install// g
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-01-22 17:20" pubdate>
+              2022-01-22
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/Myblog/categories/Go/">Go</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/Myblog/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/">自动化</a>
+            
+              <a href="/Myblog/tags/robotgo/">robotgo</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/Myblog/2022/01/20/Golang%E6%93%8D%E4%BD%9CExcel%E6%96%87%E4%BB%B6/" target="_blank">
+          Golang操作Excel文件
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/Myblog/2022/01/20/Golang%E6%93%8D%E4%BD%9CExcel%E6%96%87%E4%BB%B6/" target="_blank">
+          
+          
+            
+          
+          介绍Excelize 是 Go 语言编写的用于操作 Office Excel 文档基础库，基于 ECMA-376，ISO/IEC 29500 国际标准。可以使用它来读取、写入由 Microsoft Excel™ 2007 及以上版本创建的电子表格文档。支持 XLSX / XLSM / XLTM / XLTX 等多种文档格式，高度兼容带有样式、图片(表)、透视表、切片器等复杂组件的文档，并提供流式读
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-01-20 14:46" pubdate>
+              2022-01-20
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/Myblog/categories/Go/">Go</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/Myblog/tags/excel/">excel</a>
+            
+              <a href="/Myblog/tags/excelize/">excelize</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/Myblog/2022/01/07/Golang%E5%AE%9A%E6%97%B6%E5%99%A8/" target="_blank">
+          Golang定时器
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/Myblog/2022/01/07/Golang%E5%AE%9A%E6%97%B6%E5%99%A8/" target="_blank">
+          
+          
+            
+          
+          Go 可以借助 time.Ticker/time.timer 来实现定时触发器，主要原理是借助无缓冲channel无数据时读取操作会阻塞当前协程，Go会在给定的时间后向channel中写入一些数据（当前时间），故阻塞的协程可以恢复运行，达到延迟或定时执行的功能。
+
+ticker
+
+time.NewTicker(Duration) 按照给定时间周期性触发
+
+timer
+
+time.NewTimer(
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-01-07 17:34" pubdate>
+              2022-01-07
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/Myblog/categories/Go/">Go</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/Myblog/tags/%E5%AE%9A%E6%97%B6%E5%99%A8/">定时器</a>
+            
+              <a href="/Myblog/tags/ticker/">ticker</a>
+            
+              <a href="/Myblog/tags/timer/">timer</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/Myblog/2021/11/11/ioutil-TempFile%E4%B8%B4%E6%97%B6%E6%96%87%E4%BB%B6/" target="_blank">
+          ioutil.TempFile临时文件
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/Myblog/2021/11/11/ioutil-TempFile%E4%B8%B4%E6%97%B6%E6%96%87%E4%BB%B6/" target="_blank">
+          
+          
+            
+          
+          简介很多时候我们需要创建一些文件和目录进行操作，但是在不同操作系统中，不同文件夹有不同的操作权限，所以这时候我们就需要临时目录了，不同操作系统对应的临时目录不同，但是都有对应的读写权限。
+创建临时目录1func TempDir(dir, prefix string) (name string, err error)
+
+
+
+dir - 指定临时文件夹路径，传入零值默认取os.TempDir()
+pe
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-11-11 21:20" pubdate>
+              2021-11-11
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/Myblog/categories/Go/">Go</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/Myblog/tags/%E4%B8%B4%E6%97%B6%E6%96%87%E4%BB%B6/">临时文件</a>
+            
+              <a href="/Myblog/tags/tempfile/">tempfile</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/Myblog/2021/10/11/Redis%E7%BC%93%E5%AD%98%E9%9B%AA%E5%B4%A9%E3%80%81%E7%A9%BF%E9%80%8F%E3%80%81%E5%87%BB%E7%A9%BF/" target="_blank">
+          Redis缓存雪崩、穿透、击穿
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/Myblog/2021/10/11/Redis%E7%BC%93%E5%AD%98%E9%9B%AA%E5%B4%A9%E3%80%81%E7%A9%BF%E9%80%8F%E3%80%81%E5%87%BB%E7%A9%BF/" target="_blank">
+          
+          
+            
+          
+          Redis我们常用给一些热点数据或耗时任务来做缓存，但是实际开发中我们可能会遇到缓存雪崩、穿透和击穿的情况，下面分别是他们之前的区别和对应的解决方案。
+缓存雪崩目前电商首页以及热点数据都会去做缓存 ，一般缓存都是定时任务去刷新，或者是查不到之后去更新的。假设如果是定时任务刷新则容易出现缓存雪崩的问题：大面积的缓存失效，打崩了DB
+举个简单的例子：如果所有首页的Key失效时间都是12小时，中午12点
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-10-11 10:08" pubdate>
+              2021-10-11
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/Myblog/categories/Redis/">Redis</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/Myblog/tags/redis/">redis</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/Myblog/2021/09/29/Golang%E6%96%B0%E6%89%8B%E6%98%93%E7%8A%AF%E7%9A%84%E5%9D%91%E7%82%B9/" target="_blank">
+          Golang新手易犯的坑点
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/Myblog/2021/09/29/Golang%E6%96%B0%E6%89%8B%E6%98%93%E7%8A%AF%E7%9A%84%E5%9D%91%E7%82%B9/" target="_blank">
+          
+          
+            
+          
+          修改string 类型的常量尝试使用索引遍历字符串，来更新字符串中的个别字符，是不允许的。
+string 类型的值是只读的二进制 byte slice，如果真要修改字符串中的字符，将 string 转为 []byte 修改后，再转为 string 即可
+123456// 修改字符串的错误示例func main() &#123;  x := &quot;text&quot;  x[0] = &quo
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-09-29 15:07" pubdate>
+              2021-09-29
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/Myblog/categories/GO/">GO</a>
+            
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/Myblog/2021/08/27/GoLang%E5%AE%9E%E7%94%A8%E5%8A%9F%E8%83%BD/" target="_blank">
+          GoLang实用功能
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/Myblog/2021/08/27/GoLang%E5%AE%9E%E7%94%A8%E5%8A%9F%E8%83%BD/" target="_blank">
+          
+          
+            
+          
+          MD5值计算字符串对应md5值
+12345func MD5(str string) string &#123;    s := md5.New()    s.Write([]byte(str))    return hex.EncodeToString(s.Sum(nil))&#125;
+
+计算文件对应md值
+123456789101112func MD5ToFile(path string) (
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-08-27 14:35" pubdate>
+              2021-08-27
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/Myblog/categories/Go/">Go</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/Myblog/tags/%E5%AE%9E%E7%94%A8%E5%8A%9F%E8%83%BD/">实用功能</a>
+            
+              <a href="/Myblog/tags/%E5%B7%A5%E5%85%B7%E7%B1%BB/">工具类</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/Myblog/2021/08/23/Go%E8%AF%AD%E8%A8%80%E4%B9%8BGorm%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/" target="_blank">
+          Go语言之Gorm快速上手
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/Myblog/2021/08/23/Go%E8%AF%AD%E8%A8%80%E4%B9%8BGorm%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/" target="_blank">
+          
+          
+            
+          
+          简介gorm是一个使用Go语言编写的ORM框架。配套齐全的中文官方文档，对开发者友好，支持主流数据库，并且拥有以下特性。
+
+全功能 ORM
+关联 (Has One，Has Many，Belongs To，Many To Many，多态，单表继承)
+Create，Save，Update，Delete，Find 中钩子方法
+支持 Preload、Joins 的预加载
+事务，嵌套事务，Save Poin
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-08-23 08:38" pubdate>
+              2021-08-23
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/Myblog/categories/Go/">Go</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/Myblog/tags/gorm/">gorm</a>
+            
+              <a href="/Myblog/tags/orm/">orm</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/Myblog/2021/08/18/shell%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" target="_blank">
+          shell常用命令
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/Myblog/2021/08/18/shell%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" target="_blank">
+          
+          
+            
+          
+          常用shell命令如果需要查询shell命令的相关参数，可以使用指令man，如man sed，
+输出文件结构这里我们需要使用到tree指令
+1tree -L 3 ./
+
+
+-L 输出目录层级
+
+查询带有特定字符串的文件查询当前路径下带有字符串aaaa的文件
+1grep -rl &#x27;aaaa&#x27; ./
+
+
+12&gt;-r 表示搜索子目录&gt;-l 表示输出匹配的文件名
+
+批量替换
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-08-18 15:02" pubdate>
+              2021-08-18
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/Myblog/categories/Shell/">Shell</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/Myblog/tags/shell/">shell</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/Myblog/2021/08/10/Go%E8%AF%AD%E8%A8%80Web%E6%A1%86%E6%9E%B6%E4%B9%8BGin%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/" target="_blank">
+          Go语言Web框架之Gin快速上手
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/Myblog/2021/08/10/Go%E8%AF%AD%E8%A8%80Web%E6%A1%86%E6%9E%B6%E4%B9%8BGin%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/" target="_blank">
+          
+          
+            
+          
+          原生Web服务Go语言里面提供了一个完善的net/http包，通过http包可以很方便的搭建起来一个可以运行的Web服务。同时使用这个包能很简单地对Web的路由，静态文件，模版，cookie等数据进行设置和操作。
+1234567891011121314151617181920212223242526272829303132333435363738394041424344package mainim
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-08-10 08:21" pubdate>
+              2021-08-10
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/Myblog/categories/Go/">Go</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/Myblog/tags/web/">web</a>
+            
+              <a href="/Myblog/tags/gin/">gin</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+
+
+  <nav aria-label="navigation">
+    <span class="pagination" id="pagination">
+      <span class="page-number current">1</span><a class="page-number" href="/Myblog/page/2/#board">2</a><a class="page-number" href="/Myblog/page/3/#board">3</a><span class="space">&hellip;</span><a class="page-number" href="/Myblog/page/13/#board">13</a><a class="extend next" rel="next" href="/Myblog/page/2/#board"><i class="iconfont icon-arrowright"></i></a>
+    </span>
+  </nav>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/Myblog/js/events.js" ></script>
+<script  src="/Myblog/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/Myblog/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/Myblog/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/Myblog/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/Myblog/js/boot.js" ></script>
+
+
+</body>
+</html>

@@ -1,0 +1,539 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/Myblog/img/favicon.png">
+  <link rel="icon" href="/Myblog/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="Simple, so charming!">
+  <meta name="author" content="stellae">
+  <meta name="keywords" content="">
+  
+  <title>全文检索 - stellae&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/Myblog/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/Myblog/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"stellae.gitee.io","root":"/Myblog/","version":"1.8.10","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/Myblog/js/utils.js" ></script>
+  <script  src="/Myblog/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/Myblog/">&nbsp;<strong>stellae's blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/Myblog/img/WtwSsqwYlA0.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="全文检索">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      stellae
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2019-01-23 14:53" pubdate>
+        2019年1月23日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.2k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      21
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">全文检索</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：8 个月前
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h3 id="全文检索简介"><a href="#全文检索简介" class="headerlink" title="全文检索简介"></a>全文检索简介</h3><p>全文检索基于倒排索引进行查找数据。</p>
+<ul>
+<li>倒排索引：源于实际应用中需要根据属性的值来查找记录。这种索引表中的每一项都包括一个属性值和具有该属性值的各记录的地址。由于不是由记录来确定属性值，而是由属性值来确定记录的位置，因而称为倒排索引(inverted index) </li>
+</ul>
+<p><img src="https://stellae.gitee.io/myblog/images/images/%E5%80%92%E6%8E%92%E7%B4%A2%E5%BC%95.jpg" srcset="/Myblog/img/loading.gif" lazyload></p>
+<p>全文检索如果要实现高并发，可以使用 ElasticSearch / Solr，使用ElasticSearch有很严重的版本兼容性问题，如果要使用最好使用2.x版本。</p>
+<p>如果要求不高可以使用 Whoosh，中文分词用jieba，相对来说配置更加简单，也没有兼容性问题。</p>
+<h3 id="ElasticSearch-analysis-ik-haystack"><a href="#ElasticSearch-analysis-ik-haystack" class="headerlink" title="ElasticSearch + analysis-ik + haystack"></a>ElasticSearch + analysis-ik + haystack</h3><ul>
+<li><p>ElasticSearch 是基于Java开发的搜索引擎</p>
+</li>
+<li><p>analysis-ik用来做中文分词</p>
+</li>
+<li><p>haystack用于对接搜索引擎</p>
+</li>
+</ul>
+<h4 id="1-docker安装elasticSearch服务器"><a href="#1-docker安装elasticSearch服务器" class="headerlink" title="1. docker安装elasticSearch服务器"></a>1. docker安装elasticSearch服务器</h4><p><code>docker run -d -p 9200:9200 -e &quot;discovery.type=single-node&quot; --name es elasticsearch:2.4.6</code></p>
+<blockquote>
+<p>说明： 9200端口用于访问；<code>discovery.type=single-node</code>指定单机模式</p>
+</blockquote>
+<h4 id="2-安装中文分词插件"><a href="#2-安装中文分词插件" class="headerlink" title="2. 安装中文分词插件"></a>2. 安装中文分词插件</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">docker exec -it es /bin/bash<br>mkdir -r plugins/ik<br>cd plugins/ik<br>wget https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v1.10.6/elasticsearch-analysis-ik-1.10.6.zip<br></code></pre></td></tr></table></figure>
+
+<p>解压并删除原文件，退出重启es</p>
+<h4 id="3-使用haystack对接Elasticsearch"><a href="#3-使用haystack对接Elasticsearch" class="headerlink" title="3. 使用haystack对接Elasticsearch"></a>3. 使用haystack对接Elasticsearch</h4><p>Haystack为Django提供了模块化的搜索。它的特点是统一的，熟悉的API，可以让你在不修改代码的情况下使用不同的搜索后端（比如 Solr, Elasticsearch, Whoosh, Xapian 等等）。</p>
+<p>我们在django中可以通过使用haystack来调用Elasticsearch搜索引擎。</p>
+<p>1）安装 </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">pip install drf-haystack<br>pip install elasticsearch==<span class="hljs-number">2.4</span><span class="hljs-number">.1</span><br></code></pre></td></tr></table></figure>
+
+<p>drf-haystack是为了在REST framework中使用haystack而进行的封装（如果在Django中使用haystack，则安装django-haystack即可）。 </p>
+<p> 2）注册应用 </p>
+ <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">INSTALLED_APPS = [<br>    <span class="hljs-string">&#x27;haystack&#x27;</span>,<br>]<br></code></pre></td></tr></table></figure>
+
+<p>3）配置</p>
+<p>在配置文件中配置haystack使用的搜索引擎后端</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># Haystack</span><br>HAYSTACK_CONNECTIONS = &#123;<br>    <span class="hljs-string">&#x27;default&#x27;</span>: &#123;<br>        <span class="hljs-string">&#x27;ENGINE&#x27;</span>: <span class="hljs-string">&#x27;haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine&#x27;</span>,<br>        <span class="hljs-string">&#x27;URL&#x27;</span>: <span class="hljs-string">&#x27;http://39.96.51.36:9200/&#x27;</span>,  <span class="hljs-comment"># 此处为elasticsearch运行的服务器ip地址，端口号固定为9200</span><br>        <span class="hljs-string">&#x27;INDEX_NAME&#x27;</span>: <span class="hljs-string">&#x27;fangtx&#x27;</span>,  <span class="hljs-comment"># 指定elasticsearch建立的索引库的名称</span><br>    &#125;,<br>&#125;<br><br><span class="hljs-comment"># 当添加、修改、删除数据时，自动生成索引</span><br>HAYSTACK_SIGNAL_PROCESSOR = <span class="hljs-string">&#x27;haystack.signals.RealtimeSignalProcessor&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<p>4）创建索引类 </p>
+<p>通过创建索引类，来指明让搜索引擎对哪些字段建立索引，也就是可以通过哪些字段的关键字来检索数据。</p>
+<p>在api应用中新建search_indexes.py文件，用于存放索引类</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">搜索引擎索引类</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-keyword">from</span> haystack <span class="hljs-keyword">import</span> indexes<br><br><span class="hljs-keyword">from</span> common.models <span class="hljs-keyword">import</span> HouseInfo<br><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HouseInfoIndex</span>(<span class="hljs-params">indexes.SearchIndex, indexes.Indexable</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;房源全文检索索引&quot;&quot;&quot;</span><br><br>    text = indexes.CharField(document=<span class="hljs-literal">True</span>, use_template=<span class="hljs-literal">True</span>)<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_model</span>(<span class="hljs-params">self</span>):</span><br>        <span class="hljs-keyword">return</span> HouseInfo<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">index_queryset</span>(<span class="hljs-params">self, using=None</span>):</span><br>        <span class="hljs-keyword">return</span> self.get_model().objects.all()<br></code></pre></td></tr></table></figure>
+
+<p>5）在templates目录中创建text字段使用的模板文件 </p>
+<p>具体在templates/search/indexes/common/houseinfo_text.txt文件中定义 </p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs txt">&#123;&#123; object.title &#125;&#125;<br>&#123;&#123; object.detail &#125;&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>说明：common为模型所在app；houseinfo_text.txt为对应查询模型</p>
+</blockquote>
+<p>6）手动生成初始索引 </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">python manage.py rebuild_index<br><span class="hljs-comment"># python manage.py haystack_info 查看索引</span><br></code></pre></td></tr></table></figure>
+
+<p>7）创建序列化器 </p>
+<p>在api/serializers.py中创建haystack序列化器 </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> drf_haystack.serializers <span class="hljs-keyword">import</span> HaystackSerializer<br><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HouseInfoSerializer</span>(<span class="hljs-params">serializers.ModelSerializer</span>):</span><br>    <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Meta</span>:</span><br>        model = HouseInfo<br>        fields = <span class="hljs-string">&#x27;__all__&#x27;</span><br><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HouseInfoIndexSerializer</span>(<span class="hljs-params">HaystackSerializer</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;房源全文检索数据序列化器&quot;&quot;&quot;</span><br><br>    object = HouseInfoSerializer(read_only=<span class="hljs-literal">True</span>) <span class="hljs-comment"># 指定数据来源</span><br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">update</span>(<span class="hljs-params">self, instance, validated_data</span>):</span><br>        <span class="hljs-keyword">pass</span><br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">create</span>(<span class="hljs-params">self, validated_data</span>):</span><br>        <span class="hljs-keyword">pass</span><br><br>    <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Meta</span>:</span><br>        index_classes = [HouseInfoIndex]  <span class="hljs-comment"># Model+Index</span><br>        fields = (<span class="hljs-string">&#x27;text&#x27;</span>, <span class="hljs-string">&#x27;object&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>通过上面的序列化类，返回的结果形式如下</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs json">[<br>    &#123;<br>        <span class="hljs-attr">&quot;text&quot;</span>: <span class="hljs-string">&quot;华为 HUAWEI P10 Plus 6GB+128GB 钻雕蓝 移动联通电信4G手机 双卡双待\nwifi双天线设计！徕卡人像摄影！P10徕卡双摄拍照，低至2988元！\n11&quot;</span>,<br>        <span class="hljs-attr">&quot;object&quot;</span>: &#123;<br>            <span class="hljs-attr">&quot;id&quot;</span>: <span class="hljs-number">11</span>,<br>            <span class="hljs-attr">&quot;name&quot;</span>: <span class="hljs-string">&quot;华为 HUAWEI P10 Plus 6GB+128GB 钻雕蓝 移动联通电信4G手机 双卡双待&quot;</span>,<br>            <span class="hljs-attr">&quot;price&quot;</span>: <span class="hljs-string">&quot;3788.00&quot;</span>,<br>            <span class="hljs-attr">&quot;default_image_url&quot;</span>: <span class="hljs-string">&quot;http://image.meiduo.site:8888/group1/M00/00/02/CtM3BVrRdG6AYdapAAcPaeOqMpA1594598&quot;</span>,<br>            <span class="hljs-attr">&quot;comments&quot;</span>: <span class="hljs-number">2</span><br>        &#125;<br>    &#125;,<br>    &#123;<br>        <span class="hljs-attr">&quot;text&quot;</span>: <span class="hljs-string">&quot;华为 HUAWEI P10 Plus 6GB+128GB 玫瑰金 移动联通电信4G手机 双卡双待\nwifi双天线设计！徕卡人像摄影！P10徕卡双摄拍照，低至2988元！\n14&quot;</span>,<br>        <span class="hljs-attr">&quot;object&quot;</span>: &#123;<br>            <span class="hljs-attr">&quot;id&quot;</span>: <span class="hljs-number">14</span>,<br>            <span class="hljs-attr">&quot;name&quot;</span>: <span class="hljs-string">&quot;华为 HUAWEI P10 Plus 6GB+128GB 玫瑰金 移动联通电信4G手机 双卡双待&quot;</span>,<br>            <span class="hljs-attr">&quot;price&quot;</span>: <span class="hljs-string">&quot;3788.00&quot;</span>,<br>            <span class="hljs-attr">&quot;default_image_url&quot;</span>: <span class="hljs-string">&quot;http://image.meiduo.site:8888/group1/M00/00/02/CtM3BVrRdMSAaDUtAAVslh9vkK04466364&quot;</span>,<br>            <span class="hljs-attr">&quot;comments&quot;</span>: <span class="hljs-number">1</span><br>        &#125;<br>    &#125;<br>]<br><br></code></pre></td></tr></table></figure>
+
+<p>8）创建视图 </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SearchViewSet</span>(<span class="hljs-params">HaystackViewSet</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;全文检索视图类&quot;&quot;&quot;</span><br>    index_models = [HouseInfo]   <span class="hljs-comment"># model</span><br>    serializer_class = HouseInfoIndexSerializer<br></code></pre></td></tr></table></figure>
+
+<p>9）定义路由 </p>
+<p>通过REST framework的router来定义路由 </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> rest_framework.routers <span class="hljs-keyword">import</span> DefaultRouter<br><span class="hljs-keyword">from</span> api.views <span class="hljs-keyword">import</span> SearchViewSet<br><br>router = DefaultRouter()<br>router.register(<span class="hljs-string">&#x27;search&#x27;</span>, SearchViewSet, base_name=<span class="hljs-string">&#x27;search&#x27;</span>)<br>urlpatterns += router.urls<br></code></pre></td></tr></table></figure>
+
+<p>10）测试 </p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">http</span>://<span class="hljs-number">127.0.0.1:8080</span>/api/search/?text=%E<span class="hljs-number">5</span>%<span class="hljs-number">9</span>C%B<span class="hljs-number">0</span>%E<span class="hljs-number">9</span>%<span class="hljs-number">93</span>%<span class="hljs-number">81</span><br></code></pre></td></tr></table></figure>
+
+<p>到这里应该就神功大成了！</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/categories/%E5%85%A8%E6%96%87%E6%A3%80%E7%B4%A2/">全文检索</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/tags/django/">django</a>
+                    
+                      <a class="hover-with-bg" href="/Myblog/tags/%E5%85%A8%E6%96%87%E6%A3%80%E7%B4%A2/">全文检索</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/Myblog/2019/03/16/Alembic%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Alembic快速上手</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/Myblog/2019/01/16/Djangorestframework/">
+                        <span class="hidden-mobile">Djangorestframework</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/Myblog/js/events.js" ></script>
+<script  src="/Myblog/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/Myblog/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/Myblog/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/Myblog/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/Myblog/js/boot.js" ></script>
+
+
+</body>
+</html>

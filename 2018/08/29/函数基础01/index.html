@@ -1,0 +1,512 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/Myblog/img/favicon.png">
+  <link rel="icon" href="/Myblog/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="Simple, so charming!">
+  <meta name="author" content="stellae">
+  <meta name="keywords" content="">
+  
+  <title>函数基础01 - stellae&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/Myblog/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/Myblog/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"stellae.gitee.io","root":"/Myblog/","version":"1.8.10","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/Myblog/js/utils.js" ></script>
+  <script  src="/Myblog/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/Myblog/">&nbsp;<strong>stellae's blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/Myblog/img/WtwSsqwYlA0.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="函数基础01">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      stellae
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2018-08-29 18:59" pubdate>
+        2018年8月29日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.2k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      18
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">函数基础01</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：3 年前
+                
+              </p>
+            
+            <div class="markdown-body">
+              <p>推荐一个网址：<a target="_blank" rel="noopener" href="http://pythontutor.com/visualize.html#mode=edit">http://pythontutor.com/visualize.html#mode=edit</a><br>可以在线运行代码，观看执行过程，很好用。</p>
+<hr>
+<p><strong>没有函数，出现的问题是什么？</strong><br>1、同样的代码需要些多次。<br>2、一个功能的需求发生改变，需要修改多个地方。</p>
+<ul>
+<li>定义：函数就是对实现某一特定功能的代码段的封装。</li>
+<li>作用：提高代码的复用度，让代码更简洁。<h3 id="一、函数分类"><a href="#一、函数分类" class="headerlink" title="一、函数分类"></a>一、函数分类</h3></li>
+<li>内置函数：系统写好的，可以直接使用的函数。例如 print函数、input函数、sum函数等。</li>
+<li>自定义函数：程序员自己创建的函数<h3 id="二、函数的说明"><a href="#二、函数的说明" class="headerlink" title="二、函数的说明"></a>二、函数的说明</h3><h5 id="1、固定格式："><a href="#1、固定格式：" class="headerlink" title="1、固定格式："></a>1、固定格式：</h5><figure class="highlight flix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs flix"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">函数名（参数列表）</span></span>:<br>  函数的说明文档<br>  函数体<br></code></pre></td></tr></table></figure>
+说明文档的格式：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">download</span>(<span class="hljs-params">url</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    在这里写说明文档（函数功能描述）</span><br><span class="hljs-string">    :param url:下载数据的地址（对参数说明）</span><br><span class="hljs-string">    :return:None（返回值的说明）</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br></code></pre></td></tr></table></figure>
+<h5 id="2、-函数组成说明："><a href="#2、-函数组成说明：" class="headerlink" title="2、 函数组成说明："></a>2、 函数组成说明：</h5></li>
+<li><strong>def</strong>：python中声明函数的关键字。</li>
+<li><strong>函数名</strong>：标识符，不能是关键字。（规范：PEP8规则，见名知义）</li>
+<li><strong>（）</strong>：固定格式，并且必须写。</li>
+<li><strong>参数列表</strong>(行参)：参数名1，参数名2，参数名3…..（参数可以有多个，也可以不写）。<br>参数是用来从函数的外面，向函数里面传值用的。</li>
+<li><strong>说明文档</strong>：说明函数功能。</li>
+<li><strong>函数体</strong>：实现函数功能的代码段。<br>函数体中可能会包含return语句。<h5 id="3、初学者声明函数的过程："><a href="#3、初学者声明函数的过程：" class="headerlink" title="3、初学者声明函数的过程："></a>3、初学者声明函数的过程：</h5>1、确定函数的功能 ===》2、根据功能确定函数的名字 ===》 3、确定参数（确定函数需不需要从函数外面传递数据进来） ===》4、实现函数功能 ===》5、确定返回值<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment">#写一个函数，打印两个数的和</span><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">mysum</span>(<span class="hljs-params">a,b</span>):</span><br>    <span class="hljs-keyword">return</span> a + b<br>print(mysum(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>))<br><br><span class="hljs-number">3</span><br></code></pre></td></tr></table></figure>
+<h5 id="4、函数的调用"><a href="#4、函数的调用" class="headerlink" title="4、函数的调用"></a>4、函数的调用</h5></li>
+</ul>
+<p><strong>格式：函数名（实参列表）<br>函数体只有调用的时候才会执行，并且只能先声明才能调用</strong></p>
+<ul>
+<li>实参列表：就是给形参赋值的<h5 id="5、函数的调用过程（重要）"><a href="#5、函数的调用过程（重要）" class="headerlink" title="5、函数的调用过程（重要）"></a>5、函数的调用过程（重要）</h5>（1）、回到函数声明的位置。<br>（2）、使用实参给形参赋值（传参）。<br>（3）、执行函数体。<br>（4）、将返回值返回给函数调用者。<br>（5）、回到函数调用的地方，接着往后执行。</li>
+</ul>
+<p>练习：</p>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs excel">#写一个函数，打印一个整数的阶乘<br>def jiecheng(<span class="hljs-built_in">n</span>)<span class="hljs-symbol">:</span><br>    <span class="hljs-built_in">product</span> = <span class="hljs-number">1</span><br>    for <span class="hljs-built_in">index</span> in range(<span class="hljs-number">1</span>,<span class="hljs-built_in">n</span>+<span class="hljs-number">1</span>)<span class="hljs-symbol">:</span><br>        <span class="hljs-built_in">product</span> *= <span class="hljs-built_in">index</span><br>    print(<span class="hljs-built_in">product</span>)<br>jiecheng(<span class="hljs-number">5</span>)<br><br>结果：<br><span class="hljs-number">120</span><br></code></pre></td></tr></table></figure>
+<h5 id="6、参数"><a href="#6、参数" class="headerlink" title="6、参数"></a>6、参数</h5><p>实参：<br>（1）、位置参数：实参的位置和形参一一对应。<br>（2）、关键字参数：通过 ‘ 形参名 = 实参 ’ 来传参。<br> <code>func1(b=&#39;abc&#39; , c=True , a=10)</code><br>（3）、关键字参数和位置结合：<br><code>func1(10, b=2, c=4)</code></p>
+<p><strong>声明函数时，参数赋予默认值：</strong></p>
+<ul>
+<li>在声明函数的时候，可以参数赋默认值的。（可以参数赋默认值）</li>
+<li>给部分参数赋默认值的时候，要求有默认值的参数必须放在参数列表的最后。</li>
+<li>没有默认值的参数必须传参，有默认值的参数，可以传可以不传。<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs routeros">def func(a, <span class="hljs-attribute">b</span>=<span class="hljs-string">&#x27;a&#x27;</span>, <span class="hljs-attribute">c</span>=<span class="hljs-literal">True</span>):<br>  <span class="hljs-builtin-name">print</span>(a, b, c)<br>func(10)<br><br>结果：<br>10 a <span class="hljs-literal">True</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+<p><strong>不定个数参数</strong></p>
+<p>格式：def 函数名(*形参)</p>
+<ul>
+<li>python中通过在形参名前面加 * ，让这个形参变成一个元组，来让这个形参可以接受多个实参。<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs angelscript">def mysum(*nums):<br>  print(nums, type(nums))<br>  sum = <span class="hljs-number">0</span><br>  <span class="hljs-keyword">for</span> item <span class="hljs-keyword">in</span> nums:<br>    sum += item<br>  print(sum)<br>mysum(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>)<br><br>结果：<br>(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>) &lt;<span class="hljs-keyword">class</span> &#x27;<span class="hljs-symbol">tuple</span>&#x27;&gt;<br><span class="hljs-symbol">15</span><br></code></pre></td></tr></table></figure>
+python不能直接约束一个变量的类型。但是可以通过说明，来提示用户调用参数的时候，参数的类型。<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs swift">def <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(name:str, age:int, study_id)</span></span>:<br>  <span class="hljs-built_in">print</span>(name)<br></code></pre></td></tr></table></figure>
+其中str、int有提示作用<h5 id="7、函数的返回值"><a href="#7、函数的返回值" class="headerlink" title="7、函数的返回值"></a>7、函数的返回值</h5></li>
+<li>返回值：函数的返回值就是return关键字后面表达式的结果。就是函数调用表达式的结果。</li>
+<li>python中所有的函数都有返回值，默认为None（没有return）。<figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs fortran">def <span class="hljs-keyword">Pass</span>():<br>    <span class="hljs-keyword">pass</span><br><span class="hljs-built_in">print</span>(<span class="hljs-keyword">Pass</span>())<br><br>结果：<br><span class="hljs-keyword">None</span><br></code></pre></td></tr></table></figure></li>
+<li>return 关键字<br> 1、确定返回值<br> 2、结束函数（函数中只要遇到return，函数就直接结束）</li>
+</ul>
+<p><strong>什么时候需要返回值？</strong><br>只要实现函数的功能会产生新的数据，就通过返回值将新的数据返回，并不是打印它。</p>
+<p>练习：</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs angelscript">#练习：<span class="hljs-number">1</span>、写一个函数，统计一个列表中整数的个数<br>def count1(list):<br>    count = <span class="hljs-number">0</span><br>    <span class="hljs-keyword">for</span> index <span class="hljs-keyword">in</span> list:<br>        <span class="hljs-keyword">if</span> isinstance(index,<span class="hljs-built_in">int</span>):<br>            count += <span class="hljs-number">1</span><br>    <span class="hljs-keyword">return</span> count<br>print(count1([<span class="hljs-number">1</span>, <span class="hljs-number">1.2</span>, <span class="hljs-number">3.4</span> ,<span class="hljs-number">34.5</span>, <span class="hljs-number">34</span>, <span class="hljs-number">34</span>]))<br><br># <span class="hljs-number">2</span>、将一个数字列表中所有的元素的值都变成原来的<span class="hljs-number">2</span>倍<br>def list2(list_new):<br>    n = <span class="hljs-number">0</span><br>    <span class="hljs-keyword">for</span> item <span class="hljs-keyword">in</span> list_new:<br>        list_new[n] *= <span class="hljs-number">2</span><br>        n += <span class="hljs-number">1</span><br>    <span class="hljs-keyword">return</span> list_new<br>print(list2([<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>]))<br><br># <span class="hljs-number">3</span>、获取指定元素对应的下标<br>def list_1(list:list, item):<br>    index_list = []<br>    <span class="hljs-keyword">for</span> index <span class="hljs-keyword">in</span> range(len(list)):<br>        <span class="hljs-keyword">if</span> list[index] == item:<br>            index_list.append(index)<br>    <span class="hljs-keyword">return</span> index_list<br>print(list_1([<span class="hljs-number">1</span>,<span class="hljs-number">3</span>,<span class="hljs-number">2</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">3</span>],<span class="hljs-number">3</span>))<br>结果：<br><span class="hljs-number">3</span><br>[<span class="hljs-number">4</span>, <span class="hljs-number">6</span>, <span class="hljs-number">8</span>, <span class="hljs-number">10</span>, <span class="hljs-number">12</span>]<br><span class="hljs-number">2</span><br></code></pre></td></tr></table></figure>
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/categories/Python/">Python</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/tags/%E5%87%BD%E6%95%B0/">函数</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/Myblog/2018/08/30/%E5%87%BD%E6%95%B0%E5%9F%BA%E7%A1%8002-%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0%E3%80%81%E9%80%92%E5%BD%92%E5%87%BD%E6%95%B0/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">函数基础02-匿名函数、递归函数</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/Myblog/2018/08/28/%E5%AD%A6%E7%94%9F%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/">
+                        <span class="hidden-mobile">学生管理系统</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/Myblog/js/events.js" ></script>
+<script  src="/Myblog/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/Myblog/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/Myblog/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/Myblog/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/Myblog/js/boot.js" ></script>
+
+
+</body>
+</html>

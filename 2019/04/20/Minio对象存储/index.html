@@ -1,0 +1,509 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/Myblog/img/favicon.png">
+  <link rel="icon" href="/Myblog/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="Simple, so charming!">
+  <meta name="author" content="stellae">
+  <meta name="keywords" content="">
+  
+  <title>Minio对象存储 - stellae&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/Myblog/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/Myblog/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"stellae.gitee.io","root":"/Myblog/","version":"1.8.10","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/Myblog/js/utils.js" ></script>
+  <script  src="/Myblog/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/Myblog/">&nbsp;<strong>stellae's blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/Myblog/img/WtwSsqwYlA0.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Minio对象存储">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      stellae
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2019-04-20 15:36" pubdate>
+        2019年4月20日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.2k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      22
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Minio对象存储</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：10 个月前
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h4 id="Minio简介"><a href="#Minio简介" class="headerlink" title="Minio简介"></a>Minio简介</h4><p>Minio是GlusterFS创始人之一Anand Babu Periasamy发布新的开源项目。Minio兼容Amason的S3分布式对象存储项目，采用Golang实现，客户端支持Java,Python,Javacript, Golang语言。</p>
+<p>Minio服务端可以工作在Windows,Linux, OS X和FreeBSD上。配置简单，基本是复制可执行程序，单行命令可以运行起来。</p>
+<h4 id="Minio服务器"><a href="#Minio服务器" class="headerlink" title="Minio服务器"></a>Minio服务器</h4><p>要创建具有永久存储的MinIO容器，您需要将本地持久目录从主机操作系统映射到虚拟配置<code>~/.minio</code> 并导出<code>/data</code>目录。 为此，请运行以下命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">docker run -p 9000:9000 --name minio1 \<br>  -v /mnt/data:/data \<br>  -v /mnt/config:/root/.minio \<br>  minio/minio server /data<br></code></pre></td></tr></table></figure>
+
+<p><strong>MinIO自定义Access和Secret密钥</strong></p>
+<p>要覆盖MinIO的自动生成的密钥，您可以将Access和Secret密钥设为环境变量。 MinIO允许常规字符串作为Access和Secret密钥。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell">docker run -p 9000:9000 --name minio1 \<br>  -e &quot;MINIO_ACCESS_KEY=AKIAIOSFODNN7EXAMPLE&quot; \<br>  -e &quot;MINIO_SECRET_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY&quot; \<br>  -v /mnt/data:/data \<br>  -v /mnt/config:/root/.minio \<br>  minio/minio server /data<br></code></pre></td></tr></table></figure>
+
+<h4 id="Minio客户端"><a href="#Minio客户端" class="headerlink" title="Minio客户端"></a>Minio客户端</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs shell">ls       列出文件和文件夹。<br>mb       创建一个存储桶或一个文件夹。<br>cat      显示文件和对象内容。<br>pipe     将一个STDIN重定向到一个对象或者文件或者STDOUT。<br>share    生成用于共享的URL。<br>cp       拷贝文件和对象。<br>mirror   给存储桶和文件夹做镜像。<br>find     基于参数查找文件。<br>diff     对两个文件夹或者存储桶比较差异。<br>rm       删除文件和对象。<br>events   管理对象通知。<br>watch    监听文件和对象的事件。<br>policy   管理访问策略。<br>session  为cp命令管理保存的会话。<br>config   管理mc配置文件。<br>update   检查软件更新。<br>version  输出版本信息。<br></code></pre></td></tr></table></figure>
+
+<p>mac安装Minio客户端</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">brew install minio/stable/mc<br></code></pre></td></tr></table></figure>
+
+<p>添加hosts</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">mc config host add local http://127.0.0.1:9000 xxxx xxxx<br></code></pre></td></tr></table></figure>
+
+<p>查看 bucket</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">mc ls local<br></code></pre></td></tr></table></figure>
+
+<p>创建 bucket</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">mc mb local/&lt;bucket&gt;<br></code></pre></td></tr></table></figure>
+
+<p>给bucket赋予public权限</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">mc policy public local/&lt;bucket&gt;<br></code></pre></td></tr></table></figure>
+
+
+<h4 id="实例：Python上传图片并生成指定大小缩略图，保存到Minio服务器"><a href="#实例：Python上传图片并生成指定大小缩略图，保存到Minio服务器" class="headerlink" title="实例：Python上传图片并生成指定大小缩略图，保存到Minio服务器"></a>实例：Python上传图片并生成指定大小缩略图，保存到Minio服务器</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># minio_server.py</span><br><span class="hljs-keyword">from</span> flask <span class="hljs-keyword">import</span> current_app<br><span class="hljs-keyword">from</span> minio <span class="hljs-keyword">import</span> Minio<br><span class="hljs-keyword">from</span> minio.error <span class="hljs-keyword">import</span> ResponseError<br><br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MinioServer</span>():</span><br>    <span class="hljs-string">&quot;&quot;&quot;Minio Server&quot;&quot;&quot;</span><br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span>(<span class="hljs-params">self</span>):</span><br>        self.minio_url = current_app.config[<span class="hljs-string">&#x27;MINIO_URL&#x27;</span>]<br>        self.minio_admin = current_app.config[<span class="hljs-string">&#x27;MINIO_ADMIN&#x27;</span>]<br>        self.minio_access_key = current_app.config[<span class="hljs-string">&#x27;MINIO_ACCESS_KEY&#x27;</span>]<br>        self.minio_secret_key = current_app.config[<span class="hljs-string">&#x27;MINIO_SECRET_KEY&#x27;</span>]<br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">up_file</span>(<span class="hljs-params">self, new_filename, save_path, content_type</span>):</span><br>        <span class="hljs-string">&quot;&quot;&quot;上传文件&quot;&quot;&quot;</span><br>        bucket = current_app.config[<span class="hljs-string">&#x27;MINIO_BUCKET&#x27;</span>]  <span class="hljs-comment"># 存储桶名</span><br>        minio_client = Minio(<br>            self.minio_admin,<br>            access_key=self.minio_access_key,<br>            secret_key=self.minio_secret_key,<br>            secure=<span class="hljs-literal">False</span>)  <span class="hljs-comment"># 不启用https</span><br>        <span class="hljs-keyword">try</span>:<br>            minio_client.fput_object(<br>                bucket, new_filename, save_path, content_type=content_type)<br>        <span class="hljs-keyword">except</span> ResponseError <span class="hljs-keyword">as</span> error:<br>            print(error)<br><br>        <span class="hljs-keyword">return</span> <span class="hljs-string">f&#x27;https://<span class="hljs-subst">&#123;self.minio_url&#125;</span>/<span class="hljs-subst">&#123;bucket&#125;</span>/<span class="hljs-subst">&#123;new_filename&#125;</span>&#x27;</span><br><br></code></pre></td></tr></table></figure>
+
+<p>上传文件到minio服务器，并生成指定大小缩略图。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># upload_pic.py</span><br><span class="hljs-keyword">import</span> os<br><span class="hljs-keyword">from</span> werkzeug.utils <span class="hljs-keyword">import</span> secure_filename<br><span class="hljs-keyword">from</span> uuid <span class="hljs-keyword">import</span> uuid1<br><br><span class="hljs-keyword">from</span> ..utils.minio_server <span class="hljs-keyword">import</span> MinioServer<br><span class="hljs-keyword">from</span> ..utils.thumbnail <span class="hljs-keyword">import</span> gen_thumbnail<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">upload_picture</span>(<span class="hljs-params">file_stream</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;生成大小两张缩略图上传到Minio服务器&quot;&quot;&quot;</span><br>    filename = secure_filename(file_stream.filename)  <span class="hljs-comment"># 文件名</span><br>    content_type = file_stream.content_type  <span class="hljs-comment"># 文件类型</span><br>    save_path = os.path.join(<span class="hljs-string">&#x27;./&#x27;</span>, filename)<br>    file_stream.save(save_path)  <span class="hljs-comment"># 上传文件到本地</span><br>    uuid_now = uuid1()<br>    gen_thumbnail_pictures = gen_thumbnail(save_path)<br>    <span class="hljs-comment"># 将生成的大小缩略图上传minio</span><br>    thumbnail_list = []<br>    <span class="hljs-keyword">for</span> pic <span class="hljs-keyword">in</span> gen_thumbnail_pictures:<br>        file_prefix, file_extension = os.path.splitext(pic)  <span class="hljs-comment"># 获取文件前后缀</span><br>        split_tup = file_prefix.split(<span class="hljs-string">&#x27;_&#x27;</span>)<br>        width, height = split_tup[<span class="hljs-number">-2</span>], split_tup[<span class="hljs-number">-1</span>]<br>        new_filename = <span class="hljs-string">f&#x27;<span class="hljs-subst">&#123;uuid_now&#125;</span>_<span class="hljs-subst">&#123;width&#125;</span>*<span class="hljs-subst">&#123;height&#125;</span><span class="hljs-subst">&#123;file_extension&#125;</span>&#x27;</span><br>        minio_server = MinioServer()<br>        url = minio_server.up_file(new_filename, pic, content_type)<br>        thumbnail_list.append(url)<br>    gen_thumbnail_pictures.append(save_path)<br>    <span class="hljs-comment"># 删除临时文件</span><br>    <span class="hljs-keyword">for</span> pic_temp <span class="hljs-keyword">in</span> gen_thumbnail_pictures:<br>        <span class="hljs-keyword">if</span> os.path.exists(pic_temp):<br>            os.remove(pic_temp)<br><br>    <span class="hljs-keyword">return</span> thumbnail_list<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># thumbnail.py</span><br><span class="hljs-keyword">import</span> os<br><br><span class="hljs-keyword">from</span> multiprocessing <span class="hljs-keyword">import</span> Pool<br><span class="hljs-keyword">from</span> PIL <span class="hljs-keyword">import</span> Image<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">thumbnail</span>(<span class="hljs-params">image_details</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;生成指定尺寸缩略图&quot;&quot;&quot;</span><br>    size, path = image_details<br>    image = Image.open(path)<br>    image.thumbnail(size)<br>    file_prefix, file_extension = os.path.splitext(path)  <span class="hljs-comment"># 分割文件前后缀</span><br>    save_path = <span class="hljs-string">f&#x27;<span class="hljs-subst">&#123;file_prefix&#125;</span>_<span class="hljs-subst">&#123;size[<span class="hljs-number">0</span>]&#125;</span>_<span class="hljs-subst">&#123;size[<span class="hljs-number">1</span>]&#125;</span><span class="hljs-subst">&#123;file_extension&#125;</span>&#x27;</span><br>    image.save(save_path)<br>    <span class="hljs-keyword">return</span> save_path<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">gen_thumbnail</span>(<span class="hljs-params">file_path</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;生成大小两个尺寸的缩略图&quot;&quot;&quot;</span><br>    sizes = [(<span class="hljs-number">1024</span>, <span class="hljs-number">656</span>), (<span class="hljs-number">600</span>, <span class="hljs-number">384</span>)]<br>    file_path = [file_path] * <span class="hljs-number">2</span><br>    <span class="hljs-comment"># 创建拥有5个进程数量的进程池</span><br>    pool = Pool(<span class="hljs-number">5</span>)<br>    results = pool.map(thumbnail, zip(sizes, file_path))<br>    pool.close()   <span class="hljs-comment"># 确保不会有新的进程加入pool</span><br>    pool.join()<br>    <span class="hljs-keyword">return</span> results<br><br></code></pre></td></tr></table></figure>
+
+<p>如果要等比缩放，并且空缺地方填白。参考以下代码。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> os<br><br><span class="hljs-keyword">from</span> multiprocessing <span class="hljs-keyword">import</span> Pool<br><span class="hljs-keyword">from</span> PIL <span class="hljs-keyword">import</span> Image<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">thumbnail</span>(<span class="hljs-params">image_details</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;生成指定尺寸缩略图,并将空缺部分填白&quot;&quot;&quot;</span><br>    size, path = image_details<br>    image = Image.open(path)<br>    aspect_width, aspect_height = size<br>    source_width, source_height = image.size<br>    <span class="hljs-comment"># 判断宽高比</span><br>    <span class="hljs-keyword">if</span> (source_width / source_height) &gt; (aspect_width / aspect_height):<br>        rate = aspect_width / source_width<br>    <span class="hljs-keyword">else</span>:<br>        rate = aspect_height / source_height<br>    rate = round(rate, <span class="hljs-number">1</span>)<br>    image = image.resize((int(source_width * rate), int(source_height * rate)))<br>    <span class="hljs-comment"># 填白</span><br>    result_image = Image.new(<span class="hljs-string">&#x27;RGB&#x27;</span>, [aspect_width, aspect_height], (<span class="hljs-number">255</span>, <span class="hljs-number">255</span>, <span class="hljs-number">255</span>, <span class="hljs-number">255</span>))<br>    result_image.paste(image, (int((aspect_width - image.size[<span class="hljs-number">0</span>]) / <span class="hljs-number">2</span>), int((aspect_height - image.size[<span class="hljs-number">1</span>]) / <span class="hljs-number">2</span>)))<br>    file_prefix, file_extension = os.path.splitext(path)  <span class="hljs-comment"># 分割文件前后缀</span><br>    save_path = <span class="hljs-string">f&#x27;<span class="hljs-subst">&#123;file_prefix&#125;</span>_<span class="hljs-subst">&#123;image.size[<span class="hljs-number">0</span>]&#125;</span>_<span class="hljs-subst">&#123;image.size[<span class="hljs-number">1</span>]&#125;</span><span class="hljs-subst">&#123;file_extension&#125;</span>&#x27;</span><br>    result_image.save(save_path)<br>    <span class="hljs-keyword">return</span> save_path<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">gen_thumbnail</span>(<span class="hljs-params">file_path</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;生成大小两个尺寸的缩略图&quot;&quot;&quot;</span><br>    sizes = [(<span class="hljs-number">1013</span>, <span class="hljs-number">650</span>), (<span class="hljs-number">600</span>, <span class="hljs-number">385</span>)]<br>    file_path = [file_path] * <span class="hljs-number">2</span><br>    <span class="hljs-comment"># 创建拥有5个进程数量的进程池</span><br>    pool = Pool(<span class="hljs-number">5</span>)<br>    results = pool.map(thumbnail, zip(sizes, file_path))<br>    pool.close()   <span class="hljs-comment"># 确保不会有新的进程加入pool</span><br>    pool.join()<br>    <span class="hljs-keyword">return</span> results<br></code></pre></td></tr></table></figure>
+
+
+
+<p>本文参考文章 <a target="_blank" rel="noopener" href="https://docs.min.io/">Minio官方文档</a> / <a target="_blank" rel="noopener" href="https://github.com/minio/minio-py">Github Minio</a></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/categories/Minio/">Minio</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/tags/minio/">minio</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/Myblog/2019/04/20/Swagger%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B%E6%8C%87%E5%8D%97/">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Swagger快速上手指南</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/Myblog/2019/03/16/SQLAlchemy%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B/">
+                        <span class="hidden-mobile">SQLAlchemy快速上手</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/Myblog/js/events.js" ></script>
+<script  src="/Myblog/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/Myblog/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/Myblog/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/Myblog/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/Myblog/js/boot.js" ></script>
+
+
+</body>
+</html>

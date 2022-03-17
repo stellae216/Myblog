@@ -18,7 +18,7 @@
   <meta name="author" content="stellae">
   <meta name="keywords" content="">
   
-  <title>hexo一键自动构建gitee pages - stellae&#39;s blog</title>
+  <title>Go语言select常见用法 - stellae&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
 
@@ -163,7 +163,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="hexo一键自动构建gitee pages">
+            <span class="h2" id="subtitle" title="Go语言select常见用法">
               
             </span>
 
@@ -178,8 +178,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2022-03-10 00:30" pubdate>
-        2022年3月10日 凌晨
+      <time datetime="2022-03-17 23:16" pubdate>
+        2022年3月17日 晚上
       </time>
     </span>
   
@@ -190,7 +190,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      899 字
+      542 字
     </span>
   
 
@@ -200,7 +200,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      14
+      9
        分钟
     </span>
   
@@ -230,48 +230,51 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">hexo一键自动构建gitee pages</h1>
+            <h1 style="display: none">Go语言select常见用法</h1>
             
               <p class="note note-info">
                 
-                  本文最后更新于：8 天前
+                  本文最后更新于：几秒前
                 
               </p>
             
             <div class="markdown-body">
-              <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>由于 Gitee Pages 的访问速度很快，很多朋友会选择 Gitee Pages 部署项目（如：个人博客、开源项目国内镜像站点）。但是它不像 GitHub Pages 那样，一提交代码就能自动更新 Pages，因为 Gitee 的自动部署属于 Gitee Pages Pro 的服务。</p>
-<p>为了实现 Gitee Pages 的自动部署，找到了大佬开发的工具 <a target="_blank" rel="noopener" href="https://github.com/marketplace/actions/gitee-pages-action">Gitee Pages Action</a> ，只需要在 GitHub 项目的 Settings 页面下配置 keys，然后在 <code>.github/workflows/</code> 下创建一个工作流，通过工作流自动将代码从Github拷贝到Gitee，再模拟自动点击构建部署博客。</p>
-<h3 id="完整示例"><a href="#完整示例" class="headerlink" title="完整示例"></a>完整示例</h3><h4 id="创建workflow"><a href="#创建workflow" class="headerlink" title="创建workflow"></a>创建workflow</h4><p>首先我们需要知道hexo的目录结构：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs shell">./<br>├── README.md<br>├── .deploy_git<br>├── _config.yml<br>├── db.json<br>├── node_modules<br>├── package-lock.json<br>├── package.json<br>├── public<br>├── scaffolds<br>├── source<br>└── themes<br></code></pre></td></tr></table></figure>
-
-<p><code>_config.yml</code>描述了你的hexo仓库的一些基本信息，其中包括了你通过<code>hexo deploy</code> 部署指向的远端仓库地址。而需要推送的内容，是存放在<code>.deploy_git</code>文件夹中的，也就是我们通过命令<code>hexo generate</code>生成的博客html原始文件。</p>
-<p>所以这里我们要添加的<code>workflow</code>工作流，位于<code>.deploy_git/.github/workflows/xxx.yml</code></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> .github/workflows/sync.yml</span><br><br>name: Sync<br><br>on:<br>  push:<br>    branches: [main]<br>  workflow_dispatch:<br><br>jobs:<br>  build:<br>    runs-on: ubuntu-latest<br>    steps:<br>      - name: Sync to Gitee<br>        uses: wearerequired/git-mirror-action@master<br>        env:<br>          # 注意在 Settings-&gt;Secrets 配置 GITEE_RSA_PRIVATE_KEY<br>          SSH_PRIVATE_KEY: $&#123;&#123; secrets.GITEE_RSA_PRIVATE_KEY &#125;&#125;<br>        with:<br>          # 注意替换为你的 GitHub 源仓库地址<br>          source-repo: git@github.com:doocs/leetcode.git<br>          # 注意替换为你的 Gitee 目标仓库地址<br>          destination-repo: git@gitee.com:Doocs/leetcode.git<br><br>      - name: Build Gitee Pages<br>        uses: yanglbme/gitee-pages-action@main<br>        with:<br>          # 注意替换为你的 Gitee 用户名<br>          gitee-username: yanglbme<br>          # 注意在 Settings-&gt;Secrets 配置 GITEE_PASSWORD<br>          gitee-password: $&#123;&#123; secrets.GITEE_PASSWORD &#125;&#125;<br>          # 注意替换为你的 Gitee 仓库，仓库名严格区分大小写，请准确填写，否则会出错<br>          gitee-repo: doocs/leetcode<br>          # 要部署的分支，默认是 master，若是其他分支，则需要指定（指定的分支必须存在）<br>          branch: main<br></code></pre></td></tr></table></figure>
-
-<h4 id="配置密钥"><a href="#配置密钥" class="headerlink" title="配置密钥"></a>配置密钥</h4><p><strong>这里建议生成两对SSH Key，分别用于Github和Gitee。当然也可以用同一对，只要保证配置在 <code>Github -&gt; repo -&gt; setting -&gt; secrets中Gitee的私钥</code> 能够与 <code>Gitee -&gt; 设置中的SSH公钥</code> 对应上就好了</strong></p>
-<ol>
-<li><p>在命令行终端或 Git Bash 使用命令 <code>ssh-keygen -t rsa -C &quot;youremail@example.com&quot;</code> 生成 SSH Key，注意替换为自己的邮箱。生成的 <code>id_rsa</code> 是私钥，<code>id_rsa.pub</code> 是公钥。(⚠️注意此处不要设置密码，生成的公私钥用于下面 GitHub / Gitee 的配置，以保证公私钥成对，否则从 GitHub -&gt; Gitee 的同步将会失败。)</p>
+              <h3 id="特性速览"><a href="#特性速览" class="headerlink" title="特性速览"></a>特性速览</h3><p><code>select</code>是Go在语言层面提供的多路复用<code>I/O</code>机制，用于检测多个管道是否就绪(可读或者可写)，并且只能作用于管道。</p>
+<ul>
+<li><p>如果存在多个<code>case</code>就绪，系统会随机执行其中之一</p>
 </li>
-<li><p>在 GitHub 项目的「Settings -&gt; Secrets」路径下配置好命名为 <code>GITEE_RSA_PRIVATE_KEY</code> 和 <code>GITEE_PASSWORD</code> 的两个密钥。其中：<code>GITEE_RSA_PRIVATE_KEY</code> 存放 <code>id_rsa</code> 私钥；<code>GITEE_PASSWORD</code> 存放 Gitee 帐号的密码。</p>
+<li><p>如果所有<code>case</code>都不满足，但若存在<code>default</code>语句，则会执行对应逻辑 (<code>default</code>实际上是一种特殊的<code>case</code>，它能够出现在select的任意位置，但每次<code>select</code>中只能出现一次)</p>
 </li>
-<li><p>在 GitHub 的个人设置页面「<a target="_blank" rel="noopener" href="https://github.com/settings/keys">Settings -&gt; SSH and GPG keys</a>」配置 SSH 公钥（即：<code>id_rsa.pub</code>），命名随意。</p>
-</li>
-<li><p>在 Gitee 的个人设置页面「<a target="_blank" rel="noopener" href="https://gitee.com/profile/sshkeys">安全设置 -&gt; SSH 公钥</a>」配置 SSH 公钥（即：<code>id_rsa.pub</code>），命名随意。</p>
-</li>
-</ol>
-<h4 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h4><p>如果一切配置正常，并成功触发 <a target="_blank" rel="noopener" href="https://github.com/marketplace/actions/gitee-pages-action">Gitee Pages Action</a> ，Gitee Pages Action 会打印出成功的结果。并且，我们会在 Gitee 公众号收到一条登录通知。这是 Gitee Pages Action 程序帮我们登录到 Gitee 官网，并为我们点击了项目的部署按钮。</p>
-<h4 id="错误及解决方案"><a href="#错误及解决方案" class="headerlink" title="错误及解决方案"></a>错误及解决方案</h4><p>首次需要<strong>手动</strong>登录 Gitee ，点击“启动”进行 Gitee Pages 服务的部署。</p>
-<p>更多错误情况见 <a target="_blank" rel="noopener" href="https://github.com/marketplace/actions/gitee-pages-action#%E9%94%99%E8%AF%AF%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88">错误及解决方案</a></p>
-<h3 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h3><ul>
-<li><p><a target="_blank" rel="noopener" href="https://lxd0619.github.io/frontend/hexo%E5%90%8C%E6%97%B6%E9%83%A8%E7%BD%B2GitHub%E5%92%8CGitee.html">hexo自动同步部署GitHub和Gitee pages</a></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/marketplace/actions/gitee-pages-action">Gitee Pages Action · Actions · GitHub Marketplace · GitHub</a></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/wearerequired/git-mirror-action">GitHub - wearerequired/git-mirror-action</a></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/yanglbme/gitee-pages-action">GitHub - yanglbme/gitee-pages-action</a></p>
+<li><p>如果所有<code>case</code>都不满足，并且没有<code>default</code>语句，则会进入阻塞状态，直到某个<code>case</code>满足条件</p>
 </li>
 </ul>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">convert</span><span class="hljs-params">(i <span class="hljs-keyword">interface</span>&#123;&#125;)</span></span> &#123;<br>    <span class="hljs-keyword">switch</span> t := i.(<span class="hljs-keyword">type</span>) &#123;<br>    <span class="hljs-keyword">case</span> <span class="hljs-keyword">int</span>:<br>        <span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;i is interger&quot;</span>, t)<br>    <span class="hljs-keyword">case</span> <span class="hljs-keyword">string</span>:<br>        <span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;i is string&quot;</span>, t)<br>    <span class="hljs-keyword">case</span> <span class="hljs-keyword">float64</span>:<br>        <span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;i is float64&quot;</span>, t)<br>    <span class="hljs-keyword">default</span>:<br>        <span class="hljs-built_in">println</span>(<span class="hljs-string">&quot;type not found&quot;</span>)<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="select常见用法"><a href="#select常见用法" class="headerlink" title="select常见用法"></a>select常见用法</h3><h4 id="永久阻塞"><a href="#永久阻塞" class="headerlink" title="永久阻塞"></a>永久阻塞</h4><p>当某些时候，我们需要启动携程处理任务，但是不希望<code>main</code>函数退出，就可以采用下面这种方式永久性阻塞，保证携程任务正常工作。</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs golang"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	fmt.Println(<span class="hljs-string">&quot;time clock...&quot;</span>)<br>	<span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>		PrintTest()<br>	&#125;()<br>	<span class="hljs-keyword">select</span> &#123;&#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">PrintTest</span><span class="hljs-params">()</span></span> &#123;<br>	<span class="hljs-keyword">for</span> &#123;<br>		time.Sleep(time.Second * <span class="hljs-number">1</span>)<br>		fmt.Println(time.Now().Format(<span class="hljs-string">&quot;2006-01-02 15:04:05&quot;</span>))<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p><code>select &#123;&#125;</code> 中不包含任何<code>case</code>语句和 <code>default</code>语句，则会陷入永久性阻塞。</p>
+</blockquote>
+<h4 id="超时机制"><a href="#超时机制" class="headerlink" title="超时机制"></a>超时机制</h4><p>处理任务时，设置一个任务处理时间的<code>deadline</code>，如果超时未成功处理，则主动结束退出任务。</p>
+<ul>
+<li>方式一</li>
+</ul>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs golang"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    timeout := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-keyword">bool</span>, <span class="hljs-number">1</span>)<br>    <span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>        time.Sleep(<span class="hljs-number">2</span> * time.Second)<br>        timeout &lt;- <span class="hljs-literal">true</span><br>    &#125;()<br>    ch := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-keyword">int</span>)<br>    <span class="hljs-keyword">select</span> &#123;<br>    <span class="hljs-keyword">case</span> &lt;-ch:<br>    <span class="hljs-keyword">case</span> &lt;-timeout:<br>        fmt.Println(<span class="hljs-string">&quot;timeout 01&quot;</span>)<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>方式二</li>
+</ul>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs golang"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	job := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-keyword">string</span>)<br>	<span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>		time.Sleep(<span class="hljs-number">3</span> * time.Second)<br>		job &lt;- <span class="hljs-string">&quot;done&quot;</span><br>	&#125;()<br>	<span class="hljs-keyword">select</span> &#123;<br>	<span class="hljs-keyword">case</span> &lt;- job:<br>		fmt.Println(<span class="hljs-string">&quot;job done!&quot;</span>)<br>	<span class="hljs-keyword">case</span> &lt;- time.After(time.Second * <span class="hljs-number">2</span>):<br>		fmt.Println(<span class="hljs-string">&quot;timeout...&quot;</span>)<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="快速检错"><a href="#快速检错" class="headerlink" title="快速检错"></a>快速检错</h4><p>有时候需要用管道来传递错误，这时候可以使用<code>select</code>语句来检查管道中是否存在错误，避免陷入循环</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs golang"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	errCh := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> error)<br>	job(errCh)<br>	<span class="hljs-keyword">select</span> &#123;<br>	<span class="hljs-keyword">case</span> jobErr := &lt;- errCh:<br>		<span class="hljs-keyword">if</span> jobErr != <span class="hljs-literal">nil</span> &#123;<br>			<span class="hljs-keyword">break</span><br>		&#125;<br>	<span class="hljs-keyword">default</span>:<br>		fmt.Println(<span class="hljs-string">&quot;no error&quot;</span>)<br>	&#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+
 
             </div>
             <hr>
@@ -281,7 +284,7 @@
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/Myblog/categories/Hexo/">Hexo</a>
+                      <a class="hover-with-bg" href="/Myblog/categories/Go/">Go</a>
                     
                   </div>
                 
@@ -289,7 +292,7 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/Myblog/tags/hexo/">hexo</a>
+                      <a class="hover-with-bg" href="/Myblog/tags/select/">select</a>
                     
                   </div>
                 
@@ -306,18 +309,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/Myblog/2022/03/17/Go%E8%AF%AD%E8%A8%80select%E5%B8%B8%E8%A7%81%E7%94%A8%E6%B3%95/">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Go语言select常见用法</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/Myblog/2022/01/22/Golang%E8%87%AA%E5%8A%A8%E5%8C%96%E4%B9%8Brobotgo/">
-                        <span class="hidden-mobile">Golang自动化之robotgo</span>
+                      <a href="/Myblog/2022/03/10/hexo%E4%B8%80%E9%94%AE%E8%87%AA%E5%8A%A8%E6%9E%84%E5%BB%BAgitee-pages/">
+                        <span class="hidden-mobile">hexo一键自动构建gitee pages</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

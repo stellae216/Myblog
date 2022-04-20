@@ -234,7 +234,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：8 个月前
+                  本文最后更新于：6 小时前
                 
               </p>
             
@@ -267,9 +267,6 @@
 <p><strong>需要记录错误详细信息可以使用以下方法：</strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">try</span>:<br>    b = a / <span class="hljs-number">0</span><br><span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:<br>    logging.exception(<span class="hljs-string">&quot;Exception occurred&quot;</span>)    <span class="hljs-comment"># 推荐</span><br>    logging.error(<span class="hljs-string">&quot;Exception occurred&quot;</span>, exc_info=<span class="hljs-literal">True</span>)<br>    logging.log(level=logging.DEBUG, msg=<span class="hljs-string">&quot;Exception occurred&quot;</span>, exc_info=<span class="hljs-literal">True</span>)<br></code></pre></td></tr></table></figure>
 
-
-
-
             </div>
             <hr>
             <div>
@@ -286,7 +283,7 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/Myblog/tags/%E6%97%A5%E5%BF%97/">日志</a>
+                      <a class="hover-with-bg" href="/Myblog/tags/log/">log</a>
                     
                       <a class="hover-with-bg" href="/Myblog/tags/logging/">logging</a>
                     

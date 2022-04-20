@@ -182,6 +182,57 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/Myblog/2021/07/16/Go%E8%AF%AD%E8%A8%80sync-WaitGroup%E7%94%A8%E6%B3%95/" target="_blank">
+          Go语言sync.WaitGroup用法
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/Myblog/2021/07/16/Go%E8%AF%AD%E8%A8%80sync-WaitGroup%E7%94%A8%E6%B3%95/" target="_blank">
+          
+          
+            
+          
+          Go程序中，主线程为了等待goroutine都运行完毕，不得不在程序的末尾使用time.Sleep() 来睡眠一段时间，等待其他线程充分运行。
+123456func main()&#123;    for i := 0; i &lt; 100 ; i++&#123;        go fmt.Println(i)    &#125;    time.Sleep(time.Second)&#125
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-07-16 17:29" pubdate>
+              2021-07-16
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/Myblog/categories/Go/">Go</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/Myblog/tags/WaitGroup/">WaitGroup</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/Myblog/2021/07/16/Go%E8%AF%AD%E8%A8%80slice%E8%AF%A6%E8%A7%A3/" target="_blank">
           Go语言slice详解
         </a>
@@ -663,64 +714,6 @@ SnowFlake所生成的ID一共分成四部分：
             <i class="iconfont icon-tags"></i>
             
               <a href="/Myblog/tags/snowflake/">snowflake</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/Myblog/2020/08/05/Hasura-%E5%9F%BA%E4%BA%8EPostgreSQL%E7%9A%84GraphQL%E5%BC%95%E6%93%8E/" target="_blank">
-          Hasura-基于PostgreSQL的GraphQL引擎
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/Myblog/2020/08/05/Hasura-%E5%9F%BA%E4%BA%8EPostgreSQL%E7%9A%84GraphQL%E5%BC%95%E6%93%8E/" target="_blank">
-          
-          
-            
-          
-          Hasura简介Hasura GraphQL引擎是一种快速的GraphQL服务器，通过Postgres为您提供即时，实时的GraphQL API，并具有针对数据库事件的webhook触发器和业务逻辑的远程模式。
-Hasura可帮助您构建由Postgres支持的GraphQL应用程序，或使用Postgres将其逐步移至GraphQL以用于现有应用程序。
-如果你还不知道什么是GraphQL，可以去看下
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-08-05 15:59" pubdate>
-              2020-08-05
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/Myblog/categories/GraphQL/">GraphQL</a>
-            
-              <a href="/Myblog/categories/GraphQL/Hasura/">Hasura</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/Myblog/tags/pgsql/">pgsql</a>
-            
-              <a href="/Myblog/tags/hasura/">hasura</a>
-            
-              <a href="/Myblog/tags/graphql/">graphql</a>
             
           </div>
         

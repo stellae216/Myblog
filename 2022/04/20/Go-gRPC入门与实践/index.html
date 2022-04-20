@@ -1,0 +1,508 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/Myblog/img/favicon.png">
+  <link rel="icon" href="/Myblog/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="Simple, so charming!">
+  <meta name="author" content="stellae">
+  <meta name="keywords" content="">
+  
+  <title>Go gRPC入门与实践 - stellae&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/Myblog/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/Myblog/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"stellae.gitee.io","root":"/Myblog/","version":"1.8.10","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/Myblog/js/utils.js" ></script>
+  <script  src="/Myblog/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/Myblog/">&nbsp;<strong>stellae's blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/Myblog/img/WtwSsqwYlA0.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Go gRPC入门与实践">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      stellae
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-04-20 23:38" pubdate>
+        2022年4月20日 晚上
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.4k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      28
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Go gRPC入门与实践</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：几秒前
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h3 id="什么是gRPC"><a href="#什么是gRPC" class="headerlink" title="什么是gRPC"></a>什么是gRPC</h3><p>要说gRPC，需要先了解什么是RPC。</p>
+<p><strong>RPC</strong> (Remote Procedure Call)是远程过程调用，比如说现在有两台服务器A, B，一个在A服务器上的应用想要调用B服务器上的应用，由于不在两个方法不在一个内存空间，不能直接调用，需要通过网络表达调用的语义和传达调用的数据。常存在于分布式系统中。<strong>RPC的本质是提供了一种轻量无感知的跨进程通信的方式</strong></p>
+<p><strong>gRPC</strong> 是谷歌开源的一个高性能、开源和通用的 RPC 框架，面向移动和 HTTP/2 设计。带来诸如双向流、流控、头部压缩、单 TCP 连接上的多复用请求等特。这些特性使得其在移动设备上表现更好，更省电和节省空间占用。</p>
+<ul>
+<li>内容交换格式采用ProtoBuf(Google Protocol Buffers)，开源已久，提供了一种灵活、高效、自动序列化结构数据的机制，作用与XML，Json类似，但使用二进制，（反）序列化速度快，压缩效率高。</li>
+<li>传输协议 采用http2，性能比http1.1好了很多。</li>
+</ul>
+<h3 id="安装protoc协议编译器插件"><a href="#安装protoc协议编译器插件" class="headerlink" title="安装protoc协议编译器插件"></a>安装protoc协议编译器插件</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.28<br>go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.2<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>将<code>$GOPATH/bin</code>添加到PATH中</p>
+</blockquote>
+<h3 id="编写和编译-proto文件"><a href="#编写和编译-proto文件" class="headerlink" title="编写和编译 proto文件"></a>编写和编译 proto文件</h3><p><code>kstor.proto</code></p>
+<figure class="highlight protobuf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs protobuf"><span class="hljs-comment">// 指定使用 proto3 版本</span><br>syntax = <span class="hljs-string">&quot;proto3&quot;</span>;<br><br><span class="hljs-comment">// 分号前后分别代表: 生成的go文件的存放地址(会自动生成目录) 和 生成的go文件所属的包名</span><br><span class="hljs-keyword">option</span> go_package = <span class="hljs-string">&quot;./;kstor_proto&quot;</span>;<br><br><span class="hljs-comment">// 随便定义一个包名</span><br><span class="hljs-keyword">package</span> grpc.service.kstor_proto;<br><br><span class="hljs-comment">// The greeting service definition.</span><br><span class="hljs-class"><span class="hljs-keyword">service</span> <span class="hljs-title">Greeter</span> </span>&#123;<br>  <span class="hljs-comment">// 发送问候方法名，有无stream代表了是否要用串流还是单向</span><br>  <span class="hljs-comment">// rpc SayCreateBucket (RequestCreateBucket) returns (stream ReplyCreateBucket) &#123;&#125;</span><br>  <span class="hljs-function"><span class="hljs-keyword">rpc</span> SayGetKey (RequestGetKey) <span class="hljs-keyword">returns</span> (ReplyGetKey) </span>&#123;&#125;<br>  <span class="hljs-function"><span class="hljs-keyword">rpc</span> SaySetKey (RequestSetKey) <span class="hljs-keyword">returns</span> (ReplySetKey) </span>&#123;&#125;<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">RequestGetKey</span> </span>&#123;<br> <span class="hljs-comment">//  类型 变量名 序列号(与Reply对应)</span><br>  <span class="hljs-built_in">string</span> addr = <span class="hljs-number">1</span>;<br>  <span class="hljs-built_in">string</span> port = <span class="hljs-number">2</span>;<br>  <span class="hljs-built_in">string</span> key = <span class="hljs-number">3</span>;<br>  <span class="hljs-built_in">string</span> prefixKey = <span class="hljs-number">4</span>;<br>  <span class="hljs-built_in">string</span> bucket = <span class="hljs-number">5</span>;<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">ReplyGetKey</span> </span>&#123;<br>  <span class="hljs-built_in">string</span> getKeyMessage = <span class="hljs-number">3</span>;<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">RequestSetKey</span> </span>&#123;<br>  <span class="hljs-built_in">string</span> addr = <span class="hljs-number">1</span>;<br>  <span class="hljs-built_in">string</span> port = <span class="hljs-number">2</span>;<br>  <span class="hljs-built_in">string</span> key = <span class="hljs-number">3</span>;<br>  <span class="hljs-built_in">string</span> value = <span class="hljs-number">4</span>;<br>  <span class="hljs-built_in">string</span> bucket = <span class="hljs-number">5</span>;<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">message</span> <span class="hljs-title">ReplySetKey</span> </span>&#123;<br>  <span class="hljs-built_in">string</span> setKeyMessage = <span class="hljs-number">3</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>使用命令编译协议配置文件，生成<code>*.pb.go</code>文件和<code>*_grpc.pb.go</code>文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">protoc -I. --go_out=. --go-grpc_out=. *.proto<br><span class="hljs-meta">#</span><span class="bash"> -I, 相当于 -IPATH 和 --proto_path, 指定 proto 文件依赖的包所要搜索的路径 (这里没有依赖, 可以不写)</span><br><span class="hljs-meta">#</span><span class="bash"> --go_out 参数是指定生成 *.pb.go 文件的路径</span><br><span class="hljs-meta">#</span><span class="bash"> --go-grpc_out 参数是指定生成 *_grpc.pb.go 文件的路径</span><br></code></pre></td></tr></table></figure>
+
+<p>结构如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs shell">├── README.md<br>├── cache<br>│   └── cache.go<br>├── client<br>│   └── client.go<br>├── go.mod<br>├── go.sum<br>├── kstor_proto<br>│   ├── kstor.pb.go<br>│   ├── kstor.proto<br>│   └── kstor_grpc.pb.go<br>├── main.go<br>└── server<br>    └── server.go<br></code></pre></td></tr></table></figure>
+
+<h3 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h3><p><code>server/server.go</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><code class="hljs shell">package server<br><br>import (<br>	&quot;context&quot;<br>	&quot;fmt&quot;<br>	&quot;google.golang.org/grpc&quot;<br>	&quot;kstor/cache&quot;<br>	&quot;kstor/database&quot;<br>	&quot;kstor/global&quot;<br>	proto &quot;kstor/kstor_proto&quot;<br>	&quot;log&quot;<br>	&quot;net&quot;<br>)<br><br>type server struct &#123;<br>	proto.UnimplementedGreeterServer<br>&#125;<br><br>// SayGetKey 查询key<br>func (s *server) SayGetKey(ctx context.Context, in *proto.RequestGetKey) (*proto.ReplyGetKey, error) &#123;<br>	reply := &amp;proto.ReplyGetKey&#123;<br>		GetKeyMessage: &quot;&quot;,<br>	&#125;<br>	key, bucket := in.GetKey(), in.GetBucket()<br>	log.Printf(&quot;Received operate get key -&gt; %v&quot;, in)<br>	cacheValue, isCache := cache.Cache.GetCache(key, bucket, &quot;normal&quot;)<br>	if isCache &#123;<br>		reply.GetKeyMessage = fmt.Sprintf(&quot;Get key【%s】information from bucket【%s】for gRPC\n-&gt; %v&quot;, key, bucket, cacheValue)<br>		return reply, nil<br>	&#125;<br>	db := database.GetBoltDB()<br>	defer db.Close()<br>	bk, err := database.GetKeyByBucket(key, bucket, db)<br>	if err != nil &#123;<br>		reply.GetKeyMessage = fmt.Sprintf(&quot;Get key【%s】information from bucket【%s】failed! %s&quot;, key, bucket, err.Error())<br>		return reply, nil<br>	&#125;<br>	if bk.Value == &quot;&quot; &#123;<br>		reply.GetKeyMessage = fmt.Sprintf(&quot;Not found key【%s】information from bucket【%s】!&quot;, key, bucket)<br>		return reply, nil<br>	&#125;<br>	// 设置缓存<br>	cache.Cache.SetCache(key, bk.Value, bucket, &quot;normal&quot;)<br>	reply.GetKeyMessage = fmt.Sprintf(&quot;Get key【%s】information from bucket【%s】for gRPC\n-&gt; %v&quot;, key, bucket, bk)<br>	return reply, nil<br>&#125;<br><br>// SaySetKey 设置key<br>func (s *server) SaySetKey(ctx context.Context, in *proto.RequestSetKey) (*proto.ReplySetKey, error) &#123;<br>	reply := &amp;proto.ReplySetKey&#123;<br>		SetKeyMessage: &quot;&quot;,<br>	&#125;<br>	log.Printf(&quot;Received operate set key -&gt; %v&quot;, in)<br>	db := database.GetBoltDB()<br>	defer db.Close()<br>	err := database.SetKeyByBucket(in.GetKey(), in.GetValue(), in.GetBucket(), db)<br>	if err != nil &#123;<br>		reply.SetKeyMessage = fmt.Sprintf(&quot;set key【%s】failed! %s&quot;, in.GetKey(), err.Error())<br>		return reply, nil<br>	&#125;<br>	// 使存量key缓存失效<br>	cache.Cache.DeleteCache(in.GetKey(), in.GetBucket())<br>	reply.SetKeyMessage = fmt.Sprintf(&quot;Key【%s】from bucket【%s】set successfully for gRPC&quot;, in.GetKey(), in.GetBucket())<br>	return reply, nil<br>&#125;<br><br>// Run 启动grpc服务端<br>func Run() &#123;<br>	lis, err := net.Listen(&quot;tcp&quot;, &quot;:&quot; + global.GRPCPort)<br>	if err != nil &#123;<br>		log.Fatalf(&quot;failed to listen: %v&quot;, err)<br>	&#125;<br><br>	srv := grpc.NewServer()<br>	// 注册服务<br>	proto.RegisterGreeterServer(srv, &amp;server&#123;&#125;)<br><br>	log.Printf(&quot;gRPC server is running, try to connect to %s:%s...&quot;, global.GRPCAddr, global.GRPCPort)<br>	// 起服务<br>	if err := srv.Serve(lis); err != nil &#123;<br>		log.Fatalf(&quot;failed to serve: %v&quot;, err)<br>	&#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h3><p><code>clien/clien.go</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><code class="hljs shell"><br>package client<br><br>import (<br>	&quot;context&quot;<br>	&quot;google.golang.org/grpc/credentials/insecure&quot;<br>	&quot;kstor/global&quot;<br>	&quot;log&quot;<br>	&quot;time&quot;<br><br>	&quot;google.golang.org/grpc&quot;<br>	proto &quot;kstor/kstor_proto&quot;<br>)<br><br>// Run 启动客户端<br>func Run(opt, addr, port string) &#123;<br>	// Set up a connection to the server.<br>	serverHost := addr + &quot;:&quot; + port<br>	conn, err := grpc.Dial(serverHost, grpc.WithTransportCredentials(insecure.NewCredentials()), grpc.WithBlock())<br>	if err != nil &#123;<br>		log.Fatalf(&quot;did not connect: %v&quot;, err)<br>	&#125;<br>	defer conn.Close()<br><br>	c := proto.NewGreeterClient(conn)<br>	ctx, cancel := context.WithTimeout(context.Background(), time.Second)<br>	defer cancel()<br>	// Contact the server and print out its response.<br>	switch opt &#123;<br>	case global.GetKey:<br>		ReqGetKey(c, ctx)<br>	case global.SetKey:<br>		ReqSetKey(c, ctx)<br>	default:<br>		log.Fatal(&quot;params error&quot;)<br>	&#125;<br>&#125;<br><br>// ReqGetKey 查询key请求<br>func ReqGetKey(c proto.GreeterClient, ctx context.Context) &#123;<br>	r, err := c.SayGetKey(ctx,<br>		&amp;proto.RequestGetKey&#123;Key: global.Key, PrefixKey: global.PrefixKey, Bucket: global.Bucket&#125;)<br>	if err != nil &#123;<br>		log.Fatalf(&quot;could not greet: %v&quot;, err)<br>	&#125;<br>	log.Printf(&quot;Reply: %s&quot;, r.GetGetKeyMessage())<br>&#125;<br><br>// ReqSetKey 设置key请求<br>func ReqSetKey(c proto.GreeterClient, ctx context.Context) &#123;<br>	r, err := c.SaySetKey(ctx,<br>		&amp;proto.RequestSetKey&#123;Key: global.Key, Value: global.Value, Bucket: global.Bucket&#125;)<br>	if err != nil &#123;<br>		log.Fatalf(&quot;could not greet: %v&quot;, err)<br>	&#125;<br>	log.Printf(&quot;Reply: %s&quot;, r.GetSetKeyMessage())<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h3><ul>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/grpc/grpc-go">GitHub - grpc/grpc-go: The Go language implementation of gRPC. HTTP/2 based RPC</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.grpc.io/docs/languages/go/quickstart/">Quick start | Go | gRPC</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/0d776e653906">Go gRPC 入门与实践 - 简书</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000019216566">grpc - 使用 golang 带你从头撸一套 RPC 服务</a></p>
+</li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/categories/gRPC/">gRPC</a>
+                    
+                      <a class="hover-with-bg" href="/Myblog/categories/gRPC/RPC/">RPC</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/tags/grpc/">grpc</a>
+                    
+                      <a class="hover-with-bg" href="/Myblog/tags/grpc-go/">grpc-go</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/Myblog/2022/04/20/Golang%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%A9%E5%99%A8%E4%B9%8Bcobra/">
+                        <span class="hidden-mobile">Golang命令行利器之cobra</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/Myblog/js/events.js" ></script>
+<script  src="/Myblog/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/Myblog/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/Myblog/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/Myblog/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/Myblog/js/boot.js" ></script>
+
+
+</body>
+</html>

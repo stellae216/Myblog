@@ -182,6 +182,59 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/Myblog/2021/07/20/Go%E8%AF%AD%E8%A8%80Context%E4%B8%8A%E4%B8%8B%E6%96%87%E7%AE%A1%E7%90%86/" target="_blank">
+          Go语言Context上下文管理
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/Myblog/2021/07/20/Go%E8%AF%AD%E8%A8%80Context%E4%B8%8A%E4%B8%8B%E6%96%87%E7%AE%A1%E7%90%86/" target="_blank">
+          
+          
+            
+          
+          使用场景context在Go1.7之后就进入标准库中了。它主要的用处如果用一句话来说，是在于控制goroutine的生命周期。
+在 Go http 包的 Server 中，每一个请求在都有一个对应的goroutine去处理。请求处理函数通常会启动额外的goroutine用来访问后端服务，比如数据库和 RPC 服务。用来处理一个请求的goroutine通常需要访问一些与请求特定的数据，比如终端用户的
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-07-20 08:45" pubdate>
+              2021-07-20
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/Myblog/categories/Go/">Go</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/Myblog/tags/context/">context</a>
+            
+              <a href="/Myblog/tags/%E4%B8%8A%E4%B8%8B%E6%96%87%E7%AE%A1%E7%90%86/">上下文管理</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/Myblog/2021/07/16/Go%E8%AF%AD%E8%A8%80sync-WaitGroup%E7%94%A8%E6%B3%95/" target="_blank">
           Go语言sync.WaitGroup用法
         </a>
@@ -657,63 +710,6 @@ PostGIS通过向PostgreSQL添加对空间数据类型、空间索引和空间函
               <a href="/Myblog/tags/postgis/">postgis</a>
             
               <a href="/Myblog/tags/gis/">gis</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/Myblog/2020/08/18/Snowflake%E7%AE%97%E6%B3%95/" target="_blank">
-          Snowflake算法
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/Myblog/2020/08/18/Snowflake%E7%AE%97%E6%B3%95/" target="_blank">
-          
-          
-            
-          
-          Snowflake介绍snowflake算法来源于Twitter，算法的特性是有序、唯一，并且要求高性能，低延迟（每台机器每秒至少生成10k条数据，并且响应时间在2ms以内），要在分布式环境（多集群，跨机房）下使用。
-SnowFlake所生成的ID一共分成四部分：
-
-1.第一位
-占用1bit，其值始终是0，没有实际作用。
-2.时间戳
-占用41bit，精确到毫秒，总共可以容纳约140年的时间。
-3.
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-08-18 16:08" pubdate>
-              2020-08-18
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/Myblog/categories/Snowflake/">Snowflake</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/Myblog/tags/snowflake/">snowflake</a>
             
           </div>
         

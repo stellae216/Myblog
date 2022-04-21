@@ -182,6 +182,51 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/Myblog/2021/09/29/Golang%E6%96%B0%E6%89%8B%E6%98%93%E7%8A%AF%E7%9A%84%E5%9D%91%E7%82%B9/" target="_blank">
+          Golang新手易犯的坑点
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/Myblog/2021/09/29/Golang%E6%96%B0%E6%89%8B%E6%98%93%E7%8A%AF%E7%9A%84%E5%9D%91%E7%82%B9/" target="_blank">
+          
+          
+            
+          
+          修改string 类型的常量尝试使用索引遍历字符串，来更新字符串中的个别字符，是不允许的。
+string 类型的值是只读的二进制 byte slice，如果真要修改字符串中的字符，将 string 转为 []byte 修改后，再转为 string 即可
+123456// 修改字符串的错误示例func main() &#123;  x := &quot;text&quot;  x[0] = &quo
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-09-29 15:07" pubdate>
+              2021-09-29
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/Myblog/categories/GO/">GO</a>
+            
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/Myblog/2021/08/27/GoLang%E5%AE%9E%E7%94%A8%E5%8A%9F%E8%83%BD/" target="_blank">
           GoLang实用功能
         </a>
@@ -673,59 +718,6 @@ G代表一个Goroutine对象，每次go调用的时候，都会创建一个G对�
               <a href="/Myblog/tags/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/">垃圾回收</a>
             
               <a href="/Myblog/tags/%E4%B8%89%E8%89%B2%E6%A0%87%E8%AE%B0%E6%B3%95/">三色标记法</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/Myblog/2021/07/20/Go%E8%AF%AD%E8%A8%80Context%E4%B8%8A%E4%B8%8B%E6%96%87%E7%AE%A1%E7%90%86/" target="_blank">
-          Go语言Context上下文管理
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/Myblog/2021/07/20/Go%E8%AF%AD%E8%A8%80Context%E4%B8%8A%E4%B8%8B%E6%96%87%E7%AE%A1%E7%90%86/" target="_blank">
-          
-          
-            
-          
-          使用场景context在Go1.7之后就进入标准库中了。它主要的用处如果用一句话来说，是在于控制goroutine的生命周期。
-在 Go http 包的 Server 中，每一个请求在都有一个对应的goroutine去处理。请求处理函数通常会启动额外的goroutine用来访问后端服务，比如数据库和 RPC 服务。用来处理一个请求的goroutine通常需要访问一些与请求特定的数据，比如终端用户的
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-07-20 08:45" pubdate>
-              2021-07-20
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/Myblog/categories/Go/">Go</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/Myblog/tags/context/">context</a>
-            
-              <a href="/Myblog/tags/%E4%B8%8A%E4%B8%8B%E6%96%87%E7%AE%A1%E7%90%86/">上下文管理</a>
             
           </div>
         

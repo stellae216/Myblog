@@ -18,9 +18,25 @@
   <meta name="author" content="stellae">
   <meta name="keywords" content="">
   
-  <title>归档 - stellae&#39;s blog</title>
+  <title>Golang实现简单的内存级别缓存 - stellae&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/Myblog/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+  
 
 
 
@@ -142,14 +158,56 @@
 </nav>
 
     <div class="banner" id="banner" parallax=true
-         style="background: url('/Myblog/img/aIGED4j5Fe0.jpg') no-repeat center center;
+         style="background: url('/Myblog/img/WtwSsqwYlA0.jpg') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="归档">
+            <span class="h2" id="subtitle" title="Golang实现简单的内存级别缓存">
               
             </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      stellae
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-05-11 15:40" pubdate>
+        2022年5月11日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      118 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      2
+       分钟
+    </span>
+  
+
+  
+  
+</div>
 
             
           </div>
@@ -162,88 +220,109 @@
 
   <main>
     
-      <div class="container nopadding-x-md">
-        <div class="py-5" id="board"
-          >
-          
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-10 m-auto">
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Golang实现简单的内存级别缓存</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：几秒前
+                
+              </p>
+            
+            <div class="markdown-body">
+              <p>使用go自带的sync.Map和time.AfterFunc可以很简单的实现一个基于内存的缓存map。key不多的时候，效果还是很不错的。</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs golang"><span class="hljs-keyword">package</span> cache<br><br><span class="hljs-keyword">import</span> (<br>	<span class="hljs-string">&quot;sync&quot;</span><br>	<span class="hljs-string">&quot;sync/atomic&quot;</span><br>	<span class="hljs-string">&quot;time&quot;</span><br>)<br><br><span class="hljs-keyword">var</span> CacheMap sync.Map<br><span class="hljs-keyword">var</span> CacheLength <span class="hljs-keyword">int64</span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Set</span><span class="hljs-params">(key <span class="hljs-keyword">string</span>, data <span class="hljs-keyword">interface</span>&#123;&#125;, timeout <span class="hljs-keyword">int</span>)</span></span> &#123;<br>	CacheMap.Store(key, data)<br>	atomic.AddInt64(&amp;CacheLength, <span class="hljs-number">1</span>)<br>	time.AfterFunc(time.Second*time.Duration(timeout), <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>		atomic.AddInt64(&amp;CacheLength, <span class="hljs-number">-1</span>)<br>		CacheMap.Delete(key)<br>	&#125;)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Get</span><span class="hljs-params">(key <span class="hljs-keyword">string</span>)</span> <span class="hljs-params">(<span class="hljs-keyword">interface</span>&#123;&#125;, <span class="hljs-keyword">bool</span>)</span></span> &#123;<br>	<span class="hljs-keyword">return</span> CacheMap.Load(key)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Len</span><span class="hljs-params">()</span> <span class="hljs-title">int</span></span> &#123;<br>	<span class="hljs-keyword">return</span> <span class="hljs-keyword">int</span>(CacheLength)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/categories/Go/">Go</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/tags/%E7%BC%93%E5%AD%98/">缓存</a>
+                    
+                      <a class="hover-with-bg" href="/Myblog/tags/cache/">cache</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/Myblog/2022/04/21/%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E9%94%AE%E5%80%BC%E5%AD%98%E5%82%A8%E6%95%B0%E6%8D%AE%E5%BA%93boltdb/">
+                        <span class="hidden-mobile">一个简单的键值存储数据库boltdb</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
                 
 
-<div class="list-group">
-  <p class="h4">共计 135 篇文章</p>
-  <hr>
-  
-  
-    
-      
-      <p class="h5">2022</p>
-    
-    <a href="/Myblog/2022/05/11/Golang%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E7%9A%84%E5%86%85%E5%AD%98%E7%BA%A7%E5%88%AB%E7%BC%93%E5%AD%98/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Golang实现简单的内存级别缓存</span>
-      <time style="float: right;">05-11</time>
-    </a>
-  
-    
-    <a href="/Myblog/2022/04/21/%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E9%94%AE%E5%80%BC%E5%AD%98%E5%82%A8%E6%95%B0%E6%8D%AE%E5%BA%93boltdb/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">一个简单的键值存储数据库boltdb</span>
-      <time style="float: right;">04-21</time>
-    </a>
-  
-    
-    <a href="/Myblog/2022/04/20/Go-gRPC%E5%85%A5%E9%97%A8%E4%B8%8E%E5%AE%9E%E8%B7%B5/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Go gRPC入门与实践</span>
-      <time style="float: right;">04-20</time>
-    </a>
-  
-    
-    <a href="/Myblog/2022/04/20/Golang%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%88%A9%E5%99%A8%E4%B9%8Bcobra/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Golang命令行利器之cobra</span>
-      <time style="float: right;">04-20</time>
-    </a>
-  
-    
-    <a href="/Myblog/2022/03/17/Go%E8%AF%AD%E8%A8%80select%E5%B8%B8%E8%A7%81%E7%94%A8%E6%B3%95/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Go语言select常见用法</span>
-      <time style="float: right;">03-17</time>
-    </a>
-  
-    
-    <a href="/Myblog/2022/03/10/hexo%E4%B8%80%E9%94%AE%E8%87%AA%E5%8A%A8%E6%9E%84%E5%BB%BAgitee-pages/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">hexo一键自动构建gitee pages</span>
-      <time style="float: right;">03-10</time>
-    </a>
-  
-    
-    <a href="/Myblog/2022/01/22/Golang%E8%87%AA%E5%8A%A8%E5%8C%96%E4%B9%8Brobotgo/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Golang自动化之robotgo</span>
-      <time style="float: right;">01-22</time>
-    </a>
-  
-    
-    <a href="/Myblog/2022/01/20/Golang%E6%93%8D%E4%BD%9CExcel%E6%96%87%E4%BB%B6/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Golang操作Excel文件</span>
-      <time style="float: right;">01-20</time>
-    </a>
-  
-    
-    <a href="/Myblog/2022/01/07/Golang%E5%AE%9A%E6%97%B6%E5%99%A8/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">Golang定时器</span>
-      <time style="float: right;">01-07</time>
-    </a>
-  
-</div>
-
-
-
-
-
-              </div>
-            </div>
-          </div>
+              </article>
+            
+          </article>
         </div>
       </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
     
 
     
@@ -323,9 +402,15 @@
 
 
 
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
 
 
 
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
 
 
 

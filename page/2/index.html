@@ -182,6 +182,64 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/Myblog/2021/11/11/ioutil-TempFile%E4%B8%B4%E6%97%B6%E6%96%87%E4%BB%B6/" target="_blank">
+          ioutil.TempFile临时文件
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/Myblog/2021/11/11/ioutil-TempFile%E4%B8%B4%E6%97%B6%E6%96%87%E4%BB%B6/" target="_blank">
+          
+          
+            
+          
+          简介很多时候我们需要创建一些文件和目录进行操作，但是在不同操作系统中，不同文件夹有不同的操作权限，所以这时候我们就需要临时目录了，不同操作系统对应的临时目录不同，但是都有对应的读写权限。
+创建临时目录1func TempDir(dir, prefix string) (name string, err error)
+
+
+
+dir - 指定临时文件夹路径，传入零值默认取os.TempDir()
+pe
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-11-11 21:20" pubdate>
+              2021-11-11
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/Myblog/categories/Go/">Go</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/Myblog/tags/%E4%B8%B4%E6%97%B6%E6%96%87%E4%BB%B6/">临时文件</a>
+            
+              <a href="/Myblog/tags/tempfile/">tempfile</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/Myblog/2021/10/11/Redis%E7%BC%93%E5%AD%98%E9%9B%AA%E5%B4%A9%E3%80%81%E7%A9%BF%E9%80%8F%E3%80%81%E5%87%BB%E7%A9%BF/" target="_blank">
           Redis缓存雪崩、穿透、击穿
         </a>
@@ -663,60 +721,6 @@ log标准模块log包提供基本的日志功能，但是没有提供日志级�
               <a href="/Myblog/tags/%E5%BC%95%E7%94%A8%E4%BC%A0%E9%80%92/">引用传递</a>
             
               <a href="/Myblog/tags/%E6%8C%87%E9%92%88%E4%BC%A0%E9%80%92/">指针传递</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/Myblog/2021/07/22/Go%E8%AF%AD%E8%A8%80%E4%B9%8BGMP%E6%A8%A1%E5%9E%8B/" target="_blank">
-          Go语言之GMP模型
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/Myblog/2021/07/22/Go%E8%AF%AD%E8%A8%80%E4%B9%8BGMP%E6%A8%A1%E5%9E%8B/" target="_blank">
-          
-          
-            
-          
-          GMP模型Go语言虽然使用一个Go关键字即可实现并发，但Goroutine被调度到后端之后，具体的实现却比较复杂。这里我们就要介绍一下Go调度器之GMP模型。
-
-G
-
-G代表一个Goroutine对象，每次go调用的时候，都会创建一个G对象，它包括栈、指令指针以及对于调用goroutines很重要的其它信息。其中包括执行的函数指令及参数；G保存的任务对象；线程上下文切换，现场保护和现场恢复需要的寄
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-07-22 17:20" pubdate>
-              2021-07-22
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/Myblog/categories/Go/">Go</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/Myblog/tags/gmp/">gmp</a>
             
           </div>
         

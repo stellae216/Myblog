@@ -1,0 +1,515 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/Myblog/img/favicon.png">
+  <link rel="icon" href="/Myblog/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="Simple, so charming!">
+  <meta name="author" content="stellae">
+  <meta name="keywords" content="">
+  
+  <title>Golang之atomic原子操作 - stellae&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/Myblog/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/Myblog/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"stellae.gitee.io","root":"/Myblog/","version":"1.8.10","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/Myblog/js/utils.js" ></script>
+  <script  src="/Myblog/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/Myblog/">&nbsp;<strong>stellae's blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/Myblog/img/WtwSsqwYlA0.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Golang之atomic原子操作">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      stellae
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2022-06-10 12:46" pubdate>
+        2022年6月10日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      32
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Golang之atomic原子操作</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：1 分钟前
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>对于并发操作而言，原子操作是个非常现实的问题。典型的就是i++的问题。 当两个CPU同时对内存中的i进行读取，然后把加一之后的值放入内存中，可能两次i++的结果，这个i只增加了一次。 如何保证多CPU对同一块内存的操作是原子的。 golang中sync/atomic就是做这个使用的。</p>
+<p>具体的原子操作在不同的操作系统中实现是不同的。比如在Intel的CPU架构机器上，主要是使用总线锁的方式实现的。 大致的意思就是当一个CPU需要操作一个内存块的时候，向总线发送一个LOCK信号，所有CPU收到这个信号后就不对这个内存块进行操作了。 等待操作的CPU执行完操作后，发送UNLOCK信号，才结束。 在AMD的CPU架构机器上就是使用MESI一致性协议的方式来保证原子操作。 所以我们在看atomic源码的时候，我们看到它针对不同的操作系统有不同汇编语言文件。</p>
+<h2 id="互斥锁与原子操作的区别"><a href="#互斥锁与原子操作的区别" class="headerlink" title="互斥锁与原子操作的区别"></a>互斥锁与原子操作的区别</h2><p>平日里，在并发编程里，Go语言<code>sync</code>包里的同步原语<code>Mutex</code>是我们经常用来保证并发安全的，那么他跟<code>atomic</code>包里的这些操作有啥区别呢？在我看来他们在使用目的和底层实现上都不一样：</p>
+<ul>
+<li>使用目的：互斥锁是用来保护一段逻辑，原子操作用于对一个变量的更新保护。</li>
+<li>底层实现：<code>Mutex</code>由<strong>操作系统</strong>的调度器实现，而<code>atomic</code>包中的原子操作则由<strong>底层硬件指令</strong>直接提供支持，这些指令在执行的过程中是不允许中断的，因此原子操作可以在<code>lock-free</code>的情况下保证并发安全，并且它的性能也能做到随<code>CPU</code>个数的增多而线性扩展。</li>
+</ul>
+<p>对于一个变量更新的保护，原子操作通常会更有效率，并且更能利用计算机多核的优势。原子操作由<strong>底层硬件</strong>支持，而锁则由操作系统的<strong>调度器</strong>实现。锁应当用来保护一段逻辑，对于一个变量更新的保护，原子操作通常会更有效率，并且更能利用计算机多核的优势。</p>
+<p>比如下面这个计数程序，分别使用互斥锁和原子操作：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">mutexAdd</span><span class="hljs-params">()</span></span> &#123;<br>    <span class="hljs-keyword">var</span> a <span class="hljs-keyword">int32</span> =  <span class="hljs-number">0</span><br>    <span class="hljs-keyword">var</span> wg sync.WaitGroup<br>    <span class="hljs-keyword">var</span> mu sync.Mutex<br>    start := time.Now()<br>    <span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">100000000</span>; i++ &#123;<br>        wg.Add(<span class="hljs-number">1</span>)<br>        <span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>            <span class="hljs-keyword">defer</span> wg.Done()<br>            mu.Lock()<br>            a += <span class="hljs-number">1</span><br>            mu.Unlock()<br>        &#125;()<br>    &#125;<br>    wg.Wait()<br>    timeSpends := time.Now().Sub(start).Nanoseconds()<br>    fmt.Printf(<span class="hljs-string">&quot;use mutex a is %d, spend time: %v\n&quot;</span>, a, timeSpends)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">AtomicAdd</span><span class="hljs-params">()</span></span> &#123;<br>    <span class="hljs-keyword">var</span> a <span class="hljs-keyword">int32</span> =  <span class="hljs-number">0</span><br>    <span class="hljs-keyword">var</span> wg sync.WaitGroup<br>    start := time.Now()<br>    <span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">1000000</span>; i++ &#123;<br>        wg.Add(<span class="hljs-number">1</span>)<br>        <span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>            <span class="hljs-keyword">defer</span> wg.Done()<br>            atomic.AddInt32(&amp;a, <span class="hljs-number">1</span>)<br>        &#125;()<br>    &#125;<br>    wg.Wait()<br>    timeSpends := time.Now().Sub(start).Nanoseconds()<br>    fmt.Printf(<span class="hljs-string">&quot;use atomic a is %d, spend time: %v\n&quot;</span>, atomic.LoadInt32(&amp;a), timeSpends)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>可以观察到计数器的结果都最后都是<code>1000000</code>，都是线程安全的。</p>
+<p><strong>需要注意的是，所有原子操作方法的被操作数形参必须是指针类型，通过指针变量可以获取被操作数在内存中的地址，从而施加特殊的CPU指令，确保同一时间只有一个goroutine能够进行操作</strong>。</p>
+<h2 id="原子操作"><a href="#原子操作" class="headerlink" title="原子操作"></a>原子操作</h2><h3 id="增加或减少"><a href="#增加或减少" class="headerlink" title="增加或减少"></a>增加或减少</h3><p>对一个数值进行增加或者减少的行为也需要保证是原子的，它对应于atomic包的函数就是</p>
+<ul>
+<li>func AddInt32(addr *int32, delta int32) (new int32)</li>
+<li>func AddInt64(addr *int64, delta int64) (new int64)</li>
+<li>func AddUint32(addr *uint32, delta uint32) (new uint32)</li>
+<li>func AddUint64(addr *uint64, delta uint64) (new uint64)</li>
+<li>func AddUintptr(addr *uintptr, delta uintptr) (new uintptr)</li>
+</ul>
+<p>相关例子见上文</p>
+<h3 id="CAS"><a href="#CAS" class="headerlink" title="CAS"></a>CAS</h3><p>原子操作中最经典的CAS(compare-and-swap)在atomic包中是Compare开头的函数。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs go">- <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">CompareAndSwapInt32</span><span class="hljs-params">(addr *<span class="hljs-keyword">int32</span>, old, <span class="hljs-built_in">new</span> <span class="hljs-keyword">int32</span>)</span> <span class="hljs-params">(swapped <span class="hljs-keyword">bool</span>)</span></span><br>- <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">CompareAndSwapInt64</span><span class="hljs-params">(addr *<span class="hljs-keyword">int64</span>, old, <span class="hljs-built_in">new</span> <span class="hljs-keyword">int64</span>)</span> <span class="hljs-params">(swapped <span class="hljs-keyword">bool</span>)</span></span><br>- <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">CompareAndSwapPointer</span><span class="hljs-params">(addr *unsafe.Pointer, old, <span class="hljs-built_in">new</span> unsafe.Pointer)</span> <span class="hljs-params">(swapped <span class="hljs-keyword">bool</span>)</span></span><br>- <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">CompareAndSwapUint32</span><span class="hljs-params">(addr *<span class="hljs-keyword">uint32</span>, old, <span class="hljs-built_in">new</span> <span class="hljs-keyword">uint32</span>)</span> <span class="hljs-params">(swapped <span class="hljs-keyword">bool</span>)</span></span><br>- <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">CompareAndSwapUint64</span><span class="hljs-params">(addr *<span class="hljs-keyword">uint64</span>, old, <span class="hljs-built_in">new</span> <span class="hljs-keyword">uint64</span>)</span> <span class="hljs-params">(swapped <span class="hljs-keyword">bool</span>)</span></span><br>- <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">CompareAndSwapUintptr</span><span class="hljs-params">(addr *<span class="hljs-keyword">uintptr</span>, old, <span class="hljs-built_in">new</span> <span class="hljs-keyword">uintptr</span>)</span> <span class="hljs-params">(swapped <span class="hljs-keyword">bool</span>)</span></span><br></code></pre></td></tr></table></figure>
+
+<p>CAS的意思是判断内存中的某个值是否等于old值，如果是的话，则赋new值给这块内存。CAS是一个方法，并不局限在CPU原子操作中。 CAS比互斥锁乐观，但是也就代表CAS是有赋值不成功的时候，调用CAS的那一方就需要处理赋值不成功的后续行为了。</p>
+<p>这一系列的函数需要比较后再进行交换，也有不需要进行比较就进行交换的原子操作。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs go">- <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">SwapInt32</span><span class="hljs-params">(addr *<span class="hljs-keyword">int32</span>, <span class="hljs-built_in">new</span> <span class="hljs-keyword">int32</span>)</span> <span class="hljs-params">(old <span class="hljs-keyword">int32</span>)</span></span><br>- <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">SwapInt64</span><span class="hljs-params">(addr *<span class="hljs-keyword">int64</span>, <span class="hljs-built_in">new</span> <span class="hljs-keyword">int64</span>)</span> <span class="hljs-params">(old <span class="hljs-keyword">int64</span>)</span></span><br>- <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">SwapPointer</span><span class="hljs-params">(addr *unsafe.Pointer, <span class="hljs-built_in">new</span> unsafe.Pointer)</span> <span class="hljs-params">(old unsafe.Pointer)</span></span><br>- <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">SwapUint32</span><span class="hljs-params">(addr *<span class="hljs-keyword">uint32</span>, <span class="hljs-built_in">new</span> <span class="hljs-keyword">uint32</span>)</span> <span class="hljs-params">(old <span class="hljs-keyword">uint32</span>)</span></span><br>- <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">SwapUint64</span><span class="hljs-params">(addr *<span class="hljs-keyword">uint64</span>, <span class="hljs-built_in">new</span> <span class="hljs-keyword">uint64</span>)</span> <span class="hljs-params">(old <span class="hljs-keyword">uint64</span>)</span></span><br>- <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">SwapUintptr</span><span class="hljs-params">(addr *<span class="hljs-keyword">uintptr</span>, <span class="hljs-built_in">new</span> <span class="hljs-keyword">uintptr</span>)</span> <span class="hljs-params">(old <span class="hljs-keyword">uintptr</span>)</span></span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs go"><br><span class="hljs-comment">// 定义一个struct类型P</span><br><span class="hljs-keyword">type</span> P <span class="hljs-keyword">struct</span>&#123; x, y, z <span class="hljs-keyword">int</span> &#125;<br><br><span class="hljs-comment">// 执行类型P的指针</span><br><span class="hljs-keyword">var</span> pP *P<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br><br>    <span class="hljs-comment">// 定义一个执行unsafe.Pointer值的指针变量</span><br>    <span class="hljs-keyword">var</span> unsafe1 = (*unsafe.Pointer)(unsafe.Pointer(&amp;pP))<br><br>    <span class="hljs-comment">// Old pointer</span><br>    <span class="hljs-keyword">var</span> sy P<br><br>    <span class="hljs-comment">// 为了演示效果先将unsafe1设置成Old Pointer</span><br>    px := atomic.SwapPointer(<br>        unsafe1, unsafe.Pointer(&amp;sy))<br><br>    <span class="hljs-comment">// 执行CAS操作，交换成功，结果返回true</span><br>    y := atomic.CompareAndSwapPointer(<br>        unsafe1, unsafe.Pointer(&amp;sy), px)<br><br>    fmt.Println(y)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="读取或写入"><a href="#读取或写入" class="headerlink" title="读取或写入"></a>读取或写入</h3><p>当我们要读取一个变量的时候，很有可能这个变量正在被写入，这个时候，我们就很有可能读取到写到一半的数据。 所以读取操作是需要一个原子行为的。在atomic包中就是Load开头的函数群。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs go">- <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">LoadInt32</span><span class="hljs-params">(addr *<span class="hljs-keyword">int32</span>)</span> <span class="hljs-params">(val <span class="hljs-keyword">int32</span>)</span></span><br>- <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">LoadInt64</span><span class="hljs-params">(addr *<span class="hljs-keyword">int64</span>)</span> <span class="hljs-params">(val <span class="hljs-keyword">int64</span>)</span></span><br>- <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">LoadPointer</span><span class="hljs-params">(addr *unsafe.Pointer)</span> <span class="hljs-params">(val unsafe.Pointer)</span></span><br>- <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">LoadUint32</span><span class="hljs-params">(addr *<span class="hljs-keyword">uint32</span>)</span> <span class="hljs-params">(val <span class="hljs-keyword">uint32</span>)</span></span><br>- <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">LoadUint64</span><span class="hljs-params">(addr *<span class="hljs-keyword">uint64</span>)</span> <span class="hljs-params">(val <span class="hljs-keyword">uint64</span>)</span></span><br>- <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">LoadUintptr</span><span class="hljs-params">(addr *<span class="hljs-keyword">uintptr</span>)</span> <span class="hljs-params">(val <span class="hljs-keyword">uintptr</span>)</span></span><br></code></pre></td></tr></table></figure>
+
+<p>好了，读取我们是完成了原子性，那写入呢？也是同样的，如果有多个CPU往内存中一个数据块写入数据的时候，可能导致这个写入的数据不完整。 在atomic包对应的是Store开头的函数群。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs go">- <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">StoreInt32</span><span class="hljs-params">(addr *<span class="hljs-keyword">int32</span>, val <span class="hljs-keyword">int32</span>)</span></span><br>- <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">StoreInt64</span><span class="hljs-params">(addr *<span class="hljs-keyword">int64</span>, val <span class="hljs-keyword">int64</span>)</span></span><br>- <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">StorePointer</span><span class="hljs-params">(addr *unsafe.Pointer, val unsafe.Pointer)</span></span><br>- <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">StoreUint32</span><span class="hljs-params">(addr *<span class="hljs-keyword">uint32</span>, val <span class="hljs-keyword">uint32</span>)</span></span><br>- <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">StoreUint64</span><span class="hljs-params">(addr *<span class="hljs-keyword">uint64</span>, val <span class="hljs-keyword">uint64</span>)</span></span><br>- <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">StoreUintptr</span><span class="hljs-params">(addr *<span class="hljs-keyword">uintptr</span>, val <span class="hljs-keyword">uintptr</span>)</span></span><br></code></pre></td></tr></table></figure>
+
+<p><strong>atomic.Value保证任意值的读写安全!</strong></p>
+<p>如果你想要并发安全的设置一个结构体的多个字段，一般的我们需要把结构体转换为指针，通过<code>StorePointer</code>来进行操作。我们还可以使用<code>atomic</code>包后来引入的<code>atomic.Value</code>，它在底层为我们完成了从具体指针类型到<code>unsafe.Pointer</code>之间的转换。它使得我们可以不依赖于不保证兼容性的<code>unsafe.Pointer</code>类型，同时又能将任意数据类型的读写操作封装成原子性操作（中间状态对外不可见）。</p>
+<p><code>atomic.Value</code>类型对外暴露了两个方法：</p>
+<ul>
+<li><code>v.Store(c)</code> - 写操作，将原始的变量<code>c</code>存放到一个<code>atomic.Value</code>类型的<code>v</code>里。</li>
+<li><code>c := v.Load()</code> - 读操作，从线程安全的<code>v</code>中读取上一步存放的内容。</li>
+</ul>
+<p>1.17 版本我看还增加了<code>Swap</code>和<code>CompareAndSwap</code>方法。</p>
+<p>简洁的接口使得它的使用也很简单，只需将需要做并发保护的变量读取和赋值操作用<code>Load()</code>和<code>Store()</code>代替就行了。</p>
+<p>由于<code>Load()</code>返回的是一个<code>interface&#123;&#125;</code>类型，所以在使用前我们记得要先转换成具体类型的值，再使用。下面是一个简单的例子演示<code>atomic.Value</code>的用法。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;fmt&quot;</span><br>    <span class="hljs-string">&quot;sync&quot;</span><br>    <span class="hljs-string">&quot;sync/atomic&quot;</span><br>)<br><br><span class="hljs-keyword">type</span> Rectangle <span class="hljs-keyword">struct</span> &#123;<br>    length <span class="hljs-keyword">int</span><br>    width  <span class="hljs-keyword">int</span><br>&#125;<br><br><span class="hljs-keyword">var</span> rect atomic.Value<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">update</span><span class="hljs-params">(width, length <span class="hljs-keyword">int</span>)</span></span> &#123;<br>    rectLocal := <span class="hljs-built_in">new</span>(Rectangle)<br>    rectLocal.width = width<br>    rectLocal.length = length<br>    rect.Store(rectLocal)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    wg := sync.WaitGroup&#123;&#125;<br>    wg.Add(<span class="hljs-number">10</span>)<br>    <span class="hljs-keyword">var</span> n <span class="hljs-keyword">int</span><br>    <span class="hljs-comment">// 10 个协程并发更新</span><br>    <span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; i++ &#123;<br>        n = i<br>        <span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>            <span class="hljs-keyword">defer</span> wg.Done()<br>            update(n, n+<span class="hljs-number">5</span>)<br>        &#125;()<br>    &#125;<br>    wg.Wait()<br>    _r := rect.Load().(*Rectangle)<br>    fmt.Printf(<span class="hljs-string">&quot;rect.width=%d\nrect.length=%d\n&quot;</span>, _r.width, _r.length)<br>&#125;<br><span class="hljs-comment">// rect.width=9</span><br><span class="hljs-comment">// rect.length=14</span><br></code></pre></td></tr></table></figure>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/categories/Go/">Go</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/tags/%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C/">原子操作</a>
+                    
+                      <a class="hover-with-bg" href="/Myblog/tags/atomic/">atomic</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/Myblog/2022/05/11/Golang%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E7%9A%84%E5%86%85%E5%AD%98%E7%BA%A7%E5%88%AB%E7%BC%93%E5%AD%98/">
+                        <span class="hidden-mobile">Golang实现简单的内存级别缓存</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/Myblog/js/events.js" ></script>
+<script  src="/Myblog/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/Myblog/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/Myblog/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/Myblog/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/Myblog/js/boot.js" ></script>
+
+
+</body>
+</html>

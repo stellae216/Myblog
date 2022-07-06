@@ -182,6 +182,64 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/Myblog/2022/07/05/%E6%95%B0%E5%AD%97%E8%AF%81%E4%B9%A6%E8%AF%A6%E8%A7%A3/" target="_blank">
+          数字证书详解
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/Myblog/2022/07/05/%E6%95%B0%E5%AD%97%E8%AF%81%E4%B9%A6%E8%AF%A6%E8%A7%A3/" target="_blank">
+          
+          
+            
+          
+          介绍我们知道，摘要算法用来确保数据没有被篡改，非对称加密算法可以对数据进行加解密，签名算法可以确保数据完整性和抗否认性，把这些算法集合到一起，并搞一套完善的标准，这就是数字证书。
+因此，数字证书就是集合了多种密码学算法，用于实现数据加解密、身份认证、签名等多种功能的一种安全标准。
+数字证书可以防止中间人攻击，因为它采用链式签名认证，即通过根证书（Root CA）去签名下一级证书，这样层层签名，直到
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-07-05 16:41" pubdate>
+              2022-07-05
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/Myblog/categories/%E8%AF%81%E4%B9%A6/">证书</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/Myblog/tags/%E8%AF%81%E4%B9%A6/">证书</a>
+            
+              <a href="/Myblog/tags/%E6%95%B0%E5%AD%97%E8%AF%81%E4%B9%A6/">数字证书</a>
+            
+              <a href="/Myblog/tags/openssl/">openssl</a>
+            
+              <a href="/Myblog/tags/keytool/">keytool</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/Myblog/2022/06/10/Golang%E4%B9%8Batomic%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C/" target="_blank">
           Golang之atomic原子操作
         </a>
@@ -667,68 +725,6 @@ mac环境
               <a href="/Myblog/tags/excel/">excel</a>
             
               <a href="/Myblog/tags/excelize/">excelize</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/Myblog/2022/01/07/Golang%E5%AE%9A%E6%97%B6%E5%99%A8/" target="_blank">
-          Golang定时器
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/Myblog/2022/01/07/Golang%E5%AE%9A%E6%97%B6%E5%99%A8/" target="_blank">
-          
-          
-            
-          
-          Go 可以借助 time.Ticker/time.timer 来实现定时触发器，主要原理是借助无缓冲channel无数据时读取操作会阻塞当前协程，Go会在给定的时间后向channel中写入一些数据（当前时间），故阻塞的协程可以恢复运行，达到延迟或定时执行的功能。
-
-ticker
-
-time.NewTicker(Duration) 按照给定时间周期性触发
-
-timer
-
-time.NewTimer(
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-01-07 17:34" pubdate>
-              2022-01-07
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/Myblog/categories/Go/">Go</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/Myblog/tags/%E5%AE%9A%E6%97%B6%E5%99%A8/">定时器</a>
-            
-              <a href="/Myblog/tags/ticker/">ticker</a>
-            
-              <a href="/Myblog/tags/timer/">timer</a>
             
           </div>
         

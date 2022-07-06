@@ -182,6 +182,68 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/Myblog/2022/01/07/Golang%E5%AE%9A%E6%97%B6%E5%99%A8/" target="_blank">
+          Golang定时器
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/Myblog/2022/01/07/Golang%E5%AE%9A%E6%97%B6%E5%99%A8/" target="_blank">
+          
+          
+            
+          
+          Go 可以借助 time.Ticker/time.timer 来实现定时触发器，主要原理是借助无缓冲channel无数据时读取操作会阻塞当前协程，Go会在给定的时间后向channel中写入一些数据（当前时间），故阻塞的协程可以恢复运行，达到延迟或定时执行的功能。
+
+ticker
+
+time.NewTicker(Duration) 按照给定时间周期性触发
+
+timer
+
+time.NewTimer(
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2022-01-07 17:34" pubdate>
+              2022-01-07
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/Myblog/categories/Go/">Go</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/Myblog/tags/%E5%AE%9A%E6%97%B6%E5%99%A8/">定时器</a>
+            
+              <a href="/Myblog/tags/ticker/">ticker</a>
+            
+              <a href="/Myblog/tags/timer/">timer</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/Myblog/2021/11/11/ioutil-TempFile%E4%B8%B4%E6%97%B6%E6%96%87%E4%BB%B6/" target="_blank">
           ioutil.TempFile临时文件
         </a>
@@ -664,63 +726,6 @@ log标准模块log包提供基本的日志功能，但是没有提供日志级�
               <a href="/Myblog/tags/%E9%80%83%E9%80%B8%E5%88%86%E6%9E%90/">逃逸分析</a>
             
               <a href="/Myblog/tags/%E5%8F%98%E9%87%8F%E9%80%83%E9%80%B8/">变量逃逸</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/Myblog/2021/07/29/Go%E8%AF%AD%E8%A8%80%E7%9A%84%E5%80%BC%E4%BC%A0%E9%80%92%E5%92%8C%E6%8C%87%E9%92%88%E4%BC%A0%E9%80%92/" target="_blank">
-          Go语言的值传递和指针传递
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/Myblog/2021/07/29/Go%E8%AF%AD%E8%A8%80%E7%9A%84%E5%80%BC%E4%BC%A0%E9%80%92%E5%92%8C%E6%8C%87%E9%92%88%E4%BC%A0%E9%80%92/" target="_blank">
-          
-          
-            
-          
-          Go允许通过指针（有时称为引用）和值来传递参数。在这篇文章中，我们将比较两种方法，特别注意可能影响选择的不同情境。
-参数类型在了解参数传递类型之前，我们需要先了解go中的值类型和引用类型
-值类型值类型有: int、float、bool、array、struct等。
-值传递是指在调用函数时将实际参数复制一份传递到函数中，这样在函数中如果对参数进行修改，将不会影响到实际参数。声明一个值类型变量时，编译
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-07-29 08:57" pubdate>
-              2021-07-29
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/Myblog/categories/Go/">Go</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/Myblog/tags/%E5%80%BC%E4%BC%A0%E9%80%92/">值传递</a>
-            
-              <a href="/Myblog/tags/%E5%BC%95%E7%94%A8%E4%BC%A0%E9%80%92/">引用传递</a>
-            
-              <a href="/Myblog/tags/%E6%8C%87%E9%92%88%E4%BC%A0%E9%80%92/">指针传递</a>
             
           </div>
         

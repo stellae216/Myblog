@@ -182,6 +182,67 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/Myblog/2020/03/17/Celery-Rabbitmq%E5%AE%9E%E7%8E%B0%E5%BC%82%E6%AD%A5%E8%B0%83%E5%BA%A6/" target="_blank">
+          Celery+Rabbitmq实现异步调度
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/Myblog/2020/03/17/Celery-Rabbitmq%E5%AE%9E%E7%8E%B0%E5%BC%82%E6%AD%A5%E8%B0%83%E5%BA%A6/" target="_blank">
+          
+          
+            
+          
+          异步任务场景当业务场景涉及需要调用第三方应用，或者一些比较耗时，并且不需要立马执行，不需要等待执行完成拿到结果。在这种情况下，不能让耗时任务阻碍主线程任务进行，所以需要使用异步任务执行。
+第三方库使用我们使用celery调度异步任务，队列使用rabbitmq，结果保存在redis持久化。
+1pip install celery
+
+
+Flask-Celery官方已经不推荐使用！
+
+使用案例目录树如下
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-03-17 15:00" pubdate>
+              2020-03-17
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/Myblog/categories/Celery/">Celery</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/Myblog/tags/celery/">celery</a>
+            
+              <a href="/Myblog/tags/%E5%BC%82%E6%AD%A5%E4%BB%BB%E5%8A%A1/">异步任务</a>
+            
+              <a href="/Myblog/tags/rabbitmq/">rabbitmq</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/Myblog/2020/03/10/python%E5%AE%9E%E7%8E%B0APNs2%E6%8E%A8%E9%80%81%E8%AF%A6%E8%A7%A3/" target="_blank">
           python实现APNs2推送详解
         </a>
@@ -663,57 +724,6 @@ Pillow安装1pi
               <a href="/Myblog/tags/marshmallow/">marshmallow</a>
             
               <a href="/Myblog/tags/%E5%BA%8F%E5%88%97%E5%8C%96/">序列化</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/Myblog/2019/08/28/Pandas%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/" target="_blank">
-          Pandas快速入门
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/Myblog/2019/08/28/Pandas%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/" target="_blank">
-          
-          
-            
-          
-          Pandas简介和使用Pandas是基于NumPy的一个非常好用的库，正如名字一样，人见人爱。之所以如此，就在于不论是读取、处理数据，用它都非常简单。此前有一篇文章《别老扯什么Hadoop了，你的数据根本不够大》指出：只有在超过5TB数据量的规模下，Hadoop才是一个合理的技术选择。相对小一些的数据，使用Python + Pandas处理起来更加敏捷。
-Pandas数据读取性能Pandas提供了
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2019-08-28 11:42" pubdate>
-              2019-08-28
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/Myblog/categories/Pandas/">Pandas</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/Myblog/tags/pandas/">pandas</a>
             
           </div>
         

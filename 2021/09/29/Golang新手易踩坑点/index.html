@@ -18,7 +18,7 @@
   <meta name="author" content="stellae">
   <meta name="keywords" content="">
   
-  <title>Golang新手易犯的坑点 - stellae&#39;s blog</title>
+  <title>Golang新手易踩坑点 - stellae&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
 
@@ -163,7 +163,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Golang新手易犯的坑点">
+            <span class="h2" id="subtitle" title="Golang新手易踩坑点">
               
             </span>
 
@@ -190,7 +190,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.1k 字
+      1.5k 字
     </span>
   
 
@@ -200,7 +200,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      19
+      25
        分钟
     </span>
   
@@ -230,11 +230,11 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Golang新手易犯的坑点</h1>
+            <h1 style="display: none">Golang新手易踩坑点</h1>
             
               <p class="note note-info">
                 
-                  本文最后更新于：6 个月前
+                  本文最后更新于：几秒前
                 
               </p>
             
@@ -285,6 +285,21 @@
 
 <h4 id="defer-函数的参数值"><a href="#defer-函数的参数值" class="headerlink" title="defer 函数的参数值"></a>defer 函数的参数值</h4><p>对 defer 延迟执行的函数，它的参数会在声明时候就会求出具体值，而不是在执行时才求值</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    <span class="hljs-keyword">var</span> i = <span class="hljs-number">1</span><br>    <span class="hljs-keyword">defer</span> fmt.Println(<span class="hljs-string">&quot;result: &quot;</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span> <span class="hljs-title">int</span></span> &#123; <span class="hljs-keyword">return</span> i * <span class="hljs-number">2</span> &#125;())<br>    i++<br>&#125;<br><span class="hljs-comment">// 2</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="interface类型作为方法参数"><a href="#interface类型作为方法参数" class="headerlink" title="interface类型作为方法参数"></a>interface类型作为方法参数</h4><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs golang"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;fmt&quot;</span><br><br><span class="hljs-keyword">type</span> Inter <span class="hljs-keyword">interface</span> &#123;<br>    GetName() <span class="hljs-keyword">string</span><br>&#125;<br><br><span class="hljs-keyword">type</span> Person <span class="hljs-keyword">struct</span> &#123;&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(p *Person)</span> <span class="hljs-title">GetName</span><span class="hljs-params">()</span> <span class="hljs-title">string</span></span> &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;person&quot;</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">test</span><span class="hljs-params">(i Inter)</span></span> &#123;<br>    fmt.Println(i.GetName())<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    <span class="hljs-keyword">var</span> p Person<br>    test(p)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>以上例子中 <code>test(p)</code>处会报错，编译不通过。因为此处定义<code>*Person</code>实现了接口<code>Inter</code>，而不是<code>Person</code>，所以传入<code>p</code>是不能够被方法<code>test(i Inter)</code>接受的。</p>
+<p>所以我们这样修改一下就好了。</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs golang"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    <span class="hljs-keyword">var</span> p Person<br>    test(&amp;p)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>我们再看这个例子。</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs golang"><span class="hljs-keyword">package</span> main<br><br><span class="hljs-keyword">import</span> <span class="hljs-string">&quot;fmt&quot;</span><br><br><span class="hljs-keyword">type</span> Inter <span class="hljs-keyword">interface</span> &#123;<br>    GetName() <span class="hljs-keyword">string</span><br>&#125;<br><br><span class="hljs-keyword">type</span> Person <span class="hljs-keyword">struct</span> &#123;&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(p Person)</span> <span class="hljs-title">GetName</span><span class="hljs-params">()</span> <span class="hljs-title">string</span></span> &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;person&quot;</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">test</span><span class="hljs-params">(i Inter)</span></span> &#123;<br>    fmt.Println(i.GetName())<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    <span class="hljs-keyword">var</span> p1 Person<br>    <span class="hljs-keyword">var</span> p2 Person<br>    test(p1)<br>    test(&amp;p2)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>你会惊奇的发现<code>test(p1)</code>、<code>test(&amp;p2)</code>都OK，可以正常编译运行。如果按照上面的思路，实现接口的是结构体<code>Person</code>而不是<code>*Person</code>，为什么<code>test(&amp;p2)</code>可以正常编译呢？</p>
+<p>因为golang里面，定义<code>GetName</code>普通方法(非指针类型)时，会自动生成对应指针类型的方法，所以都能够正常传入。</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs golang"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(p Person)</span> <span class="hljs-title">GetName</span><span class="hljs-params">()</span> <span class="hljs-title">string</span></span> &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;person&quot;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>同样的，我们也就可以理解为什么定义<code>interface&#123;&#125;</code>类型的参数，可以接收任意类型值。</p>
 
             </div>
             <hr>

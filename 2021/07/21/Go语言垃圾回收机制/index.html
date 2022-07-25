@@ -190,7 +190,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      3.1k 字
+      3.2k 字
     </span>
   
 
@@ -200,7 +200,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      40
+      42
        分钟
     </span>
   
@@ -234,7 +234,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：1 年前
+                  本文最后更新于：13 分钟前
                 
               </p>
             
@@ -260,6 +260,15 @@
 </ol>
 <p>可视化如下：</p>
 <p><img src="https://stellae.gitee.io/myblog/images/images/2732449449-5c66324354fa8.gif" srcset="/Myblog/img/loading.gif" lazyload alt="三色标记法"></p>
+<p>根对象：</p>
+<ol>
+<li><p>全局变量：程序在编译期间就能够确定的那些存在于程序整个生命周期的变量。</p>
+</li>
+<li><p>执行栈：每个goroutine都包含自己的执行栈，这些执行栈上包含栈上的变量以及指向分配的堆内存区块的指针。</p>
+</li>
+<li><p>寄存器：寄存器的值可能表示一个指针，参与计算的这些指针可能指向某些赋值器分配的堆内存区块。</p>
+</li>
+</ol>
 <p>三色标记的一个明显好处是能够让用户程序和 mark 并发的进行，具体可以参考论文：《On-the-fly garbage collection: an exercise in cooperation.》，Golang 的 GC 实现也是基于这篇论文。</p>
 <h4 id="复制收集"><a href="#复制收集" class="headerlink" title="复制收集"></a>复制收集</h4><p>复制收集的方式只需要对对象进行一次扫描。准备一个「新的空间」，从根开始，对对象进行扫，如果存在对这个对象的引用，就把它复制到「新空间中」。一次扫描结束之后，所有存在于「新空间」的对象就是所有的非垃圾对象。</p>
 <p>这两种方式各有千秋，标记清除的方式节省内存但是两次扫描需要更多的时间，对于垃圾比例较小的情况占优势。复制收集更快速但是需要额外开辟一块用来复制的内存，对垃圾比例较大的情况占优势。特别的，复制收集有「局部性」的优点。</p>

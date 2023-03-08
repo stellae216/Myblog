@@ -200,7 +200,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      86
+      87
        分钟
     </span>
   
@@ -582,14 +582,14 @@
 <li><a target="_blank" rel="noopener" href="http://www.postgres.cn/docs/13/ddl-partitioning.html">postgres表分区</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/Richard2014/p/9930612.html">pgsql多级分区</a></li>
 </ul>
-<h3 id="事务隔离级别"><a href="#事务隔离级别" class="headerlink" title="事务隔离级别"></a>事务隔离级别</h3><p>事务隔离级别：<strong>读未提交、读已提交、可重复读、可并行化</strong>。 mysql默认隔离级别为：可重复读，pgsql默认隔离级别为：读已提交。</p>
+<h3 id="事务隔离级别"><a href="#事务隔离级别" class="headerlink" title="事务隔离级别"></a>事务隔离级别</h3><p>事务隔离级别从低到高分别是：<strong>读未提交、读已提交、可重复读、可并行化</strong>。 mysql默认隔离级别为：可重复读，pgsql默认隔离级别为：读已提交。</p>
 <p>不同事务隔离级别可能会导致以下情况：</p>
 <ul>
-<li><p>脏读：读取到其他事务未提交的数据。设置到【读已提交】事务级别可解决</p>
+<li><p>脏读：读取到其他事务未提交的数据。设置到【读已提交】以上事务级别避免脏读</p>
 </li>
-<li><p>不可重复读：同一个事务同一个查询语句，在其他事务中修改数据提交之后，总能查询到最新的数据，设置到【可重复读】事务级别可解决</p>
+<li><p>不可重复读：同一个事务同一个查询语句，在其他事务中修改数据提交之后，总能查询到最新的数据，设置到【可重复读】以上事务级别可避免。</p>
 </li>
-<li><p>幻读：幻读与可重复读都是读到其他事务已提交的数据，只是针对点不同，幻读针对insert和delete，后者针对update</p>
+<li><p>幻读：幻读与可重复读都是读到其他事务已提交的数据，只是针对点不同，幻读针对insert和delete，后者针对update，设置到【可并行化】可避免出现幻读。</p>
 </li>
 </ul>
 <table>

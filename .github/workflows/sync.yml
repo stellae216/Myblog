@@ -32,5 +32,9 @@ jobs:
           gitee-repo: stellae/Myblog
           # 要部署的分支，默认是 master，若是其他分支，则需要指定（指定的分支必须存在）
           branch: main
-
+      - name: ServerChan · Server酱通知
+        uses: easychen/github-action-server-chan@v1.0.0
+        with:
+          sendkey: ${{ secrets.ServerJiang_SendKey }}
+          title: "个人博客部署成功！😝"
 

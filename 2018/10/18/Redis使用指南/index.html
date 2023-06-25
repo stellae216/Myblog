@@ -18,7 +18,7 @@
   <meta name="author" content="stellae">
   <meta name="keywords" content="">
   
-  <title>Redis - stellae&#39;s blog</title>
+  <title>Redis使用指南 - stellae&#39;s blog</title>
 
   <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
 
@@ -163,7 +163,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="Redis">
+            <span class="h2" id="subtitle" title="Redis使用指南">
               
             </span>
 
@@ -230,11 +230,11 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">Redis</h1>
+            <h1 style="display: none">Redis使用指南</h1>
             
               <p class="note note-info">
                 
-                  本文最后更新于：1 年前
+                  本文最后更新于：3 个月前
                 
               </p>
             
@@ -249,8 +249,6 @@
 <p>冷数据 - 不经常被访问的数据</p>
 <h3 id="安装Redis-Remote-Dictionary-Server"><a href="#安装Redis-Remote-Dictionary-Server" class="headerlink" title="安装Redis(Remote Dictionary Server)"></a>安装Redis(Remote Dictionary Server)</h3><p>源码构建安装</p>
 <h3 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h3><figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs properties"><span class="hljs-attr">拷贝redis.conf文件到用户主目录</span><br><span class="hljs-attr">vim</span> <span class="hljs-string">redis.conf</span><br><span class="hljs-attr">bind</span> <span class="hljs-string">修改成自己的内网地址</span><br><span class="hljs-meta">端口默认</span> <span class="hljs-string">6379</span><br><span class="hljs-attr">requirepass</span> <span class="hljs-string">demo 取消注释，设置口令</span><br><span class="hljs-comment"># Redis可以实现数据的持久化存储，即将数据保存到磁盘上。 </span><br><span class="hljs-comment"># Redis的持久化存储提供两种方式：RDB与AOF</span><br><span class="hljs-attr">appendonly</span> <span class="hljs-string">yes 打开AOF模式</span><br></code></pre></td></tr></table></figure>
-
-
 
 <h3 id="启动Redis服务"><a href="#启动Redis服务" class="headerlink" title="启动Redis服务"></a>启动Redis服务</h3><p><code>redis-server redis.conf &gt; redis.log &amp;</code>  </p>
 <p>说明：输入重定向到redis.log中 ， &amp; 后台运行</p>
@@ -267,8 +265,6 @@
 <p><strong>4、集合（Set）：可以去重</strong></p>
 <p><strong>5、有序集合（SortedSet）：适合做排行榜</strong></p>
 <h3 id="Python连接redis"><a href="#Python连接redis" class="headerlink" title="Python连接redis"></a>Python连接redis</h3><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs routeros">import redis<br><br>def main():<br>   <span class="hljs-built_in"> client </span>= redis.StrictRedis(<span class="hljs-attribute">host</span>=<span class="hljs-string">&#x27;120.78.83.46&#x27;</span>, <span class="hljs-attribute">port</span>=6379, <span class="hljs-attribute">password</span>=<span class="hljs-string">&#x27;demo&#x27;</span>)<br>    client.<span class="hljs-builtin-name">set</span>(<span class="hljs-string">&#x27;time&#x27;</span>, <span class="hljs-string">&#x27;time&#x27;</span>)<br>    client.expire(<span class="hljs-string">&#x27;time&#x27;</span>, 150)<br>    # client.<span class="hljs-builtin-name">set</span>(<span class="hljs-string">&#x27;lvhaojie&#x27;</span>, <span class="hljs-string">&#x27;1&#x27;</span>)<br>    <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> range(20):<br>        client.incr(<span class="hljs-string">&#x27;lvhaojie&#x27;</span>)<br>    <span class="hljs-builtin-name">print</span>(client.<span class="hljs-builtin-name">get</span>(<span class="hljs-string">&#x27;lvhaojie&#x27;</span>))<br>    <span class="hljs-builtin-name">print</span>(client.ttl(<span class="hljs-string">&#x27;time&#x27;</span>))<br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    main()<br></code></pre></td></tr></table></figure>
-
-
 
 <h3 id="Pipeline-and-Transation"><a href="#Pipeline-and-Transation" class="headerlink" title="Pipeline and Transation"></a>Pipeline and Transation</h3><h4 id="Pipeline"><a href="#Pipeline" class="headerlink" title="Pipeline"></a>Pipeline</h4><p>Redis是建立在TCP协议基础上的CS架构，客户端client对redis server采取请求响应的方式交互。</p>
 <p>设想这样的一个场景，你要批量的执行一系列redis命令，例如执行100次get key，这时你要向redis请求100次+获取响应100次。如果能一次性将100个请求提交给redis server，执行完成之后批量的获取相应，只需要向redis请求1次，然后批量执行完命令，一次性结果，性能是不是会好很多呢？</p>
@@ -290,10 +286,10 @@
 </blockquote>
 <h3 id="主从复制（读写分离）"><a href="#主从复制（读写分离）" class="headerlink" title="主从复制（读写分离）"></a>主从复制（读写分离）</h3><p>master可读可写，slave只读。</p>
 <ul>
-<li>master不用修改任何配置</li>
-</ul>
-<ul>
-<li>slave修改两条配置:</li>
+<li><p>master不用修改任何配置</p>
+</li>
+<li><p>slave修改两条配置:</p>
+</li>
 </ul>
 <p><code>slaveof &lt;masterip&gt; &lt;masterport&gt;</code></p>
 <p><code>slaveauth &lt;master口令&gt;</code></p>
@@ -302,14 +298,10 @@
 <h3 id="启动哨兵"><a href="#启动哨兵" class="headerlink" title="启动哨兵"></a>启动哨兵</h3><p>redis安装目录下拷贝sentinel.conf文件，再进行修改</p>
 <figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs smali">bind &lt;内网地址&gt;<br>sentinel<span class="hljs-built_in"> monitor </span>mymaster &lt;masterIP&gt; &lt;master端口&gt; &lt;投票数量&gt;<br><span class="hljs-keyword">.</span>..&lt;修改认定下线时间&gt;<br><span class="hljs-keyword">.</span>..&lt;恢复超时时间&gt;<br></code></pre></td></tr></table></figure>
 
-
-
 <p>启动哨兵：</p>
 <p><code>redis-server sentinel.conf --sentinel</code></p>
 <p>一些内置hash算法库</p>
 <figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs nix"><span class="hljs-built_in">import</span> hashlib<br><span class="hljs-comment"># 哈希函数(散列函数) - MD5 / SHA1 / SHA256</span><br><span class="hljs-comment"># 哈希摘要 / 数字签名</span><br><span class="hljs-attr">key</span> = hashlib.md5(&lt;二进制数据&gt;).hexdigest()<br><span class="hljs-comment"># 根据数据内容生成唯一一个key，用来作为存入数据库的key值。</span><br><br><span class="hljs-built_in">import</span> base64 <span class="hljs-comment"># 将二进制转换成字符串</span><br><span class="hljs-comment"># BASE64编码: 0-9 a-z A-Z + /</span><br><br><span class="hljs-built_in">import</span> zlib <span class="hljs-comment"># 压缩</span><br></code></pre></td></tr></table></figure>
-
-
 
 <h3 id="Python连接redis（哨兵模式）"><a href="#Python连接redis（哨兵模式）" class="headerlink" title="Python连接redis（哨兵模式）"></a>Python连接redis（哨兵模式）</h3><p>我们可以事先封装好连接redis哨兵模式的工具类，方便使用。具体方式如下</p>
 <p>redis_sentinel_url.py</p>
@@ -328,8 +320,6 @@
 <p>如果没有密码换成这样写就可以<code>redis+sentinel://host:26379/mymaster/4</code></p>
 </blockquote>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">redis = redis_conn()[<span class="hljs-number">-1</span>]<br>redis.set(<span class="hljs-string">&quot;redis-key&quot;</span>, <span class="hljs-string">&quot;value&quot;</span>)<br></code></pre></td></tr></table></figure>
-
-
 
 <h3 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h3><ul>
 <li>原生redis使用 - 查看<a target="_blank" rel="noopener" href="http://www.redisdoc.com/">Redis中文文档 </a>或者 <a target="_blank" rel="noopener" href="http://www.runoob.com/redis/redis-keys.html">菜鸟教程</a> 里面有详细的使用说明</li>

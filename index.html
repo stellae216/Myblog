@@ -182,6 +182,113 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/Myblog/2023/04/06/Golang%E5%B8%B8%E8%A7%81%E9%9D%A2%E8%AF%95%E9%97%AE%E9%A2%98%E8%AF%A6%E8%A7%A3/" target="_blank">
+          golang常见面试问题详解
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/Myblog/2023/04/06/Golang%E5%B8%B8%E8%A7%81%E9%9D%A2%E8%AF%95%E9%97%AE%E9%A2%98%E8%AF%A6%E8%A7%A3/" target="_blank">
+          
+          
+            
+          
+          为什么map是非线程安全的？golang的map 跟hash map 是一样的，hash map 的内存是按照2的倍数开辟的，当前面开辟的内存不够的时候，会新开辟一段内存，将原来内存的数据转移到新的内存块中，这个过程是没有加锁的，如果这个时候同时有个读的线程过来获取这块内存数据，就会出现数据安全问题。
+那么为什么golang的map设计时不加锁呢？ 
+作为基础的数据结构，常见的业务诉求根本不会应用
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-04-06 11:55" pubdate>
+              2023-04-06
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/Myblog/categories/Go/">Go</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/Myblog/tags/%E9%9D%A2%E8%AF%95/">面试</a>
+            
+              <a href="/Myblog/tags/go/">go</a>
+            
+              <a href="/Myblog/tags/golang/">golang</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/Myblog/2023/03/17/Redis%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E8%AF%A6%E8%A7%A3/" target="_blank">
+          Redis常见问题详解
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/Myblog/2023/03/17/Redis%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E8%AF%A6%E8%A7%A3/" target="_blank">
+          
+          
+            
+          
+          为什么redis要设计为单线程模式因为Redis是基于内存的数据操作，时间的花费主要集中在IO上，CPU不是Redis的性能瓶颈，Redis的瓶颈最有可能是机器内存的大小或者网络带宽。既然单线程容易实现，而且CPU不会成为瓶颈，那就顺理成章地采用单线程的方案了。
+并且redis中还有类似list、hash等复杂的数据结构，这些结构有可能会进行很细粒度的操作，比如在很长的列表后面添加一个元素，在ha
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2023-03-17 10:19" pubdate>
+              2023-03-17
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/Myblog/categories/Redis/">Redis</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/Myblog/tags/redis/">redis</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/Myblog/2022/07/05/%E6%95%B0%E5%AD%97%E8%AF%81%E4%B9%A6%E8%AF%A6%E8%A7%A3/" target="_blank">
           数字证书详解
         </a>
@@ -616,115 +723,6 @@ gRPC 是谷歌开源的一个高
             <i class="iconfont icon-tags"></i>
             
               <a href="/Myblog/tags/hexo/">hexo</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/Myblog/2022/01/22/Golang%E8%87%AA%E5%8A%A8%E5%8C%96%E4%B9%8Brobotgo/" target="_blank">
-          Golang自动化之robotgo
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/Myblog/2022/01/22/Golang%E8%87%AA%E5%8A%A8%E5%8C%96%E4%B9%8Brobotgo/" target="_blank">
-          
-          
-            
-          
-          什么是robotgoGolang 跨平台自动化系统，用于控制键盘、鼠标、位图、图像、读取屏幕，进程、窗口句柄以及全局事件监听。RobotGo 支持 Mac, Windows, and Linux(X11)系统
-安装robotgo建议安装go1.17版本，亲测有效。
-
-mac环境
-
-123456// Xcode Command Line Toolsxcode-select --install// g
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-01-22 17:20" pubdate>
-              2022-01-22
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/Myblog/categories/Go/">Go</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/Myblog/tags/%E8%87%AA%E5%8A%A8%E5%8C%96/">自动化</a>
-            
-              <a href="/Myblog/tags/robotgo/">robotgo</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/Myblog/2022/01/20/Golang%E6%93%8D%E4%BD%9CExcel%E6%96%87%E4%BB%B6/" target="_blank">
-          Golang操作Excel文件
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/Myblog/2022/01/20/Golang%E6%93%8D%E4%BD%9CExcel%E6%96%87%E4%BB%B6/" target="_blank">
-          
-          
-            
-          
-          介绍Excelize 是 Go 语言编写的用于操作 Office Excel 文档基础库，基于 ECMA-376，ISO/IEC 29500 国际标准。可以使用它来读取、写入由 Microsoft Excel™ 2007 及以上版本创建的电子表格文档。支持 XLSX / XLSM / XLTM / XLTX 等多种文档格式，高度兼容带有样式、图片(表)、透视表、切片器等复杂组件的文档，并提供流式读
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2022-01-20 14:46" pubdate>
-              2022-01-20
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/Myblog/categories/Go/">Go</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/Myblog/tags/excel/">excel</a>
-            
-              <a href="/Myblog/tags/excelize/">excelize</a>
             
           </div>
         

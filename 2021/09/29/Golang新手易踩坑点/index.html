@@ -190,7 +190,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      1.5k 字
+      1.6k 字
     </span>
   
 
@@ -200,7 +200,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      25
+      27
        分钟
     </span>
   
@@ -234,7 +234,7 @@
             
               <p class="note note-info">
                 
-                  本文最后更新于：8 个月前
+                  本文最后更新于：2 个月前
                 
               </p>
             
@@ -300,6 +300,13 @@
 <figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs golang"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(p Person)</span> <span class="hljs-title">GetName</span><span class="hljs-params">()</span> <span class="hljs-title">string</span></span> &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;person&quot;</span><br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>同样的，我们也就可以理解为什么定义<code>interface&#123;&#125;</code>类型的参数，可以接收任意类型值。</p>
+<p> </p>
+<h4 id="如何优雅组装切片"><a href="#如何优雅组装切片" class="headerlink" title="如何优雅组装切片"></a>如何优雅组装切片</h4><p><strong>使用append函数 和 拆分切片实现切片重组！</strong></p>
+<p>案例一：<code>[]int&#123;1,2,3,4,5,6&#125;</code>  =&gt; <code>[]int&#123;4,5,6,1,2,3&#125;</code></p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs golang">a := []<span class="hljs-keyword">int</span>&#123;<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>&#125;<br>res = <span class="hljs-built_in">append</span>(a[<span class="hljs-number">3</span>:], a[:<span class="hljs-number">3</span>]...)<br></code></pre></td></tr></table></figure>
+
+<p>案例二：在切片<code>[]int&#123;1,2,3,4,5,6&#125;</code> 索引为1的位置插入元素0</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs golang">a := []<span class="hljs-keyword">int</span>&#123;<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>&#125;<br>res = <span class="hljs-built_in">append</span>(a[:<span class="hljs-number">1</span>], <span class="hljs-built_in">append</span>([]<span class="hljs-keyword">int</span>&#123;<span class="hljs-number">0</span>&#125;, a[<span class="hljs-number">1</span>:]...)...)<br></code></pre></td></tr></table></figure>
 
             </div>
             <hr>
@@ -309,10 +316,19 @@
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/Myblog/categories/GO/">GO</a>
+                      <a class="hover-with-bg" href="/Myblog/categories/Go/">Go</a>
                     
                   </div>
                 
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/tags/go/">go</a>
+                    
+                      <a class="hover-with-bg" href="/Myblog/tags/golang/">golang</a>
+                    
+                  </div>
                 
               </div>
               

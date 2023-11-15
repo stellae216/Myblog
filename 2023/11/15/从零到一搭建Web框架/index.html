@@ -1,0 +1,613 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/Myblog/img/favicon.png">
+  <link rel="icon" href="/Myblog/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="Simple, so charming!">
+  <meta name="author" content="stellae">
+  <meta name="keywords" content="">
+  
+  <title>从零到一搭建Web框架 - stellae&#39;s blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/Myblog/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/Myblog/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"stellae.gitee.io","root":"/Myblog/","version":"1.8.10","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}}};
+  </script>
+  <script  src="/Myblog/js/utils.js" ></script>
+  <script  src="/Myblog/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 40vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/Myblog/">&nbsp;<strong>stellae's blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/Myblog/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/Myblog/img/WtwSsqwYlA0.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="从零到一搭建Web框架">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-author" aria-hidden="true"></i>
+      stellae
+    </span>
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2023-11-15 10:02" pubdate>
+        2023年11月15日 上午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      5.7k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      100
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">从零到一搭建Web框架</h1>
+            
+              <p class="note note-info">
+                
+                  本文最后更新于：几秒前
+                
+              </p>
+            
+            <div class="markdown-body">
+              <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>为什么我们要使用web框架？ 要解答这个问题，首先需要知道我们工作中遇到了什么样的问题，web框架能够为我们带来什么？只有想明白了这个问题，我们才能知道我们需要什么样的框架，实现什么样的功能。相信阅读完本文你能够有自己的答案。</p>
+<p><em>tip：本文旨在指明设计框架的思路，与使用编程语言无关，本文我们使用golang作为示例。</em></p>
+<p>我们先来看看标准库<code>http/net</code>如何处理一个请求</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs go"><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    http.HandleFunc(<span class="hljs-string">&quot;/api/v1/hello&quot;</span>, helloHandler)<br>    http.HandleFunc(<span class="hljs-string">&quot;/api/v1/test&quot;</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(writer http.ResponseWriter, request *http.Request)</span></span> &#123;&#125;)<br>    <span class="hljs-keyword">if</span> err := http.ListenAndServe(<span class="hljs-string">&quot;:8080&quot;</span>, <span class="hljs-literal">nil</span>); err != <span class="hljs-literal">nil</span> &#123;<br>        log.Fatal(err)<br>    &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">helloHandler</span><span class="hljs-params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;<br>    res := <span class="hljs-keyword">map</span>[<span class="hljs-keyword">string</span>]<span class="hljs-keyword">interface</span>&#123;&#125;&#123;<span class="hljs-string">&quot;code&quot;</span>: <span class="hljs-number">0</span>, <span class="hljs-string">&quot;msg&quot;</span>: <span class="hljs-string">&quot;ok&quot;</span>&#125;<br>    w.WriteHeader(http.StatusOK)<br>    b, err := json.Marshal(res)<br>    <span class="hljs-keyword">if</span> err != <span class="hljs-literal">nil</span> &#123;<br>        log.Fatal(err)<br>        <span class="hljs-keyword">return</span><br>    &#125;<br>    <span class="hljs-keyword">if</span> _, err = w.Write(b); err != <span class="hljs-literal">nil</span> &#123;<br>        log.Fatal(err)<br>        <span class="hljs-keyword">return</span><br>    &#125;<br>    <span class="hljs-keyword">return</span><br>&#125;<br><br><br></code></pre></td></tr></table></figure>
+
+<p>通过这个例子，我们可以发现标准库提供的能力太过基础，不支持类似 <strong>动态路由</strong>、<strong>工具集</strong>、<strong>中间件</strong>、<strong>错误处理</strong> 等能力。这个时候就需要框架来给我们提供相应的能力，让我们远离频繁手工处理复杂代码，这就是框架的价值所在。</p>
+<p>接下来让我们来搭建一个web框架(设计思路参考Gin)，下面是框架的各个模块实现。</p>
+<h3 id="HTTP基础"><a href="#HTTP基础" class="headerlink" title="HTTP基础"></a>HTTP基础</h3><p>通过查看<code>net/http</code>的源码可以发现，<code>Handler</code>是一个接口，需要实现方法 <em>ServeHTTP</em> ，也就是说，只要传入任何实现了 <em>ServerHTTP</em> 接口的实例，所有的HTTP请求，就都交给了该实例处理了。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> Engine <span class="hljs-keyword">struct</span>&#123;&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(e *Engine)</span> <span class="hljs-title">ServeHTTP</span><span class="hljs-params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;<br>    <span class="hljs-keyword">switch</span> r.URL.Path &#123;<br>    <span class="hljs-keyword">case</span> <span class="hljs-string">&quot;/&quot;</span>:<br>        fmt.Fprint(w, <span class="hljs-string">&quot;URL.Path = %q\n&quot;</span>, r.URL.Path)<br>    <span class="hljs-keyword">default</span>:<br>        fmt.Fprintf(w, <span class="hljs-string">&quot;404 NOT FOUND: %s\n&quot;</span>, r.URL)<br>    &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    engine := <span class="hljs-built_in">new</span>(Engine)<br>    http.HandleFunc(<span class="hljs-string">&quot;/&quot;</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;<br>    &#125;)<br>    http.ListenAndServe(<span class="hljs-string">&quot;:8080&quot;</span>, engine)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>我们实现方法<code>ServeHTTP(w http.ResponseWriter, r *http.Request)</code> ，现在相当于拦截了所有的http请求，拥有的统一的请求入口，我们可以在这里做一些特定路由的处理，也能够做其他业务处理逻辑，比如日志、异常处理等。并且我们能够拿到req 和 response请求，可以自行处理http请求和响应，当然我们也可以将一些常用的请求封装起来，简化业务代码开发。</p>
+<p>我们简单完善下代码后大概是这样</p>
+<p><code>engine.go</code></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><code class="hljs go"><br><span class="hljs-keyword">type</span> Engine <span class="hljs-keyword">struct</span> &#123;<br>    router <span class="hljs-keyword">map</span>[<span class="hljs-keyword">string</span>]HandlerFunc<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(e *Engine)</span> <span class="hljs-title">ServeHTTP</span><span class="hljs-params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;<br>    key := r.Method + <span class="hljs-string">&quot;-&quot;</span> + r.URL.Path<br>    <span class="hljs-keyword">if</span> _, ok := e.router[key]; !ok &#123;<br>        w.WriteHeader(http.StatusNotFound)<br>        fmt.Fprintf(w, <span class="hljs-string">&quot;404 NOT FOUND: %s\n&quot;</span>, key)<br>        <span class="hljs-keyword">return</span><br>    &#125;<br>    fmt.Fprintf(w, <span class="hljs-string">&quot;URL.Path = %s\n&quot;</span>, key)<br>&#125;<br><br><span class="hljs-keyword">type</span> HandlerFunc <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(w http.ResponseWriter, r *http.Request)</span></span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewEngine</span><span class="hljs-params">()</span> *<span class="hljs-title">Engine</span></span> &#123;<br>    <span class="hljs-keyword">return</span> &amp;Engine&#123;router: <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-keyword">string</span>]HandlerFunc)&#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(e *Engine)</span> <span class="hljs-title">Run</span><span class="hljs-params">(port <span class="hljs-keyword">string</span>)</span> <span class="hljs-title">error</span></span> &#123;<br>    <span class="hljs-keyword">return</span> http.ListenAndServe(<span class="hljs-string">&quot;:&quot;</span>+port, e)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(e *Engine)</span> <span class="hljs-title">AddRoute</span><span class="hljs-params">(method <span class="hljs-keyword">string</span>, pattern <span class="hljs-keyword">string</span>, handler HandlerFunc)</span></span> &#123;<br>    e.router[method+<span class="hljs-string">&quot;-&quot;</span>+pattern] = handler<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(e *Engine)</span> <span class="hljs-title">GET</span><span class="hljs-params">(pattern <span class="hljs-keyword">string</span>, handler HandlerFunc)</span></span> &#123;<br>    e.AddRoute(http.MethodGet, pattern, handler)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(e *Engine)</span> <span class="hljs-title">POST</span><span class="hljs-params">(pattern <span class="hljs-keyword">string</span>, handler HandlerFunc)</span></span> &#123;<br>    e.AddRoute(http.MethodPost, pattern, handler)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(e *Engine)</span> <span class="hljs-title">PATCH</span><span class="hljs-params">(pattern <span class="hljs-keyword">string</span>, handler HandlerFunc)</span></span> &#123;<br>    e.AddRoute(http.MethodPatch, pattern, handler)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(e *Engine)</span> <span class="hljs-title">PUT</span><span class="hljs-params">(pattern <span class="hljs-keyword">string</span>, handler HandlerFunc)</span></span> &#123;<br>    e.AddRoute(http.MethodPut, pattern, handler)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(e *Engine)</span> <span class="hljs-title">DELETE</span><span class="hljs-params">(pattern <span class="hljs-keyword">string</span>, handler HandlerFunc)</span></span> &#123;<br>    e.AddRoute(http.MethodDelete, pattern, handler)<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p><code>main.go</code></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    e := engine.NewEngine()<br>    e.GET(<span class="hljs-string">&quot;/api/v1/hello&quot;</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;<br>    &#125;)<br>    e.POST(<span class="hljs-string">&quot;/api/v1/hello&quot;</span>, <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;&#125;)<br>    <span class="hljs-keyword">if</span> err := e.Run(<span class="hljs-string">&quot;8080&quot;</span>); err != <span class="hljs-literal">nil</span> &#123;<br>        <span class="hljs-built_in">panic</span>(err)<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>现在看起来是不是已经优雅很多了，但是目前封装的能力还不够，比如handler函数我们还需要单独处理请求和相应，还不支持路由、分组、以及中间件，后面我们会一一组装。</p>
+<h3 id="Context上下文"><a href="#Context上下文" class="headerlink" title="Context上下文"></a>Context上下文</h3><p>对Web服务来说，无非是根据请求<code>*http.Request</code>，构造响应<code>http.ResponseWriter</code>。但是这两个对象提供的接口粒度太细，比如我们要构造一个完整的响应，需要考虑消息头(Header)和消息体(Body)，而 Header 包含了状态码(StatusCode)，消息类型(ContentType)等几乎每次请求都需要设置的信息。因此，如果不进行有效的封装，那么框架的用户将需要写大量重复，繁杂的代码，而且容易出错。针对常用场景，能够高效地构造出 HTTP 响应是一个好的框架必须考虑的点。</p>
+<p>用返回 JSON 数据作比较，感受下封装前后的差距。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs go">obj = <span class="hljs-keyword">map</span>[<span class="hljs-keyword">string</span>]<span class="hljs-keyword">interface</span>&#123;&#125;&#123;<br>    <span class="hljs-string">&quot;data&quot;</span>: <span class="hljs-string">&quot;hello world&quot;</span>,<br>&#125;<br>w.Header().Set(<span class="hljs-string">&quot;Content-Type&quot;</span>, <span class="hljs-string">&quot;application/json&quot;</span>)<br>w.WriteHeader(http.StatusOK)<br>encoder := json.NewEncoder(w)<br><span class="hljs-keyword">if</span> err := encoder.Encode(obj); err != <span class="hljs-literal">nil</span> &#123;<br>    http.Error(w, err.Error(), <span class="hljs-number">500</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>VS 封装后：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs go">c.RetJson(http.StatusOK, <span class="hljs-keyword">map</span>[<span class="hljs-keyword">string</span>]<span class="hljs-keyword">interface</span>&#123;&#125;&#123;<br>        <span class="hljs-string">&quot;data&quot;</span>: <span class="hljs-string">&quot;hello world&quot;</span>,<br>&#125;)<br></code></pre></td></tr></table></figure>
+
+<p>所以针对使用场景，封装<code>*http.Request</code>和<code>http.ResponseWriter</code>的方法，简化相关接口的调用，只是设计 Context 的原因之一。Context 随着每一个请求的出现而产生，请求的结束而销毁，和当前请求强相关的信息都应由 Context 承载。因此，设计 Context 结构，扩展性和复杂性留在了内部，而对外简化了接口。路由的处理函数，以及将要实现的中间件，参数都统一使用 Context 实例， Context 就像一次会话的百宝箱，可以找到任何东西。</p>
+<p><code>engine.go</code></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> Engine <span class="hljs-keyword">struct</span> &#123;<br>    Router *router.Router<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewEngine</span><span class="hljs-params">()</span> *<span class="hljs-title">Engine</span></span> &#123;<br>    <span class="hljs-keyword">return</span> &amp;Engine&#123;Router: router.NewRouter()&#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(e *Engine)</span> <span class="hljs-title">Run</span><span class="hljs-params">(port <span class="hljs-keyword">string</span>)</span> <span class="hljs-title">error</span></span> &#123;<br>    <span class="hljs-keyword">return</span> http.ListenAndServe(<span class="hljs-string">&quot;:&quot;</span>+port, e)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>context.go</code></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">package</span> context<br><br><span class="hljs-keyword">import</span> (<br>    <span class="hljs-string">&quot;encoding/json&quot;</span><br>    <span class="hljs-string">&quot;net/http&quot;</span><br>)<br><br><span class="hljs-keyword">type</span> Context <span class="hljs-keyword">struct</span> &#123;<br>    Writer http.ResponseWriter<br>    Req    *http.Request<br>    Path   <span class="hljs-keyword">string</span><br>    Method <span class="hljs-keyword">string</span><br>    <span class="hljs-comment">// response http code</span><br>    StatusCode <span class="hljs-keyword">int</span><br>&#125;<br><br><span class="hljs-keyword">type</span> HandlerFunc <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(ctx *Context)</span></span><br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewContext</span><span class="hljs-params">(w http.ResponseWriter, r *http.Request)</span> *<span class="hljs-title">Context</span></span> &#123;<br>    <span class="hljs-keyword">return</span> &amp;Context&#123;<br>        Writer: w,<br>        Req:    r,<br>        Path:   r.URL.Path,<br>        Method: r.Method,<br>    &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(c *Context)</span> <span class="hljs-title">PostForm</span><span class="hljs-params">(key <span class="hljs-keyword">string</span>)</span> <span class="hljs-title">string</span></span> &#123;<br>    <span class="hljs-keyword">return</span> c.Req.FormValue(key)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(c *Context)</span> <span class="hljs-title">Query</span><span class="hljs-params">(key <span class="hljs-keyword">string</span>)</span> <span class="hljs-title">string</span></span> &#123;<br>    <span class="hljs-keyword">return</span> c.Req.URL.Query().Get(key)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(c *Context)</span> <span class="hljs-title">Status</span><span class="hljs-params">(code <span class="hljs-keyword">int</span>)</span></span> &#123;<br>    c.StatusCode = code<br>    c.Writer.WriteHeader(code)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(c *Context)</span> <span class="hljs-title">SetHeader</span><span class="hljs-params">(headers <span class="hljs-keyword">map</span>[<span class="hljs-keyword">string</span>]<span class="hljs-keyword">string</span>)</span></span> &#123;<br>    <span class="hljs-keyword">for</span> key, value := <span class="hljs-keyword">range</span> headers &#123;<br>        c.Writer.Header().Set(key, value)<br>    &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(c *Context)</span> <span class="hljs-title">RetString</span><span class="hljs-params">(code <span class="hljs-keyword">int</span>, str <span class="hljs-keyword">string</span>)</span></span> &#123;<br>    c.SetHeader(<span class="hljs-keyword">map</span>[<span class="hljs-keyword">string</span>]<span class="hljs-keyword">string</span>&#123;<br>        <span class="hljs-string">&quot;Content-Type&quot;</span>: <span class="hljs-string">&quot;text/plain&quot;</span>,<br>    &#125;)<br>    c.Status(code)<br>    c.Writer.Write([]<span class="hljs-keyword">byte</span>(str))<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(c *Context)</span> <span class="hljs-title">RetJson</span><span class="hljs-params">(code <span class="hljs-keyword">int</span>, obj <span class="hljs-keyword">interface</span>&#123;&#125;)</span></span> &#123;<br>    c.SetHeader(<span class="hljs-keyword">map</span>[<span class="hljs-keyword">string</span>]<span class="hljs-keyword">string</span>&#123;<br>        <span class="hljs-string">&quot;Content-Type&quot;</span>: <span class="hljs-string">&quot;application/json&quot;</span>,<br>    &#125;)<br>    c.Status(code)<br>    encoder := json.NewEncoder(c.Writer)<br>    <span class="hljs-keyword">if</span> err := encoder.Encode(obj); err != <span class="hljs-literal">nil</span> &#123;<br>        http.Error(c.Writer, err.Error(), <span class="hljs-number">500</span>)<br>    &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(c *Context)</span> <span class="hljs-title">RetData</span><span class="hljs-params">(code <span class="hljs-keyword">int</span>, d []<span class="hljs-keyword">byte</span>)</span></span> &#123;<br>    c.Status(code)<br>    c.Writer.Write(d)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(c *Context)</span> <span class="hljs-title">RetHTML</span><span class="hljs-params">(code <span class="hljs-keyword">int</span>, html <span class="hljs-keyword">string</span>)</span></span> &#123;<br>    c.SetHeader(<span class="hljs-keyword">map</span>[<span class="hljs-keyword">string</span>]<span class="hljs-keyword">string</span>&#123;<br>        <span class="hljs-string">&quot;Content-Type&quot;</span>: <span class="hljs-string">&quot;text/html&quot;</span>,<br>    &#125;)<br>    c.RetData(code, []<span class="hljs-keyword">byte</span>(html))<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>所有会话内请求和响应的处理，都可以在context中完成。</p>
+<ul>
+<li><code>Context</code>目前只包含了<code>http.ResponseWriter</code>和<code>*http.Request</code>，另外提供了对 Method 和 Path 这两个常用属性的直接访问。</li>
+<li>提供了访问Query和PostForm参数的方法。</li>
+<li>提供了快速构造String/Data/JSON/HTML响应的方法。</li>
+</ul>
+<h3 id="Route路由和分组"><a href="#Route路由和分组" class="headerlink" title="Route路由和分组"></a>Route路由和分组</h3><p>在前面我们用了一个非常简单的<code>map</code>结构存储了路由表，使用<code>map</code>存储键值对，索引非常高效，但是有一个弊端，键值对的存储的方式，只能用来索引静态路由。那如果我们想支持类似于<code>/hello/:name</code>这样的动态路由怎么办呢？所谓动态路由，即一条路由规则可以匹配某一类型而非某一条固定的路由。例如<code>/hello/:name</code>，可以匹配<code>/hello/stellaelv</code>、<code>hello/heathsong</code>等。</p>
+<p>动态路由有很多种实现方式，支持的规则、性能等有很大的差异。例如开源的路由实现<code>gorouter</code>支持在路由规则中嵌入正则表达式，例如<code>/p/[0-9A-Za-z]+</code>，即路径中的参数仅匹配数字和字母；另一个开源实现<code>httprouter</code>就不支持正则表达式，采用<code>/hello/:name</code>的形式去匹配，著名的Web开源框架<code>gin</code> 就是使用了<code>httprouter</code>。</p>
+<p>实现动态路由最常用的数据结构，被称为前缀树(Trie树)：每一个节点的所有的子节点都拥有相同的前缀。这种结构非常适用于路由匹配，比如我们定义了如下路由规则：</p>
+<ul>
+<li>/:name/a</li>
+<li>/:name/b</li>
+<li>/:name/c</li>
+<li>/about</li>
+<li>/p/blog</li>
+<li>/p/related</li>
+</ul>
+<p><img src="https://stellae.gitee.io/myblog/images/images/WechatIMG71851.jpg" srcset="/Myblog/img/loading.gif" lazyload></p>
+<p>HTTP请求的路径恰好是由<code>/</code>分隔的多段构成的，因此，每一段可以作为前缀树的一个节点。我们通过树结构查询，如果中间某一层的节点都不满足条件，那么就说明没有匹配到的路由，查询结束。</p>
+<p>接下来我们实现的动态路由具备以下功能。</p>
+<ul>
+<li>支持通用参数匹配符号<code>:</code>  -&gt;   例如 <code>/hello/:name</code>，可以匹配 <code>/hello/a</code> 和 <code>/hello/b</code>。</li>
+</ul>
+<h4 id="前缀树"><a href="#前缀树" class="headerlink" title="前缀树"></a>前缀树</h4><p>首先我们需要设计树节点上应该存储哪些信息。</p>
+<p><code>tree.go</code></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> Node <span class="hljs-keyword">struct</span> &#123;<br>	pattern  <span class="hljs-keyword">string</span> <span class="hljs-comment">// 待匹配路由, 如 /:name/stellae</span><br>	part     <span class="hljs-keyword">string</span> <span class="hljs-comment">// 路由中的一部分，如 :name</span><br>	children []*Node<br>	handler  context.HandlerFunc <span class="hljs-comment">// 叶子节点保存handler</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>与普通的树不同，为了实现动态路由匹配，我们需要判断<code>child.part</code> 首字母是否是 <code>:</code>，如果模糊匹配到了<code>:name</code>，会以<code>&#123;&quot;name&quot;: part&#125;</code> 的形式返回，方便后续context 存储和使用。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// matchChild 返回匹配节点和路径参数</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(n *Node)</span> <span class="hljs-title">matchChild</span><span class="hljs-params">(part <span class="hljs-keyword">string</span>)</span> <span class="hljs-params">(*Node, <span class="hljs-keyword">map</span>[<span class="hljs-keyword">string</span>]<span class="hljs-keyword">string</span>)</span></span> &#123;<br>	<span class="hljs-keyword">for</span> _, children := <span class="hljs-keyword">range</span> n.children &#123;<br>		<span class="hljs-keyword">if</span> children.part[<span class="hljs-number">0</span>] == <span class="hljs-string">&#x27;:&#x27;</span> &#123;<br>			<span class="hljs-keyword">return</span> children, <span class="hljs-keyword">map</span>[<span class="hljs-keyword">string</span>]<span class="hljs-keyword">string</span>&#123;<br>				children.part[<span class="hljs-number">1</span>:]: part,<br>			&#125;<br>		&#125;<br>		<span class="hljs-keyword">if</span> children.part == part &#123;<br>			<span class="hljs-keyword">return</span> children, <span class="hljs-literal">nil</span><br>		&#125;<br>	&#125;<br>	<span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>, <span class="hljs-literal">nil</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>对于路由来说，最重要的当然是注册与匹配了。开发服务时，注册路由规则，映射handler；访问时，匹配路由规则，查找到对应的handler。因此，Tree 树需要支持节点的插入与查询。插入功能很简单，递归查找每一层的节点，如果没有匹配到当前<code>part</code>的节点，则新建一个。</p>
+<p>有一点需要注意，只有叶子节点才保存pattern和 handler信息。因此，当我们递归匹配每个子节点时，必须要成功匹配到叶子结点，并且pattern和 handler信息不为空才算匹配成功。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(n *Node)</span> <span class="hljs-title">Insert</span><span class="hljs-params">(parts []<span class="hljs-keyword">string</span>, pattern <span class="hljs-keyword">string</span>, handler context.HandlerFunc)</span> <span class="hljs-title">bool</span></span> &#123;<br>	<span class="hljs-keyword">for</span> idx, p := <span class="hljs-keyword">range</span> parts &#123;<br>		nextNode, _ := n.matchChild(p)<br>		<span class="hljs-keyword">if</span> nextNode == <span class="hljs-literal">nil</span> &#123;<br>			<span class="hljs-comment">// 新增节点</span><br>			nextNode = &amp;Node&#123;<br>				part:     p,<br>				children: <span class="hljs-built_in">make</span>([]*Node, <span class="hljs-number">0</span>),<br>			&#125;<br>			<span class="hljs-comment">// 叶子节点保存接口信息</span><br>			<span class="hljs-keyword">if</span> idx == <span class="hljs-built_in">len</span>(parts)<span class="hljs-number">-1</span> &#123;<br>				nextNode.pattern = pattern<br>				nextNode.handler = handler<br>				n.children = <span class="hljs-built_in">append</span>(n.children, nextNode)<br>				<span class="hljs-keyword">return</span> <span class="hljs-literal">true</span><br>			&#125;<br>			n.children = <span class="hljs-built_in">append</span>(n.children, nextNode)<br>		&#125;<br>		<span class="hljs-comment">// 已存在节点</span><br>		<span class="hljs-keyword">if</span> idx == <span class="hljs-built_in">len</span>(parts)<span class="hljs-number">-1</span> &#123;<br>			<span class="hljs-keyword">if</span> nextNode.handler != <span class="hljs-literal">nil</span> &#123;<br>				<span class="hljs-built_in">panic</span>(fmt.Errorf(<span class="hljs-string">&quot;已存在路由：%s, 不允许重复注册！&quot;</span>, pattern))<br>			&#125;<br>			<span class="hljs-keyword">return</span> <span class="hljs-literal">true</span><br>		&#125;<br>		<span class="hljs-keyword">return</span> nextNode.Insert(parts[<span class="hljs-number">1</span>:], pattern, handler)<br>	&#125;<br>	<span class="hljs-keyword">return</span> <span class="hljs-literal">true</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(n *Node)</span> <span class="hljs-title">Search</span><span class="hljs-params">(pattern <span class="hljs-keyword">string</span>, ctx *context.Context)</span> <span class="hljs-params">(<span class="hljs-keyword">bool</span>, context.HandlerFunc)</span></span> &#123;<br>	parts := strings.Split(pattern, <span class="hljs-string">&quot;/&quot;</span>)<br>	<span class="hljs-keyword">for</span> idx, part := <span class="hljs-keyword">range</span> parts &#123;<br>		nextNode, params := n.matchChild(part)<br>		<span class="hljs-keyword">if</span> nextNode == <span class="hljs-literal">nil</span> &#123;<br>			<span class="hljs-comment">// 匹配失败</span><br>			<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>, <span class="hljs-literal">nil</span><br>		&#125;<br>		<span class="hljs-comment">// 设置url参数</span><br>		<span class="hljs-keyword">for</span> k, v := <span class="hljs-keyword">range</span> params &#123;<br>			ctx.SetParams(k, v)<br>		&#125;<br>		<span class="hljs-comment">// 匹配成功</span><br>		<span class="hljs-keyword">if</span> idx == <span class="hljs-built_in">len</span>(parts)<span class="hljs-number">-1</span> &amp;&amp; nextNode.pattern != <span class="hljs-string">&quot;&quot;</span> &amp;&amp; nextNode.handler != <span class="hljs-literal">nil</span> &#123;<br>			<span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>, nextNode.handler<br>		&#125;<br>		n = nextNode<br>	&#125;<br>	<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>, <span class="hljs-literal">nil</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Tree 树的插入与查找都成功实现了，接下来我们将 Tree 树应用到路由中去吧。</p>
+<p><code>router.go</code></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(r *Router)</span> <span class="hljs-title">AddRoute</span><span class="hljs-params">(method <span class="hljs-keyword">string</span>, pattern <span class="hljs-keyword">string</span>, handler context.HandlerFunc)</span></span> &#123;<br>	parts := <span class="hljs-built_in">append</span>([]<span class="hljs-keyword">string</span>&#123;method&#125;, strings.Split(pattern, <span class="hljs-string">&quot;/&quot;</span>)[<span class="hljs-number">1</span>:]...)<br>	r.Node.Insert(parts, method+pattern, handler)<br>	fmt.Printf(<span class="hljs-string">&quot;[Interface] add interface %s %s \n&quot;</span>, method, pattern)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>context中新增属性<code>URLParams</code>，存储url path 中的参数数据</p>
+<p><code>context.go</code></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> Context <span class="hljs-keyword">struct</span> &#123;<br>	Writer    http.ResponseWriter<br>	Req       *http.Request<br>	Path      <span class="hljs-keyword">string</span><br>	Method    <span class="hljs-keyword">string</span><br>	URLParams <span class="hljs-keyword">map</span>[<span class="hljs-keyword">string</span>]<span class="hljs-keyword">string</span> <span class="hljs-comment">// url 路径参数，例如:name</span><br>	<span class="hljs-comment">// response http code</span><br>	StatusCode <span class="hljs-keyword">int</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewContext</span><span class="hljs-params">(w http.ResponseWriter, r *http.Request)</span> *<span class="hljs-title">Context</span></span> &#123;<br>	<span class="hljs-keyword">return</span> &amp;Context&#123;<br>		Writer:    w,<br>		Req:       r,<br>		Path:      r.URL.Path,<br>		Method:    r.Method,<br>		URLParams: <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-keyword">string</span>]<span class="hljs-keyword">string</span>),<br>	&#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(c *Context)</span> <span class="hljs-title">Params</span><span class="hljs-params">(key <span class="hljs-keyword">string</span>)</span> <span class="hljs-title">string</span></span> &#123;<br>	<span class="hljs-keyword">return</span> c.URLParams[key]<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(c *Context)</span> <span class="hljs-title">SetParams</span><span class="hljs-params">(key, val <span class="hljs-keyword">string</span>)</span></span> &#123;<br>	c.URLParams[key] = val<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>engine.go</code></p>
+<p>我们统一接口处理 <code>ServeHTTP(w http.ResponseWriter, r *http.Request)</code> 方法里面调用<code>Node.Search(pattern, c)</code> 利用前缀树匹配路由获取handler</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(e *Engine)</span> <span class="hljs-title">ServeHTTP</span><span class="hljs-params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;<br>	c := context.NewContext(w, r)<br>	pattern := c.Method + c.Path<br>	exist, handler := e.Router.Node.Search(pattern, c)<br>	<span class="hljs-keyword">if</span> !exist &#123;<br>		c.RetString(http.StatusNotFound, <span class="hljs-string">&quot;404 NOT FOUND&quot;</span>)<br>		<span class="hljs-keyword">return</span><br>	&#125;<br>	handler(c)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>main.go</code></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	e := engine.NewEngine()<br>	router := e.Router<br>	router.GET(<span class="hljs-string">&quot;/api/v1/hello/:name&quot;</span>, HelloHandler)<br>	<span class="hljs-keyword">if</span> err := e.Run(<span class="hljs-string">&quot;8080&quot;</span>); err != <span class="hljs-literal">nil</span> &#123;<br>		<span class="hljs-built_in">panic</span>(err)<br>	&#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">HelloHandler2</span><span class="hljs-params">(c *context.Context)</span></span> &#123;<br>	c.RetString(http.StatusOK, <span class="hljs-string">&quot;hello &quot;</span>+c.Params(<span class="hljs-string">&quot;name&quot;</span>))<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="分组"><a href="#分组" class="headerlink" title="分组"></a>分组</h4><p>分组控制(Group Control)是 Web 框架应提供的基础功能之一。所谓分组，是指路由的分组。如果没有路由分组，我们需要针对每一个路由进行控制。但是真实的业务场景中，往往某一组路由需要相似的处理。例如：</p>
+<ul>
+<li>以<code>/post</code>开头的路由匿名可访问。</li>
+<li>以<code>/admin</code>开头的路由需要鉴权。</li>
+<li>以<code>/api</code>开头的路由是 RESTful 接口，可以对接第三方平台，需要三方平台鉴权。</li>
+</ul>
+<p>大部分情况下的路由分组，是以相同的前缀来区分的。因此，我们今天实现的分组控制也是以前缀来区分，并且支持分组的嵌套。例如<code>/post</code>是一个分组，<code>/post/a</code>和<code>/post/b</code>可以是该分组下的子分组。作用在<code>/post</code>分组上的中间件(middleware)，也都会作用在子分组，子分组还可以应用自己特有的中间件。</p>
+<p>中间件可以给框架提供无限的扩展能力，应用在分组上，可以使得分组控制的收益更为明显，而不是共享相同的路由前缀这么简单。例如<code>/admin</code>的分组，可以应用鉴权中间件；<code>/</code>分组应用日志中间件，<code>/</code>是默认的最顶层的分组，也就意味着给所有的路由，即整个框架增加了记录日志的能力。</p>
+<p><code>group.go</code></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> Group <span class="hljs-keyword">struct</span> &#123;<br>	Prefix      <span class="hljs-keyword">string</span>                <span class="hljs-comment">// 完整的路由前缀</span><br>	Middlewares []context.HandlerFunc <span class="hljs-comment">// support middleware</span><br>	Child       *Group<br>	Router      *Router <span class="hljs-comment">// 指向router，注册路由</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(g *Group)</span> <span class="hljs-title">AddGroup</span><span class="hljs-params">(part <span class="hljs-keyword">string</span>)</span> *<span class="hljs-title">Group</span></span> &#123;<br>	child := &amp;Group&#123;<br>		Prefix: g.Prefix + part,<br>		Router: g.Router, <span class="hljs-comment">// 所有group共用同一颗前缀树，也就是同一个router</span><br>	&#125;<br>	g.Child = child<br>	<span class="hljs-keyword">return</span> child<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(g *Group)</span> <span class="hljs-title">GET</span><span class="hljs-params">(pattern <span class="hljs-keyword">string</span>, handler context.HandlerFunc)</span></span> &#123;<br>	g.Router.GET(g.Prefix+pattern, handler)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(g *Group)</span> <span class="hljs-title">POST</span><span class="hljs-params">(pattern <span class="hljs-keyword">string</span>, handler context.HandlerFunc)</span></span> &#123;<br>	g.Router.POST(g.Prefix+pattern, handler)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(g *Group)</span> <span class="hljs-title">PATCH</span><span class="hljs-params">(pattern <span class="hljs-keyword">string</span>, handler context.HandlerFunc)</span></span> &#123;<br>	g.Router.PATCH(g.Prefix+pattern, handler)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(g *Group)</span> <span class="hljs-title">PUT</span><span class="hljs-params">(pattern <span class="hljs-keyword">string</span>, handler context.HandlerFunc)</span></span> &#123;<br>	g.Router.PUT(g.Prefix+pattern, handler)<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(g *Group)</span> <span class="hljs-title">DELETE</span><span class="hljs-params">(pattern <span class="hljs-keyword">string</span>, handler context.HandlerFunc)</span></span> &#123;<br>	g.Router.DELETE(g.Prefix+pattern, handler)<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>对应engine和main文件调整如下：</p>
+<p><code>engine</code></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> Engine <span class="hljs-keyword">struct</span> &#123;<br>	Router *router.Router<br>	Group  *router.Group  <span class="hljs-comment">// 新增Group属性</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewEngine</span><span class="hljs-params">()</span> *<span class="hljs-title">Engine</span></span> &#123;<br>	engine := &amp;Engine&#123;Router: router.NewRouter()&#125;<br>	<span class="hljs-comment">// 注意：路由前缀树保存在router上，所以new Group时需要指向同一个router</span><br>	engine.Group = &amp;router.Group&#123;Router: engine.Router&#125;<br>	<span class="hljs-keyword">return</span> engine<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>main.go</code></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	e := engine.NewEngine()<br>	groupApi := e.Group.AddGroup(<span class="hljs-string">&quot;/api&quot;</span>)<br>	groupV2 := groupApi.AddGroup(<span class="hljs-string">&quot;/v2&quot;</span>)<br>	groupV2.GET(<span class="hljs-string">&quot;/hello&quot;</span>, HelloHandler)<br>	groupV2.GET(<span class="hljs-string">&quot;/hello/:name&quot;</span>, HelloHandler2)<br><br>	<span class="hljs-keyword">if</span> err := e.Run(<span class="hljs-string">&quot;8080&quot;</span>); err != <span class="hljs-literal">nil</span> &#123;<br>		<span class="hljs-built_in">panic</span>(err)<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这里我们的<strong>路由分组</strong>功能就算是大功告成了。至于提供扩展能力支持中间件的内容，放在后面去实现。</p>
+<h3 id="Middleware中间件"><a href="#Middleware中间件" class="headerlink" title="Middleware中间件"></a>Middleware中间件</h3><p><strong>中间件是什么？</strong></p>
+<p>中间件(middlewares)，简单说，就是非业务的技术类组件。Web 框架本身不可能去理解所有的业务，因而不可能实现所有的功能。因此，框架需要有一个插口，允许用户自己定义功能，嵌入到框架中，仿佛这个功能是框架原生支持的一样。因此，对中间件而言，需要考虑2个比较关键的点：</p>
+<ul>
+<li>插入点在哪？使用框架的人并不关心底层逻辑的具体实现，如果插入点太底层，中间件逻辑就会非常复杂。如果插入点离用户太近，那和用户直接定义一组函数，每次在 Handler 中手工调用没有多大的优势了。</li>
+<li>中间件的输入是什么？中间件的输入，决定了扩展能力。暴露的参数太少，用户发挥空间有限。</li>
+</ul>
+<p><strong>那对于一个 Web 框架而言，中间件应该设计成什么样呢？</strong></p>
+<p>中间件的定义与路由映射的 Handler 一致，处理的输入是<code>Context</code>对象。插入点是框架接收到请求初始化<code>Context</code>对象后，允许用户使用自己定义的中间件做一些额外的处理，例如记录日志等，以及对<code>Context</code>进行二次加工。另外通过调用<code>(*Context).Next()</code>函数，中间件可等待用户自己定义的 <code>Handler</code>处理结束后，再做一些额外的操作，例如计算本次处理所用时间等。即 中间件支持用户在请求被处理的前后，做一些额外的操作。</p>
+<p>举个例子，我们希望最终能够支持如下定义的中间件，<code>c.Next()</code>表示等待执行其他的中间件或用户的<code>Handler</code>：</p>
+<p><code>middleware.go</code></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Timer</span><span class="hljs-params">()</span> <span class="hljs-title">context</span>.<span class="hljs-title">HandlerFunc</span></span> &#123;<br>	<span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(c *context.Context)</span></span> &#123;<br>		t := time.Now()<br>		c.Next()<br>		fmt.Printf(<span class="hljs-string">&quot;[Timer] request %s cost %v\n&quot;</span>, c.Req.RequestURI, time.Since(t))<br>	&#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Logger</span><span class="hljs-params">()</span> <span class="hljs-title">context</span>.<span class="hljs-title">HandlerFunc</span></span> &#123;<br>	<span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(c *context.Context)</span></span> &#123;<br>		c.Next()<br>		fmt.Printf(<span class="hljs-string">&quot;[Logger] request %s, http status: %d!\n&quot;</span>, c.Req.RequestURI, c.StatusCode)<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>当我们收到请求后，匹配路由，该请求的所有信息都保存在<code>Context</code>中。中间件也不例外，接收到请求后，应查找所有应作用于该路由的中间件，保存在<code>Context</code>中，依次进行调用。中间件不仅作用在处理流程前，也可以作用在处理流程后，即在用户定义的 Handler 处理完毕后，还可以执行剩下的操作。</p>
+<p>为此，我们给<code>Context</code>添加了2个参数，定义了<code>Next</code>方法：</p>
+<p><code>context.go</code></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> Context <span class="hljs-keyword">struct</span> &#123;<br>	Writer    http.ResponseWriter<br>	Req       *http.Request<br>	Path      <span class="hljs-keyword">string</span><br>	Method    <span class="hljs-keyword">string</span><br>	URLParams <span class="hljs-keyword">map</span>[<span class="hljs-keyword">string</span>]<span class="hljs-keyword">string</span> <span class="hljs-comment">// url 路径参数，例如:name</span><br>	<span class="hljs-comment">// response http code</span><br>	StatusCode <span class="hljs-keyword">int</span><br>	<span class="hljs-comment">// middleware</span><br>	Handlers []HandlerFunc<br>	idx      <span class="hljs-keyword">int</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewContext</span><span class="hljs-params">(w http.ResponseWriter, r *http.Request)</span> *<span class="hljs-title">Context</span></span> &#123;<br>	<span class="hljs-keyword">return</span> &amp;Context&#123;<br>		Writer:    w,<br>		Req:       r,<br>		Path:      r.URL.Path,<br>		Method:    r.Method,<br>		URLParams: <span class="hljs-built_in">make</span>(<span class="hljs-keyword">map</span>[<span class="hljs-keyword">string</span>]<span class="hljs-keyword">string</span>),<br>		idx:       <span class="hljs-number">0</span>,<br>	&#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(c *Context)</span> <span class="hljs-title">Next</span><span class="hljs-params">()</span></span> &#123;<br>	c.idx++<br>	c.Handlers[c.idx](c)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>idx</code>是记录当前执行到第几个中间件，当在中间件中调用<code>Next</code>方法时，控制权交给了下一个中间件，直到调用到最后一个中间件，然后再从后往前。</p>
+<p>同时调整<code>ServeHTTP</code>方法，在请求过来之前，匹配路由查询所有的middleware，保存在context中，同时将该用户handler一起保存起来。</p>
+<p><code>engine.go</code></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs go"><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(e *Engine)</span> <span class="hljs-title">ServeHTTP</span><span class="hljs-params">(w http.ResponseWriter, r *http.Request)</span></span> &#123;<br>	c := context.NewContext(w, r)<br>	<span class="hljs-comment">// 遍历当前请求属于哪些路由组，获取对应的middlewares(handler)，保存于context</span><br>	group := e.Group<br>	<span class="hljs-keyword">for</span> group.Child != <span class="hljs-literal">nil</span> &#123;<br>		group = group.Child<br>		<span class="hljs-comment">// group.Prefix+&quot;/&quot;  避免错误匹配</span><br>		<span class="hljs-keyword">if</span> strings.HasPrefix(c.Path, group.Prefix+<span class="hljs-string">&quot;/&quot;</span>) &#123;<br>			c.Handlers = <span class="hljs-built_in">append</span>(c.Handlers, group.Middlewares...)<br>		&#125;<br>	&#125;<br>	<span class="hljs-comment">// 匹配路由处理业务</span><br>	exist, handler := e.Router.Node.Search(c.Method+c.Path, c)<br>	<span class="hljs-keyword">if</span> !exist &#123;<br>		handler = <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(ctx *context.Context)</span></span> &#123;<br>			c.RetString(http.StatusNotFound, <span class="hljs-string">&quot;404 NOT FOUND&quot;</span>)<br>		&#125;<br>	&#125;<br>	<span class="hljs-comment">// 加入业务逻辑handler，后面统一处理</span><br>	c.Handlers = <span class="hljs-built_in">append</span>(c.Handlers, handler)<br>	c.Handlers[<span class="hljs-number">0</span>](c)<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>main.go</code></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs go"><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>	e := engine.NewEngine()<br>	groupApi := e.Group.AddGroup(<span class="hljs-string">&quot;/api&quot;</span>)<br>	groupApi.Use(middleware.Timer())<br>	groupV2 := groupApi.AddGroup(<span class="hljs-string">&quot;/v2&quot;</span>)<br>	groupV2.Use(middleware.Logger())<br>	groupV2.GET(<span class="hljs-string">&quot;/hello&quot;</span>, HelloHandler)<br>	groupV2.GET(<span class="hljs-string">&quot;/hello/:name&quot;</span>, HelloHandler2)<br><br>	<span class="hljs-keyword">if</span> err := e.Run(<span class="hljs-string">&quot;8080&quot;</span>); err != <span class="hljs-literal">nil</span> &#123;<br>		<span class="hljs-built_in">panic</span>(err)<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>同时应用下面两个中间件，执行顺序应该是如何？</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Test1</span><span class="hljs-params">()</span> <span class="hljs-title">context</span>.<span class="hljs-title">HandlerFunc</span></span> &#123;<br>	<span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(c *context.Context)</span></span> &#123;<br>		fmt.Println(<span class="hljs-string">&quot;part1&quot;</span>)<br>		c.Next()<br>		fmt.Println(<span class="hljs-string">&quot;part2&quot;</span>)<br>	&#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Test2</span><span class="hljs-params">()</span> <span class="hljs-title">context</span>.<span class="hljs-title">HandlerFunc</span></span> &#123;<br>	<span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(c *context.Context)</span></span> &#123;<br>		fmt.Println(<span class="hljs-string">&quot;part3&quot;</span>)<br>		c.Next()<br>		fmt.Println(<span class="hljs-string">&quot;part4&quot;</span>)<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>最终的顺序是<code>part1 -&gt; part3 -&gt; User Handler -&gt; part 4 -&gt; part2</code></p>
+<h3 id="Error错误恢复"><a href="#Error错误恢复" class="headerlink" title="Error错误恢复"></a>Error错误恢复</h3><p>Go 语言中，比较常见的错误处理方法是返回 error，由调用者决定后续如何处理。但是如果是无法恢复的错误，可以手动触发 panic，当然如果在程序运行过程中出现了类似于数组越界的错误，panic 也会被触发。我们也可以使用 recover 函数，可以避免因为 panic 发生而导致整个程序终止，recover 函数只在 defer 中生效。</p>
+<p>对一个 Web 框架而言，错误处理机制是非常必要的。可能是框架本身没有完备的测试，导致在某些情况下出现空指针异常等情况。也有可能用户不正确的参数，触发了某些异常，例如数组越界，空指针等。如果因为这些原因导致系统宕机，必然是不可接受的。</p>
+<p>所以我们可以添加一个非常简单的错误处理机制，即在此类错误发生时，向用户返回 <em>Internal Server Error</em>，并且在日志中打印必要的错误信息，方便进行错误定位。</p>
+<p>我们之前实现了中间件机制，错误处理也可以作为一个中间件，增强 gee 框架的能力。</p>
+<p>新增文件 <strong>recovery.go</strong>，在这个文件中实现中间件 <code>Recovery</code>。</p>
+<p><code>recovery.go</code></p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">Recovery</span><span class="hljs-params">()</span> <span class="hljs-title">context</span>.<span class="hljs-title">HandlerFunc</span></span> &#123;<br>	<span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">(c *context.Context)</span></span> &#123;<br>		<span class="hljs-keyword">defer</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>			<span class="hljs-keyword">if</span> err := <span class="hljs-built_in">recover</span>(); err != <span class="hljs-literal">nil</span> &#123;<br>				message := fmt.Sprintf(<span class="hljs-string">&quot;%s&quot;</span>, err)<br>				fmt.Printf(<span class="hljs-string">&quot;%s\n\n&quot;</span>, trace(message))<br>				c.RetString(http.StatusInternalServerError, <span class="hljs-string">&quot;Internal Server Error&quot;</span>)<br>			&#125;<br>		&#125;()<br>		c.Next()<br>	&#125;<br>&#125;<br><br><span class="hljs-comment">// print stack trace for debug</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">trace</span><span class="hljs-params">(message <span class="hljs-keyword">string</span>)</span> <span class="hljs-title">string</span></span> &#123;<br>	<span class="hljs-keyword">var</span> pcs [<span class="hljs-number">32</span>]<span class="hljs-keyword">uintptr</span><br>	n := runtime.Callers(<span class="hljs-number">3</span>, pcs[:]) <span class="hljs-comment">// skip first 3 caller</span><br><br>	<span class="hljs-keyword">var</span> str strings.Builder<br>	str.WriteString(message + <span class="hljs-string">&quot;\nTraceback:&quot;</span>)<br>	<span class="hljs-keyword">for</span> _, pc := <span class="hljs-keyword">range</span> pcs[:n] &#123;<br>		fn := runtime.FuncForPC(pc)<br>		file, line := fn.FileLine(pc)<br>		str.WriteString(fmt.Sprintf(<span class="hljs-string">&quot;\n\t%s:%d&quot;</span>, file, line))<br>	&#125;<br>	<span class="hljs-keyword">return</span> str.String()<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>只需要在<code>ServeHTTP(w http.ResponseWriter, r *http.Request)</code> 最开始给context 添加这个能力:</p>
+<p> <code>c.Handlers = []context.HandlerFunc&#123;middleware.Recovery()&#125;</code></p>
+<p>如果发生异常，我们可以在后台日志中看到如下内容，引发错误的原因和堆栈信息都被打印了出来。通过日志，我们可以很容易地发现问题所在。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs shell">runtime error: index out of range [100] with length 2<br>Traceback:<br>        /Users/deathfeeling/.gvm/gos/go1.19/src/runtime/panic.go:885<br>        /Users/deathfeeling/.gvm/gos/go1.19/src/runtime/panic.go:113<br>        /Users/deathfeeling/Codes/go/src/github.com/stellae216/web-go/main.go:60<br>        /Users/deathfeeling/Codes/go/src/github.com/stellae216/web-go/middleware/middleware.go:13<br>        /Users/deathfeeling/Codes/go/src/github.com/stellae216/web-go/middleware/middleware.go:12<br>        /Users/deathfeeling/Codes/go/src/github.com/stellae216/web-go/middleware/recovery.go:21<br>        /Users/deathfeeling/Codes/go/src/github.com/stellae216/web-go/middleware/recovery.go:20<br>        /Users/deathfeeling/Codes/go/src/github.com/stellae216/web-go/engine/engine.go:40<br>        /Users/deathfeeling/.gvm/gos/go1.19/src/net/http/server.go:2948<br>        /Users/deathfeeling/.gvm/gos/go1.19/src/net/http/server.go:1992<br>        /Users/deathfeeling/.gvm/gos/go1.19/src/runtime/asm_arm64.s:1166<br><br></code></pre></td></tr></table></figure>
+
+<p><strong>到这里web框架的基础功能都已经具备了，大概只有不到400行代码，你就可以拥有一个完全自定义的高可用web框架😊😊</strong></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/categories/Golang/">Golang</a>
+                    
+                      <a class="hover-with-bg" href="/Myblog/categories/Golang/Web%E6%A1%86%E6%9E%B6/">Web框架</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/Myblog/tags/golang/">golang</a>
+                    
+                      <a class="hover-with-bg" href="/Myblog/tags/web%E6%A1%86%E6%9E%B6/">web框架</a>
+                    
+                      <a class="hover-with-bg" href="/Myblog/tags/framework/">framework</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/Myblog/2023/06/25/Golang%E4%B8%ADstruct%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2/">
+                        <span class="hidden-mobile">Golang中struct相互转换</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/Myblog/js/events.js" ></script>
+<script  src="/Myblog/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/Myblog/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+  <script  src="/Myblog/js/local-search.js" ></script>
+  <script>
+    (function () {
+      var path = "/Myblog/local-search.xml";
+      $('#local-search-input').on('click', function() {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      });
+      $('#modalSearch').on('shown.bs.modal', function() {
+        $('#local-search-input').focus();
+      });
+    })()
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/Myblog/js/boot.js" ></script>
+
+
+</body>
+</html>
